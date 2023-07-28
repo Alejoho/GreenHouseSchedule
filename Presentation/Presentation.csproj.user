@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="CustomControls\ComboBoxWithLabel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CustomControls\TextBoxWithLabel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\AddEditClientWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\AddEditGreenHouseWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\AddEditSpeciesWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\ClientsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\GreenHousesWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\NewOrderWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\AddEditSeedTrayWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\OrganizationsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\ProductsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\SeedTraysWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="CustomControls\ComboBoxWithLabel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomControls\TextBoxWithLabel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\AddEditClientWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\AddEditGreenHouseWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\AddEditSpeciesWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\ClientsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\GreenHousesWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\NewOrderWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\AddEditSeedTrayWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\OrganizationsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\ProductsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\SeedTraysWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

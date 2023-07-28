@@ -1,0 +1,19 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/.vscode
+/packages
+
+/DataAccess/bin
+/Domain/bin
+/Presentation/bin
+
+/DataAccess/.vscode
+/Domain/.vscode
+/Presentation/.vscode
+
+/DataAccess/obj
+/Domain/obj
+/Presentation/obj

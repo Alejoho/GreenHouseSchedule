@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Presentation.CustomControls.ComboBoxWithLabel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Presentation.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="330">
+    <Grid>
+
+        <DockPanel  Margin="0 0 0 0">
+            <TextBlock Grid.Column="0" Text="{Binding Path=FieldLabel}" VerticalAlignment="Center" 
+                Margin="0 0 5 0" DockPanel.Dock="Left" HorizontalAlignment="Right" Width="150"
+                TextAlignment="Right"/>
+
+            <ComboBox Grid.Column="1" VerticalContentAlignment="Center"
+                 HorizontalAlignment="Stretch" Padding="5 0 0 0" Margin="0 3" DockPanel.Dock="Left"
+                 Width="134" x:Name="ComboBox" Text="{Binding Path=FieldContent}">
+            </ComboBox>
+
+            <Button Content="+" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
+                    Margin="2" x:Name="ButtonAdd"/>
+        </DockPanel>
+    </Grid>
+</UserControl>

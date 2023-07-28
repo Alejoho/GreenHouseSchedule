@@ -1,0 +1,53 @@
+﻿<Window x:Class="Presentation.Forms.ProductsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation.Forms"
+        mc:Ignorable="d"
+        Title="Productos" Height="455" Width="700" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="61"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+
+        <!--DataGrid-->
+        <DataGrid x:Name="dgProducts" Grid.Row="0" Grid.Column="0" Margin="20 10 5 5">
+            
+        </DataGrid>
+        
+        <!--Variety-->
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <ListBox x:Name="lstVarieties" Height="290" Margin="5 10 5 5"/>
+            <StackPanel Orientation="Horizontal" Margin="5 5 5 5">
+                <TextBox x:Name="txtNewVariety" Text="nueva variedad" Width="110"/>
+                <Button x:Name="btnAddVariety" Content="Agregar" Margin="20 0 0 0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <Button Grid.Row="0" Grid.Column="2" Height="40" Width="70" Margin="5 20 0 0" VerticalAlignment="Top" 
+                HorizontalAlignment="Left" x:Name="btnRemoveVariety">
+            <TextBlock Text="Borrar variedad" TextWrapping="Wrap" TextAlignment="Center"/>
+        </Button>
+        
+        <!--Buttons-->
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Left"
+                    Margin="50 0 0 0">
+            <Button x:Name="btnNewProduct" Content="Nuevo" Margin="5 15" Width="70"/>
+            <Button x:Name="btnEditProduct" Content="Editar" Margin="5 15" Width="70"/>
+            <Button x:Name="btnDeleteProduct" Content="Borrar" Margin="5 15" Width="70"/>
+            <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70"/>
+        </StackPanel>
+        
+        
+        
+    </Grid>
+</Window>
