@@ -8,18 +8,19 @@
              d:DesignHeight="20" d:DesignWidth="330">
     <Grid>
 
-        <StackPanel  Margin="0 0 0 0" Orientation="Horizontal">
-            <TextBlock Grid.Column="0" Text="{Binding Path=FieldLabel}" VerticalAlignment="Center" 
-                Margin="0 0 5 0" HorizontalAlignment="Right" 
-                TextAlignment="Right"/>
+        <DockPanel  Margin="0 0 0 0">
+            <Button Content="+" HorizontalContentAlignment="Right" VerticalContentAlignment="Top"
+                    Margin="2 3 2 3" x:Name="ButtonAdd" Width="14" DockPanel.Dock="Right"/>
 
-            <ComboBox Grid.Column="1" VerticalContentAlignment="Center"
+            <ComboBox Grid.Column="1" VerticalContentAlignment="Center" DockPanel.Dock="Right"
                  HorizontalAlignment="Right" Padding="5 0 0 0" Margin="0 3"
-                 Width="134" x:Name="ComboBox" Text="{Binding Path=FieldContent}">
+                 Width="132" x:Name="ComboBox" Text="{Binding Path=FieldContent}">
             </ComboBox>
 
-            <Button Content="+" HorizontalContentAlignment="Right" VerticalContentAlignment="Top"
-                    Margin="2 3 0 3" x:Name="ButtonAdd" Width="14"/>
-        </StackPanel>
+            <TextBlock Grid.Column="0" Text="{Binding Path=FieldLabel}" VerticalAlignment="Center" 
+                Margin="0 0 5 0" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                TextAlignment="Right"/>
+
+        </DockPanel>
     </Grid>
 </UserControl>
