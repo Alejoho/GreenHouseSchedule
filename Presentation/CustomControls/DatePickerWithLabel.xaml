@@ -7,13 +7,15 @@
              mc:Ignorable="d" 
             d:DesignHeight="26" d:DesignWidth="300">
     <Grid>
-        <DockPanel  Margin="0 0 0 0">
-            <TextBlock Grid.Column="0" Text="{Binding Path=FieldLabel}" VerticalAlignment="Center" 
-                Margin="0 0 5 0" DockPanel.Dock="Left" HorizontalAlignment="Right" x:Name="Label"/>
+        <DockPanel  Margin="0 0 0 0" LastChildFill="False">
 
-            <DatePicker Grid.Column="1" Text="{Binding Path=FieldContent}" VerticalContentAlignment="Center"
-                 HorizontalAlignment="Stretch" Padding="5 0 0 0" Margin="0 3" DockPanel.Dock="Left"
-                 Width="150" x:Name="TextBox"/>
+            <DatePicker Text="{Binding Path=FieldContent}" VerticalContentAlignment="Center"
+                 HorizontalAlignment="Right" Padding="5 0 0 0" Margin="0 3" DockPanel.Dock="Right"
+                 Width="150" x:Name="TimePicker"/>
+
+            <TextBlock Grid.Column="0" Text="{Binding Path=FieldLabel}" DockPanel.Dock="Right" 
+                Margin="0 0 5 0" x:Name="Label" VerticalAlignment="Center"/>
+            
         </DockPanel>
     </Grid>
 </UserControl>
