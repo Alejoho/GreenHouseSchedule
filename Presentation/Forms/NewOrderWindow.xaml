@@ -25,6 +25,8 @@
             <custom:ComboBoxWithLabel FieldLabel="Cliente" HorizontalAlignment="Right"/>
             <custom:ComboBoxWithLabel FieldLabel="Producto" HorizontalAlignment="Right"/>
             <custom:TextBoxWithLabel FieldLabel="Cantidad de posturas" HorizontalAlignment="Right"/>
+            <DatePicker x:Name="datepick"/>
+            <Button x:Name="buttonn" Height="20" Content="fecha"/>
         </StackPanel>
         
     </Grid>
