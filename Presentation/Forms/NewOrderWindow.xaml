@@ -26,14 +26,14 @@
         <!--#region First Row-->
 
         <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
-            <custom:ComboBoxWithLabel FieldLabel="Cliente" HorizontalAlignment="Right"/>
-            <custom:ComboBoxWithLabel FieldLabel="Producto" HorizontalAlignment="Right"/>
-            <custom:TextBoxWithLabel FieldLabel="Cantidad de posturas" HorizontalAlignment="Right"/>
-            <custom:DatePickerWithLabel FieldLabel="Fecha deseada"/>
-            <Button Content="buscar disponibilidad" Height="35" Width="150" Margin="0 10 0 0"/>
+            <custom:ComboBoxWithLabel x:Name="lblcmbbtnClient" FieldLabel="Cliente" HorizontalAlignment="Right" />
+            <custom:ComboBoxWithLabel x:Name="lblcmbbtnProduct" FieldLabel="Producto" HorizontalAlignment="Right"/>
+            <custom:TextBoxWithLabel x:Name="txtAmountOfSeedlings" FieldLabel="Cantidad de posturas" HorizontalAlignment="Right"/>
+            <custom:DatePickerWithLabel x:Name="dtpWishDate" FieldLabel="Fecha deseada"/>
+            <Button x:Name="btnSearchAvailability" Content="buscar disponibilidad" Height="35" Width="150" Margin="0 10 0 0"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="1" Grid.Column="1" Width="150" Height="150" HorizontalAlignment="Left" 
+        <DataGrid x:Name="dgSeedTraySelector" Grid.Row="1" Grid.Column="1" Width="150" Height="150" HorizontalAlignment="Left" 
                   VerticalAlignment="Top" Margin="15 0 0 0">
         </DataGrid>
         
@@ -42,11 +42,11 @@
 
         <!--#region Second Row-->
 
-        <DataGrid Grid.Row="2" Grid.Column="0" Margin="15 5">
+        <DataGrid x:Name="dgAvailabilityOfGreenHousesArea" Grid.Row="2" Grid.Column="0" Margin="15 5">
             
         </DataGrid>
 
-        <DataGrid Grid.Row="2" Grid.Column="1" Margin="15 5">
+        <DataGrid x:Name="dgAvailabilityOfSeedTray" Grid.Row="2" Grid.Column="1" Margin="15 5">
 
         </DataGrid>
         
@@ -55,16 +55,24 @@
 
         <!--#region Third Row-->
 
-        <DataGrid Grid.Row="3" Grid.Column="0" Margin="15 5">
+        <DataGrid x:Name="dgSeedTrayPermutations" Grid.Row="3" Grid.Column="0" Margin="15 5">
             
         </DataGrid>
 
         <StackPanel Grid.Row="3" Grid.Column="1">
-            <DataGrid Margin="15 5" Height="100">
+            <DataGrid x:Name="dgSeedTrayAreaToPlace" Margin="15 5" Height="100">
                 
             </DataGrid>
-
-            <custom:TextBoxWithLabel FieldLabel="Fecha" Width="200" HorizontalAlignment="Left" Margin="0 5 0 0"/>
+            <StackPanel Orientation="Horizontal" Margin="0 -7 0 0">
+                <Button x:Name="btnChoosePermutation" Width="80" Margin="0 7 0 0">
+                    <Grid>
+                        <TextBlock Margin="0 -2 0 10" TextAlignment="Center">Seleccionar</TextBlock>
+                        <TextBlock Margin="0 10 0 0" TextAlignment="Center">Combinación</TextBlock>
+                    </Grid>
+                </Button>
+                <custom:TextBoxWithLabel x:Name="lbltxtDate" FieldLabel="Fecha" Width="190" HorizontalAlignment="Left" Margin="0 5 0 0"/>
+                
+            </StackPanel>
 
         </StackPanel>
 
@@ -74,13 +82,13 @@
         <!--#region Fourth Row-->
 
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <DataGrid Width="460" Margin="15 10">
+            <DataGrid x:Name="dgOrderLocations" Width="460" Margin="15 10">
             </DataGrid>
 
-            <Button Width="80" Height="50" VerticalAlignment="Top" Margin="0 20 0 0">
+            <Button x:Name="btnAddOrderLocation" Width="80" Height="50" VerticalAlignment="Top" Margin="0 20 0 0">
                 <Grid>
-                    <TextBlock Margin="0 0 0 18">Agregar</TextBlock>
-                    <TextBlock Margin="0 18 0 0">Locación</TextBlock>
+                    <TextBlock Margin="0 0 0 18" TextAlignment="Center">Agregar</TextBlock>
+                    <TextBlock Margin="0 18 0 0" TextAlignment="Center">Locación</TextBlock>
                 </Grid>
             </Button>
         </StackPanel>
@@ -92,8 +100,8 @@
 
         <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal"
                     VerticalAlignment="Top">
-            <Button Content="Guardar" Height="35" Width="100" Margin="110 0 30 0" FontSize="15"/>
-            <Button Content="Cancelar" Height="35" Width="100" Margin="30 0 0 0" FontSize="15"/>
+            <Button x:Name="btnSave" Content="Guardar" Height="35" Width="100" Margin="110 0 30 0" FontSize="15"/>
+            <Button x:Name="btnCancel" Content="Cancelar" Height="35" Width="100" Margin="30 0 0 0" FontSize="15"/>
         </StackPanel>
 
         <!--#endregion-->
