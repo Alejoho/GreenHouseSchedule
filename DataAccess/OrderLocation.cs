@@ -20,16 +20,15 @@ namespace DataAccess
             this.Blocks = new HashSet<Block>();
         }
     
-        public int OrderLocationID { get; set; }
-        public byte IdGreenHouse { get; set; }
-        public byte IdSeedTray { get; set; }
-        public short IdOrder { get; set; }
+        public int ID { get; set; }
+        public byte GreenHouseId { get; set; }
+        public byte SeedTrayId { get; set; }
+        public short OrderId { get; set; }
         public short SeedTrayAmount { get; set; }
         public int SeedlingAmount { get; set; }
         public Nullable<System.DateTime> SowDate { get; set; }
         public Nullable<System.DateTime> EstimateDeliveryDate { get; set; }
         public Nullable<System.DateTime> RealDeliveryDate { get; set; }
-        public Nullable<bool> Sown { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Block> Blocks { get; set; }

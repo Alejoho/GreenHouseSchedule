@@ -117,7 +117,7 @@ namespace Domain
         private void ImplementEstimateReservation()
         {
             LinkedList<OrderModel> ordersToSow = (LinkedList<OrderModel>)SeedBedStatus.Orders
-                .Where(order => order.EstimateSowDate <= SeedBedStatus.IteratorDate && order.Sown == false);
+                .Where(order => order.EstimateSowDate <= SeedBedStatus.IteratorDate && order.Complete == false);
 
             int minimumLimitOfSow = 50; //TODO: Esta variable se saca del archivo de configuracion
 
@@ -136,7 +136,7 @@ namespace Domain
                                 SeedBedStatus.ReserveSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
                                 SeedBedStatus.ReserveArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                                 SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay -= orderLocation.SeedTrayAmount;
-                                order.Sown = true;
+                                order.Complete = true;
                             }
                             else
                             {

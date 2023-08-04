@@ -51,7 +51,7 @@ namespace DataAccess.Repositories
         public bool Update(Greenhouse entity)
         {
             Greenhouse greenHouse = _sowScheduleDB.GreenHouses
-                .Where(x => x.GreenHouseID == entity.GreenHouseID).FirstOrDefault();
+                .Where(x => x.ID == entity.ID).FirstOrDefault();
             if(greenHouse != null)
             {
                 return true;

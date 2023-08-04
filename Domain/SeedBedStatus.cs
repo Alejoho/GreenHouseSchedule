@@ -148,7 +148,7 @@ namespace Domain
             foreach (var greenHouse in greenHouses)
             {
                 greenHousesModelList.Add(new GreenHouseModel(
-                    greenHouse.GreenHouseID,
+                    greenHouse.ID,
                     greenHouse.Name,
                     greenHouse.SeedTrayArea,
                     greenHouse.AmountOfBlocks,
@@ -170,7 +170,7 @@ namespace Domain
             foreach (var seedTray in seedTrays)
             {
                 seedTrayModelList.Add(new SeedTrayModel(
-                    seedTray.SeedTrayID,
+                    seedTray.ID,
                     seedTray.Name,
                     seedTray.TrayArea,
                     seedTray.TotalAlveolus,
@@ -193,16 +193,17 @@ namespace Domain
             foreach (var order in orderList)
             {
                 orderModelLinkedList.AddLast(new OrderModel(
-                    order.OrderID,
-                    new ClientModel(order.Client.ClientID, order.Client.Name, order.Client.NickName),
-                    new ProductModel(order.Product.ProductID, order.Product.Variety, order.Product.Species.Name, order.Product.Species.ProductionDays),
+                    order.ID,
+                    new ClientModel(order.Client.ID, order.Client.Name, order.Client.NickName),
+                    new ProductModel(order.Product.ID, order.Product.Variety, order.Product.Species.Name, order.Product.Species.ProductionDays),
                     order.AmountofAlgorithmSeedlings,
                     order.DateOfRequest,
                     order.EstimateSowDate,
                     order.EstimateDeliveryDate,
                     order.RealSowDate,
                     order.RealDeliveryDate,
-                    order.Sown));
+                    order.Complete
+                    ));
             }
             orderModelLinkedList = (LinkedList<OrderModel>)(from order in orderModelLinkedList
                                                             orderby order.RequestDate, order.EstimateSowDate
@@ -242,10 +243,10 @@ namespace Domain
             foreach (var orderLocation in orderLocations)
             {
                 orderLocationModelLinkedList.AddLast(new OrderLocationModel(
-                    orderLocation.OrderLocationID,
-                    orderLocation.IdGreenHouse,
-                    orderLocation.IdSeedTray,
-                    orderLocation.IdOrder,
+                    orderLocation.ID,
+                    orderLocation.GreenHouseId,
+                    orderLocation.SeedTrayId,
+                    orderLocation.OrderId,
                     orderLocation.SeedTrayAmount,
                     orderLocation.SeedlingAmount,
                     orderLocation.SowDate,
@@ -288,8 +289,8 @@ namespace Domain
             foreach (var deliveryDetail in deliveryDetails)
             {
                 deliveryDetailModelList.Add(new DeliveryDetailModel(
-                    deliveryDetail.DeliveryDetailID,
-                    deliveryDetail.Block.IdOrderLocation,
+                    deliveryDetail.ID,
+                    deliveryDetail.Block.OrderLocationId,
                     deliveryDetail.DeliveryDate,
                     deliveryDetail.SeedTrayAmountDelivered));
             }

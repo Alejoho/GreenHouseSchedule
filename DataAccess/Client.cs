@@ -20,12 +20,12 @@ namespace DataAccess
             this.Orders = new HashSet<Order>();
         }
     
-        public short ClientID { get; set; }
+        public short ID { get; set; }
         public string Name { get; set; }
         public string NickName { get; set; }
         public string PhoneNumber { get; set; }
         public string OtherNumber { get; set; }
-        public short IdOrganization { get; set; }
+        public short OrganizationId { get; set; }
     
         public virtual Organization Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

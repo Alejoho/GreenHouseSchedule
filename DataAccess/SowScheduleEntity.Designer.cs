@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Alejo\Documents\GH\Proyecto green house 6-22\GHSchedule\DataAccess\SowScheduleEntity.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Alejandro\Documents\GH\GHSchedule\DataAccess\SowScheduleEntity.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

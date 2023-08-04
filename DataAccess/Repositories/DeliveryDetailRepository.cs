@@ -45,7 +45,7 @@ namespace DataAccess.Repositories
         public bool Update(DeliveryDetail entity)
         {
             DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails
-                .Where(x => x.DeliveryDetailID == entity.DeliveryDetailID).FirstOrDefault();
+                .Where(x => x.ID == entity.ID).FirstOrDefault();
             if (deliveryDetail != null)
             {
                 return true;

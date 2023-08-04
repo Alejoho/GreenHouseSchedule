@@ -7,88 +7,87 @@
       <Schema Namespace="SowScheduleDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Blocks">
           <Key>
-            <PropertyRef Name="BlockID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="BlockID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdOrderLocation" Type="int" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderLocationId" Type="int" Nullable="false" />
           <Property Name="BlockNumber" Type="tinyint" Nullable="false" />
           <Property Name="SeedTrayAmount" Type="smallint" Nullable="false" />
           <Property Name="NumberWithinThBlock" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
-            <PropertyRef Name="ClientID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ClientID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="NickName" Type="nvarchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
           <Property Name="OtherNumber" Type="nvarchar" MaxLength="20" />
-          <Property Name="IdOrganization" Type="smallint" Nullable="false" />
+          <Property Name="OrganizationId" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="DeliveryDetails">
           <Key>
-            <PropertyRef Name="DeliveryDetailID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="DeliveryDetailID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdBlock" Type="bigint" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlockId" Type="bigint" Nullable="false" />
           <Property Name="DeliveryDate" Type="date" Nullable="false" />
           <Property Name="SeedTrayAmountDelivered" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="GreenHouses">
           <Key>
-            <PropertyRef Name="GreenHouseID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="GreenHouseID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="Width" Type="decimal" Precision="4" Scale="2" />
-          <Property Name="Lenght" Type="decimal" Precision="4" Scale="2" />
-          <Property Name="GreenHouseArea" Type="decimal" Precision="5" Scale="2" />
-          <Property Name="SeedTrayArea" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="Width" Type="numeric" Precision="4" Scale="2" />
+          <Property Name="Lenght" Type="numeric" Precision="4" Scale="2" />
+          <Property Name="GreenHouseArea" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="SeedTrayArea" Type="numeric" Precision="5" Scale="2" Nullable="false" />
           <Property Name="AmountOfBlocks" Type="tinyint" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Municipalities">
           <Key>
-            <PropertyRef Name="MunicipalityID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="MunicipalityID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdProvince" Type="tinyint" Nullable="false" />
+          <Property Name="ProvinceId" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
-            <PropertyRef Name="OrderDetailID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="OrderDetailID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdOrder" Type="smallint" Nullable="false" />
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="smallint" Nullable="false" />
           <Property Name="SeedsSource" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Germination" Type="tinyint" />
           <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="OrderLocations">
           <Key>
-            <PropertyRef Name="OrderLocationID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="OrderLocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdGreenHouse" Type="tinyint" Nullable="false" />
-          <Property Name="IdSeedTray" Type="tinyint" Nullable="false" />
-          <Property Name="IdOrder" Type="smallint" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GreenHouseId" Type="tinyint" Nullable="false" />
+          <Property Name="SeedTrayId" Type="tinyint" Nullable="false" />
+          <Property Name="OrderId" Type="smallint" Nullable="false" />
           <Property Name="SeedTrayAmount" Type="smallint" Nullable="false" />
           <Property Name="SeedlingAmount" Type="int" Nullable="false" />
           <Property Name="SowDate" Type="date" />
           <Property Name="EstimateDeliveryDate" Type="date" />
           <Property Name="RealDeliveryDate" Type="date" />
-          <Property Name="Sown" Type="bit" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
-            <PropertyRef Name="OrderID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="OrderID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdClient" Type="smallint" Nullable="false" />
-          <Property Name="IdProduct" Type="tinyint" Nullable="false" />
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="smallint" Nullable="false" />
+          <Property Name="ProductId" Type="tinyint" Nullable="false" />
           <Property Name="AmountofWishedSeedlings" Type="int" Nullable="false" />
           <Property Name="AmountofAlgorithmSeedlings" Type="int" Nullable="false" />
           <Property Name="WishDate" Type="date" Nullable="false" />
@@ -97,44 +96,44 @@
           <Property Name="EstimateDeliveryDate" Type="date" Nullable="false" />
           <Property Name="RealSowDate" Type="date" />
           <Property Name="RealDeliveryDate" Type="date" />
-          <Property Name="Sown" Type="bit" Nullable="false" />
+          <Property Name="Complete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Organizations">
           <Key>
-            <PropertyRef Name="OrganizationID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="OrganizationID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdMunicipalities" Type="smallint" Nullable="false" />
-          <Property Name="IdTypeOfOrganization" Type="tinyint" Nullable="false" />
+          <Property Name="MunicipalitiesId" Type="smallint" Nullable="false" />
+          <Property Name="TypeOfOrganizationId" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
-            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ProductID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdSpecie" Type="tinyint" Nullable="false" />
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SpecieId" Type="tinyint" Nullable="false" />
           <Property Name="Variety" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Provinces">
           <Key>
-            <PropertyRef Name="ProvinceID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ProvinceID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="SeedTrays">
           <Key>
-            <PropertyRef Name="SeedTrayID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="SeedTrayID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="TotalAlveolus" Type="smallint" Nullable="false" />
           <Property Name="AlveolusLength" Type="tinyint" />
           <Property Name="AlveolusWidth" Type="tinyint" />
-          <Property Name="TrayLength" Type="decimal" Precision="3" Scale="2" />
-          <Property Name="TrayWidth" Type="decimal" Precision="3" Scale="2" />
-          <Property Name="TrayArea" Type="decimal" Precision="5" Scale="4" Nullable="false" />
+          <Property Name="TrayLength" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="TrayWidth" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="TrayArea" Type="numeric" Precision="5" Scale="4" Nullable="false" />
           <Property Name="TotalAmount" Type="smallint" Nullable="false" />
           <Property Name="Material" Type="nvarchar" MaxLength="20" />
           <Property Name="Preference" Type="tinyint" Nullable="false" />
@@ -142,175 +141,175 @@
         </EntityType>
         <EntityType Name="Species">
           <Key>
-            <PropertyRef Name="SpecieID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="SpecieID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ProductionDays" Type="tinyint" Nullable="false" />
-          <Property Name="WeightOf1000Seeds" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="WeightOf1000Seeds" Type="numeric" Precision="7" Scale="3" />
           <Property Name="AmountOfSeedsPerHectare" Type="int" Nullable="false" />
-          <Property Name="WeightOfSeedsPerHectare" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="WeightOfSeedsPerHectare" Type="numeric" Precision="7" Scale="3" Nullable="false" />
         </EntityType>
         <EntityType Name="TypesOfOrganization">
           <Key>
-            <PropertyRef Name="TypeOfOrganizationID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="TypeOfOrganizationID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Blocks_DeliveryDetails">
-          <End Role="Blocks" Type="Self.Blocks" Multiplicity="1" />
-          <End Role="DeliveryDetails" Type="Self.DeliveryDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Blocks">
-              <PropertyRef Name="BlockID" />
-            </Principal>
-            <Dependent Role="DeliveryDetails">
-              <PropertyRef Name="IdBlock" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Clients_Organizations">
-          <End Role="Organizations" Type="Self.Organizations" Multiplicity="1" />
-          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organizations">
-              <PropertyRef Name="OrganizationID" />
-            </Principal>
-            <Dependent Role="Clients">
-              <PropertyRef Name="IdOrganization" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Municipalities_Provinces">
-          <End Role="Provinces" Type="Self.Provinces" Multiplicity="1" />
-          <End Role="Municipalities" Type="Self.Municipalities" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Provinces">
-              <PropertyRef Name="ProvinceID" />
-            </Principal>
-            <Dependent Role="Municipalities">
-              <PropertyRef Name="IdProvince" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_Orders">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="IdOrder" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderLocations_Blocks">
+        <Association Name="FK_Blocks_OrderLocationId">
           <End Role="OrderLocations" Type="Self.OrderLocations" Multiplicity="1" />
           <End Role="Blocks" Type="Self.Blocks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OrderLocations">
-              <PropertyRef Name="OrderLocationID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Blocks">
-              <PropertyRef Name="IdOrderLocation" />
+              <PropertyRef Name="OrderLocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderLocations_GreenHouses">
+        <Association Name="FK_Clients_OrganizationId">
+          <End Role="Organizations" Type="Self.Organizations" Multiplicity="1" />
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Clients">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryDetails_BlockId">
+          <End Role="Blocks" Type="Self.Blocks" Multiplicity="1" />
+          <End Role="DeliveryDetails" Type="Self.DeliveryDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blocks">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeliveryDetails">
+              <PropertyRef Name="BlockId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Municipalities_ProvinceId">
+          <End Role="Provinces" Type="Self.Provinces" Multiplicity="1" />
+          <End Role="Municipalities" Type="Self.Municipalities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provinces">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Municipalities">
+              <PropertyRef Name="ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_OrderId">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderLocations_GreenHouseId">
           <End Role="GreenHouses" Type="Self.GreenHouses" Multiplicity="1" />
           <End Role="OrderLocations" Type="Self.OrderLocations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GreenHouses">
-              <PropertyRef Name="GreenHouseID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="OrderLocations">
-              <PropertyRef Name="IdGreenHouse" />
+              <PropertyRef Name="GreenHouseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderLocations_Orders">
+        <Association Name="FK_OrderLocations_OrderId">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="OrderLocations" Type="Self.OrderLocations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
-              <PropertyRef Name="OrderID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="OrderLocations">
-              <PropertyRef Name="IdOrder" />
+              <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderLocations_SeedTrays">
+        <Association Name="FK_OrderLocations_SeedTrayId">
           <End Role="SeedTrays" Type="Self.SeedTrays" Multiplicity="1" />
           <End Role="OrderLocations" Type="Self.OrderLocations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SeedTrays">
-              <PropertyRef Name="SeedTrayID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="OrderLocations">
-              <PropertyRef Name="IdSeedTray" />
+              <PropertyRef Name="SeedTrayId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Orders_Clients">
+        <Association Name="FK_Orders_ClientId">
           <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clients">
-              <PropertyRef Name="ClientID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Orders">
-              <PropertyRef Name="IdClient" />
+              <PropertyRef Name="ClientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Orders_Products">
+        <Association Name="FK_Orders_ProductId">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
-              <PropertyRef Name="ProductID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Orders">
-              <PropertyRef Name="IdProduct" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Organizations_Municipalities">
+        <Association Name="FK_Organizations_MunicipalityId">
           <End Role="Municipalities" Type="Self.Municipalities" Multiplicity="1" />
           <End Role="Organizations" Type="Self.Organizations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Municipalities">
-              <PropertyRef Name="MunicipalityID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Organizations">
-              <PropertyRef Name="IdMunicipalities" />
+              <PropertyRef Name="MunicipalitiesId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Organizations_TypesOfOrganization">
+        <Association Name="FK_Organizations_TypesOfOrganizationId">
           <End Role="TypesOfOrganization" Type="Self.TypesOfOrganization" Multiplicity="1" />
           <End Role="Organizations" Type="Self.Organizations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TypesOfOrganization">
-              <PropertyRef Name="TypeOfOrganizationID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Organizations">
-              <PropertyRef Name="IdTypeOfOrganization" />
+              <PropertyRef Name="TypeOfOrganizationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_Species">
+        <Association Name="FK_Products_SpecieId">
           <End Role="Species" Type="Self.Species" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Species">
-              <PropertyRef Name="SpecieID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="IdSpecie" />
+              <PropertyRef Name="SpecieId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -329,55 +328,55 @@
           <EntitySet Name="SeedTrays" EntityType="Self.SeedTrays" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Species" EntityType="Self.Species" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypesOfOrganization" EntityType="Self.TypesOfOrganization" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Blocks_DeliveryDetails" Association="Self.FK_Blocks_DeliveryDetails">
+          <AssociationSet Name="FK_Blocks_OrderLocationId" Association="Self.FK_Blocks_OrderLocationId">
+            <End Role="OrderLocations" EntitySet="OrderLocations" />
+            <End Role="Blocks" EntitySet="Blocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clients_OrganizationId" Association="Self.FK_Clients_OrganizationId">
+            <End Role="Organizations" EntitySet="Organizations" />
+            <End Role="Clients" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryDetails_BlockId" Association="Self.FK_DeliveryDetails_BlockId">
             <End Role="Blocks" EntitySet="Blocks" />
             <End Role="DeliveryDetails" EntitySet="DeliveryDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Clients_Organizations" Association="Self.FK_Clients_Organizations">
-            <End Role="Organizations" EntitySet="Organizations" />
-            <End Role="Clients" EntitySet="Clients" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Municipalities_Provinces" Association="Self.FK_Municipalities_Provinces">
+          <AssociationSet Name="FK_Municipalities_ProvinceId" Association="Self.FK_Municipalities_ProvinceId">
             <End Role="Provinces" EntitySet="Provinces" />
             <End Role="Municipalities" EntitySet="Municipalities" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+          <AssociationSet Name="FK_OrderDetails_OrderId" Association="Self.FK_OrderDetails_OrderId">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderLocations_Blocks" Association="Self.FK_OrderLocations_Blocks">
-            <End Role="OrderLocations" EntitySet="OrderLocations" />
-            <End Role="Blocks" EntitySet="Blocks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderLocations_GreenHouses" Association="Self.FK_OrderLocations_GreenHouses">
+          <AssociationSet Name="FK_OrderLocations_GreenHouseId" Association="Self.FK_OrderLocations_GreenHouseId">
             <End Role="GreenHouses" EntitySet="GreenHouses" />
             <End Role="OrderLocations" EntitySet="OrderLocations" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderLocations_Orders" Association="Self.FK_OrderLocations_Orders">
+          <AssociationSet Name="FK_OrderLocations_OrderId" Association="Self.FK_OrderLocations_OrderId">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderLocations" EntitySet="OrderLocations" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderLocations_SeedTrays" Association="Self.FK_OrderLocations_SeedTrays">
+          <AssociationSet Name="FK_OrderLocations_SeedTrayId" Association="Self.FK_OrderLocations_SeedTrayId">
             <End Role="SeedTrays" EntitySet="SeedTrays" />
             <End Role="OrderLocations" EntitySet="OrderLocations" />
           </AssociationSet>
-          <AssociationSet Name="FK_Orders_Clients" Association="Self.FK_Orders_Clients">
+          <AssociationSet Name="FK_Orders_ClientId" Association="Self.FK_Orders_ClientId">
             <End Role="Clients" EntitySet="Clients" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Orders_Products" Association="Self.FK_Orders_Products">
+          <AssociationSet Name="FK_Orders_ProductId" Association="Self.FK_Orders_ProductId">
             <End Role="Products" EntitySet="Products" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Organizations_Municipalities" Association="Self.FK_Organizations_Municipalities">
+          <AssociationSet Name="FK_Organizations_MunicipalityId" Association="Self.FK_Organizations_MunicipalityId">
             <End Role="Municipalities" EntitySet="Municipalities" />
             <End Role="Organizations" EntitySet="Organizations" />
           </AssociationSet>
-          <AssociationSet Name="FK_Organizations_TypesOfOrganization" Association="Self.FK_Organizations_TypesOfOrganization">
+          <AssociationSet Name="FK_Organizations_TypesOfOrganizationId" Association="Self.FK_Organizations_TypesOfOrganizationId">
             <End Role="TypesOfOrganization" EntitySet="TypesOfOrganization" />
             <End Role="Organizations" EntitySet="Organizations" />
           </AssociationSet>
-          <AssociationSet Name="Fk_Species" Association="Self.Fk_Species">
+          <AssociationSet Name="FK_Products_SpecieId" Association="Self.FK_Products_SpecieId">
             <End Role="Species" EntitySet="Species" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
@@ -389,44 +388,44 @@
       <Schema Namespace="SowScheduleDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Block">
           <Key>
-            <PropertyRef Name="BlockID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="BlockID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdOrderLocation" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderLocationId" Type="Int32" Nullable="false" />
           <Property Name="BlockNumber" Type="Byte" Nullable="false" />
           <Property Name="SeedTrayAmount" Type="Int16" Nullable="false" />
           <Property Name="NumberWithinThBlock" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="DeliveryDetails" Relationship="Self.FK_Blocks_DeliveryDetails" FromRole="Blocks" ToRole="DeliveryDetails" />
-          <NavigationProperty Name="OrderLocation" Relationship="Self.FK_OrderLocations_Blocks" FromRole="Blocks" ToRole="OrderLocations" />
+          <NavigationProperty Name="OrderLocation" Relationship="Self.FK_Blocks_OrderLocationId" FromRole="Blocks" ToRole="OrderLocations" />
+          <NavigationProperty Name="DeliveryDetails" Relationship="Self.FK_DeliveryDetails_BlockId" FromRole="Blocks" ToRole="DeliveryDetails" />
         </EntityType>
         <EntityType Name="Client">
           <Key>
-            <PropertyRef Name="ClientID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ClientID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="OtherNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="IdOrganization" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Organization" Relationship="Self.FK_Clients_Organizations" FromRole="Clients" ToRole="Organizations" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Clients" FromRole="Clients" ToRole="Orders" />
+          <Property Name="OrganizationId" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Clients_OrganizationId" FromRole="Clients" ToRole="Organizations" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_ClientId" FromRole="Clients" ToRole="Orders" />
         </EntityType>
         <EntityType Name="DeliveryDetail">
           <Key>
-            <PropertyRef Name="DeliveryDetailID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="DeliveryDetailID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdBlock" Type="Int64" Nullable="false" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlockId" Type="Int64" Nullable="false" />
           <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="SeedTrayAmountDelivered" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Block" Relationship="Self.FK_Blocks_DeliveryDetails" FromRole="DeliveryDetails" ToRole="Blocks" />
+          <NavigationProperty Name="Block" Relationship="Self.FK_DeliveryDetails_BlockId" FromRole="DeliveryDetails" ToRole="Blocks" />
         </EntityType>
         <EntityType Name="Greenhouse">
           <Key>
-            <PropertyRef Name="GreenHouseID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="GreenHouseID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Width" Type="Decimal" Precision="4" Scale="2" />
@@ -435,55 +434,54 @@
           <Property Name="SeedTrayArea" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
           <Property Name="AmountOfBlocks" Type="Byte" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="OrderLocations" Relationship="Self.FK_OrderLocations_GreenHouses" FromRole="GreenHouses" ToRole="OrderLocations" />
+          <NavigationProperty Name="OrderLocations" Relationship="Self.FK_OrderLocations_GreenHouseId" FromRole="GreenHouses" ToRole="OrderLocations" />
         </EntityType>
         <EntityType Name="Municipality">
           <Key>
-            <PropertyRef Name="MunicipalityID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="MunicipalityID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdProvince" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Province" Relationship="Self.FK_Municipalities_Provinces" FromRole="Municipalities" ToRole="Provinces" />
-          <NavigationProperty Name="Organizations" Relationship="Self.FK_Organizations_Municipalities" FromRole="Municipalities" ToRole="Organizations" />
+          <Property Name="ProvinceId" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Province" Relationship="Self.FK_Municipalities_ProvinceId" FromRole="Municipalities" ToRole="Provinces" />
+          <NavigationProperty Name="Organizations" Relationship="Self.FK_Organizations_MunicipalityId" FromRole="Municipalities" ToRole="Organizations" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
-            <PropertyRef Name="OrderDetailID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="OrderDetailID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdOrder" Type="Int16" Nullable="false" />
+          <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int16" Nullable="false" />
           <Property Name="SeedsSource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Germination" Type="Byte" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetails_Orders" FromRole="OrderDetails" ToRole="Orders" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetails_OrderId" FromRole="OrderDetails" ToRole="Orders" />
         </EntityType>
         <EntityType Name="OrderLocation">
           <Key>
-            <PropertyRef Name="OrderLocationID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="OrderLocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdGreenHouse" Type="Byte" Nullable="false" />
-          <Property Name="IdSeedTray" Type="Byte" Nullable="false" />
-          <Property Name="IdOrder" Type="Int16" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GreenHouseId" Type="Byte" Nullable="false" />
+          <Property Name="SeedTrayId" Type="Byte" Nullable="false" />
+          <Property Name="OrderId" Type="Int16" Nullable="false" />
           <Property Name="SeedTrayAmount" Type="Int16" Nullable="false" />
           <Property Name="SeedlingAmount" Type="Int32" Nullable="false" />
           <Property Name="SowDate" Type="DateTime" Precision="0" />
           <Property Name="EstimateDeliveryDate" Type="DateTime" Precision="0" />
           <Property Name="RealDeliveryDate" Type="DateTime" Precision="0" />
-          <Property Name="Sown" Type="Boolean" />
-          <NavigationProperty Name="Blocks" Relationship="Self.FK_OrderLocations_Blocks" FromRole="OrderLocations" ToRole="Blocks" />
-          <NavigationProperty Name="Greenhouse" Relationship="Self.FK_OrderLocations_GreenHouses" FromRole="OrderLocations" ToRole="GreenHouses" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_OrderLocations_Orders" FromRole="OrderLocations" ToRole="Orders" />
-          <NavigationProperty Name="SeedTray" Relationship="Self.FK_OrderLocations_SeedTrays" FromRole="OrderLocations" ToRole="SeedTrays" />
+          <NavigationProperty Name="Blocks" Relationship="Self.FK_Blocks_OrderLocationId" FromRole="OrderLocations" ToRole="Blocks" />
+          <NavigationProperty Name="Greenhouse" Relationship="Self.FK_OrderLocations_GreenHouseId" FromRole="OrderLocations" ToRole="GreenHouses" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_OrderLocations_OrderId" FromRole="OrderLocations" ToRole="Orders" />
+          <NavigationProperty Name="SeedTray" Relationship="Self.FK_OrderLocations_SeedTrayId" FromRole="OrderLocations" ToRole="SeedTrays" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
-            <PropertyRef Name="OrderID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="OrderID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdClient" Type="Int16" Nullable="false" />
-          <Property Name="IdProduct" Type="Byte" Nullable="false" />
+          <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="Int16" Nullable="false" />
+          <Property Name="ProductId" Type="Byte" Nullable="false" />
           <Property Name="AmountofWishedSeedlings" Type="Int32" Nullable="false" />
           <Property Name="AmountofAlgorithmSeedlings" Type="Int32" Nullable="false" />
           <Property Name="WishDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -492,47 +490,47 @@
           <Property Name="EstimateDeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="RealSowDate" Type="DateTime" Precision="0" />
           <Property Name="RealDeliveryDate" Type="DateTime" Precision="0" />
-          <Property Name="Sown" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Client" Relationship="Self.FK_Orders_Clients" FromRole="Orders" ToRole="Clients" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
-          <NavigationProperty Name="OrderLocations" Relationship="Self.FK_OrderLocations_Orders" FromRole="Orders" ToRole="OrderLocations" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_Orders_Products" FromRole="Orders" ToRole="Products" />
+          <Property Name="Complete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Orders_ClientId" FromRole="Orders" ToRole="Clients" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_OrderId" FromRole="Orders" ToRole="OrderDetails" />
+          <NavigationProperty Name="OrderLocations" Relationship="Self.FK_OrderLocations_OrderId" FromRole="Orders" ToRole="OrderLocations" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Orders_ProductId" FromRole="Orders" ToRole="Products" />
         </EntityType>
         <EntityType Name="Organization">
           <Key>
-            <PropertyRef Name="OrganizationID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="OrganizationID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdMunicipalities" Type="Int16" Nullable="false" />
-          <Property Name="IdTypeOfOrganization" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Clients" Relationship="Self.FK_Clients_Organizations" FromRole="Organizations" ToRole="Clients" />
-          <NavigationProperty Name="Municipality" Relationship="Self.FK_Organizations_Municipalities" FromRole="Organizations" ToRole="Municipalities" />
-          <NavigationProperty Name="TypesOfOrganization" Relationship="Self.FK_Organizations_TypesOfOrganization" FromRole="Organizations" ToRole="TypesOfOrganization" />
+          <Property Name="MunicipalitiesId" Type="Int16" Nullable="false" />
+          <Property Name="TypeOfOrganizationId" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_Clients_OrganizationId" FromRole="Organizations" ToRole="Clients" />
+          <NavigationProperty Name="Municipality" Relationship="Self.FK_Organizations_MunicipalityId" FromRole="Organizations" ToRole="Municipalities" />
+          <NavigationProperty Name="TypesOfOrganization" Relationship="Self.FK_Organizations_TypesOfOrganizationId" FromRole="Organizations" ToRole="TypesOfOrganization" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
-            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ProductID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdSpecie" Type="Byte" Nullable="false" />
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SpecieId" Type="Byte" Nullable="false" />
           <Property Name="Variety" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Products" FromRole="Products" ToRole="Orders" />
-          <NavigationProperty Name="Species" Relationship="Self.Fk_Species" FromRole="Products" ToRole="Species" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_ProductId" FromRole="Products" ToRole="Orders" />
+          <NavigationProperty Name="Species" Relationship="Self.FK_Products_SpecieId" FromRole="Products" ToRole="Species" />
         </EntityType>
         <EntityType Name="Province">
           <Key>
-            <PropertyRef Name="ProvinceID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ProvinceID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Municipalities" Relationship="Self.FK_Municipalities_Provinces" FromRole="Provinces" ToRole="Municipalities" />
+          <NavigationProperty Name="Municipalities" Relationship="Self.FK_Municipalities_ProvinceId" FromRole="Provinces" ToRole="Municipalities" />
         </EntityType>
         <EntityType Name="SeedTray">
           <Key>
-            <PropertyRef Name="SeedTrayID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="SeedTrayID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TotalAlveolus" Type="Int16" Nullable="false" />
           <Property Name="AlveolusLength" Type="Byte" />
@@ -544,181 +542,181 @@
           <Property Name="Material" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Preference" Type="Byte" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="OrderLocations" Relationship="Self.FK_OrderLocations_SeedTrays" FromRole="SeedTrays" ToRole="OrderLocations" />
+          <NavigationProperty Name="OrderLocations" Relationship="Self.FK_OrderLocations_SeedTrayId" FromRole="SeedTrays" ToRole="OrderLocations" />
         </EntityType>
         <EntityType Name="Species">
           <Key>
-            <PropertyRef Name="SpecieID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="SpecieID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProductionDays" Type="Byte" Nullable="false" />
-          <Property Name="WeightOf1000Seeds" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="WeightOf1000Seeds" Type="Decimal" Precision="7" Scale="3" />
           <Property Name="AmountOfSeedsPerHectare" Type="Int32" Nullable="false" />
-          <Property Name="WeightOfSeedsPerHectare" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.Fk_Species" FromRole="Species" ToRole="Products" />
+          <Property Name="WeightOfSeedsPerHectare" Type="Decimal" Precision="7" Scale="3" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_SpecieId" FromRole="Species" ToRole="Products" />
         </EntityType>
         <EntityType Name="TypesOfOrganization">
           <Key>
-            <PropertyRef Name="TypeOfOrganizationID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="TypeOfOrganizationID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Organizations" Relationship="Self.FK_Organizations_TypesOfOrganization" FromRole="TypesOfOrganization" ToRole="Organizations" />
+          <NavigationProperty Name="Organizations" Relationship="Self.FK_Organizations_TypesOfOrganizationId" FromRole="TypesOfOrganization" ToRole="Organizations" />
         </EntityType>
-        <Association Name="FK_Blocks_DeliveryDetails">
-          <End Role="Blocks" Type="Self.Block" Multiplicity="1" />
-          <End Role="DeliveryDetails" Type="Self.DeliveryDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Blocks">
-              <PropertyRef Name="BlockID" />
-            </Principal>
-            <Dependent Role="DeliveryDetails">
-              <PropertyRef Name="IdBlock" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderLocations_Blocks">
+        <Association Name="FK_Blocks_OrderLocationId">
           <End Role="OrderLocations" Type="Self.OrderLocation" Multiplicity="1" />
           <End Role="Blocks" Type="Self.Block" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OrderLocations">
-              <PropertyRef Name="OrderLocationID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Blocks">
-              <PropertyRef Name="IdOrderLocation" />
+              <PropertyRef Name="OrderLocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Clients_Organizations">
+        <Association Name="FK_DeliveryDetails_BlockId">
+          <End Role="Blocks" Type="Self.Block" Multiplicity="1" />
+          <End Role="DeliveryDetails" Type="Self.DeliveryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blocks">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeliveryDetails">
+              <PropertyRef Name="BlockId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clients_OrganizationId">
           <End Role="Organizations" Type="Self.Organization" Multiplicity="1" />
           <End Role="Clients" Type="Self.Client" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organizations">
-              <PropertyRef Name="OrganizationID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Clients">
-              <PropertyRef Name="IdOrganization" />
+              <PropertyRef Name="OrganizationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Orders_Clients">
+        <Association Name="FK_Orders_ClientId">
           <End Role="Clients" Type="Self.Client" Multiplicity="1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clients">
-              <PropertyRef Name="ClientID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Orders">
-              <PropertyRef Name="IdClient" />
+              <PropertyRef Name="ClientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderLocations_GreenHouses">
+        <Association Name="FK_OrderLocations_GreenHouseId">
           <End Role="GreenHouses" Type="Self.Greenhouse" Multiplicity="1" />
           <End Role="OrderLocations" Type="Self.OrderLocation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GreenHouses">
-              <PropertyRef Name="GreenHouseID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="OrderLocations">
-              <PropertyRef Name="IdGreenHouse" />
+              <PropertyRef Name="GreenHouseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Municipalities_Provinces">
+        <Association Name="FK_Municipalities_ProvinceId">
           <End Role="Provinces" Type="Self.Province" Multiplicity="1" />
           <End Role="Municipalities" Type="Self.Municipality" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Provinces">
-              <PropertyRef Name="ProvinceID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Municipalities">
-              <PropertyRef Name="IdProvince" />
+              <PropertyRef Name="ProvinceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Organizations_Municipalities">
+        <Association Name="FK_Organizations_MunicipalityId">
           <End Role="Municipalities" Type="Self.Municipality" Multiplicity="1" />
           <End Role="Organizations" Type="Self.Organization" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Municipalities">
-              <PropertyRef Name="MunicipalityID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Organizations">
-              <PropertyRef Name="IdMunicipalities" />
+              <PropertyRef Name="MunicipalitiesId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderDetails_Orders">
+        <Association Name="FK_OrderDetails_OrderId">
           <End Role="Orders" Type="Self.Order" Multiplicity="1" />
           <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
-              <PropertyRef Name="OrderID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="OrderDetails">
-              <PropertyRef Name="IdOrder" />
+              <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderLocations_Orders">
+        <Association Name="FK_OrderLocations_OrderId">
           <End Role="Orders" Type="Self.Order" Multiplicity="1" />
           <End Role="OrderLocations" Type="Self.OrderLocation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
-              <PropertyRef Name="OrderID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="OrderLocations">
-              <PropertyRef Name="IdOrder" />
+              <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderLocations_SeedTrays">
+        <Association Name="FK_OrderLocations_SeedTrayId">
           <End Role="SeedTrays" Type="Self.SeedTray" Multiplicity="1" />
           <End Role="OrderLocations" Type="Self.OrderLocation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SeedTrays">
-              <PropertyRef Name="SeedTrayID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="OrderLocations">
-              <PropertyRef Name="IdSeedTray" />
+              <PropertyRef Name="SeedTrayId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Orders_Products">
+        <Association Name="FK_Orders_ProductId">
           <End Role="Products" Type="Self.Product" Multiplicity="1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
-              <PropertyRef Name="ProductID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Orders">
-              <PropertyRef Name="IdProduct" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Organizations_TypesOfOrganization">
+        <Association Name="FK_Organizations_TypesOfOrganizationId">
           <End Role="TypesOfOrganization" Type="Self.TypesOfOrganization" Multiplicity="1" />
           <End Role="Organizations" Type="Self.Organization" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TypesOfOrganization">
-              <PropertyRef Name="TypeOfOrganizationID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Organizations">
-              <PropertyRef Name="IdTypeOfOrganization" />
+              <PropertyRef Name="TypeOfOrganizationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_Species">
+        <Association Name="FK_Products_SpecieId">
           <End Role="Species" Type="Self.Species" Multiplicity="1" />
           <End Role="Products" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Species">
-              <PropertyRef Name="SpecieID" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="IdSpecie" />
+              <PropertyRef Name="SpecieId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -737,55 +735,55 @@
           <EntitySet Name="SeedTrays" EntityType="Self.SeedTray" />
           <EntitySet Name="Species" EntityType="Self.Species" />
           <EntitySet Name="TypesOfOrganizations" EntityType="Self.TypesOfOrganization" />
-          <AssociationSet Name="FK_Blocks_DeliveryDetails" Association="Self.FK_Blocks_DeliveryDetails">
+          <AssociationSet Name="FK_Blocks_OrderLocationId" Association="Self.FK_Blocks_OrderLocationId">
+            <End Role="OrderLocations" EntitySet="OrderLocations" />
+            <End Role="Blocks" EntitySet="Blocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryDetails_BlockId" Association="Self.FK_DeliveryDetails_BlockId">
             <End Role="Blocks" EntitySet="Blocks" />
             <End Role="DeliveryDetails" EntitySet="DeliveryDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderLocations_Blocks" Association="Self.FK_OrderLocations_Blocks">
-            <End Role="OrderLocations" EntitySet="OrderLocations" />
-            <End Role="Blocks" EntitySet="Blocks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Clients_Organizations" Association="Self.FK_Clients_Organizations">
+          <AssociationSet Name="FK_Clients_OrganizationId" Association="Self.FK_Clients_OrganizationId">
             <End Role="Organizations" EntitySet="Organizations" />
             <End Role="Clients" EntitySet="Clients" />
           </AssociationSet>
-          <AssociationSet Name="FK_Orders_Clients" Association="Self.FK_Orders_Clients">
+          <AssociationSet Name="FK_Orders_ClientId" Association="Self.FK_Orders_ClientId">
             <End Role="Clients" EntitySet="Clients" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderLocations_GreenHouses" Association="Self.FK_OrderLocations_GreenHouses">
+          <AssociationSet Name="FK_OrderLocations_GreenHouseId" Association="Self.FK_OrderLocations_GreenHouseId">
             <End Role="GreenHouses" EntitySet="GreenHouses" />
             <End Role="OrderLocations" EntitySet="OrderLocations" />
           </AssociationSet>
-          <AssociationSet Name="FK_Municipalities_Provinces" Association="Self.FK_Municipalities_Provinces">
+          <AssociationSet Name="FK_Municipalities_ProvinceId" Association="Self.FK_Municipalities_ProvinceId">
             <End Role="Provinces" EntitySet="Provinces" />
             <End Role="Municipalities" EntitySet="Municipalities" />
           </AssociationSet>
-          <AssociationSet Name="FK_Organizations_Municipalities" Association="Self.FK_Organizations_Municipalities">
+          <AssociationSet Name="FK_Organizations_MunicipalityId" Association="Self.FK_Organizations_MunicipalityId">
             <End Role="Municipalities" EntitySet="Municipalities" />
             <End Role="Organizations" EntitySet="Organizations" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+          <AssociationSet Name="FK_OrderDetails_OrderId" Association="Self.FK_OrderDetails_OrderId">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderLocations_Orders" Association="Self.FK_OrderLocations_Orders">
+          <AssociationSet Name="FK_OrderLocations_OrderId" Association="Self.FK_OrderLocations_OrderId">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderLocations" EntitySet="OrderLocations" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderLocations_SeedTrays" Association="Self.FK_OrderLocations_SeedTrays">
+          <AssociationSet Name="FK_OrderLocations_SeedTrayId" Association="Self.FK_OrderLocations_SeedTrayId">
             <End Role="SeedTrays" EntitySet="SeedTrays" />
             <End Role="OrderLocations" EntitySet="OrderLocations" />
           </AssociationSet>
-          <AssociationSet Name="FK_Orders_Products" Association="Self.FK_Orders_Products">
+          <AssociationSet Name="FK_Orders_ProductId" Association="Self.FK_Orders_ProductId">
             <End Role="Products" EntitySet="Products" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Organizations_TypesOfOrganization" Association="Self.FK_Organizations_TypesOfOrganization">
+          <AssociationSet Name="FK_Organizations_TypesOfOrganizationId" Association="Self.FK_Organizations_TypesOfOrganizationId">
             <End Role="TypesOfOrganization" EntitySet="TypesOfOrganizations" />
             <End Role="Organizations" EntitySet="Organizations" />
           </AssociationSet>
-          <AssociationSet Name="Fk_Species" Association="Self.Fk_Species">
+          <AssociationSet Name="FK_Products_SpecieId" Association="Self.FK_Products_SpecieId">
             <End Role="Species" EntitySet="Species" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
@@ -799,8 +797,8 @@
           <EntitySetMapping Name="Blocks">
             <EntityTypeMapping TypeName="SowScheduleDBModel.Block">
               <MappingFragment StoreEntitySet="Blocks">
-                <ScalarProperty Name="BlockID" ColumnName="BlockID" />
-                <ScalarProperty Name="IdOrderLocation" ColumnName="IdOrderLocation" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OrderLocationId" ColumnName="OrderLocationId" />
                 <ScalarProperty Name="BlockNumber" ColumnName="BlockNumber" />
                 <ScalarProperty Name="SeedTrayAmount" ColumnName="SeedTrayAmount" />
                 <ScalarProperty Name="NumberWithinThBlock" ColumnName="NumberWithinThBlock" />
@@ -810,20 +808,20 @@
           <EntitySetMapping Name="Clients">
             <EntityTypeMapping TypeName="SowScheduleDBModel.Client">
               <MappingFragment StoreEntitySet="Clients">
-                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="NickName" ColumnName="NickName" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="OtherNumber" ColumnName="OtherNumber" />
-                <ScalarProperty Name="IdOrganization" ColumnName="IdOrganization" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DeliveryDetails">
             <EntityTypeMapping TypeName="SowScheduleDBModel.DeliveryDetail">
               <MappingFragment StoreEntitySet="DeliveryDetails">
-                <ScalarProperty Name="DeliveryDetailID" ColumnName="DeliveryDetailID" />
-                <ScalarProperty Name="IdBlock" ColumnName="IdBlock" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BlockId" ColumnName="BlockId" />
                 <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
                 <ScalarProperty Name="SeedTrayAmountDelivered" ColumnName="SeedTrayAmountDelivered" />
               </MappingFragment>
@@ -832,7 +830,7 @@
           <EntitySetMapping Name="GreenHouses">
             <EntityTypeMapping TypeName="SowScheduleDBModel.Greenhouse">
               <MappingFragment StoreEntitySet="GreenHouses">
-                <ScalarProperty Name="GreenHouseID" ColumnName="GreenHouseID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
@@ -847,17 +845,17 @@
           <EntitySetMapping Name="Municipalities">
             <EntityTypeMapping TypeName="SowScheduleDBModel.Municipality">
               <MappingFragment StoreEntitySet="Municipalities">
-                <ScalarProperty Name="MunicipalityID" ColumnName="MunicipalityID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdProvince" ColumnName="IdProvince" />
+                <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrderDetails">
             <EntityTypeMapping TypeName="SowScheduleDBModel.OrderDetail">
               <MappingFragment StoreEntitySet="OrderDetails">
-                <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
-                <ScalarProperty Name="IdOrder" ColumnName="IdOrder" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="SeedsSource" ColumnName="SeedsSource" />
                 <ScalarProperty Name="Germination" ColumnName="Germination" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -867,25 +865,24 @@
           <EntitySetMapping Name="OrderLocations">
             <EntityTypeMapping TypeName="SowScheduleDBModel.OrderLocation">
               <MappingFragment StoreEntitySet="OrderLocations">
-                <ScalarProperty Name="OrderLocationID" ColumnName="OrderLocationID" />
-                <ScalarProperty Name="IdGreenHouse" ColumnName="IdGreenHouse" />
-                <ScalarProperty Name="IdSeedTray" ColumnName="IdSeedTray" />
-                <ScalarProperty Name="IdOrder" ColumnName="IdOrder" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="GreenHouseId" ColumnName="GreenHouseId" />
+                <ScalarProperty Name="SeedTrayId" ColumnName="SeedTrayId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="SeedTrayAmount" ColumnName="SeedTrayAmount" />
                 <ScalarProperty Name="SeedlingAmount" ColumnName="SeedlingAmount" />
                 <ScalarProperty Name="SowDate" ColumnName="SowDate" />
                 <ScalarProperty Name="EstimateDeliveryDate" ColumnName="EstimateDeliveryDate" />
                 <ScalarProperty Name="RealDeliveryDate" ColumnName="RealDeliveryDate" />
-                <ScalarProperty Name="Sown" ColumnName="Sown" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="SowScheduleDBModel.Order">
               <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
-                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="AmountofWishedSeedlings" ColumnName="AmountofWishedSeedlings" />
                 <ScalarProperty Name="AmountofAlgorithmSeedlings" ColumnName="AmountofAlgorithmSeedlings" />
                 <ScalarProperty Name="WishDate" ColumnName="WishDate" />
@@ -894,25 +891,25 @@
                 <ScalarProperty Name="EstimateDeliveryDate" ColumnName="EstimateDeliveryDate" />
                 <ScalarProperty Name="RealSowDate" ColumnName="RealSowDate" />
                 <ScalarProperty Name="RealDeliveryDate" ColumnName="RealDeliveryDate" />
-                <ScalarProperty Name="Sown" ColumnName="Sown" />
+                <ScalarProperty Name="Complete" ColumnName="Complete" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Organizations">
             <EntityTypeMapping TypeName="SowScheduleDBModel.Organization">
               <MappingFragment StoreEntitySet="Organizations">
-                <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdMunicipalities" ColumnName="IdMunicipalities" />
-                <ScalarProperty Name="IdTypeOfOrganization" ColumnName="IdTypeOfOrganization" />
+                <ScalarProperty Name="MunicipalitiesId" ColumnName="MunicipalitiesId" />
+                <ScalarProperty Name="TypeOfOrganizationId" ColumnName="TypeOfOrganizationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="SowScheduleDBModel.Product">
               <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="IdSpecie" ColumnName="IdSpecie" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SpecieId" ColumnName="SpecieId" />
                 <ScalarProperty Name="Variety" ColumnName="Variety" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -920,7 +917,7 @@
           <EntitySetMapping Name="Provinces">
             <EntityTypeMapping TypeName="SowScheduleDBModel.Province">
               <MappingFragment StoreEntitySet="Provinces">
-                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -928,7 +925,7 @@
           <EntitySetMapping Name="SeedTrays">
             <EntityTypeMapping TypeName="SowScheduleDBModel.SeedTray">
               <MappingFragment StoreEntitySet="SeedTrays">
-                <ScalarProperty Name="SeedTrayID" ColumnName="SeedTrayID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TotalAlveolus" ColumnName="TotalAlveolus" />
                 <ScalarProperty Name="AlveolusLength" ColumnName="AlveolusLength" />
@@ -946,7 +943,7 @@
           <EntitySetMapping Name="Species">
             <EntityTypeMapping TypeName="SowScheduleDBModel.Species">
               <MappingFragment StoreEntitySet="Species">
-                <ScalarProperty Name="SpecieID" ColumnName="SpecieID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ProductionDays" ColumnName="ProductionDays" />
                 <ScalarProperty Name="WeightOf1000Seeds" ColumnName="WeightOf1000Seeds" />
@@ -958,7 +955,7 @@
           <EntitySetMapping Name="TypesOfOrganizations">
             <EntityTypeMapping TypeName="SowScheduleDBModel.TypesOfOrganization">
               <MappingFragment StoreEntitySet="TypesOfOrganization">
-                <ScalarProperty Name="TypeOfOrganizationID" ColumnName="TypeOfOrganizationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>

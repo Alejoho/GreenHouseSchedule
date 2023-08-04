@@ -179,7 +179,6 @@ create table "OrderLocations"(
 	"SowDate" date,
 	"EstimateDeliveryDate" date,
 	"RealDeliveryDate" date,
-	"Sown" bit,
 	CONSTRAINT [PK_OrderLocations] primary key ("ID"),
 	CONSTRAINT [FK_OrderLocations_SeedTrayId] foreign key ("SeedTrayId") 
 	references "SeedTrays" ("ID"),
@@ -237,6 +236,7 @@ create table "Orders"(
 	"EstimateDeliveryDate" date not null,
 	"RealSowDate" date,
 	"RealDeliveryDate" date,
+	"Complete" bit not null,
 	CONSTRAINT [PK_Orders] primary key ("ID"),
 	CONSTRAINT [FK_Orders_ClientId] foreign key ("ClientId") 
 	references "Clients" ("ID"),

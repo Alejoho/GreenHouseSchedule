@@ -20,7 +20,7 @@ namespace DataAccess
             this.OrderLocations = new HashSet<OrderLocation>();
         }
     
-        public byte SeedTrayID { get; set; }
+        public byte ID { get; set; }
         public string Name { get; set; }
         public short TotalAlveolus { get; set; }
         public Nullable<byte> AlveolusLength { get; set; }

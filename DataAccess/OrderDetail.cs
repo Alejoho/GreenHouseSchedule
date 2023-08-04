@@ -14,8 +14,8 @@ namespace DataAccess
     
     public partial class OrderDetail
     {
-        public short OrderDetailID { get; set; }
-        public short IdOrder { get; set; }
+        public short ID { get; set; }
+        public short OrderId { get; set; }
         public string SeedsSource { get; set; }
         public Nullable<byte> Germination { get; set; }
         public string Description { get; set; }

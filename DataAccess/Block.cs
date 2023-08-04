@@ -11,7 +11,7 @@ namespace DataAccess
 {
     using System;
     using System.Collections.Generic;
-    //ale
+    
     public partial class Block
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,14 +20,14 @@ namespace DataAccess
             this.DeliveryDetails = new HashSet<DeliveryDetail>();
         }
     
-        public long BlockID { get; set; }
-        public int IdOrderLocation { get; set; }
+        public long ID { get; set; }
+        public int OrderLocationId { get; set; }
         public byte BlockNumber { get; set; }
         public short SeedTrayAmount { get; set; }
         public byte NumberWithinThBlock { get; set; }
     
+        public virtual OrderLocation OrderLocation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; }
-        public virtual OrderLocation OrderLocation { get; set; }
     }
 }

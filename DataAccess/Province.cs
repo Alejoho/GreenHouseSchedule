@@ -20,7 +20,7 @@ namespace DataAccess
             this.Municipalities = new HashSet<Municipality>();
         }
     
-        public byte ProvinceID { get; set; }
+        public byte ID { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

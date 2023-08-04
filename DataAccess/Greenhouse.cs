@@ -20,7 +20,7 @@ namespace DataAccess
             this.OrderLocations = new HashSet<OrderLocation>();
         }
     
-        public byte GreenHouseID { get; set; }
+        public byte ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public Nullable<decimal> Width { get; set; }

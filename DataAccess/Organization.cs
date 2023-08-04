@@ -20,10 +20,10 @@ namespace DataAccess
             this.Clients = new HashSet<Client>();
         }
     
-        public short OrganizationID { get; set; }
+        public short ID { get; set; }
         public string Name { get; set; }
-        public short IdMunicipalities { get; set; }
-        public byte IdTypeOfOrganization { get; set; }
+        public short MunicipalitiesId { get; set; }
+        public byte TypeOfOrganizationId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Client> Clients { get; set; }

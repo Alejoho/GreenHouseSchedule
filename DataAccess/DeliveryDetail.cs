@@ -14,8 +14,8 @@ namespace DataAccess
     
     public partial class DeliveryDetail
     {
-        public long DeliveryDetailID { get; set; }
-        public long IdBlock { get; set; }
+        public long ID { get; set; }
+        public long BlockId { get; set; }
         public System.DateTime DeliveryDate { get; set; }
         public short SeedTrayAmountDelivered { get; set; }
     

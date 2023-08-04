@@ -20,7 +20,7 @@ namespace DataAccess
             this.Products = new HashSet<Product>();
         }
     
-        public byte SpecieID { get; set; }
+        public byte ID { get; set; }
         public string Name { get; set; }
         public byte ProductionDays { get; set; }
         public Nullable<decimal> WeightOf1000Seeds { get; set; }

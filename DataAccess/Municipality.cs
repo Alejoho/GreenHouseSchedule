@@ -20,9 +20,9 @@ namespace DataAccess
             this.Organizations = new HashSet<Organization>();
         }
     
-        public short MunicipalityID { get; set; }
+        public short ID { get; set; }
         public string Name { get; set; }
-        public byte IdProvince { get; set; }
+        public byte ProvinceId { get; set; }
     
         public virtual Province Province { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

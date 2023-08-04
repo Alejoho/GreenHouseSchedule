@@ -20,8 +20,8 @@ namespace DataAccess
             this.Orders = new HashSet<Order>();
         }
     
-        public byte ProductID { get; set; }
-        public byte IdSpecie { get; set; }
+        public byte ID { get; set; }
+        public byte SpecieId { get; set; }
         public string Variety { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

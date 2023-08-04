@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1e20d016258a4216b4398852a2686cd8" Name="Diagram1">
+      <Diagram DiagramId="8e7f33fc27104f13a2b471e44375d304" Name="Diagram1">
         <EntityTypeShape EntityType="SowScheduleDBModel.Block" Width="1.5" PointX="17.25" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.Client" Width="1.5" PointX="7.5" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.DeliveryDetail" Width="1.5" PointX="19.5" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.Greenhouse" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.Municipality" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.OrderDetail" Width="1.5" PointX="12" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SowScheduleDBModel.OrderLocation" Width="1.5" PointX="15" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SowScheduleDBModel.OrderLocation" Width="1.5" PointX="15" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.Order" Width="1.5" PointX="9.75" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.Organization" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.Product" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
@@ -19,19 +19,19 @@
         <EntityTypeShape EntityType="SowScheduleDBModel.SeedTray" Width="1.5" PointX="12.75" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.Species" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.TypesOfOrganization" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_Blocks_DeliveryDetails" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_OrderLocations_Blocks" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_Clients_Organizations" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_Orders_Clients" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_OrderLocations_GreenHouses" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_Municipalities_Provinces" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_Organizations_Municipalities" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_OrderDetails_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_OrderLocations_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_OrderLocations_SeedTrays" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_Orders_Products" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.FK_Organizations_TypesOfOrganization" ManuallyRouted="false" />
-        <AssociationConnector Association="SowScheduleDBModel.Fk_Species" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_Blocks_OrderLocationId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_DeliveryDetails_BlockId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_Clients_OrganizationId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_Orders_ClientId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_OrderLocations_GreenHouseId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_Municipalities_ProvinceId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_Organizations_MunicipalityId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_OrderDetails_OrderId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_OrderLocations_OrderId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_OrderLocations_SeedTrayId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_Orders_ProductId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_Organizations_TypesOfOrganizationId" ManuallyRouted="false" />
+        <AssociationConnector Association="SowScheduleDBModel.FK_Products_SpecieId" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

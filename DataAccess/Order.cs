@@ -21,9 +21,9 @@ namespace DataAccess
             this.OrderLocations = new HashSet<OrderLocation>();
         }
     
-        public short OrderID { get; set; }
-        public short IdClient { get; set; }
-        public byte IdProduct { get; set; }
+        public short ID { get; set; }
+        public short ClientId { get; set; }
+        public byte ProductId { get; set; }
         public int AmountofWishedSeedlings { get; set; }
         public int AmountofAlgorithmSeedlings { get; set; }
         public System.DateTime WishDate { get; set; }
@@ -32,7 +32,7 @@ namespace DataAccess
         public System.DateTime EstimateDeliveryDate { get; set; }
         public Nullable<System.DateTime> RealSowDate { get; set; }
         public Nullable<System.DateTime> RealDeliveryDate { get; set; }
-        public bool Sown { get; set; }
+        public bool Complete { get; set; }
     
         public virtual Client Client { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

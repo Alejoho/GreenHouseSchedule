@@ -43,7 +43,7 @@ namespace DataAccess.Repositories
         public bool Update(OrderLocation entity)
         {
             OrderLocation orderLocation = _sowScheduleDB.OrderLocations
-                .Where(x => x.OrderLocationID == entity.OrderLocationID).FirstOrDefault();
+                .Where(x => x.ID == entity.ID).FirstOrDefault();
             if (orderLocation != null)
             {
                 return true;

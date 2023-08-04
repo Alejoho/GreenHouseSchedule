@@ -24,7 +24,7 @@ namespace Domain.Models
         private DateTime? _realSowDate;
         private DateTime? _realDeliveryDate;
         private LinkedList<OrderLocationModel> _orderLocations;
-        private bool _sown;
+        private bool _complete;
 
         /// <summary>
         /// Initializes a new instance of <c>OrderModel</c>. Tiene un cliente <paramref name="pClient"/>
@@ -39,7 +39,7 @@ namespace Domain.Models
         /// <param name="pRealSowDate">The real date on which the order is started to sow.</param>
         /// <param name="pRealDeliveryDate">The real date on which the order is started to deliver.</param>
         /// <param name="pSown">This indicates whether this order is completely sown.</param>
-        public OrderModel(int pID, ClientModel pClient, ProductModel pProduct, int pSeedlingAmount, DateTime pRequestDate, DateTime pEstimateSowDate, DateTime pEstimateDeliveryDate, DateTime? pRealSowDate, DateTime? pRealDeliveryDate,bool pSown)
+        public OrderModel(int pID, ClientModel pClient, ProductModel pProduct, int pSeedlingAmount, DateTime pRequestDate, DateTime pEstimateSowDate, DateTime pEstimateDeliveryDate, DateTime? pRealSowDate, DateTime? pRealDeliveryDate,bool pComplete)
         {
             _ID = pID;
             _client = pClient;
@@ -51,7 +51,7 @@ namespace Domain.Models
             _realSowDate = pRealSowDate;
             _realDeliveryDate = pRealDeliveryDate;
             _orderLocations = new LinkedList<OrderLocationModel>();
-            _sown = pSown;
+            _complete = pComplete;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Domain.Models
             this._realSowDate =pOrderModelOriginal.RealSowDate;
             this._realDeliveryDate =pOrderModelOriginal.RealDeliveryDate;
             this._orderLocations = new LinkedList<OrderLocationModel>();
-            this._sown =pOrderModelOriginal.Sown;
+            this._complete = pOrderModelOriginal.Complete;
 
             foreach(OrderLocationModel orderLocationModel in pOrderModelOriginal.OrderLocations)
             {
@@ -131,6 +131,6 @@ namespace Domain.Models
         /// <value>
         /// Gets or sets a bool type that indicates whether this order is completely sown.
         /// </value>
-        public bool Sown { get => _sown; set => _sown = value; }
+        public bool Complete { get => _complete; set => _complete = value; }
     }
 }
