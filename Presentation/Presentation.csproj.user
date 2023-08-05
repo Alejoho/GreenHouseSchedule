@@ -25,6 +25,9 @@
     <Compile Update="Forms\AddEditSpeciesWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\AddOrganizationWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\ClientsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,6 +55,9 @@
     <Compile Update="Forms\SeedTraysWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\SowWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CustomControls\ComboBoxWithLabel.xaml">
@@ -70,6 +76,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\AddEditSpeciesWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\AddOrganizationWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\ClientsWindow.xaml">
@@ -97,6 +106,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\SeedTraysWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\SowWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
