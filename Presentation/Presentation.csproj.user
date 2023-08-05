@@ -37,6 +37,9 @@
     <Compile Update="Forms\AddEditSeedTrayWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\OrderListWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\OrganizationsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -76,6 +79,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\AddEditSeedTrayWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\OrderListWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\OrganizationsWindow.xaml">
