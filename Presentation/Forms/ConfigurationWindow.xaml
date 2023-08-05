@@ -1,0 +1,33 @@
+﻿<Window x:Class="Presentation.Forms.ConfigurationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation.Forms"
+        xmlns:custom="clr-namespace:Presentation.CustomControls"
+        mc:Ignorable="d"
+        Title="Configuraciones" Height="350" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+            <custom:TextBoxWithLabel FieldLabel="Días de retroceso" HorizontalAlignment="Right" x:Name="lbltxtName" Margin="0 10 0 0"/>
+            <custom:TextBoxWithLabel FieldLabel="Potencial de siembra diario" HorizontalAlignment="Right" x:Name="lbltxtNickName"/>
+            <custom:TextBoxWithLabel FieldLabel="Bandejas mínima de una locación" HorizontalAlignment="Right" x:Name="lbltxtCellNumber"/>
+            <custom:TextBoxWithLabel FieldLabel="Multiplicador de posturas" HorizontalAlignment="Right" x:Name="lbltxtPhoneNumber"/>
+            <custom:TextBoxWithLabel FieldLabel="Rango de muestra de siembra" HorizontalAlignment="Right" x:Name="lbltxtPhoneNumbe"/>
+            <custom:TextBoxWithLabel FieldLabel="Rango de muestra de entregas" HorizontalAlignment="Right" x:Name="lbltxtPhoneNumb"/>
+            <Button Content="Organizaciones" Height="40" Width="210" Margin="0 20 0 0"/>
+
+        </StackPanel>
+
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
+            <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0"/>
+            <Button x:Name="btnBack" Content="Atrás" Width="80"/>
+        </StackPanel>
+    </Grid>
+</Window>

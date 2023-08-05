@@ -31,6 +31,9 @@
     <Compile Update="Forms\ClientsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\ConfigurationWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\DeliveryWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -82,6 +85,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\ClientsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\ConfigurationWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\DeliveryWindow.xaml">
