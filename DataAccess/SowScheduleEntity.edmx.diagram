@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8e7f33fc27104f13a2b471e44375d304" Name="Diagram1">
+      <Diagram DiagramId="3f42b9d11dfe43e5a820031e42b099bb" Name="Diagram1">
         <EntityTypeShape EntityType="SowScheduleDBModel.Block" Width="1.5" PointX="17.25" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.Client" Width="1.5" PointX="7.5" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SowScheduleDBModel.DeliveryDetail" Width="1.5" PointX="19.5" PointY="5.375" IsExpanded="true" />

@@ -169,6 +169,13 @@
   <ItemGroup>
     <Content Include="ScriptDB.sql" />
     <Content Include="ScriptValues.sql" />
+    <Content Include="SowScheduleDB.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SowScheduleDB_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>SowScheduleDB.mdf</DependentUpon>
+    </Content>
     <Content Include="SowScheduleEntity.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SowScheduleEntity.edmx</DependentUpon>
