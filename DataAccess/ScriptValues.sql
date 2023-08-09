@@ -4,10 +4,21 @@ use "SowScheduleDB";
 go
 insert into "Provinces" values
 	('Pinar del Río'),
-	('La Habana'),
 	('Artemisa'),
+	('La Habana'),	
 	('Mayabeque'),
 	('Matanzas'),
+	('Cienfuegos'),
+	('Villa Clara'),
+	('Sancti Spíritus'),
+	('Ciego de Ávila'),
+	('Camagüey'),
+	('Las Tunas'),
+	('Granma'),
+	('Holguín'),
+	('Santiago'),
+	('Guantánamo'),
+	('Isla de la Juventud'),
 	('N.I.');
 
 go
