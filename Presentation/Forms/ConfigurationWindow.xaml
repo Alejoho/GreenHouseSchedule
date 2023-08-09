@@ -14,13 +14,19 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" HorizontalAlignment="Center">
-            <custom:TextBoxWithLabel FieldLabel="Días de retroceso" HorizontalAlignment="Right" x:Name="lbltxtName" Margin="0 10 0 0"/>
-            <custom:TextBoxWithLabel FieldLabel="Potencial de siembra diario" HorizontalAlignment="Right" x:Name="lbltxtNickName"/>
-            <custom:TextBoxWithLabel FieldLabel="Bandejas mínima de una locación" HorizontalAlignment="Right" x:Name="lbltxtCellNumber"/>
-            <custom:TextBoxWithLabel FieldLabel="Multiplicador de posturas" HorizontalAlignment="Right" x:Name="lbltxtPhoneNumber"/>
-            <custom:TextBoxWithLabel FieldLabel="Rango de muestra de siembra" HorizontalAlignment="Right" x:Name="lbltxtPhoneNumbe"/>
-            <custom:TextBoxWithLabel FieldLabel="Rango de muestra de entregas" HorizontalAlignment="Right" x:Name="lbltxtPhoneNumb"/>
-            <Button Content="Organizaciones" Height="40" Width="210" Margin="0 20 0 0"/>
+            <custom:TextBoxWithLabel FieldLabel="Días de retroceso" HorizontalAlignment="Right" Margin="0 10 0 0"
+                                     x:Name="lbltxtRegressionDays"/>
+            <custom:TextBoxWithLabel FieldLabel="Potencial de siembra diario" HorizontalAlignment="Right" 
+                                     x:Name="lbltxtDailySowingPotential"/>
+            <custom:TextBoxWithLabel FieldLabel="Bandejas mínima de una locación" HorizontalAlignment="Right" 
+                                     x:Name="lbltxtLocationMinimumSeedTray"/>
+            <custom:TextBoxWithLabel FieldLabel="Multiplicador de posturas" HorizontalAlignment="Right" 
+                                     x:Name="lbltxtSeedlingMultiplier"/>
+            <custom:TextBoxWithLabel FieldLabel="Rango de muestra de siembra" HorizontalAlignment="Right" 
+                                     x:Name="lbltxtSowShowRange"/>
+            <custom:TextBoxWithLabel FieldLabel="Rango de muestra de entregas" HorizontalAlignment="Right" 
+                                     x:Name="lbltxtDeliveryShowRange"/>
+            <Button x:Name="btnOrganization" Content="Organizaciones" Height="40" Width="210" Margin="0 20 0 0"/>
 
         </StackPanel>
 
