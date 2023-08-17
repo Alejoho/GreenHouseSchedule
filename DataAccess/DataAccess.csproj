@@ -110,7 +110,9 @@
     <Compile Include="Province.cs">
       <DependentUpon>SowScheduleEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\ClientRepository.cs" />
     <Compile Include="Repositories\DeliveryDetailRepository.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\GreenHouseRepository.cs" />
     <Compile Include="Repositories\OrderLocationRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
