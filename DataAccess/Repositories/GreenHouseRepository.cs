@@ -2,28 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataAccess;
 
 namespace DataAccess.Repositories
 {
-    public class GreenHouseRepository : IGreenHouseRepository
+    public class GreenHouseRepository : GenericRepository, IGreenHouseRepository
     {
-        private SowScheduleDBEntities _sowScheduleDB;
-        public GreenHouseRepository()
-        {
-            _sowScheduleDB = new SowScheduleDBEntities();
-        }
 
         public IEnumerable<Greenhouse> GetAll()
         {
-            //try
-            //{
             return _sowScheduleDB.GreenHouses;
-            //}
-            //catch (Exception ex)
-            //{
-
-            //}
         }
 
         public bool Insert(Greenhouse entity)
@@ -42,18 +29,33 @@ namespace DataAccess.Repositories
 
         public bool Remove(int pId)
         {
-            Greenhouse greenHouse = _sowScheduleDB.GreenHouses.Find(pId);
-            _sowScheduleDB.GreenHouses.Remove(greenHouse);
-            _sowScheduleDB.SaveChanges();
-            return true;
+            try
+            {
+                Greenhouse greenHouse = _sowScheduleDB.GreenHouses.Find(pId);
+                _sowScheduleDB.GreenHouses.Remove(greenHouse);
+                _sowScheduleDB.SaveChanges();
+                return true;
+            }catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public bool Update(Greenhouse entity)
         {
-            Greenhouse greenHouse = _sowScheduleDB.GreenHouses
-                .Where(x => x.ID == entity.ID).FirstOrDefault();
-            if(greenHouse != null)
+            Greenhouse greenHouse = _sowScheduleDB.GreenHouses.Find(entity.ID);
+            if (greenHouse != null)
             {
+                greenHouse.ID = entity.ID;
+                greenHouse.Name = entity.Name;
+                greenHouse.Description = entity.Description;
+                greenHouse.Width = entity.Width;
+                greenHouse.Lenght   = entity.Lenght;
+                greenHouse.GreenHouseArea = entity.GreenHouseArea;
+                greenHouse.SeedTrayArea = entity.SeedTrayArea;
+                greenHouse.AmountOfBlocks = entity.AmountOfBlocks;
+                greenHouse.Active = entity.Active;
+                _sowScheduleDB.SaveChanges();
                 return true;
             }
             return false;
