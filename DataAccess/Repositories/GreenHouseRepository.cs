@@ -7,6 +7,13 @@ namespace DataAccess.Repositories
 {
     public class GreenHouseRepository : GenericRepository, IGreenHouseRepository
     {
+        public GreenHouseRepository(SowScheduleDBEntities dbContex) : base(dbContex)
+        {
+        }
+
+        public GreenHouseRepository()
+        {
+        }
 
         public IEnumerable<Greenhouse> GetAll()
         {

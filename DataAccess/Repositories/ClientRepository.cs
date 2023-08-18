@@ -10,6 +10,14 @@ namespace DataAccess.Repositories
 {
     public class ClientRepository : GenericRepository, IClientRepository
     {
+        public ClientRepository(SowScheduleDBEntities dbContex) : base(dbContex)
+        {
+        }
+
+        public ClientRepository() 
+        { 
+        }
+
         public IEnumerable<Client> GetAll()
         {
             return _sowScheduleDB.Clients;            
