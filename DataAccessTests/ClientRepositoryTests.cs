@@ -4,7 +4,6 @@ using DataAccess.Contracts;
 using DataAccess.Repositories;
 using FluentAssertions;
 using Moq;
-using System.Data.Entity;
 
 namespace DataAccessTests;
 
@@ -14,20 +13,10 @@ public class ClientRepositoryTests
     public void GetAll_ShouldReturnClients()
     {
         List<Client> clientes = GenerateClients(5);
-        //var data = clientes.AsQueryable();
 
         var mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
-        var mockClientDbSet = MockGenerator.GenerateDbSetMock<DbSet<Client>,Client> (clientes);
-        //new Mock<DbSet<Client>>();
-        //MockGenerator.GenerateDbSetMock<DbSet<Client>>(clientes);
-        //mockClientDbSet.As<IQueryable<Client>>().Setup(x => x.Provider).Returns(data.Provider);
-        //mockClientDbSet.As<IQueryable<Client>>().Setup(x => x.ElementType).Returns(data.ElementType);
-        //mockClientDbSet.As<IQueryable<Client>>().Setup(x => x.Expression).Returns(data.Expression);
-        //mockClientDbSet.As<IQueryable<Client>>().Setup(x => x.GetEnumerator()).Returns(data.GetEnumerator());
 
-        //mockSowScheduleDbContex.Setup(x => x.Clients).Returns((MockGenerator.GenerateDbSetMock<DbSet<Client>>(clientes)).Object);
-
-        mockSowScheduleDbContex.Setup(x => x.Clients).Returns(mockClientDbSet.Object);
+        mockSowScheduleDbContex.Setup(x => x.Clients).Returns((MockGenerator.GetQueryableMockDbSet<Client>(clientes)));
 
         IClientRepository clientRepository = new ClientRepository(mockSowScheduleDbContex.Object);
 
@@ -40,44 +29,87 @@ public class ClientRepositoryTests
     public void Insert_ShouldInsertAClient()
     {
         var clientes = GenerateClients(5);
-        var data = clientes.AsQueryable();
-        var newCliente = GenerateClients(1).First();
+        var newClient = GenerateClients(6).Last();
 
         var mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
-        var mockClientDbSet = new Mock<DbSet<Client>>();
 
-        mockClientDbSet.As<IQueryable<Client>>().Setup(x => x.Provider).Returns(data.Provider);
-        mockClientDbSet.As<IQueryable<Client>>().Setup(x => x.ElementType).Returns(data.ElementType);
-        mockClientDbSet.As<IQueryable<Client>>().Setup(x => x.Expression).Returns(data.Expression);
-        mockClientDbSet.As<IQueryable<Client>>().Setup(x => x.GetEnumerator()).Returns(data.GetEnumerator());
-        mockClientDbSet.Setup(x => x.Add(newCliente)).Callback((Client x) => clientes.Add(x));
-
-        mockSowScheduleDbContex.Setup(x => x.Clients).Returns(mockClientDbSet.Object);
+        mockSowScheduleDbContex.Setup(x => x.Clients).Returns(MockGenerator.GetQueryableMockDbSet<Client>(clientes));
 
         IClientRepository clientRepository = new ClientRepository(mockSowScheduleDbContex.Object);
 
-        bool actual = clientRepository.Insert(newCliente);
+        bool actual = clientRepository.Insert(newClient);
 
         actual.Should().BeTrue();
         clientes.Count.Should().Be(6);
-        mockClientDbSet.Verify(x => x.Add(newCliente), Times.Once());
+        mockSowScheduleDbContex.Verify(x => x.Clients.Add(newClient), Times.Once());
         mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }
 
     [Fact]
     public void Remove_ShouldRemoveAClient()
     {
+        var clientes = GenerateClients(5);
+        int idOfTheClientToRemove = clientes.Last().ID;
+        var clientToRemove = clientes.Find(x => x.ID == idOfTheClientToRemove);
 
+        var mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+
+        mockSowScheduleDbContex.Setup(x => x.Clients).Returns(MockGenerator.GetQueryableMockDbSet<Client>(clientes));
+        mockSowScheduleDbContex.Setup(x => x.Clients.Find(idOfTheClientToRemove)).Returns(clientToRemove);
+
+        IClientRepository clientRepository = new ClientRepository(mockSowScheduleDbContex.Object);
+
+        bool actual = clientRepository.Remove(idOfTheClientToRemove);
+
+        actual.Should().BeTrue();
+        clientes.Count.Should().Be(4);
+        mockSowScheduleDbContex.Verify(x => x.Clients.Find(idOfTheClientToRemove), Times.Once());
+        mockSowScheduleDbContex.Verify(x => x.Clients.Remove(clientToRemove), Times.Once());
+        mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }
 
     [Fact]
-    public void Remove_ShouldUpdateAClient()
+    public void Update_ShouldUpdateAClient()
     {
+        var clientes = GenerateClients(5);
+        int idOfTheClientToUpdate = clientes.Last().ID;
+        var clientToUpdate = clientes.Find(x => x.ID == idOfTheClientToUpdate);
 
+        var newClientData = new Client
+        {
+            ID = clientToUpdate.ID,
+            Name = "Alejandro",
+            NickName ="Alejo",
+            PhoneNumber = "12345678",
+            OtherNumber = "87654321",
+            OrganizationId = 1
+        };
+
+        var mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+
+        mockSowScheduleDbContex.Setup(x => x.Clients).Returns(MockGenerator.GetQueryableMockDbSet<Client>(clientes));
+        mockSowScheduleDbContex.Setup(x => x.Clients.Find(newClientData.ID)).Returns(clientToUpdate).Verifiable();
+
+        IClientRepository clientRepository = new ClientRepository(mockSowScheduleDbContex.Object);
+
+        bool actual = clientRepository.Update(newClientData);
+
+        actual.Should().BeTrue();
+
+        var clientUpdated = clientes.Find(x => x.ID == idOfTheClientToUpdate);
+        mockSowScheduleDbContex.Verify(x => x.Clients.Find(newClientData.ID), Times.Once());
+        mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
+
+        clientUpdated.Name.Should().Be(newClientData.Name);
+        clientUpdated.NickName.Should().Be(newClientData.NickName);
+        clientUpdated.PhoneNumber.Should().Be(newClientData.PhoneNumber);
+        clientUpdated.OtherNumber.Should().Be(newClientData.OtherNumber);
+        clientUpdated.OrganizationId.Should().Be(newClientData.OrganizationId);        
     }
 
     public List<Client> GenerateClients(int count)
     {
+        Randomizer.Seed = new Random(123);
         var fakeClient = new Faker<Client>()
             .RuleFor(x => x.ID, f => Convert.ToInt16(f.IndexFaker))
             .RuleFor(x => x.Name, f => f.Person.FullName)
