@@ -11,20 +11,20 @@ public class ClientRepositoryTests
 {
     List<Client> _clients;
     Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
+    IClientRepository _clientRepository;
 
     public ClientRepositoryTests()
     {
         _clients = GenerateClients(5);
         _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
         _mockSowScheduleDbContex.Setup(x => x.Clients).Returns((MockGenerator.GetQueryableMockDbSet<Client>(_clients)));
+        _clientRepository = new ClientRepository(_mockSowScheduleDbContex.Object);
     }
 
     [Fact]
     public void GetAll_ShouldReturnClients()
-    {        
-        IClientRepository clientRepository = new ClientRepository(_mockSowScheduleDbContex.Object);
-
-        var actual = clientRepository.GetAll();
+    {                
+        var actual = _clientRepository.GetAll();
 
         actual.Count().Should().Be(5);
     }
@@ -34,9 +34,7 @@ public class ClientRepositoryTests
     {
         var newClient = GenerateClients(6).Last();
 
-        IClientRepository clientRepository = new ClientRepository(_mockSowScheduleDbContex.Object);
-
-        bool actual = clientRepository.Insert(newClient);
+        bool actual = _clientRepository.Insert(newClient);
 
         actual.Should().BeTrue();
         _clients.Count.Should().Be(6);
@@ -52,9 +50,7 @@ public class ClientRepositoryTests
 
         _mockSowScheduleDbContex.Setup(x => x.Clients.Find(idOfTheClientToRemove)).Returns(clientToRemove);
 
-        IClientRepository clientRepository = new ClientRepository(_mockSowScheduleDbContex.Object);
-
-        bool actual = clientRepository.Remove(idOfTheClientToRemove);
+        bool actual = _clientRepository.Remove(idOfTheClientToRemove);
 
         actual.Should().BeTrue();
         _clients.Count.Should().Be(4);
@@ -82,9 +78,7 @@ public class ClientRepositoryTests
         _mockSowScheduleDbContex.Setup(x => x.Clients).Returns(MockGenerator.GetQueryableMockDbSet<Client>(_clients));
         _mockSowScheduleDbContex.Setup(x => x.Clients.Find(newClientData.ID)).Returns(clientToUpdate).Verifiable();
 
-        IClientRepository clientRepository = new ClientRepository(_mockSowScheduleDbContex.Object);
-
-        bool actual = clientRepository.Update(newClientData);
+        bool actual = _clientRepository.Update(newClientData);
 
         actual.Should().BeTrue();
 

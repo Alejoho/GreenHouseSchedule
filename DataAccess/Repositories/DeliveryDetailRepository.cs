@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class DeliveryDetailRepository : IDeliveryDetailRepository
+    public class DeliveryDetailRepository : GenericRepository, IDeliveryDetailRepository
     {
-        private SowScheduleDBEntities _sowScheduleDB;
+        public DeliveryDetailRepository(SowScheduleDBEntities dbContex) : base(dbContex)
+        {
+        }
+
         public DeliveryDetailRepository()
         {
-            _sowScheduleDB = new SowScheduleDBEntities();
         }
 
         public IEnumerable<DeliveryDetail> GetAll()
@@ -36,18 +38,29 @@ namespace DataAccess.Repositories
 
         public bool Remove(int pId)
         {
-            DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(pId);
-            _sowScheduleDB.DeliveryDetails.Remove(deliveryDetail);
-            _sowScheduleDB.SaveChanges();
-            return true;
+            try
+            {
+                DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(pId);
+                _sowScheduleDB.DeliveryDetails.Remove(deliveryDetail);
+                _sowScheduleDB.SaveChanges();
+                return true;
+            }catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public bool Update(DeliveryDetail entity)
         {
-            DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails
-                .Where(x => x.ID == entity.ID).FirstOrDefault();
+            //DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails
+            //    .Where(x => x.ID == entity.ID).FirstOrDefault();
+            DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(entity.ID);                
             if (deliveryDetail != null)
             {
+                deliveryDetail.BlockId=entity.BlockId;
+                deliveryDetail.DeliveryDate = entity.DeliveryDate;
+                deliveryDetail.SeedTrayAmountDelivered = entity.SeedTrayAmountDelivered;
+                _sowScheduleDB.SaveChanges();
                 return true;
             }
             return false;
