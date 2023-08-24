@@ -52,8 +52,6 @@ namespace DataAccess.Repositories
 
         public bool Update(DeliveryDetail entity)
         {
-            //DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails
-            //    .Where(x => x.ID == entity.ID).FirstOrDefault();
             DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(entity.ID);                
             if (deliveryDetail != null)
             {
@@ -67,3 +65,4 @@ namespace DataAccess.Repositories
         }
     }
 }
+
