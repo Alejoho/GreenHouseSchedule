@@ -47,10 +47,10 @@ namespace DataAccess.Repositories
         public bool Update(Block entity)
         {
             Block block = _sowScheduleDB.Blocks.Find(entity.ID);
-            if(block != null)
+            if (block != null)
             {
                 block.ID = entity.ID;
-                block.OrderLocationId=entity.OrderLocationId;
+                block.OrderLocationId = entity.OrderLocationId;
                 block.BlockNumber = entity.BlockNumber;
                 block.SeedTrayAmount = entity.SeedTrayAmount;
                 block.NumberWithinThBlock = entity.NumberWithinThBlock;

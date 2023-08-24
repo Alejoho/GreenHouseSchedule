@@ -60,20 +60,13 @@ public class ClientRepositoryTests
     }
 
     [Fact]
-    public void Update_ShouldUpdateAClient()
+    public void Update_ShouldUpdateARecord()
     {
-        int idOfTheRecordToUpdate = _clients.Last().ID;
+        var idOfTheRecordToUpdate = _clients.Last().ID;
         var recordToUpdate = _clients.Find(x => x.ID == idOfTheRecordToUpdate);
 
-        var newRecordData = new Client
-        {
-            ID = recordToUpdate.ID,
-            Name = "Alejandro",
-            NickName = "Alejo",
-            PhoneNumber = "12345678",
-            OtherNumber = "87654321",
-            OrganizationId = 1
-        };
+        var newRecordData = GenerateOneRandomRecord();
+        newRecordData.ID = idOfTheRecordToUpdate;
 
         _mockSowScheduleDbContex.Setup(x => x.Clients.Find(newRecordData.ID)).Returns(recordToUpdate);
 
@@ -81,21 +74,21 @@ public class ClientRepositoryTests
 
         actual.Should().BeTrue();
 
-        var clientUpdated = _clients.Find(x => x.ID == idOfTheRecordToUpdate);
+        var recordUpdated = _clients.Find(x => x.ID == idOfTheRecordToUpdate);
         _mockSowScheduleDbContex.Verify(x => x.Clients.Find(newRecordData.ID), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
-        clientUpdated.Name.Should().Be(newRecordData.Name);
-        clientUpdated.NickName.Should().Be(newRecordData.NickName);
-        clientUpdated.PhoneNumber.Should().Be(newRecordData.PhoneNumber);
-        clientUpdated.OtherNumber.Should().Be(newRecordData.OtherNumber);
-        clientUpdated.OrganizationId.Should().Be(newRecordData.OrganizationId);
+        recordUpdated.Name.Should().Be(newRecordData.Name);
+        recordUpdated.NickName.Should().Be(newRecordData.NickName);
+        recordUpdated.PhoneNumber.Should().Be(newRecordData.PhoneNumber);
+        recordUpdated.OtherNumber.Should().Be(newRecordData.OtherNumber);
+        recordUpdated.OrganizationId.Should().Be(newRecordData.OrganizationId);
     }
 
     public List<Client> GenerateRecords(int count)
     {
         Randomizer.Seed = new Random(123);
-        var fakeClient = new Faker<Client>()
+        var fakeRecord = new Faker<Client>()
             .RuleFor(x => x.ID, f => Convert.ToInt16(f.IndexFaker))
             .RuleFor(x => x.Name, f => f.Person.FullName)
             .RuleFor(x => x.NickName, f => f.Address.StreetName())
@@ -103,6 +96,19 @@ public class ClientRepositoryTests
             .RuleFor(x => x.OtherNumber, f => f.Phone.PhoneNumber())
             .RuleFor(x => x.OrganizationId, f => Convert.ToInt16(f.Address.BuildingNumber()[0]));
 
-        return fakeClient.Generate(count).ToList();
+        return fakeRecord.Generate(count).ToList();
+    }
+
+    public Client GenerateOneRandomRecord()
+    {      
+        var fakeRecord = new Faker<Client>()
+            .RuleFor(x => x.ID, f => Convert.ToInt16(f.IndexFaker))
+            .RuleFor(x => x.Name, f => f.Person.FullName)
+            .RuleFor(x => x.NickName, f => f.Address.StreetName())
+            .RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumber())
+            .RuleFor(x => x.OtherNumber, f => f.Phone.PhoneNumber())
+            .RuleFor(x => x.OrganizationId, f => Convert.ToInt16(f.Address.BuildingNumber()[0]));
+
+        return fakeRecord.Generate(1).Single();
     }
 }

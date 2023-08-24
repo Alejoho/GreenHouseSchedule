@@ -62,16 +62,11 @@ public class DeliveryDetailsRepositoryTests
     [Fact]
     public void Update_ShouldUpdateARecord()
     {
-        int idOfTheRecordToUpdate = _deliveryDetails.Last().ID;
+        var idOfTheRecordToUpdate = _deliveryDetails.Last().ID;
         var recordToUpdate = _deliveryDetails.Find(x => x.ID == idOfTheRecordToUpdate);
 
-        var newRecordData = new DeliveryDetail
-        {
-            ID = recordToUpdate.ID,
-            BlockId = 43,
-            DeliveryDate = new DateTime(2023, 6, 25),
-            SeedTrayAmountDelivered = 22500
-        };
+        var newRecordData = GenerateOneRandomRecord();
+        newRecordData.ID = idOfTheRecordToUpdate;
        
         _mockSowScheduleDbContex.Setup(x => x.DeliveryDetails.Find(newRecordData.ID)).Returns(recordToUpdate);
 
@@ -98,9 +93,22 @@ public class DeliveryDetailsRepositoryTests
             .RuleFor(x => x.ID, f => f.IndexFaker)
             .RuleFor(x => x.BlockId, f => Convert.ToInt32(f.Address.BuildingNumber()[0]))
             .RuleFor(x => x.DeliveryDate, f => f.Date.Between(starDate, endDate))
-            .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short());
+            .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(1,1000));
 
         return fakeDeliveryDetail.Generate(count).ToList();
+    }
+
+    public DeliveryDetail GenerateOneRandomRecord()
+    {
+        DateTime starDate = new DateTime(2023, 1, 1);
+        DateTime endDate = new DateTime(2023, 12, 31);
+        var fakeDeliveryDetail = new Faker<DeliveryDetail>()
+            .RuleFor(x => x.ID, f => f.IndexFaker)
+            .RuleFor(x => x.BlockId, f => Convert.ToInt32(f.Address.BuildingNumber()[0]))
+            .RuleFor(x => x.DeliveryDate, f => f.Date.Between(starDate, endDate))
+            .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(1, 1000));
+
+        return fakeDeliveryDetail.Generate(1).Single();
     }
 }
 
