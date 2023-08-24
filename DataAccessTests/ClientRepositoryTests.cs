@@ -15,85 +15,84 @@ public class ClientRepositoryTests
 
     public ClientRepositoryTests()
     {
-        _clients = GenerateClients(5);
+        _clients = GenerateRecords(5);
         _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
         _mockSowScheduleDbContex.Setup(x => x.Clients).Returns((MockGenerator.GetQueryableMockDbSet<Client>(_clients)));
         _clientRepository = new ClientRepository(_mockSowScheduleDbContex.Object);
     }
 
     [Fact]
-    public void GetAll_ShouldReturnClients()
-    {                
+    public void GetAll_ShouldReturnRecords()
+    {
         var actual = _clientRepository.GetAll();
 
         actual.Count().Should().Be(5);
     }
 
     [Fact]
-    public void Insert_ShouldInsertAClient()
+    public void Insert_ShouldInsertARecord()
     {
-        var newClient = GenerateClients(6).Last();
+        var newRecord = GenerateRecords(6).Last();
 
-        bool actual = _clientRepository.Insert(newClient);
+        bool actual = _clientRepository.Insert(newRecord);
 
         actual.Should().BeTrue();
         _clients.Count.Should().Be(6);
-        _mockSowScheduleDbContex.Verify(x => x.Clients.Add(newClient), Times.Once());
+        _mockSowScheduleDbContex.Verify(x => x.Clients.Add(newRecord), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }
 
     [Fact]
-    public void Remove_ShouldRemoveAClient()
+    public void Remove_ShouldRemoveARecord()
     {
-        int idOfTheClientToRemove = _clients.Last().ID;
-        var clientToRemove = _clients.Find(x => x.ID == idOfTheClientToRemove);
+        int idOfTheRecordToRemove = _clients.Last().ID;
+        var recordToRemove = _clients.Find(x => x.ID == idOfTheRecordToRemove);
 
-        _mockSowScheduleDbContex.Setup(x => x.Clients.Find(idOfTheClientToRemove)).Returns(clientToRemove);
+        _mockSowScheduleDbContex.Setup(x => x.Clients.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
 
-        bool actual = _clientRepository.Remove(idOfTheClientToRemove);
+        bool actual = _clientRepository.Remove(idOfTheRecordToRemove);
 
         actual.Should().BeTrue();
         _clients.Count.Should().Be(4);
-        _mockSowScheduleDbContex.Verify(x => x.Clients.Find(idOfTheClientToRemove), Times.Once());
-        _mockSowScheduleDbContex.Verify(x => x.Clients.Remove(clientToRemove), Times.Once());
+        _mockSowScheduleDbContex.Verify(x => x.Clients.Find(idOfTheRecordToRemove), Times.Once());
+        _mockSowScheduleDbContex.Verify(x => x.Clients.Remove(recordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }
 
     [Fact]
     public void Update_ShouldUpdateAClient()
     {
-        int idOfTheClientToUpdate = _clients.Last().ID;
-        var clientToUpdate = _clients.Find(x => x.ID == idOfTheClientToUpdate);
+        int idOfTheRecordToUpdate = _clients.Last().ID;
+        var recordToUpdate = _clients.Find(x => x.ID == idOfTheRecordToUpdate);
 
-        var newClientData = new Client
+        var newRecordData = new Client
         {
-            ID = clientToUpdate.ID,
+            ID = recordToUpdate.ID,
             Name = "Alejandro",
-            NickName ="Alejo",
+            NickName = "Alejo",
             PhoneNumber = "12345678",
             OtherNumber = "87654321",
             OrganizationId = 1
         };
 
-        _mockSowScheduleDbContex.Setup(x => x.Clients).Returns(MockGenerator.GetQueryableMockDbSet<Client>(_clients));
-        _mockSowScheduleDbContex.Setup(x => x.Clients.Find(newClientData.ID)).Returns(clientToUpdate).Verifiable();
+        _mockSowScheduleDbContex.Setup(x => x.Clients.Find(newRecordData.ID)).Returns(recordToUpdate);
 
-        bool actual = _clientRepository.Update(newClientData);
+        bool actual = _clientRepository.Update(newRecordData);
 
         actual.Should().BeTrue();
 
-        var clientUpdated = _clients.Find(x => x.ID == idOfTheClientToUpdate);
-        _mockSowScheduleDbContex.Verify(x => x.Clients.Find(newClientData.ID), Times.Once());
+        var clientUpdated = _clients.Find(x => x.ID == idOfTheRecordToUpdate);
+        _mockSowScheduleDbContex.Verify(x => x.Clients.Find(newRecordData.ID), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
-        clientUpdated.Name.Should().Be(newClientData.Name);
-        clientUpdated.NickName.Should().Be(newClientData.NickName);
-        clientUpdated.PhoneNumber.Should().Be(newClientData.PhoneNumber);
-        clientUpdated.OtherNumber.Should().Be(newClientData.OtherNumber);
-        clientUpdated.OrganizationId.Should().Be(newClientData.OrganizationId);        
+        clientUpdated.Name.Should().Be(newRecordData.Name);
+        clientUpdated.NickName.Should().Be(newRecordData.NickName);
+        clientUpdated.PhoneNumber.Should().Be(newRecordData.PhoneNumber);
+        clientUpdated.OtherNumber.Should().Be(newRecordData.OtherNumber);
+        clientUpdated.OrganizationId.Should().Be(newRecordData.OrganizationId);
     }
 
-    public List<Client> GenerateClients(int count)
+    public List<Client> GenerateRecords(int count)
     {
         Randomizer.Seed = new Random(123);
         var fakeClient = new Faker<Client>()
