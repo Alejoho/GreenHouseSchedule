@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderLocationId" Type="int" Nullable="false" />
           <Property Name="BlockNumber" Type="tinyint" Nullable="false" />
           <Property Name="SeedTrayAmount" Type="smallint" Nullable="false" />
@@ -30,8 +30,8 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="BlockId" Type="bigint" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlockId" Type="int" Nullable="false" />
           <Property Name="DeliveryDate" Type="date" Nullable="false" />
           <Property Name="SeedTrayAmountDelivered" Type="smallint" Nullable="false" />
         </EntityType>
@@ -390,7 +390,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrderLocationId" Type="Int32" Nullable="false" />
           <Property Name="BlockNumber" Type="Byte" Nullable="false" />
           <Property Name="SeedTrayAmount" Type="Int16" Nullable="false" />
@@ -415,8 +415,8 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BlockId" Type="Int64" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlockId" Type="Int32" Nullable="false" />
           <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="SeedTrayAmountDelivered" Type="Int16" Nullable="false" />
           <NavigationProperty Name="Block" Relationship="Self.FK_DeliveryDetails_BlockId" FromRole="DeliveryDetails" ToRole="Blocks" />

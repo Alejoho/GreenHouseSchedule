@@ -192,7 +192,7 @@ go
 drop table if exists "Blocks";
 go
 create table "Blocks"(
-	"ID" bigint identity(1,1),
+	"ID" int identity(1,1),
 	"OrderLocationId" int not null,
 	"BlockNumber" tinyint not null,
 	"SeedTrayAmount" smallint not null,
@@ -209,8 +209,8 @@ go
 drop table if exists "DeliveryDetails";
 go
 create table "DeliveryDetails"(
-	"ID" bigint identity(1,1),
-	"BlockId" bigint not null,
+	"ID" int identity(1,1),
+	"BlockId" int not null,
 	"DeliveryDate" date not null,
 	"SeedTrayAmountDelivered" smallint not null,
 	CONSTRAINT [PK_DeliveryDetails] primary key ("ID"),

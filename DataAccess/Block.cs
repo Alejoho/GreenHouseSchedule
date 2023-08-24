@@ -20,7 +20,7 @@ namespace DataAccess
             this.DeliveryDetails = new HashSet<DeliveryDetail>();
         }
     
-        public long ID { get; set; }
+        public int ID { get; set; }
         public int OrderLocationId { get; set; }
         public byte BlockNumber { get; set; }
         public short SeedTrayAmount { get; set; }
