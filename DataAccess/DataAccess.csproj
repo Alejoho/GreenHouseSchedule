@@ -74,6 +74,7 @@
     <Compile Include="Client.cs">
       <DependentUpon>SowScheduleEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Contracts\IBlockRepository.cs" />
     <Compile Include="Contracts\IClientRepository.cs" />
     <Compile Include="Contracts\IDeliveryDetailRepository.cs" />
     <Compile Include="Contracts\IGenericRepository.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Province.cs">
       <DependentUpon>SowScheduleEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\BlockRepository.cs" />
     <Compile Include="Repositories\ClientRepository.cs" />
     <Compile Include="Repositories\DeliveryDetailRepository.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
