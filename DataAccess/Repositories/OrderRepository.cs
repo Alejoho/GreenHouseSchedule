@@ -1,18 +1,18 @@
 ﻿using DataAccess.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class OrderRepository : IOrderRepository
+    public class OrderRepository : GenericRepository, IOrderRepository
     {
-        private SowScheduleDBEntities _sowScheduleDB;
+
+        public OrderRepository(SowScheduleDBEntities dbContex) : base(dbContex)
+        {
+        }
+
         public OrderRepository()
         {
-            _sowScheduleDB = new SowScheduleDBEntities();
         }
 
         public IEnumerable<Order> GetAll()
@@ -22,17 +22,54 @@ namespace DataAccess.Repositories
 
         public bool Insert(Order entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _sowScheduleDB.Orders.Add(entity);
+                _sowScheduleDB.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool Remove(int pId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Order order = _sowScheduleDB.Orders.Find(pId);
+                _sowScheduleDB.Orders.Remove(order);
+                _sowScheduleDB.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool Update(Order entity)
         {
-            throw new NotImplementedException();
+            Order order = _sowScheduleDB.Orders.Find(entity.ID);
+            if (order != null)
+            {
+                order.ID = entity.ID;
+                order.ClientId = entity.ClientId;
+                order.ProductId = entity.ProductId;
+                order.AmountofWishedSeedlings = entity.AmountofWishedSeedlings;
+                order.AmountofAlgorithmSeedlings = entity.AmountofAlgorithmSeedlings;
+                order.WishDate = entity.WishDate;
+                order.DateOfRequest = entity.DateOfRequest;
+                order.EstimateSowDate = entity.EstimateSowDate;
+                order.EstimateDeliveryDate = entity.EstimateDeliveryDate;
+                order.RealSowDate = entity.RealSowDate;
+                order.RealDeliveryDate = entity.RealDeliveryDate;
+                order.Complete = entity.Complete;
+                _sowScheduleDB.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }
