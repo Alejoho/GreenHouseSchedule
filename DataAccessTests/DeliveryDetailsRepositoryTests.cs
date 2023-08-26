@@ -67,7 +67,7 @@ public class DeliveryDetailsRepositoryTests
 
         var newRecordData = GenerateOneRandomRecord();
         newRecordData.ID = idOfTheRecordToUpdate;
-       
+
         _mockSowScheduleDbContex.Setup(x => x.DeliveryDetails.Find(newRecordData.ID)).Returns(recordToUpdate);
 
         bool actual = _deliveryDetailRepository.Update(newRecordData);
@@ -87,28 +87,29 @@ public class DeliveryDetailsRepositoryTests
     public List<DeliveryDetail> GenerateRecords(int count)
     {
         Randomizer.Seed = new Random(123);
-        DateTime starDate = new DateTime(2023, 1, 1);
-        DateTime endDate = new DateTime(2023, 12, 31);
-        var fakeDeliveryDetail = new Faker<DeliveryDetail>()
-            .RuleFor(x => x.ID, f => f.IndexFaker)
-            .RuleFor(x => x.BlockId, f => Convert.ToInt32(f.Address.BuildingNumber()[0]))
-            .RuleFor(x => x.DeliveryDate, f => f.Date.Between(starDate, endDate))
-            .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(1,1000));
+        var fakeDeliveryDetail = GetFaker();
 
         return fakeDeliveryDetail.Generate(count).ToList();
     }
 
     public DeliveryDetail GenerateOneRandomRecord()
     {
-        DateTime starDate = new DateTime(2023, 1, 1);
-        DateTime endDate = new DateTime(2023, 12, 31);
-        var fakeDeliveryDetail = new Faker<DeliveryDetail>()
-            .RuleFor(x => x.ID, f => f.IndexFaker)
-            .RuleFor(x => x.BlockId, f => Convert.ToInt32(f.Address.BuildingNumber()[0]))
-            .RuleFor(x => x.DeliveryDate, f => f.Date.Between(starDate, endDate))
-            .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(1, 1000));
+
+        var fakeDeliveryDetail = GetFaker();
 
         return fakeDeliveryDetail.Generate(1).Single();
+    }
+
+    public Faker<DeliveryDetail> GetFaker()
+    {
+        DateTime starDate = new DateTime(2023, 1, 1);
+        DateTime endDate = new DateTime(2023, 12, 31);
+        int index = 1;
+        return new Faker<DeliveryDetail>()
+            .RuleFor(x => x.ID, f => index++)
+            .RuleFor(x => x.BlockId, f => f.Random.Int(1, 200))
+            .RuleFor(x => x.DeliveryDate, f => f.Date.Between(starDate, endDate))
+            .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(1, 1000));
     }
 }
 

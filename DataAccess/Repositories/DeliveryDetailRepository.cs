@@ -55,7 +55,6 @@ namespace DataAccess.Repositories
             DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(entity.ID);                
             if (deliveryDetail != null)
             {
-                deliveryDetail.ID = entity.ID;
                 deliveryDetail.BlockId=entity.BlockId;
                 deliveryDetail.DeliveryDate = entity.DeliveryDate;
                 deliveryDetail.SeedTrayAmountDelivered = entity.SeedTrayAmountDelivered;

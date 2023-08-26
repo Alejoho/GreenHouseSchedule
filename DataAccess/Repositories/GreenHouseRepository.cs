@@ -53,7 +53,6 @@ namespace DataAccess.Repositories
             Greenhouse greenHouse = _sowScheduleDB.GreenHouses.Find(entity.ID);
             if (greenHouse != null)
             {
-                greenHouse.ID = entity.ID;
                 greenHouse.Name = entity.Name;
                 greenHouse.Description = entity.Description;
                 greenHouse.Width = entity.Width;

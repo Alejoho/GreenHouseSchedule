@@ -88,27 +88,27 @@ public class ClientRepositoryTests
     public List<Client> GenerateRecords(int count)
     {
         Randomizer.Seed = new Random(123);
-        var fakeRecord = new Faker<Client>()
-            .RuleFor(x => x.ID, f => Convert.ToInt16(f.IndexFaker))
-            .RuleFor(x => x.Name, f => f.Person.FullName)
-            .RuleFor(x => x.NickName, f => f.Address.StreetName())
-            .RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumber())
-            .RuleFor(x => x.OtherNumber, f => f.Phone.PhoneNumber())
-            .RuleFor(x => x.OrganizationId, f => Convert.ToInt16(f.Address.BuildingNumber()[0]));
+        var fakeRecord = GetFaker();
 
         return fakeRecord.Generate(count).ToList();
     }
 
     public Client GenerateOneRandomRecord()
-    {      
-        var fakeRecord = new Faker<Client>()
-            .RuleFor(x => x.ID, f => Convert.ToInt16(f.IndexFaker))
+    {
+        var fakeRecord = GetFaker();
+
+        return fakeRecord.Generate(1).Single();
+    }
+
+    public Faker<Client> GetFaker()
+    {
+        short index = 1;
+        return new Faker<Client>()
+            .RuleFor(x => x.ID, f => index++)
             .RuleFor(x => x.Name, f => f.Person.FullName)
             .RuleFor(x => x.NickName, f => f.Address.StreetName())
             .RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumber())
             .RuleFor(x => x.OtherNumber, f => f.Phone.PhoneNumber())
-            .RuleFor(x => x.OrganizationId, f => Convert.ToInt16(f.Address.BuildingNumber()[0]));
-
-        return fakeRecord.Generate(1).Single();
+            .RuleFor(x => x.OrganizationId, f => f.Random.Short(1,100));
     }
 }

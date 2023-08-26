@@ -92,12 +92,7 @@ public class BlockRepositoryTests
     public List<Block> GenerateRecords(int count)
     {
         Randomizer.Seed = new Random(123);
-        var fakeRecord = new Faker<Block>()
-            .RuleFor(x => x.ID, f => f.IndexFaker)
-            .RuleFor(x => x.OrderLocationId, f => f.Random.Byte())
-            .RuleFor(x => x.BlockNumber, f => f.Random.Byte(1, 4))
-            .RuleFor(x => x.SeedTrayAmount, f => f.Random.Short(1, 1000))
-            .RuleFor(x => x.NumberWithinThBlock, f => f.Random.Byte(1, 25));
+        var fakeRecord = GetFaker();
 
         return fakeRecord.Generate(count).ToList();
     }
@@ -105,13 +100,19 @@ public class BlockRepositoryTests
     public Block GenerateOneRandomRecord()
     {
         Randomizer.Seed = new Random(123);
-        var fakeRecord = new Faker<Block>()
-            .RuleFor(x => x.ID, f => f.IndexFaker)
+        var fakeRecord = GetFaker();
+        return fakeRecord.Generate(1).Single();
+    }
+
+    public Faker<Block> GetFaker()
+    {
+        int index = 1;
+        return new Faker<Block>()
+            .RuleFor(x => x.ID, f => index++)
             .RuleFor(x => x.OrderLocationId, f => f.Random.Byte())
             .RuleFor(x => x.BlockNumber, f => f.Random.Byte(1, 4))
             .RuleFor(x => x.SeedTrayAmount, f => f.Random.Short(1, 1000))
             .RuleFor(x => x.NumberWithinThBlock, f => f.Random.Byte(1, 25));
-
-        return fakeRecord.Generate(1).Single();
     }
+
 }

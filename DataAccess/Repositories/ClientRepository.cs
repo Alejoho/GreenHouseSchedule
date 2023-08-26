@@ -57,7 +57,6 @@ namespace DataAccess.Repositories
             Client client = _sowScheduleDB.Clients.Find(entity.ID);
             if (client != null)
             {   
-                client.ID=entity.ID;
                 client.Name=entity.Name;
                 client.NickName=entity.NickName;
                 client.PhoneNumber=entity.PhoneNumber;

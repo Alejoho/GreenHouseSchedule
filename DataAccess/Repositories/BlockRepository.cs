@@ -49,7 +49,6 @@ namespace DataAccess.Repositories
             Block block = _sowScheduleDB.Blocks.Find(entity.ID);
             if (block != null)
             {
-                block.ID = entity.ID;
                 block.OrderLocationId = entity.OrderLocationId;
                 block.BlockNumber = entity.BlockNumber;
                 block.SeedTrayAmount = entity.SeedTrayAmount;

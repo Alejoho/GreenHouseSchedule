@@ -107,15 +107,16 @@ public class GreenHouseRepositoryTests
 
     public Faker<Greenhouse> GetFaker()
     {
+        byte index = 1;
         return new Faker<Greenhouse>()
-            .RuleFor(x => x.ID, f => Convert.ToByte(f.IndexFaker))
+            .RuleFor(x => x.ID, f => index++)
             .RuleFor(x => x.Name, f => f.Person.FullName)
             .RuleFor(x => x.Description, f => f.Commerce.ProductDescription())
             .RuleFor(x => x.Width, f => f.Random.Short(6, 20))
             .RuleFor(x => x.Lenght, f => f.Random.Short(50, 100))
-            .RuleFor(x => x.GreenHouseArea, f => f.Random.Short(300, 2000))
+            .RuleFor(x => x.GreenHouseArea, (f, u) => u.Width * u.Lenght)
             .RuleFor(x => x.SeedTrayArea, f => f.Random.Short(200, 1500))
-            .RuleFor(x => x.AmountOfBlocks, f => Convert.ToByte(f.Random.Short(2, 4)))
+            .RuleFor(x => x.AmountOfBlocks, f => f.Random.Byte(2, 4))
             .RuleFor(x => x.Active, f => f.Random.Bool());
     }
 }
