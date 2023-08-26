@@ -79,6 +79,7 @@
     <Compile Include="Contracts\IDeliveryDetailRepository.cs" />
     <Compile Include="Contracts\IGenericRepository.cs" />
     <Compile Include="Contracts\IGreenHouseRepository.cs" />
+    <Compile Include="Contracts\IMunicipalityRepository.cs" />
     <Compile Include="Contracts\IOrderLocationRepository.cs" />
     <Compile Include="Contracts\IOrderRepository.cs" />
     <Compile Include="Contracts\IProductRepository.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Repositories\DeliveryDetailRepository.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\GreenHouseRepository.cs" />
+    <Compile Include="Repositories\MunicipalityRepository.cs" />
     <Compile Include="Repositories\OrderLocationRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Repositories\SeedTrayRepository.cs" />

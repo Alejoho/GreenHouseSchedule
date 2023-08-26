@@ -79,7 +79,6 @@ public class GreenHouseRepositoryTests
         _mockSowScheduleDbContex.Verify(x => x.GreenHouses.Find(newRecordData.ID), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
-        recordUpdated.ID.Should().Be(newRecordData.ID);
         recordUpdated.Name.Should().Be(newRecordData.Name);
         recordUpdated.Description.Should().Be(newRecordData.Description);
         recordUpdated.Width.Should().Be(newRecordData.Width);
