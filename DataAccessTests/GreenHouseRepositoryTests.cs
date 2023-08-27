@@ -12,7 +12,7 @@ public class GreenHouseRepositoryTests
 
     List<Greenhouse> _greenHouses;
     Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
-    IGreenHouseRepository _greenHouseRepository;
+    GreenHouseRepository _greenHouseRepository;
 
     public GreenHouseRepositoryTests()
     {

@@ -12,7 +12,7 @@ namespace DataAccessTests
 
         List<Order> _orders;
         Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
-        IOrderRepository _orderRepository;
+        OrderRepository _orderRepository;
 
         public OrderRepostioryTests()
         {

@@ -11,7 +11,7 @@ public class ClientRepositoryTests
 {
     List<Client> _clients;
     Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
-    IClientRepository _clientRepository;
+    ClientRepository _clientRepository;
 
     public ClientRepositoryTests()
     {

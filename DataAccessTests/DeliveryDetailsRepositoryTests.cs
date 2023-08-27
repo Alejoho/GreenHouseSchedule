@@ -11,7 +11,7 @@ public class DeliveryDetailsRepositoryTests
 {
     List<DeliveryDetail> _deliveryDetails;
     Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
-    IDeliveryDetailRepository _deliveryDetailRepository;
+    DeliveryDetailRepository _deliveryDetailRepository;
 
     public DeliveryDetailsRepositoryTests()
     {

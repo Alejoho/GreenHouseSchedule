@@ -17,7 +17,7 @@ public class MunicipalityRepositoryTests
 
     List<Municipality> _municipalities;
     Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
-    IMunicipalityRepository _municipalityRepository;
+    MunicipalityRepository _municipalityRepository;
 
     public MunicipalityRepositoryTests()
     {

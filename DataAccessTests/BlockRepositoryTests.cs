@@ -16,7 +16,7 @@ public class BlockRepositoryTests
 {
     List<Block> _blocks;
     Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
-    IBlockRepository _blockRepository;
+    BlockRepository _blockRepository;
 
     public BlockRepositoryTests()
     {
