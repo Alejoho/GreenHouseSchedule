@@ -1,13 +1,8 @@
 ﻿using Bogus;
-using DataAccess.Repositories;
 using DataAccess;
+using DataAccess.Repositories;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessTests;
 
@@ -106,7 +101,7 @@ public class ProductRepositoryTests
         byte index = 1;
         return new Faker<Product>()
             .RuleFor(x => x.ID, f => index++)
-            .RuleFor(x => x.SpecieId, f => f.Random.Byte(1,20))
+            .RuleFor(x => x.SpecieId, f => f.Random.Byte(1, 20))
             .RuleFor(x => x.Variety, f => f.Commerce.Product());
     }
 }

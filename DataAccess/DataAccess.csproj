@@ -84,6 +84,7 @@
     <Compile Include="Contracts\IOrderRepository.cs" />
     <Compile Include="Contracts\IProductRepository.cs" />
     <Compile Include="Contracts\ISeedTrayRepository.cs" />
+    <Compile Include="Contracts\ISpeciesRepository.cs" />
     <Compile Include="DeliveryDetail.cs">
       <DependentUpon>SowScheduleEntity.tt</DependentUpon>
     </Compile>
@@ -122,6 +123,7 @@
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\SeedTrayRepository.cs" />
+    <Compile Include="Repositories\SpeciesRepository.cs" />
     <Compile Include="SeedTray.cs">
       <DependentUpon>SowScheduleEntity.tt</DependentUpon>
     </Compile>
