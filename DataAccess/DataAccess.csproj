@@ -82,6 +82,7 @@
     <Compile Include="Contracts\IMunicipalityRepository.cs" />
     <Compile Include="Contracts\IOrderLocationRepository.cs" />
     <Compile Include="Contracts\IOrderRepository.cs" />
+    <Compile Include="Contracts\IOrganizationRepository.cs" />
     <Compile Include="Contracts\IProductRepository.cs" />
     <Compile Include="Contracts\ISeedTrayRepository.cs" />
     <Compile Include="Contracts\ISpeciesRepository.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Repositories\MunicipalityRepository.cs" />
     <Compile Include="Repositories\OrderLocationRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
+    <Compile Include="Repositories\OrganizationRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\SeedTrayRepository.cs" />
     <Compile Include="Repositories\SpeciesRepository.cs" />
