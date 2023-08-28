@@ -1,18 +1,18 @@
 ﻿using DataAccess.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DataAccess.Repositories
 {
-    public class OrderLocationRepository : IOrderLocationRepository
+    public class OrderLocationRepository : GenericRepository, IOrderLocationRepository
     {
-        private SowScheduleDBEntities _sowScheduleDB;
-        public OrderLocationRepository()
+        public OrderLocationRepository(SowScheduleDBEntities dbContex) : base(dbContex)
         {
-            _sowScheduleDB = new SowScheduleDBEntities();
         }
 
+        public OrderLocationRepository()
+        {
+        }
         public IEnumerable<OrderLocation> GetAll()
         {
             return _sowScheduleDB.OrderLocations;
@@ -42,10 +42,18 @@ namespace DataAccess.Repositories
 
         public bool Update(OrderLocation entity)
         {
-            OrderLocation orderLocation = _sowScheduleDB.OrderLocations
-                .Where(x => x.ID == entity.ID).FirstOrDefault();
+            OrderLocation orderLocation = _sowScheduleDB.OrderLocations.Find(entity.ID);
             if (orderLocation != null)
             {
+                orderLocation.GreenHouseId = entity.GreenHouseId;
+                orderLocation.SeedTrayId = entity.SeedTrayId;
+                orderLocation.OrderId = entity.OrderId;
+                orderLocation.SeedTrayAmount = entity.SeedTrayAmount;
+                orderLocation.SeedlingAmount = entity.SeedlingAmount;
+                orderLocation.SowDate = entity.SowDate;
+                orderLocation.EstimateDeliveryDate = entity.EstimateDeliveryDate;
+                orderLocation.RealDeliveryDate = entity.RealDeliveryDate;
+                _sowScheduleDB.SaveChanges();
                 return true;
             }
             return false;
