@@ -68,12 +68,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Block.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Client.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Contracts\IBlockRepository.cs" />
     <Compile Include="Contracts\IClientRepository.cs" />
     <Compile Include="Contracts\IDeliveryDetailRepository.cs" />
@@ -87,34 +81,7 @@
     <Compile Include="Contracts\IProductRepository.cs" />
     <Compile Include="Contracts\ISeedTrayRepository.cs" />
     <Compile Include="Contracts\ISpeciesRepository.cs" />
-    <Compile Include="DeliveryDetail.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Greenhouse.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Municipality.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Order.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OrderDetail.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OrderLocation.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Organization.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Product.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Province.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Repositories\BlockRepository.cs" />
     <Compile Include="Repositories\ClientRepository.cs" />
     <Compile Include="Repositories\DeliveryDetailRepository.cs" />
@@ -128,29 +95,15 @@
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\SeedTrayRepository.cs" />
     <Compile Include="Repositories\SpeciesRepository.cs" />
-    <Compile Include="SeedTray.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="SowScheduleEntity.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SowScheduleEntity.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="SowScheduleEntity.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="SowScheduleEntity.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SowScheduleEntity.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Species.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TypesOfOrganization.cs">
-      <DependentUpon>SowScheduleEntity.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
