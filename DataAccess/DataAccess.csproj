@@ -200,6 +200,12 @@
       <LastGenOutput>SowScheduleEntity.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SupportLayer\SupportLayer.csproj">
+      <Project>{5e47e8ec-3968-4686-9675-5d5b59c7b1ed}</Project>
+      <Name>SupportLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
