@@ -13,7 +13,8 @@ namespace DataAccess
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using SupportLayer.DatabaseModels;
+
     public partial class SowScheduleDBEntities : DbContext
     {
         public SowScheduleDBEntities()

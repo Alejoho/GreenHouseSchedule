@@ -1,6 +1,7 @@
 ﻿using DataAccess.Contracts;
 using System;
 using System.Collections.Generic;
+using SupportLayer.DatabaseModels;
 
 namespace DataAccess.Repositories
 {
