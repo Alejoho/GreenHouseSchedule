@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataAccess
+namespace SupportLayer.DatabaseModels
 {
     using System;
     using System.Collections.Generic;
