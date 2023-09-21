@@ -23,16 +23,16 @@ namespace DataAccess.Repositories
 
         public bool Insert(Greenhouse entity)
         {
-            try
-            {
+            //try
+            //{
                 _sowScheduleDB.GreenHouses.Add(entity);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            //}
+            //catch (Exception ex)
+            //{                
+            //    return false;
+            //}
         }
 
         public bool Remove(int pId)

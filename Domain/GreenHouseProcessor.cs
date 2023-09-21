@@ -27,7 +27,8 @@ namespace Domain
         private bool ValidateData(Greenhouse model)
         {
             //TODO - Create the method to validate the model
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return true;
         }
 
         public bool SaveGreenHouse(Greenhouse model)

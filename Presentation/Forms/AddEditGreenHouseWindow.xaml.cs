@@ -36,16 +36,18 @@ namespace Presentation.Forms
         {
             //bool? test = chkActive.IsChecked;
             //return;
-            PopulateModel();
-            if (processor.SaveGreenHouse(model) == true)
+            if (ValidateDataType() == true)
             {
-                //TODO - mejorar el mensaje
-                MessageBox.Show("Registro salvado");
-                this.Close();
-            }
-            else
-            {
-                ShowError();
+                if (processor.SaveGreenHouse(model) == true)
+                {
+                    //TODO - mejorar el mensaje
+                    MessageBox.Show("Registro salvado");
+                    this.Close();
+                }
+                else
+                {
+                    ShowError();
+                }
             }
         }
 
@@ -54,7 +56,7 @@ namespace Presentation.Forms
             MessageBox.Show(processor.FirstError);
         }
 
-        private void PopulateModel()
+        private bool ValidateDataType()
         {
             model.Name = tbtxtName.FieldContent;
             model.Description = txtDescription.Text;
@@ -66,7 +68,7 @@ namespace Presentation.Forms
             else
             {
                 MessageBox.Show("Ancho inválido");
-                return;
+                return false;
             }
 
             if (decimal.TryParse(tbtxtLength.FieldContent, out decimal length))
@@ -76,18 +78,18 @@ namespace Presentation.Forms
             else
             {
                 MessageBox.Show("Largo inválido");
-                return;
+                return false;
             }
 
-            if (decimal.TryParse(tbtxtGreenHouseArea.FieldContent, out decimal greenHouseArea))
-            {
-                model.GreenHouseArea = greenHouseArea;
-            }
-            else
-            {
-                MessageBox.Show("Área de la casa de posturas inválido");
-                return;
-            }
+            //if (decimal.TryParse(tbtxtGreenHouseArea.FieldContent, out decimal greenHouseArea))
+            //{
+            model.GreenHouseArea = width * length;
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Área de la casa de posturas inválido");
+            //    return false;
+            //}
 
             if (decimal.TryParse(tbtxtSeedTrayArea.FieldContent, out decimal seedTrayArea))
             {
@@ -96,22 +98,22 @@ namespace Presentation.Forms
             else
             {
                 MessageBox.Show("Área de bandejas inválido");
-                return;
+                return false;
             }
 
             if (byte.TryParse(tbtxtAmountOfBlocks.FieldContent, out byte amountOfBlocks))
             {
-                model.SeedTrayArea = amountOfBlocks;
+                model.AmountOfBlocks = amountOfBlocks;
             }
             else
             {
-                MessageBox.Show("Área de bandejas inválido");
-                return;
+                MessageBox.Show("Cantidad de bloques inválido");
+                return false;
             }
 
             model.Active = chkActive.IsChecked ?? false;
 
-            //model.GreenHouseArea
+            return true;
         }
     }
 }

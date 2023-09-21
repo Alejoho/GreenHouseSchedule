@@ -13,7 +13,7 @@
             <custom:TextBoxWithLabel FieldLabel="Nombre*" HorizontalAlignment="Right" x:Name="tbtxtName"/>
             <custom:TextBoxWithLabel FieldLabel="Ancho" HorizontalAlignment="Right" x:Name="tbtxtWidth"/>
             <custom:TextBoxWithLabel FieldLabel="Largo" HorizontalAlignment="Right" x:Name="tbtxtLength"/>
-            <custom:TextBoxWithLabel FieldLabel="Area de la casa" HorizontalAlignment="Right" x:Name="tbtxtGreenHouseArea"/>
+            <!--<custom:TextBoxWithLabel FieldLabel="Area de la casa" HorizontalAlignment="Right" x:Name="tbtxtGreenHouseArea"/>-->
             <custom:TextBoxWithLabel FieldLabel="Area de bandejas*" HorizontalAlignment="Right" x:Name="tbtxtSeedTrayArea"/>
             <custom:TextBoxWithLabel FieldLabel="Cantidad de bloques*" HorizontalAlignment="Right" x:Name="tbtxtAmountOfBlocks"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
