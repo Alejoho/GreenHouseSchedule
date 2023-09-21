@@ -151,7 +151,7 @@ create table "GreenHouses"(
 	"Name" nvarchar(50) not null,
 	"Description" nvarchar(max),
 	"Width" numeric(4,2),
-	"Lenght" numeric(4,2),
+	"Length" numeric(4,2),
 	"GreenHouseArea" numeric(5,2),
 	"SeedTrayArea" numeric(5,2) not null,
 	"AmountOfBlocks" tinyint not null,

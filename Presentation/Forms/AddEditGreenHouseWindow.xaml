@@ -6,16 +6,22 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
-        Title="Añadir/Editar casa de postura" Height="280" Width="400" ResizeMode="NoResize"
+        Title="Añadir/Editar casa de postura" Height="350" Width="400" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel Margin="0 10 0 0" HorizontalAlignment="Center">
-            <custom:TextBoxWithLabel FieldLabel="Nombre*" HorizontalAlignment="Right" x:Name="lbltxtName"/>
-            <custom:TextBoxWithLabel FieldLabel="Ancho" HorizontalAlignment="Right" x:Name="lbltxtWidth"/>
-            <custom:TextBoxWithLabel FieldLabel="Largo" HorizontalAlignment="Right" x:Name="lbltxtLenght"/>
-            <custom:TextBoxWithLabel FieldLabel="Area de la casa" HorizontalAlignment="Right" x:Name="lbltxtGreenHouseArea"/>
-            <custom:TextBoxWithLabel FieldLabel="Area de bandejas*" HorizontalAlignment="Right" x:Name="lbltxtSeedTrayArea"/>
-            <custom:TextBoxWithLabel FieldLabel="Cantidad de bloques*" HorizontalAlignment="Right" x:Name="lbltxtAmountOfBlocks"/>
+            <custom:TextBoxWithLabel FieldLabel="Nombre*" HorizontalAlignment="Right" x:Name="tbtxtName"/>
+            <custom:TextBoxWithLabel FieldLabel="Ancho" HorizontalAlignment="Right" x:Name="tbtxtWidth"/>
+            <custom:TextBoxWithLabel FieldLabel="Largo" HorizontalAlignment="Right" x:Name="tbtxtLength"/>
+            <custom:TextBoxWithLabel FieldLabel="Area de la casa" HorizontalAlignment="Right" x:Name="tbtxtGreenHouseArea"/>
+            <custom:TextBoxWithLabel FieldLabel="Area de bandejas*" HorizontalAlignment="Right" x:Name="tbtxtSeedTrayArea"/>
+            <custom:TextBoxWithLabel FieldLabel="Cantidad de bloques*" HorizontalAlignment="Right" x:Name="tbtxtAmountOfBlocks"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="Description" VerticalAlignment="Top" Margin="0 3 5 0" HorizontalAlignment="Right"
+                           x:Name="tbDescription"/>
+                <TextBox Width="150" Height="70" Padding="5 0 0 0" TextWrapping="Wrap" Margin="0 3 0 0"
+                         x:Name="txtDescription"/>
+            </StackPanel>
             <CheckBox x:Name="chkActive" Content="Activa" HorizontalAlignment="Center" Margin="0 10 0 0" IsChecked="True"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
                 <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0"

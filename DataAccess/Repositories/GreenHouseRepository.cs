@@ -57,7 +57,7 @@ namespace DataAccess.Repositories
                 greenHouse.Name = entity.Name;
                 greenHouse.Description = entity.Description;
                 greenHouse.Width = entity.Width;
-                greenHouse.Lenght   = entity.Lenght;
+                greenHouse.Length   = entity.Length;
                 greenHouse.GreenHouseArea = entity.GreenHouseArea;
                 greenHouse.SeedTrayArea = entity.SeedTrayArea;
                 greenHouse.AmountOfBlocks = entity.AmountOfBlocks;

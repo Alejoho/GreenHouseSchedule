@@ -24,7 +24,7 @@ namespace SupportLayer.DatabaseModels
         public string Name { get; set; }
         public string Description { get; set; }
         public Nullable<decimal> Width { get; set; }
-        public Nullable<decimal> Lenght { get; set; }
+        public Nullable<decimal> Length { get; set; }
         public Nullable<decimal> GreenHouseArea { get; set; }
         public decimal SeedTrayArea { get; set; }
         public byte AmountOfBlocks { get; set; }
