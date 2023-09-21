@@ -40,16 +40,14 @@ namespace Domain
         /// </summary>
         public SeedBedStatus()
         {
-
-            //OrderModel minee= new OrderModel(); 
-            _iteratorDate = DateTime.Now.AddDays(-90); //// TODO: el -90 hay que sacarlo del
-                                                       // archivo de configuracion
-                                                       //_iteratorDate.Month
+            //OrderModel minee= new OrderModel();
+            // TODO - el -90 hay que sacarlo del archivo de configuracion _iteratorDate.Month 
+            _iteratorDate = DateTime.Now.AddDays(-90); 
 
             _presentDate = DateTime.Now;
 
-            _amountOfSowSeedTrayPerDay = 500; //// TODO: el 500 hay que sacarlo del
-                                              // archivo de configuracion           
+            // TODO - el 500 hay que sacarlo delarchivo de configuracion           
+            _amountOfSowSeedTrayPerDay = 500; 
 
             _greenHouseRepository = new GreenHouseRepository();
             _seedTrayRepository = new SeedTrayRepository();

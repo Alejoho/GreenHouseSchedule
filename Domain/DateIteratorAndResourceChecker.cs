@@ -119,7 +119,7 @@ namespace Domain
             LinkedList<OrderModel> ordersToSow = (LinkedList<OrderModel>)SeedBedStatus.Orders
                 .Where(order => order.EstimateSowDate <= SeedBedStatus.IteratorDate && order.Complete == false);
 
-            int minimumLimitOfSow = 50; //TODO: Esta variable se saca del archivo de configuracion
+            int minimumLimitOfSow = 50; //TODO - Esta variable se saca del archivo de configuracion
 
             foreach (OrderModel order in ordersToSow)
             {
@@ -507,7 +507,7 @@ namespace Domain
 
         #region Properties
 
-        //TODO:Evaluar si quitar estas propiedades ya que no se usan fuera de la clase
+        //TODO - Evaluar si quitar estas propiedades ya que no se usan fuera de la clase
 
 
         public SeedBedStatus SeedBedStatus { get => _seedBedStatus; set => _seedBedStatus = value; }
