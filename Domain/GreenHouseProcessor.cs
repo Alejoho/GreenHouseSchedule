@@ -57,8 +57,8 @@ namespace Domain
         public IEnumerable<Greenhouse> GetAllGreenHouses()
         {
             //TODO - Create the GetAll method for green houses
-            throw new NotImplementedException();
-            //return repository.GetAll();
+            //throw new NotImplementedException();
+            return repository.GetAll();
         }
     }
 }

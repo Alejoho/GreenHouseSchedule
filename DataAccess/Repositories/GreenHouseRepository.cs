@@ -18,7 +18,8 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Greenhouse> GetAll()
         {
-            return _sowScheduleDB.GreenHouses;
+            var output = _sowScheduleDB.GreenHouses;
+            return output;
         }
 
         public bool Insert(Greenhouse entity)

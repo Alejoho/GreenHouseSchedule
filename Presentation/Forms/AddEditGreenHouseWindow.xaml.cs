@@ -1,5 +1,7 @@
 ﻿using Domain;
 using SupportLayer.DatabaseModels;
+using System;
+using System.Linq;
 using System.Windows;
 
 
@@ -18,6 +20,7 @@ namespace Presentation.Forms
             processor = new GreenHouseProcessor();
             model = new Greenhouse();
             model.ID = 0;
+            LlenarCasillas();
         }
 
         public AddEditGreenHouseWindow(Greenhouse model)
@@ -34,8 +37,10 @@ namespace Presentation.Forms
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+
             //bool? test = chkActive.IsChecked;
             //return;
+            /*
             if (ValidateDataType() == true)
             {
                 if (processor.SaveGreenHouse(model) == true)
@@ -49,6 +54,10 @@ namespace Presentation.Forms
                     ShowError();
                 }
             }
+            */
+
+            var lista = processor.GetAllGreenHouses();
+            Console.WriteLine(lista.Count());
         }
 
         private void ShowError()
@@ -114,6 +123,16 @@ namespace Presentation.Forms
             model.Active = chkActive.IsChecked ?? false;
 
             return true;
+        }
+
+        private void LlenarCasillas()
+        {
+            tbtxtName.FieldContent = "casa 9";
+            txtDescription.Text = "esto es una casa grande";
+            tbtxtWidth.FieldContent = "10";
+            tbtxtLength.FieldContent = "25";
+            tbtxtSeedTrayArea.FieldContent = "195";
+            tbtxtAmountOfBlocks.FieldContent = "4";
         }
     }
 }
