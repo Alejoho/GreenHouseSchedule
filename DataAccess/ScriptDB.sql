@@ -159,7 +159,7 @@ create table "GreenHouses"(
 	CONSTRAINT [PK_GreenHouses] primary key ("ID"),
 	CONSTRAINT [UC_GreenHouses_Name] UNIQUE ("Name"),
 	CONSTRAINT [CK_GreenHouses_Width] CHECK ("Width" > 0 and "Width" < 200),
-	CONSTRAINT [CK_GreenHouses_Lenght] CHECK ("Lenght" > 0 and "Lenght" < 200),
+	CONSTRAINT [CK_GreenHouses_Length] CHECK ("Length" > 0 and "Length" < 200),
 	CONSTRAINT [CK_GreenHouses_GreenHouseArea] CHECK ("GreenHouseArea" > 0),
 	CONSTRAINT [CK_GreenHouses_SeedTrayArea] CHECK ("SeedTrayArea" > 0),
 	CONSTRAINT [CK_GreenHouses_AmountOfBlocks] CHECK ("AmountOfBlocks" > 0 and "AmountOfBlocks" < 10)
