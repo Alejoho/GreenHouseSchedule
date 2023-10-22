@@ -1,7 +1,8 @@
 ﻿using DataAccess.Contracts;
 using System;
 using System.Collections.Generic;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -47,7 +48,7 @@ namespace DataAccess.Repositories
 
         public bool Update(Municipality entity)
         {
-            Municipality municipality = _sowScheduleDB.Municipalities.Find(entity.ID);
+            Municipality municipality = _sowScheduleDB.Municipalities.Find(entity.Id);
             if (municipality != null)
             {
                 municipality.Name = entity.Name;

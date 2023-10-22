@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -53,7 +54,7 @@ namespace DataAccess.Repositories
 
         public bool Update(DeliveryDetail entity)
         {
-            DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(entity.ID);                
+            DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(entity.Id);                
             if (deliveryDetail != null)
             {
                 deliveryDetail.BlockId=entity.BlockId;

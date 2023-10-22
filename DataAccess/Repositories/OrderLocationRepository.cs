@@ -1,7 +1,8 @@
 ﻿using DataAccess.Contracts;
 using System;
 using System.Collections.Generic;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -45,7 +46,7 @@ namespace DataAccess.Repositories
 
         public bool Update(OrderLocation entity)
         {
-            OrderLocation orderLocation = _sowScheduleDB.OrderLocations.Find(entity.ID);
+            OrderLocation orderLocation = _sowScheduleDB.OrderLocations.Find(entity.Id);
             if (orderLocation != null)
             {
                 orderLocation.GreenHouseId = entity.GreenHouseId;

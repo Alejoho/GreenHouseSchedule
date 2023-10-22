@@ -2,7 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -52,7 +53,7 @@ namespace DataAccess.Repositories
 
         public bool Update(SeedTray entity)
         {
-            SeedTray seedTray = _sowScheduleDB.SeedTrays.Find(entity.ID);
+            SeedTray seedTray = _sowScheduleDB.SeedTrays.Find(entity.Id);
             if (seedTray != null)
             {
                 seedTray.Name = entity.Name;

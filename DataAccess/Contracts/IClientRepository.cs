@@ -1,4 +1,4 @@
-﻿using SupportLayer.DatabaseModels;
+﻿using SupportLayer.Models;
 
 namespace DataAccess.Contracts
 {

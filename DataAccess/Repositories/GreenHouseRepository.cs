@@ -2,8 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SupportLayer.DatabaseModels;
-
+using SupportLayer.Models;
+using DataAccess.Context;
+// TODO - Fix the error in the Length propertie of GreenHouses
 namespace DataAccess.Repositories
 {
     public class GreenHouseRepository : GenericRepository, IGreenHouseRepository
@@ -16,13 +17,13 @@ namespace DataAccess.Repositories
         {
         }
 
-        public IEnumerable<Greenhouse> GetAll()
+        public IEnumerable<GreenHouse> GetAll()
         {
             var output = _sowScheduleDB.GreenHouses;
             return output;
         }
 
-        public bool Insert(Greenhouse entity)
+        public bool Insert(GreenHouse entity)
         {
             //try
             //{
@@ -40,7 +41,7 @@ namespace DataAccess.Repositories
         {
             try
             {
-                Greenhouse greenHouse = _sowScheduleDB.GreenHouses.Find(pId);
+                GreenHouse greenHouse = _sowScheduleDB.GreenHouses.Find(pId);
                 _sowScheduleDB.GreenHouses.Remove(greenHouse);
                 _sowScheduleDB.SaveChanges();
                 return true;
@@ -50,15 +51,15 @@ namespace DataAccess.Repositories
             }
         }
 
-        public bool Update(Greenhouse entity)
+        public bool Update(GreenHouse entity)
         {
-            Greenhouse greenHouse = _sowScheduleDB.GreenHouses.Find(entity.ID);
+            GreenHouse greenHouse = _sowScheduleDB.GreenHouses.Find(entity.Id);
             if (greenHouse != null)
             {
                 greenHouse.Name = entity.Name;
                 greenHouse.Description = entity.Description;
                 greenHouse.Width = entity.Width;
-                greenHouse.Length   = entity.Length;
+                greenHouse.Lenght   = entity.Lenght;
                 greenHouse.GreenHouseArea = entity.GreenHouseArea;
                 greenHouse.SeedTrayArea = entity.SeedTrayArea;
                 greenHouse.AmountOfBlocks = entity.AmountOfBlocks;

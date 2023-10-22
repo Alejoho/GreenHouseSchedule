@@ -1,8 +1,8 @@
-﻿using SupportLayer.DatabaseModels;
+﻿using SupportLayer.Models;
 
 namespace DataAccess.Contracts
 {
-    public interface IGreenHouseRepository : IGenericRepository<Greenhouse>
+    public interface IGreenHouseRepository : IGenericRepository<GreenHouse>
     {
 
     }

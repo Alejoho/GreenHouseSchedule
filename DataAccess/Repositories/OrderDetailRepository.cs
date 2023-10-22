@@ -5,7 +5,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -51,7 +52,7 @@ namespace DataAccess.Repositories
 
         public bool Update(OrderDetail entity)
         {
-            OrderDetail orderDetail = _sowScheduleDB.OrderDetails.Find(entity.ID);
+            OrderDetail orderDetail = _sowScheduleDB.OrderDetails.Find(entity.Id);
             if (orderDetail != null)
             {
                 orderDetail.OrderId = entity.OrderId;

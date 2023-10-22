@@ -1,7 +1,8 @@
 ﻿using DataAccess.Contracts;
 using System;
 using System.Collections.Generic;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -47,7 +48,7 @@ namespace DataAccess.Repositories
 
         public bool Update(Block entity)
         {
-            Block block = _sowScheduleDB.Blocks.Find(entity.ID);
+            Block block = _sowScheduleDB.Blocks.Find(entity.Id);
             if (block != null)
             {
                 block.OrderLocationId = entity.OrderLocationId;
@@ -58,6 +59,6 @@ namespace DataAccess.Repositories
                 return true;
             }
             return false;
-        }
+        } 
     }
 }

@@ -2,7 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -48,7 +49,7 @@ namespace DataAccess.Repositories
 
         public bool Update(Product entity)
         {
-            Product product = _sowScheduleDB.Products.Find(entity.ID);
+            Product product = _sowScheduleDB.Products.Find(entity.Id);
             if(product!=null)
             {
                 product.SpecieId = entity.SpecieId;

@@ -5,7 +5,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -55,7 +56,7 @@ namespace DataAccess.Repositories
 
         public bool Update(Client entity)
         {
-            Client client = _sowScheduleDB.Clients.Find(entity.ID);
+            Client client = _sowScheduleDB.Clients.Find(entity.Id);
             if (client != null)
             {   
                 client.Name=entity.Name;

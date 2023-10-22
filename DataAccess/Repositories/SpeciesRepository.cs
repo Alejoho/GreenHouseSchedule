@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -50,7 +51,7 @@ namespace DataAccess.Repositories
 
         public bool Update(Species entity)
         {
-            Species species = _sowScheduleDB.Species.Find(entity.ID);
+            Species species = _sowScheduleDB.Species.Find(entity.Id);
             if (species != null)
             {
                 species.Name = entity.Name;

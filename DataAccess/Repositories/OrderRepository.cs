@@ -1,7 +1,8 @@
 ﻿using DataAccess.Contracts;
 using System;
 using System.Collections.Generic;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
+using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -52,10 +53,10 @@ namespace DataAccess.Repositories
 
         public bool Update(Order entity)
         {
-            Order order = _sowScheduleDB.Orders.Find(entity.ID);
+            Order order = _sowScheduleDB.Orders.Find(entity.Id);
             if (order != null)
             {
-                order.ID = entity.ID;
+                order.Id = entity.Id;
                 order.ClientId = entity.ClientId;
                 order.ProductId = entity.ProductId;
                 order.AmountofWishedSeedlings = entity.AmountofWishedSeedlings;
