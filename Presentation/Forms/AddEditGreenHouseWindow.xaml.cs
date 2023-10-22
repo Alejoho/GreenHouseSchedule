@@ -1,5 +1,5 @@
 ﻿using Domain;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
 using System;
 using System.Linq;
 using System.Windows;
@@ -13,17 +13,17 @@ namespace Presentation.Forms
     public partial class AddEditGreenHouseWindow : Window
     {
         private GreenHouseProcessor processor;
-        private Greenhouse model;
+        private GreenHouse model;
         public AddEditGreenHouseWindow()
         {
             InitializeComponent();
             processor = new GreenHouseProcessor();
-            model = new Greenhouse();
-            model.ID = 0;
+            model = new GreenHouse();
+            model.Id = 0;
             LlenarCasillas();
         }
 
-        public AddEditGreenHouseWindow(Greenhouse model)
+        public AddEditGreenHouseWindow(GreenHouse model)
         {
             InitializeComponent();
             processor = new GreenHouseProcessor();
@@ -82,7 +82,7 @@ namespace Presentation.Forms
 
             if (decimal.TryParse(tbtxtLength.FieldContent, out decimal length))
             {
-                model.Length = length;
+                model.Lenght = length;
             }
             else
             {
