@@ -41,20 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseModels\Block.cs" />
-    <Compile Include="DatabaseModels\Client.cs" />
-    <Compile Include="DatabaseModels\DeliveryDetail.cs" />
-    <Compile Include="DatabaseModels\Greenhouse.cs" />
-    <Compile Include="DatabaseModels\Municipality.cs" />
-    <Compile Include="DatabaseModels\Order.cs" />
-    <Compile Include="DatabaseModels\OrderDetail.cs" />
-    <Compile Include="DatabaseModels\OrderLocation.cs" />
-    <Compile Include="DatabaseModels\Organization.cs" />
-    <Compile Include="DatabaseModels\Product.cs" />
-    <Compile Include="DatabaseModels\Province.cs" />
-    <Compile Include="DatabaseModels\SeedTray.cs" />
-    <Compile Include="DatabaseModels\Species.cs" />
-    <Compile Include="DatabaseModels\TypesOfOrganization.cs" />
+    <Compile Include="Models\Block.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\DeliveryDetail.cs" />
+    <Compile Include="Models\Greenhouse.cs" />
+    <Compile Include="Models\Municipality.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDetail.cs" />
+    <Compile Include="Models\OrderLocation.cs" />
+    <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Province.cs" />
+    <Compile Include="Models\SeedTray.cs" />
+    <Compile Include="Models\Species.cs" />
+    <Compile Include="Models\TypesOfOrganization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
