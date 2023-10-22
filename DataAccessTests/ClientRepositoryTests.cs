@@ -45,8 +45,8 @@ public class ClientRepositoryTests
     [Fact]
     public void Remove_ShouldRemoveARecord()
     {
-        int idOfTheRecordToRemove = _clients.Last().ID;
-        var recordToRemove = _clients.Find(x => x.ID == idOfTheRecordToRemove);
+        int idOfTheRecordToRemove = _clients.Last().Id;
+        var recordToRemove = _clients.Find(x => x.Id == idOfTheRecordToRemove);
 
         _mockSowScheduleDbContex.Setup(x => x.Clients.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
 
@@ -62,20 +62,20 @@ public class ClientRepositoryTests
     [Fact]
     public void Update_ShouldUpdateARecord()
     {
-        var idOfTheRecordToUpdate = _clients.Last().ID;
-        var recordToUpdate = _clients.Find(x => x.ID == idOfTheRecordToUpdate);
+        var idOfTheRecordToUpdate = _clients.Last().Id;
+        var recordToUpdate = _clients.Find(x => x.Id == idOfTheRecordToUpdate);
 
         var newRecordData = GenerateOneRandomRecord();
-        newRecordData.ID = idOfTheRecordToUpdate;
+        newRecordData.Id = idOfTheRecordToUpdate;
 
-        _mockSowScheduleDbContex.Setup(x => x.Clients.Find(newRecordData.ID)).Returns(recordToUpdate);
+        _mockSowScheduleDbContex.Setup(x => x.Clients.Find(newRecordData.Id)).Returns(recordToUpdate);
 
         bool actual = _clientRepository.Update(newRecordData);
 
         actual.Should().BeTrue();
 
-        var recordUpdated = _clients.Find(x => x.ID == idOfTheRecordToUpdate);
-        _mockSowScheduleDbContex.Verify(x => x.Clients.Find(newRecordData.ID), Times.Once());
+        var recordUpdated = _clients.Find(x => x.Id == idOfTheRecordToUpdate);
+        _mockSowScheduleDbContex.Verify(x => x.Clients.Find(newRecordData.Id), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
         recordUpdated.Name.Should().Be(newRecordData.Name);
@@ -104,7 +104,7 @@ public class ClientRepositoryTests
     {
         short index = 1;
         return new Faker<Client>()
-            .RuleFor(x => x.ID, f => index++)
+            .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.Name, f => f.Person.FullName)
             .RuleFor(x => x.NickName, f => f.Address.StreetName())
             .RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumber())

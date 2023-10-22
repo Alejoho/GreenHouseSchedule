@@ -45,8 +45,8 @@ public class OrderLocationRepositoryTests
     [Fact]
     public void Remove_ShouldRemoveARecord()
     {
-        int idOfTheRecordToRemove = _orderLocations.Last().ID;
-        var recordToRemove = _orderLocations.Find(x => x.ID == idOfTheRecordToRemove);
+        int idOfTheRecordToRemove = _orderLocations.Last().Id;
+        var recordToRemove = _orderLocations.Find(x => x.Id == idOfTheRecordToRemove);
 
         _mockSowScheduleDbContex.Setup(x => x.OrderLocations.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
 
@@ -62,20 +62,20 @@ public class OrderLocationRepositoryTests
     [Fact]
     public void Update_ShouldUpdateARecord()
     {
-        var idOfTheRecordToUpdate = _orderLocations.Last().ID;
-        var recordToUpdate = _orderLocations.Find(x => x.ID == idOfTheRecordToUpdate);
+        var idOfTheRecordToUpdate = _orderLocations.Last().Id;
+        var recordToUpdate = _orderLocations.Find(x => x.Id == idOfTheRecordToUpdate);
 
         var newRecordData = GenerateOneRandomRecord();
-        newRecordData.ID = idOfTheRecordToUpdate;
+        newRecordData.Id = idOfTheRecordToUpdate;
 
-        _mockSowScheduleDbContex.Setup(x => x.OrderLocations.Find(newRecordData.ID)).Returns(recordToUpdate);
+        _mockSowScheduleDbContex.Setup(x => x.OrderLocations.Find(newRecordData.Id)).Returns(recordToUpdate);
 
         bool actual = _orderLocationRepository.Update(newRecordData);
 
         actual.Should().BeTrue();
 
-        var recordUpdated = _orderLocations.Find(x => x.ID == idOfTheRecordToUpdate);
-        _mockSowScheduleDbContex.Verify(x => x.OrderLocations.Find(newRecordData.ID), Times.Once());
+        var recordUpdated = _orderLocations.Find(x => x.Id == idOfTheRecordToUpdate);
+        _mockSowScheduleDbContex.Verify(x => x.OrderLocations.Find(newRecordData.Id), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
         recordUpdated.GreenHouseId.Should().Be(newRecordData.GreenHouseId);
@@ -109,7 +109,7 @@ public class OrderLocationRepositoryTests
         short[] productionDays = new short[] { 30,45};
         short index = 1;
         return new Faker<OrderLocation>()
-            .RuleFor(x => x.ID, f => index++)
+            .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.GreenHouseId, f => f.Random.Byte(1, 8))
             .RuleFor(x => x.SeedTrayId, f => f.Random.Byte(1, 7))
             .RuleFor(x => x.OrderId, f => f.Random.Short(1, 500))

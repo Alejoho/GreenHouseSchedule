@@ -46,8 +46,8 @@ namespace DataAccessTests
         [Fact]
         public void Remove_ShouldRemoveARecord()
         {
-            int idOfTheRecordToRemove = _orders.Last().ID;
-            var recordToRemove = _orders.Find(x => x.ID == idOfTheRecordToRemove);
+            int idOfTheRecordToRemove = _orders.Last().Id;
+            var recordToRemove = _orders.Find(x => x.Id == idOfTheRecordToRemove);
 
             _mockSowScheduleDbContex.Setup(x => x.Orders.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
 
@@ -63,20 +63,20 @@ namespace DataAccessTests
         [Fact]
         public void Update_ShouldUpdateARecord()
         {
-            var idOfTheRecordToUpdate = _orders.Last().ID;
-            var recordToUpdate = _orders.Find(x => x.ID == idOfTheRecordToUpdate);
+            var idOfTheRecordToUpdate = _orders.Last().Id;
+            var recordToUpdate = _orders.Find(x => x.Id == idOfTheRecordToUpdate);
 
             var newRecordData = GenerateOneRandomRecord();
-            newRecordData.ID = idOfTheRecordToUpdate;
+            newRecordData.Id = idOfTheRecordToUpdate;
 
-            _mockSowScheduleDbContex.Setup(x => x.Orders.Find(newRecordData.ID)).Returns(recordToUpdate);
+            _mockSowScheduleDbContex.Setup(x => x.Orders.Find(newRecordData.Id)).Returns(recordToUpdate);
 
             bool actual = _orderRepository.Update(newRecordData);
 
             actual.Should().BeTrue();
 
-            var recordUpdated = _orders.Find(x => x.ID == idOfTheRecordToUpdate);
-            _mockSowScheduleDbContex.Verify(x => x.Orders.Find(newRecordData.ID), Times.Once());
+            var recordUpdated = _orders.Find(x => x.Id == idOfTheRecordToUpdate);
+            _mockSowScheduleDbContex.Verify(x => x.Orders.Find(newRecordData.Id), Times.Once());
             _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
             recordUpdated.ClientId.Should().Be(newRecordData.ClientId);
@@ -112,7 +112,7 @@ namespace DataAccessTests
             int[] productionDays = new[] { 30, 45 };
             short index = 1;
             return new Faker<Order>()
-                .RuleFor(x => x.ID, f => index++)
+                .RuleFor(x => x.Id, f => index++)
                 .RuleFor(x => x.ClientId, f => f.Random.Short(1, 300))
                 .RuleFor(x => x.ProductId, f => f.Random.Byte(1, 60))
                 .RuleFor(x => x.AmountofWishedSeedlings, f => f.Random.Int(20000, 80000))

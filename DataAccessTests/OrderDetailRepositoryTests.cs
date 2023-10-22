@@ -50,8 +50,8 @@ namespace DataAccessTests
         [Fact]
         public void Remove_ShouldRemoveARecord()
         {
-            int idOfTheRecordToRemove = _orderDetails.Last().ID;
-            var recordToRemove = _orderDetails.Find(x => x.ID == idOfTheRecordToRemove);
+            int idOfTheRecordToRemove = _orderDetails.Last().Id;
+            var recordToRemove = _orderDetails.Find(x => x.Id == idOfTheRecordToRemove);
 
             _mockSowScheduleDbContex.Setup(x => x.OrderDetails.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
 
@@ -67,20 +67,20 @@ namespace DataAccessTests
         [Fact]
         public void Update_ShouldUpdateARecord()
         {
-            var idOfTheRecordToUpdate = _orderDetails.Last().ID;
-            var recordToUpdate = _orderDetails.Find(x => x.ID == idOfTheRecordToUpdate);
+            var idOfTheRecordToUpdate = _orderDetails.Last().Id;
+            var recordToUpdate = _orderDetails.Find(x => x.Id == idOfTheRecordToUpdate);
 
             var newRecordData = GenerateOneRandomRecord();
-            newRecordData.ID = idOfTheRecordToUpdate;
+            newRecordData.Id = idOfTheRecordToUpdate;
 
-            _mockSowScheduleDbContex.Setup(x => x.OrderDetails.Find(newRecordData.ID)).Returns(recordToUpdate);
+            _mockSowScheduleDbContex.Setup(x => x.OrderDetails.Find(newRecordData.Id)).Returns(recordToUpdate);
 
             bool actual = _orderDetailRepository.Update(newRecordData);
 
             actual.Should().BeTrue();
 
-            var recordUpdated = _orderDetails.Find(x => x.ID == idOfTheRecordToUpdate);
-            _mockSowScheduleDbContex.Verify(x => x.OrderDetails.Find(newRecordData.ID), Times.Once());
+            var recordUpdated = _orderDetails.Find(x => x.Id == idOfTheRecordToUpdate);
+            _mockSowScheduleDbContex.Verify(x => x.OrderDetails.Find(newRecordData.Id), Times.Once());
             _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
             recordUpdated.OrderId.Should().Be(newRecordData.OrderId);
@@ -108,7 +108,7 @@ namespace DataAccessTests
         {
             short index = 1;
             return new Faker<OrderDetail>()
-                .RuleFor(x => x.ID, f => index++)
+                .RuleFor(x => x.Id, f => index++)
                 .RuleFor(x => x.OrderId, f => f.Random.Short(1,300))
                 .RuleFor(x => x.SeedsSource, f => f.Address.StreetName())
                 .RuleFor(x => x.Germination, f => f.Random.Byte(45,95))

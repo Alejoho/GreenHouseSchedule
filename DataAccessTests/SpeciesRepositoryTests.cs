@@ -3,6 +3,8 @@ using DataAccess;
 using DataAccess.Repositories;
 using FluentAssertions;
 using Moq;
+using SupportLayer.Models;
+using DataAccess.Context;
 
 namespace DataAccessTests;
 
@@ -45,8 +47,8 @@ public class SpeciesRepositoryTests
     [Fact]
     public void Remove_ShouldRemoveARecord()
     {
-        int idOfTheRecordToRemove = _species.Last().ID;
-        var recordToRemove = _species.Find(x => x.ID == idOfTheRecordToRemove);
+        int idOfTheRecordToRemove = _species.Last().Id;
+        var recordToRemove = _species.Find(x => x.Id == idOfTheRecordToRemove);
 
         _mockSowScheduleDbContex.Setup(x => x.Species.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
 
@@ -62,20 +64,20 @@ public class SpeciesRepositoryTests
     [Fact]
     public void Update_ShouldUpdateARecord()
     {
-        var idOfTheRecordToUpdate = _species.Last().ID;
-        var recordToUpdate = _species.Find(x => x.ID == idOfTheRecordToUpdate);
+        var idOfTheRecordToUpdate = _species.Last().Id;
+        var recordToUpdate = _species.Find(x => x.Id == idOfTheRecordToUpdate);
 
         var newRecordData = GenerateOneRandomRecord();
-        newRecordData.ID = idOfTheRecordToUpdate;
+        newRecordData.Id = idOfTheRecordToUpdate;
 
-        _mockSowScheduleDbContex.Setup(x => x.Species.Find(newRecordData.ID)).Returns(recordToUpdate);
+        _mockSowScheduleDbContex.Setup(x => x.Species.Find(newRecordData.Id)).Returns(recordToUpdate);
 
         bool actual = _speciesRepository.Update(newRecordData);
 
         actual.Should().BeTrue();
 
-        var recordUpdated = _species.Find(x => x.ID == idOfTheRecordToUpdate);
-        _mockSowScheduleDbContex.Verify(x => x.Species.Find(newRecordData.ID), Times.Once());
+        var recordUpdated = _species.Find(x => x.Id == idOfTheRecordToUpdate);
+        _mockSowScheduleDbContex.Verify(x => x.Species.Find(newRecordData.Id), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
         recordUpdated.Name.Should().Be(newRecordData.Name);
@@ -105,7 +107,7 @@ public class SpeciesRepositoryTests
         byte[] productionDays = new[] { (byte)30, (byte)45 };
         byte index = 1;
         return new Faker<Species>()
-            .RuleFor(x => x.ID, f => index++)
+            .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.Name, f => f.Commerce.Product())
             .RuleFor(x => x.ProductionDays, f => f.PickRandom(productionDays))
             .RuleFor(x => x.WeightOf1000Seeds, f => Convert.ToDecimal(f.Random.Short(800, 1750)))

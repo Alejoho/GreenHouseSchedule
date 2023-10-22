@@ -44,8 +44,8 @@ public class ProductRepositoryTests
     [Fact]
     public void Remove_ShouldRemoveARecord()
     {
-        int idOfTheRecordToRemove = _products.Last().ID;
-        var recordToRemove = _products.Find(x => x.ID == idOfTheRecordToRemove);
+        int idOfTheRecordToRemove = _products.Last().Id;
+        var recordToRemove = _products.Find(x => x.Id == idOfTheRecordToRemove);
 
         _mockSowScheduleDbContex.Setup(x => x.Products.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
 
@@ -61,20 +61,20 @@ public class ProductRepositoryTests
     [Fact]
     public void Update_ShouldUpdateARecord()
     {
-        var idOfTheRecordToUpdate = _products.Last().ID;
-        var recordToUpdate = _products.Find(x => x.ID == idOfTheRecordToUpdate);
+        var idOfTheRecordToUpdate = _products.Last().Id;
+        var recordToUpdate = _products.Find(x => x.Id == idOfTheRecordToUpdate);
 
         var newRecordData = GenerateOneRandomRecord();
-        newRecordData.ID = idOfTheRecordToUpdate;
+        newRecordData.Id = idOfTheRecordToUpdate;
 
-        _mockSowScheduleDbContex.Setup(x => x.Products.Find(newRecordData.ID)).Returns(recordToUpdate);
+        _mockSowScheduleDbContex.Setup(x => x.Products.Find(newRecordData.Id)).Returns(recordToUpdate);
 
         bool actual = _productRepository.Update(newRecordData);
 
         actual.Should().BeTrue();
 
-        var recordUpdated = _products.Find(x => x.ID == idOfTheRecordToUpdate);
-        _mockSowScheduleDbContex.Verify(x => x.Products.Find(newRecordData.ID), Times.Once());
+        var recordUpdated = _products.Find(x => x.Id == idOfTheRecordToUpdate);
+        _mockSowScheduleDbContex.Verify(x => x.Products.Find(newRecordData.Id), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
         recordUpdated.SpecieId.Should().Be(newRecordData.SpecieId);
@@ -100,7 +100,7 @@ public class ProductRepositoryTests
     {
         byte index = 1;
         return new Faker<Product>()
-            .RuleFor(x => x.ID, f => index++)
+            .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.SpecieId, f => f.Random.Byte(1, 20))
             .RuleFor(x => x.Variety, f => f.Commerce.Product());
     }

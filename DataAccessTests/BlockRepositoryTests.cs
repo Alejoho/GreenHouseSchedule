@@ -50,8 +50,8 @@ public class BlockRepositoryTests
     [Fact]
     public void Remove_ShouldRemoveARecord()
     {
-        int idOfTheRecordToRemove = _blocks.Last().ID;
-        var recordToRemove = _blocks.Find(x => x.ID == idOfTheRecordToRemove);
+        int idOfTheRecordToRemove = _blocks.Last().Id;
+        var recordToRemove = _blocks.Find(x => x.Id == idOfTheRecordToRemove);
 
         _mockSowScheduleDbContex.Setup(x => x.Blocks.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
 
@@ -67,20 +67,20 @@ public class BlockRepositoryTests
     [Fact]
     public void Update_ShouldUpdateARecord()
     {
-        int idOfTheRecordToUpdate = _blocks.Last().ID;
-        var recordToUpdate = _blocks.Find(x => x.ID == idOfTheRecordToUpdate);
+        int idOfTheRecordToUpdate = _blocks.Last().Id;
+        var recordToUpdate = _blocks.Find(x => x.Id == idOfTheRecordToUpdate);
 
         var newRecordData = GenerateOneRandomRecord();
-        newRecordData.ID = idOfTheRecordToUpdate;
+        newRecordData.Id = idOfTheRecordToUpdate;
 
-        _mockSowScheduleDbContex.Setup(x => x.Blocks.Find(newRecordData.ID)).Returns(recordToUpdate);
+        _mockSowScheduleDbContex.Setup(x => x.Blocks.Find(newRecordData.Id)).Returns(recordToUpdate);
 
         bool actual = _blockRepository.Update(newRecordData);
 
         actual.Should().BeTrue();
 
-        var recordUpdated = _blocks.Find(x => x.ID == idOfTheRecordToUpdate);
-        _mockSowScheduleDbContex.Verify(x => x.Blocks.Find(newRecordData.ID), Times.Once());
+        var recordUpdated = _blocks.Find(x => x.Id == idOfTheRecordToUpdate);
+        _mockSowScheduleDbContex.Verify(x => x.Blocks.Find(newRecordData.Id), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
         recordUpdated.OrderLocationId.Should().Be(newRecordData.OrderLocationId);
@@ -108,7 +108,7 @@ public class BlockRepositoryTests
     {
         int index = 1;
         return new Faker<Block>()
-            .RuleFor(x => x.ID, f => index++)
+            .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.OrderLocationId, f => f.Random.Byte())
             .RuleFor(x => x.BlockNumber, f => f.Random.Byte(1, 4))
             .RuleFor(x => x.SeedTrayAmount, f => f.Random.Short(1, 1000))

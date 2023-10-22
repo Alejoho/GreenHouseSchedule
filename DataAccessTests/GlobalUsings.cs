@@ -1,2 +1,3 @@
 global using Xunit;
-global using SupportLayer.DatabaseModels;
+global using SupportLayer.Models;
+global using DataAccess.Context;

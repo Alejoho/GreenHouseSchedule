@@ -45,8 +45,8 @@ public class SeedTrayRepositoryTests
     [Fact]
     public void Remove_ShouldRemoveARecord()
     {
-        int idOfTheRecordToRemove = _seedTrays.Last().ID;
-        var recordToRemove = _seedTrays.Find(x => x.ID == idOfTheRecordToRemove);
+        int idOfTheRecordToRemove = _seedTrays.Last().Id;
+        var recordToRemove = _seedTrays.Find(x => x.Id == idOfTheRecordToRemove);
 
         _mockSowScheduleDbContex.Setup(x => x.SeedTrays.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
 
@@ -62,20 +62,20 @@ public class SeedTrayRepositoryTests
     [Fact]
     public void Update_ShouldUpdateARecord()
     {
-        var idOfTheRecordToUpdate = _seedTrays.Last().ID;
-        var recordToUpdate = _seedTrays.Find(x => x.ID == idOfTheRecordToUpdate);
+        var idOfTheRecordToUpdate = _seedTrays.Last().Id;
+        var recordToUpdate = _seedTrays.Find(x => x.Id == idOfTheRecordToUpdate);
 
         var newRecordData = GenerateOneRandomRecord();
-        newRecordData.ID = idOfTheRecordToUpdate;
+        newRecordData.Id = idOfTheRecordToUpdate;
 
-        _mockSowScheduleDbContex.Setup(x => x.SeedTrays.Find(newRecordData.ID)).Returns(recordToUpdate);
+        _mockSowScheduleDbContex.Setup(x => x.SeedTrays.Find(newRecordData.Id)).Returns(recordToUpdate);
 
         bool actual = _seedTrayRepository.Update(newRecordData);
 
         actual.Should().BeTrue();
 
-        var recordUpdated = _seedTrays.Find(x => x.ID == idOfTheRecordToUpdate);
-        _mockSowScheduleDbContex.Verify(x => x.SeedTrays.Find(newRecordData.ID), Times.Once());
+        var recordUpdated = _seedTrays.Find(x => x.Id == idOfTheRecordToUpdate);
+        _mockSowScheduleDbContex.Verify(x => x.SeedTrays.Find(newRecordData.Id), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
         recordUpdated.Name.Should().Be(newRecordData.Name);
@@ -112,7 +112,7 @@ public class SeedTrayRepositoryTests
         byte index = 1;
         byte preference = 1;
         return new Faker<SeedTray>()
-            .RuleFor(x => x.ID, f => index++)
+            .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.Name, f => f.Person.FirstName)
             .RuleFor(x => x.AlveolusLength, f => f.Random.Byte(10, 25))
             .RuleFor(x => x.AlveolusWidth, f => f.Random.Byte(8, 14))

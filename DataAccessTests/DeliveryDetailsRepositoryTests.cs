@@ -45,8 +45,8 @@ public class DeliveryDetailsRepositoryTests
     [Fact]
     public void Remove_ShouldRemoveARecord()
     {
-        var idOfTheRecordToRemove = _deliveryDetails.Last().ID;
-        var recordToRemove = _deliveryDetails.Find(x => x.ID == idOfTheRecordToRemove);
+        var idOfTheRecordToRemove = _deliveryDetails.Last().Id;
+        var recordToRemove = _deliveryDetails.Find(x => x.Id == idOfTheRecordToRemove);
 
         _mockSowScheduleDbContex.Setup(x => x.DeliveryDetails.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
 
@@ -62,20 +62,20 @@ public class DeliveryDetailsRepositoryTests
     [Fact]
     public void Update_ShouldUpdateARecord()
     {
-        var idOfTheRecordToUpdate = _deliveryDetails.Last().ID;
-        var recordToUpdate = _deliveryDetails.Find(x => x.ID == idOfTheRecordToUpdate);
+        var idOfTheRecordToUpdate = _deliveryDetails.Last().Id;
+        var recordToUpdate = _deliveryDetails.Find(x => x.Id == idOfTheRecordToUpdate);
 
         var newRecordData = GenerateOneRandomRecord();
-        newRecordData.ID = idOfTheRecordToUpdate;
+        newRecordData.Id = idOfTheRecordToUpdate;
 
-        _mockSowScheduleDbContex.Setup(x => x.DeliveryDetails.Find(newRecordData.ID)).Returns(recordToUpdate);
+        _mockSowScheduleDbContex.Setup(x => x.DeliveryDetails.Find(newRecordData.Id)).Returns(recordToUpdate);
 
         bool actual = _deliveryDetailRepository.Update(newRecordData);
 
         actual.Should().BeTrue();
 
-        var recordUpdated = _deliveryDetails.Find(x => x.ID == idOfTheRecordToUpdate);
-        _mockSowScheduleDbContex.Verify(x => x.DeliveryDetails.Find(newRecordData.ID), Times.Once());
+        var recordUpdated = _deliveryDetails.Find(x => x.Id == idOfTheRecordToUpdate);
+        _mockSowScheduleDbContex.Verify(x => x.DeliveryDetails.Find(newRecordData.Id), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
         recordUpdated.BlockId.Should().Be(newRecordData.BlockId);
@@ -106,7 +106,7 @@ public class DeliveryDetailsRepositoryTests
         DateTime endDate = new DateTime(2023, 12, 31);
         int index = 1;
         return new Faker<DeliveryDetail>()
-            .RuleFor(x => x.ID, f => index++)
+            .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.BlockId, f => f.Random.Int(1, 200))
             .RuleFor(x => x.DeliveryDate, f => f.Date.Between(starDate, endDate))
             .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(1, 1000));

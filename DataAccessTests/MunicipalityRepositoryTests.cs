@@ -51,8 +51,8 @@ public class MunicipalityRepositoryTests
     [Fact]
     public void Remove_ShouldRemoveARecord()
     {
-        int idOfTheRecordToRemove = _municipalities.Last().ID;
-        var recordToRemove = _municipalities.Find(x => x.ID == idOfTheRecordToRemove);
+        int idOfTheRecordToRemove = _municipalities.Last().Id;
+        var recordToRemove = _municipalities.Find(x => x.Id == idOfTheRecordToRemove);
 
         _mockSowScheduleDbContex.Setup(x => x.Municipalities.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
 
@@ -68,20 +68,20 @@ public class MunicipalityRepositoryTests
     [Fact]
     public void Update_ShouldUpdateARecord()
     {
-        var idOfTheRecordToUpdate = _municipalities.Last().ID;
-        var recordToUpdate = _municipalities.Find(x => x.ID == idOfTheRecordToUpdate);
+        var idOfTheRecordToUpdate = _municipalities.Last().Id;
+        var recordToUpdate = _municipalities.Find(x => x.Id == idOfTheRecordToUpdate);
 
         var newRecordData = GenerateOneRandomRecord();
-        newRecordData.ID = idOfTheRecordToUpdate;
+        newRecordData.Id = idOfTheRecordToUpdate;
 
-        _mockSowScheduleDbContex.Setup(x => x.Municipalities.Find(newRecordData.ID)).Returns(recordToUpdate);
+        _mockSowScheduleDbContex.Setup(x => x.Municipalities.Find(newRecordData.Id)).Returns(recordToUpdate);
 
         bool actual = _municipalityRepository.Update(newRecordData);
 
         actual.Should().BeTrue();
 
-        var recordUpdated = _municipalities.Find(x => x.ID == idOfTheRecordToUpdate);
-        _mockSowScheduleDbContex.Verify(x => x.Municipalities.Find(newRecordData.ID), Times.Once());
+        var recordUpdated = _municipalities.Find(x => x.Id == idOfTheRecordToUpdate);
+        _mockSowScheduleDbContex.Verify(x => x.Municipalities.Find(newRecordData.Id), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
         recordUpdated.Name.Should().Be(newRecordData.Name);
@@ -107,7 +107,7 @@ public class MunicipalityRepositoryTests
     {
         short index = 1;
         return new Faker<Municipality>()
-            .RuleFor(x => x.ID, f => index++)
+            .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.Name, f => f.Address.State())
             .RuleFor(x => x.ProvinceId, f => f.Random.Byte(1, 17));
 
