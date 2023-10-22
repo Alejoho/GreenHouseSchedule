@@ -41,22 +41,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Block.cs" />
-    <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\DeliveryDetail.cs" />
-    <Compile Include="Models\Greenhouse.cs" />
-    <Compile Include="Models\Municipality.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderDetail.cs" />
-    <Compile Include="Models\OrderLocation.cs" />
-    <Compile Include="Models\Organization.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\Province.cs" />
-    <Compile Include="Models\SeedTray.cs" />
-    <Compile Include="Models\Species.cs" />
-    <Compile Include="Models\TypesOfOrganization.cs" />
+    <Compile Include="Models2\Block.cs" />
+    <Compile Include="Models2\Client.cs" />
+    <Compile Include="Models2\DeliveryDetail.cs" />
+    <Compile Include="Models2\Greenhouse.cs" />
+    <Compile Include="Models2\Municipality.cs" />
+    <Compile Include="Models2\Order.cs" />
+    <Compile Include="Models2\OrderDetail.cs" />
+    <Compile Include="Models2\OrderLocation.cs" />
+    <Compile Include="Models2\Organization.cs" />
+    <Compile Include="Models2\Product.cs" />
+    <Compile Include="Models2\Province.cs" />
+    <Compile Include="Models2\SeedTray.cs" />
+    <Compile Include="Models2\Species.cs" />
+    <Compile Include="Models2\TypesOfOrganization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
