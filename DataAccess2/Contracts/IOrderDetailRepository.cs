@@ -1,8 +1,0 @@
-﻿using SupportLayer.DatabaseModels;
-
-namespace DataAccess.Contracts
-{
-    internal interface IOrderDetailRepository : IGenericRepository<OrderDetail>
-    {
-    }
-}
