@@ -146,7 +146,7 @@ namespace Domain
             foreach (var greenHouse in greenHouses)
             {
                 greenHousesModelList.Add(new GreenHouseModel(
-                    greenHouse.ID,
+                    greenHouse.Id,
                     greenHouse.Name,
                     greenHouse.SeedTrayArea,
                     greenHouse.AmountOfBlocks,
@@ -168,7 +168,7 @@ namespace Domain
             foreach (var seedTray in seedTrays)
             {
                 seedTrayModelList.Add(new SeedTrayModel(
-                    seedTray.ID,
+                    seedTray.Id,
                     seedTray.Name,
                     seedTray.TrayArea,
                     seedTray.TotalAlveolus,
@@ -191,9 +191,9 @@ namespace Domain
             foreach (var order in orderList)
             {
                 orderModelLinkedList.AddLast(new OrderModel(
-                    order.ID,
-                    new ClientModel(order.Client.ID, order.Client.Name, order.Client.NickName),
-                    new ProductModel(order.Product.ID, order.Product.Variety, order.Product.Species.Name, order.Product.Species.ProductionDays),
+                    order.Id,
+                    new ClientModel(order.Client.Id, order.Client.Name, order.Client.NickName),
+                    new ProductModel(order.Product.Id, order.Product.Variety, order.Product.Specie.Name, order.Product.Specie.ProductionDays),
                     order.AmountofAlgorithmSeedlings,
                     order.DateOfRequest,
                     order.EstimateSowDate,
@@ -241,7 +241,7 @@ namespace Domain
             foreach (var orderLocation in orderLocations)
             {
                 orderLocationModelLinkedList.AddLast(new OrderLocationModel(
-                    orderLocation.ID,
+                    orderLocation.Id,
                     orderLocation.GreenHouseId,
                     orderLocation.SeedTrayId,
                     orderLocation.OrderId,
@@ -287,7 +287,7 @@ namespace Domain
             foreach (var deliveryDetail in deliveryDetails)
             {
                 deliveryDetailModelList.Add(new DeliveryDetailModel(
-                    deliveryDetail.ID,
+                    deliveryDetail.Id,
                     deliveryDetail.Block.OrderLocationId,
                     deliveryDetail.DeliveryDate,
                     deliveryDetail.SeedTrayAmountDelivered));

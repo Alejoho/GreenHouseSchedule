@@ -1,6 +1,6 @@
 ﻿using DataAccess.Contracts;
 using DataAccess.Repositories;
-using SupportLayer.DatabaseModels;
+using SupportLayer.Models;
 
 namespace Domain
 {
@@ -24,18 +24,18 @@ namespace Domain
             repository = new GreenHouseRepository();
             errors = new List<string>();
         }
-        private bool ValidateData(Greenhouse model)
+        private bool ValidateData(GreenHouse model)
         {
             //TODO - Create the method to validate the model
             //throw new NotImplementedException();
             return true;
         }
 
-        public bool SaveGreenHouse(Greenhouse model)
+        public bool SaveGreenHouse(GreenHouse model)
         {
             if (ValidateData(model) == true)
             {
-                if (model.ID == 0)
+                if (model.Id == 0)
                 {
                     repository.Insert(model);
                 }
@@ -48,13 +48,13 @@ namespace Domain
             return false;
         }
 
-        public void DeleteGreenHouse(Greenhouse model)
+        public void DeleteGreenHouse(GreenHouse model)
         {
             //TODO - Create the delete method for green houses
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Greenhouse> GetAllGreenHouses()
+        public IEnumerable<GreenHouse> GetAllGreenHouses()
         {
             //TODO - Create the GetAll method for green houses
             //throw new NotImplementedException();
