@@ -1,0 +1,55 @@
+﻿DESCRIPTION
+    Scaffolds a DbContext and entity types for a database.
+    
+
+PARAMETERS
+    -Connection <String>
+        The connection string to the database.
+        
+    -Provider <String>
+        The provider to use. (E.g. Microsoft.EntityFrameworkCore.SqlServer)
+        
+    -OutputDir <String>
+        The directory to put files in. Paths are relative to the project directory.
+        
+    -ContextDir <String>
+        The directory to put the DbContext file in. Paths are relative to the project directory.
+        
+    -Context <String>
+        The name of the DbContext. Defaults to the database name.
+        
+    -Schemas <String[]>
+        The schemas of tables to generate entity types for.
+        
+    -Tables <String[]>
+        The tables to generate entity types for.
+        
+    -DataAnnotations [<SwitchParameter>]
+        Use attributes to configure the model (where possible). If omitted, only the fluent API is used.
+        
+    -UseDatabaseNames [<SwitchParameter>]
+        Use table and column names directly from the database.
+        
+    -Force [<SwitchParameter>]
+        Overwrite existing files.
+        
+    -NoOnConfiguring [<SwitchParameter>]
+        Don't generate DbContext.OnConfiguring.
+        
+    -Project <String>
+        The project to use.
+        
+    -StartupProject <String>
+        The startup project to use. Defaults to the solution's startup project.
+        
+    -Namespace <String>
+        The namespace to use. Matches the directory by default.
+        
+    -ContextNamespace <String>
+        The namespace of the DbContext class. Matches the directory by default.
+        
+    -NoPluralize [<SwitchParameter>]
+        Don't use the pluralizer.
+        
+    -Args <String>
+        Arguments passed to the application.

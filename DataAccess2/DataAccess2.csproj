@@ -154,9 +154,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SupportLayer\SupportLayer.csproj">
+    <ProjectReference Include="..\SupportLayer\SupportLayer2.csproj">
       <Project>{5e47e8ec-3968-4686-9675-5d5b59c7b1ed}</Project>
-      <Name>SupportLayer</Name>
+      <Name>SupportLayer2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

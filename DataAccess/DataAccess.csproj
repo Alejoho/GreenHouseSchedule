@@ -19,4 +19,8 @@
     <Folder Include="ModelsToCopy\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SupportLayer\SupportLayer2.csproj" />
+  </ItemGroup>
+
 </Project>

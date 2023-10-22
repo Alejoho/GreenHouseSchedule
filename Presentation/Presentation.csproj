@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\SupportLayer\SupportLayer.csproj" />
+    <ProjectReference Include="..\SupportLayer\SupportLayer2.csproj" />
   </ItemGroup>
 
 </Project>
