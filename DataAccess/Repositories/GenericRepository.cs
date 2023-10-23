@@ -9,16 +9,16 @@ namespace DataAccess.Repositories
 {
     public abstract class GenericRepository
     {
-        protected readonly SowScheduleDBEntities _sowScheduleDB;
+        protected readonly SowScheduleContext _sowScheduleDB;
 
-        public GenericRepository(SowScheduleDBEntities dbContex)
+        public GenericRepository(SowScheduleContext dbContex)
         {
             _sowScheduleDB = dbContex;
         }
 
         public GenericRepository()
         {
-            _sowScheduleDB = new SowScheduleDBEntities();
+            _sowScheduleDB = new SowScheduleContext();
         }
     }
 }

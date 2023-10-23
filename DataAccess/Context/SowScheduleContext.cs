@@ -5,13 +5,13 @@ using SupportLayer.Models;
 
 namespace DataAccess.Context;
 
-public partial class SowScheduleDBEntities : DbContext
+public partial class SowScheduleContext : DbContext
 {
-    public SowScheduleDBEntities()
+    public SowScheduleContext()
     {
     }
 
-    public SowScheduleDBEntities(DbContextOptions<SowScheduleDBEntities> options)
+    public SowScheduleContext(DbContextOptions<SowScheduleContext> options)
         : base(options)
     {
     }

@@ -8,7 +8,7 @@ namespace DataAccess.Repositories
 {
     public class OrganizationRepository : GenericRepository, IOrganizationRepository
     {
-        public OrganizationRepository(SowScheduleDBEntities dbContex) : base(dbContex)
+        public OrganizationRepository(SowScheduleContext dbContex) : base(dbContex)
         {
         }
 

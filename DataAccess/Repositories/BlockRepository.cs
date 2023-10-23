@@ -8,7 +8,7 @@ namespace DataAccess.Repositories
 {
     public class BlockRepository : GenericRepository, IBlockRepository
     {
-        public BlockRepository(SowScheduleDBEntities dbContex) : base(dbContex)
+        public BlockRepository(SowScheduleContext dbContex) : base(dbContex)
         {
         }
 

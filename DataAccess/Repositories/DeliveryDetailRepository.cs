@@ -11,7 +11,7 @@ namespace DataAccess.Repositories
 {
     public class DeliveryDetailRepository : GenericRepository, IDeliveryDetailRepository
     {
-        public DeliveryDetailRepository(SowScheduleDBEntities dbContex) : base(dbContex)
+        public DeliveryDetailRepository(SowScheduleContext dbContex) : base(dbContex)
         {
         }
 

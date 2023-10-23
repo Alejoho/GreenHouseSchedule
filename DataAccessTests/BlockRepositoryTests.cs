@@ -15,13 +15,13 @@ namespace DataAccessTests;
 public class BlockRepositoryTests
 {
     List<Block> _blocks;
-    Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
+    Mock<SowScheduleContext> _mockSowScheduleDbContex;
     BlockRepository _blockRepository;
 
     public BlockRepositoryTests()
     {
         _blocks = GenerateRecords(5);
-        _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+        _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
         _mockSowScheduleDbContex.Setup(x => x.Blocks).Returns((MockGenerator.GetQueryableMockDbSet<Block>(_blocks)));
         _blockRepository = new BlockRepository(_mockSowScheduleDbContex.Object);
     }

@@ -12,13 +12,13 @@ public class SpeciesRepositoryTests
 {
 
     List<Species> _species;
-    Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
+    Mock<SowScheduleContext> _mockSowScheduleDbContex;
     SpeciesRepository _speciesRepository;
 
     public SpeciesRepositoryTests()
     {
         _species = GenerateRecords(5);
-        _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+        _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
         _mockSowScheduleDbContex.Setup(x => x.Species).Returns((MockGenerator.GetQueryableMockDbSet<Species>(_species)));
         _speciesRepository = new SpeciesRepository(_mockSowScheduleDbContex.Object);
     }

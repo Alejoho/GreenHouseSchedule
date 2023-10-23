@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Context\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SupportLayer\SupportLayer.csproj" />
   </ItemGroup>
 

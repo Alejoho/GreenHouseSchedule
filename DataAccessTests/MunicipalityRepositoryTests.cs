@@ -16,13 +16,13 @@ public class MunicipalityRepositoryTests
 {
 
     List<Municipality> _municipalities;
-    Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
+    Mock<SowScheduleContext> _mockSowScheduleDbContex;
     MunicipalityRepository _municipalityRepository;
 
     public MunicipalityRepositoryTests()
     {
         _municipalities = GenerateRecords(5);
-        _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+        _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
         _mockSowScheduleDbContex.Setup(x => x.Municipalities).Returns((MockGenerator.GetQueryableMockDbSet<Municipality>(_municipalities)));
         _municipalityRepository = new MunicipalityRepository(_mockSowScheduleDbContex.Object);
     }

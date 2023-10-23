@@ -10,13 +10,13 @@ namespace DataAccessTests;
 public class ClientRepositoryTests
 {
     List<Client> _clients;
-    Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
+    Mock<SowScheduleContext> _mockSowScheduleDbContex;
     ClientRepository _clientRepository;
 
     public ClientRepositoryTests()
     {
         _clients = GenerateRecords(5);
-        _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+        _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
         _mockSowScheduleDbContex.Setup(x => x.Clients).Returns((MockGenerator.GetQueryableMockDbSet<Client>(_clients)));
         _clientRepository = new ClientRepository(_mockSowScheduleDbContex.Object);
     }

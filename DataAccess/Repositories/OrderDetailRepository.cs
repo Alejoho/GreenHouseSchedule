@@ -12,7 +12,7 @@ namespace DataAccess.Repositories
 {
     public class OrderDetailRepository : GenericRepository, IOrderDetailRepository
     {
-        public OrderDetailRepository(SowScheduleDBEntities dbContex) : base(dbContex) 
+        public OrderDetailRepository(SowScheduleContext dbContex) : base(dbContex) 
         {
         }
 

@@ -10,13 +10,13 @@ public class SeedTrayRepositoryTests
 {
 
     List<SeedTray> _seedTrays;
-    Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
+    Mock<SowScheduleContext> _mockSowScheduleDbContex;
     SeedTrayRepository _seedTrayRepository;
 
     public SeedTrayRepositoryTests()
     {
         _seedTrays = GenerateRecords(5);
-        _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+        _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
         _mockSowScheduleDbContex.Setup(x => x.SeedTrays).Returns((MockGenerator.GetQueryableMockDbSet<SeedTray>(_seedTrays)));
         _seedTrayRepository = new SeedTrayRepository(_mockSowScheduleDbContex.Object);
     }

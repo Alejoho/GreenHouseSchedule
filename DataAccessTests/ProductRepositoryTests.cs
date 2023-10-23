@@ -9,13 +9,13 @@ namespace DataAccessTests;
 public class ProductRepositoryTests
 {
     List<Product> _products;
-    Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
+    Mock<SowScheduleContext> _mockSowScheduleDbContex;
     ProductRepository _productRepository;
 
     public ProductRepositoryTests()
     {
         _products = GenerateRecords(5);
-        _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+        _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
         _mockSowScheduleDbContex.Setup(x => x.Products).Returns((MockGenerator.GetQueryableMockDbSet<Product>(_products)));
         _productRepository = new ProductRepository(_mockSowScheduleDbContex.Object);
     }

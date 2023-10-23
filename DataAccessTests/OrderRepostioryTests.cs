@@ -11,13 +11,13 @@ namespace DataAccessTests
     {
 
         List<Order> _orders;
-        Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
+        Mock<SowScheduleContext> _mockSowScheduleDbContex;
         OrderRepository _orderRepository;
 
         public OrderRepostioryTests()
         {
             _orders = GenerateRecords(5);
-            _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+            _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
             _mockSowScheduleDbContex.Setup(x => x.Orders).Returns((MockGenerator.GetQueryableMockDbSet<Order>(_orders)));
             _orderRepository = new OrderRepository(_mockSowScheduleDbContex.Object);
         }

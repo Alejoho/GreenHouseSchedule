@@ -12,7 +12,7 @@ namespace DataAccess.Repositories
 {
     public class ClientRepository : GenericRepository, IClientRepository
     {
-        public ClientRepository(SowScheduleDBEntities dbContex) : base(dbContex)
+        public ClientRepository(SowScheduleContext dbContex) : base(dbContex)
         {
         }
 

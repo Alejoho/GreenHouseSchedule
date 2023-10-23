@@ -9,7 +9,7 @@ namespace DataAccess.Repositories
 {
     public class ProductRepository : GenericRepository, IProductRepository
     {
-        public ProductRepository(SowScheduleDBEntities dbContex) : base(dbContex)
+        public ProductRepository(SowScheduleContext dbContex) : base(dbContex)
         {
         }
 

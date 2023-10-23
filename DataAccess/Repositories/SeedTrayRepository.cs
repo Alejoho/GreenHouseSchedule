@@ -9,7 +9,7 @@ namespace DataAccess.Repositories
 {
     public class SeedTrayRepository : GenericRepository, ISeedTrayRepository
     {
-        public SeedTrayRepository(SowScheduleDBEntities dbContex) : base(dbContex)
+        public SeedTrayRepository(SowScheduleContext dbContex) : base(dbContex)
         {
         }
 

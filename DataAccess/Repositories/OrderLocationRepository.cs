@@ -8,7 +8,7 @@ namespace DataAccess.Repositories
 {
     public class OrderLocationRepository : GenericRepository, IOrderLocationRepository
     {
-        public OrderLocationRepository(SowScheduleDBEntities dbContex) : base(dbContex)
+        public OrderLocationRepository(SowScheduleContext dbContex) : base(dbContex)
         {
         }
 

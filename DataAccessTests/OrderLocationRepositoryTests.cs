@@ -10,13 +10,13 @@ namespace DataAccessTests;
 public class OrderLocationRepositoryTests
 {
     List<OrderLocation> _orderLocations;
-    Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
+    Mock<SowScheduleContext> _mockSowScheduleDbContex;
     OrderLocationRepository _orderLocationRepository;
 
     public OrderLocationRepositoryTests()
     {
         _orderLocations = GenerateRecords(5);
-        _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+        _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
         _mockSowScheduleDbContex.Setup(x => x.OrderLocations).Returns((MockGenerator.GetQueryableMockDbSet<OrderLocation>(_orderLocations)));
         _orderLocationRepository = new OrderLocationRepository(_mockSowScheduleDbContex.Object);
     }

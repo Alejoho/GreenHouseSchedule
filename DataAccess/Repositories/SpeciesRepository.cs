@@ -11,7 +11,7 @@ namespace DataAccess.Repositories
 {
     public class SpeciesRepository:GenericRepository,ISpeciesRepository
     {
-        public SpeciesRepository(SowScheduleDBEntities dbContex) :base(dbContex)
+        public SpeciesRepository(SowScheduleContext dbContex) :base(dbContex)
         { 
         }
 

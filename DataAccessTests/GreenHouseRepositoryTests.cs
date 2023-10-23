@@ -11,13 +11,13 @@ public class GreenHouseRepositoryTests
 {
 
     List<GreenHouse> _greenHouses;
-    Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
+    Mock<SowScheduleContext> _mockSowScheduleDbContex;
     GreenHouseRepository _greenHouseRepository;
 
     public GreenHouseRepositoryTests()
     {
         _greenHouses = GenerateRecords(5);
-        _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+        _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
         _mockSowScheduleDbContex.Setup(x => x.GreenHouses).Returns((MockGenerator.GetQueryableMockDbSet<GreenHouse>(_greenHouses)));
         _greenHouseRepository = new GreenHouseRepository(_mockSowScheduleDbContex.Object);
     }

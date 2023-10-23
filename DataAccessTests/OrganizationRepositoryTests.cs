@@ -10,13 +10,13 @@ public class OrganizationRepositoryTests
 {
 
     List<Organization> _organizations;
-    Mock<SowScheduleDBEntities> _mockSowScheduleDbContex;
+    Mock<SowScheduleContext> _mockSowScheduleDbContex;
     OrganizationRepository _organizationRepository;
 
     public OrganizationRepositoryTests()
     {
         _organizations = GenerateRecords(5);
-        _mockSowScheduleDbContex = new Mock<SowScheduleDBEntities>();
+        _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
         _mockSowScheduleDbContex.Setup(x => x.Organizations).Returns((MockGenerator.GetQueryableMockDbSet<Organization>(_organizations)));
         _organizationRepository = new OrganizationRepository(_mockSowScheduleDbContex.Object);
     }
