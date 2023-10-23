@@ -82,7 +82,7 @@ public class GreenHouseRepositoryTests
         recordUpdated.Name.Should().Be(newRecordData.Name);
         recordUpdated.Description.Should().Be(newRecordData.Description);
         recordUpdated.Width.Should().Be(newRecordData.Width);
-        recordUpdated.Lenght.Should().Be(newRecordData.Lenght);
+        recordUpdated.Length.Should().Be(newRecordData.Length);
         recordUpdated.GreenHouseArea.Should().Be(newRecordData.GreenHouseArea);
         recordUpdated.SeedTrayArea.Should().Be(newRecordData.SeedTrayArea);
         recordUpdated.AmountOfBlocks.Should().Be(newRecordData.AmountOfBlocks);
@@ -112,8 +112,8 @@ public class GreenHouseRepositoryTests
             .RuleFor(x => x.Name, f => f.Person.FullName)
             .RuleFor(x => x.Description, f => f.Commerce.ProductDescription())
             .RuleFor(x => x.Width, f => f.Random.Short(6, 20))
-            .RuleFor(x => x.Lenght, f => f.Random.Short(50, 100))
-            .RuleFor(x => x.GreenHouseArea, (f, u) => u.Width * u.Lenght)
+            .RuleFor(x => x.Length, f => f.Random.Short(50, 100))
+            .RuleFor(x => x.GreenHouseArea, (f, u) => u.Width * u.Length)
             .RuleFor(x => x.SeedTrayArea, f => f.Random.Short(200, 1500))
             .RuleFor(x => x.AmountOfBlocks, f => f.Random.Byte(2, 4))
             .RuleFor(x => x.Active, f => f.Random.Bool());

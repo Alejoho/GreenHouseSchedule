@@ -43,10 +43,10 @@ public partial class SowScheduleDBEntities : DbContext
     public virtual DbSet<Species> Species { get; set; }
 
     public virtual DbSet<TypesOfOrganization> TypesOfOrganizations { get; set; }
-    // TODO - Check hot to get the connection string from the presentation layer
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;attachdbfilename=C:\\Users\\Alejo\\Documents\\GH\\GreenHouseSchedule\\DataAccess\\SowScheduleDB.mdf;integrated security=True;Trust Server Certificate=True;");
+        => optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Alejo\\Documents\\GH\\GreenHouseSchedule\\DataAccess\\SowScheduleDB.mdf;Integrated Security=True;Connect Timeout=30;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -95,7 +95,7 @@ public partial class SowScheduleDBEntities : DbContext
                 .ValueGeneratedOnAdd()
                 .HasColumnName("ID");
             entity.Property(e => e.GreenHouseArea).HasColumnType("numeric(5, 2)");
-            entity.Property(e => e.Lenght).HasColumnType("numeric(4, 2)");
+            entity.Property(e => e.Length).HasColumnType("numeric(4, 2)");
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.SeedTrayArea).HasColumnType("numeric(5, 2)");
             entity.Property(e => e.Width).HasColumnType("numeric(4, 2)");

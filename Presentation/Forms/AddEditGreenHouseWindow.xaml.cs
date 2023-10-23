@@ -82,7 +82,7 @@ namespace Presentation.Forms
 
             if (decimal.TryParse(tbtxtLength.FieldContent, out decimal length))
             {
-                model.Lenght = length;
+                model.Length = length;
             }
             else
             {

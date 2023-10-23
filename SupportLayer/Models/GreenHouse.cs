@@ -13,7 +13,7 @@ public partial class GreenHouse
 
     public decimal? Width { get; set; }
 
-    public decimal? Lenght { get; set; }
+    public decimal? Length { get; set; }
 
     public decimal? GreenHouseArea { get; set; }
 
