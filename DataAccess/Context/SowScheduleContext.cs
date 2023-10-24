@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using SupportLayer.Models;
 
@@ -7,6 +8,7 @@ namespace DataAccess.Context;
 
 public partial class SowScheduleContext : DbContext
 {
+    
     public SowScheduleContext()
     {
     }
@@ -46,7 +48,12 @@ public partial class SowScheduleContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Alejo\\Documents\\GH\\GreenHouseSchedule\\DataAccess\\SowScheduleDB.mdf;Integrated Security=True;Connect Timeout=30;Trust Server Certificate=True");
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["SowScheduleDB"].ConnectionString;
+        optionsBuilder.UseSqlServer(connectionString);
+        //optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Alejo\\Documents\\GH\\GreenHouseSchedule\\DataAccess\\SowScheduleDB.mdf;Integrated Security=True;Connect Timeout=30;Trust Server Certificate=True");
+        //optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\SowScheduleDB.mdf;Integrated Security=True;Connect Timeout=30;Trust Server Certificate=True");        
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
