@@ -12,8 +12,10 @@ namespace Presentation.Forms
     /// </summary>
     public partial class AddEditGreenHouseWindow : Window
     {
+
         private GreenHouseProcessor processor;
         private GreenHouse model;
+
         public AddEditGreenHouseWindow()
         {
             InitializeComponent();
@@ -40,7 +42,7 @@ namespace Presentation.Forms
 
             //bool? test = chkActive.IsChecked;
             //return;
-            /*
+            
             if (ValidateDataType() == true)
             {
                 if (processor.SaveGreenHouse(model) == true)
@@ -53,11 +55,9 @@ namespace Presentation.Forms
                 {
                     ShowError();
                 }
-            }
-            */
-
-            var lista = processor.GetAllGreenHouses();
-            Console.WriteLine(lista.Count());
+            }            
+            //var lista = processor.GetAllGreenHouses();
+            //Console.WriteLine(lista.Count());
         }
 
         private void ShowError()

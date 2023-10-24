@@ -24,6 +24,7 @@ namespace Domain
             repository = new GreenHouseRepository();
             errors = new List<string>();
         }
+
         private bool ValidateData(GreenHouse model)
         {
             //TODO - Create the method to validate the model
