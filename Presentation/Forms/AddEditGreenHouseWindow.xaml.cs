@@ -1,7 +1,5 @@
-﻿using Domain;
+﻿using Domain.Processors;
 using SupportLayer.Models;
-using System;
-using System.Linq;
 using System.Windows;
 
 
@@ -38,12 +36,11 @@ namespace Presentation.Forms
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
-        {           
+        {
             if (ValidateDataType() == true)
             {
                 if (processor.SaveGreenHouse(model) == true)
                 {
-                    //NEXT - mejorar el mensaje
                     MessageBox.Show("Registro salvado");
                     this.Close();
                 }
@@ -51,41 +48,53 @@ namespace Presentation.Forms
                 {
                     ShowError();
                 }
-            }            
+            }
         }
 
         private void ShowError()
         {
-            MessageBox.Show(processor.FirstError);
+            MessageBox.Show(processor.Error);
         }
 
         private bool ValidateDataType()
         {
+            decimal width = -1;
+            decimal length = -1;
+
             model.Name = tbtxtName.FieldContent;
+
             model.Description = txtDescription.Text;
 
-            if (decimal.TryParse(tbtxtWidth.FieldContent, out decimal width))
+            if (tbtxtWidth.FieldContent != string.Empty)
             {
-                model.Width = width;
-            }
-            else
-            {
-                MessageBox.Show("Ancho inválido");
-                return false;
-            }
-
-            if (decimal.TryParse(tbtxtLength.FieldContent, out decimal length))
-            {
-                model.Length = length;
-            }
-            else
-            {
-                MessageBox.Show("Largo inválido");
-                return false;
+                if (decimal.TryParse(tbtxtWidth.FieldContent, out width))
+                {
+                    model.Width = width;
+                }
+                else
+                {
+                    MessageBox.Show("Ancho inválido");
+                    return false;
+                }
             }
 
-            // NEXT - Check how many digits of precision this property have Revisar con cuantos digitos de precision quedan esta propiedad
-            model.GreenHouseArea = width * length;
+            if (tbtxtLength.FieldContent != string.Empty)
+            {
+                if (decimal.TryParse(tbtxtLength.FieldContent, out length))
+                {
+                    model.Length = length;
+                }
+                else
+                {
+                    MessageBox.Show("Largo inválido");
+                    return false;
+                }
+            }
+
+            if (width != -1 && length != -1)
+            {
+                model.GreenHouseArea = width * length;
+            }
 
             if (decimal.TryParse(tbtxtSeedTrayArea.FieldContent, out decimal seedTrayArea))
             {
