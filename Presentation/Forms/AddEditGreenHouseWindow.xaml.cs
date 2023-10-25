@@ -38,16 +38,12 @@ namespace Presentation.Forms
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-
-            //bool? test = chkActive.IsChecked;
-            //return;
-            
+        {           
             if (ValidateDataType() == true)
             {
                 if (processor.SaveGreenHouse(model) == true)
                 {
-                    //TODO - mejorar el mensaje
+                    //NEXT - mejorar el mensaje
                     MessageBox.Show("Registro salvado");
                     this.Close();
                 }
@@ -56,8 +52,6 @@ namespace Presentation.Forms
                     ShowError();
                 }
             }            
-            //var lista = processor.GetAllGreenHouses();
-            //Console.WriteLine(lista.Count());
         }
 
         private void ShowError()
@@ -90,15 +84,8 @@ namespace Presentation.Forms
                 return false;
             }
 
-            //if (decimal.TryParse(tbtxtGreenHouseArea.FieldContent, out decimal greenHouseArea))
-            //{
+            // NEXT - Check how many digits of precision this property have Revisar con cuantos digitos de precision quedan esta propiedad
             model.GreenHouseArea = width * length;
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Área de la casa de posturas inválido");
-            //    return false;
-            //}
 
             if (decimal.TryParse(tbtxtSeedTrayArea.FieldContent, out decimal seedTrayArea))
             {
