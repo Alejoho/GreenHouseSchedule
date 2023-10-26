@@ -23,5 +23,7 @@ namespace Presentation.Forms
         {
             InitializeComponent();
         }
+
+        //NEXT - Do all the logic for showing all the houses, edit them and delete them
     }
 }
