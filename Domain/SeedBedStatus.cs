@@ -170,7 +170,7 @@ namespace Domain
                 seedTrayModelList.Add(new SeedTrayModel(
                     seedTray.Id,
                     seedTray.Name,
-                    seedTray.TrayArea,
+                    seedTray.LogicalTrayArea,
                     seedTray.TotalAlveolus,
                     seedTray.TotalAmount,
                     seedTray.Active

@@ -19,7 +19,9 @@ public partial class SeedTray
 
     public decimal? TrayWidth { get; set; }
 
-    public decimal TrayArea { get; set; }
+    public decimal? TrayArea { get; set; }
+
+    public decimal LogicalTrayArea { get; set; }
 
     public short TotalAmount { get; set; }
 

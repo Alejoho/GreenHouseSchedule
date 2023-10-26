@@ -123,7 +123,8 @@ create table "SeedTrays"(
 	"AlveolusWidth" tinyint,
 	"TrayLength" numeric(3,2),
 	"TrayWidth" numeric(3,2),
-	"TrayArea" numeric(5,4) not null,
+	"TrayArea" numeric(5,4),
+	"LogicalTrayArea" numeric(5,4) not null,
 	"TotalAmount" smallint not null,
 	"Material" nvarchar(20),
 	"Preference" tinyint not null,
@@ -137,6 +138,7 @@ create table "SeedTrays"(
 	CONSTRAINT [CK_SeedTrays_TrayLength] CHECK ("TrayLength" > 0 and "TrayLength" < 1.5),
 	CONSTRAINT [CK_SeedTrays_TrayWidth] CHECK ("TrayWidth" > 0 and "TrayWidth" < 1.5),
 	CONSTRAINT [CK_SeedTrays_TrayArea] CHECK ("TrayArea" > 0 and "TrayArea" < 0.5),
+	CONSTRAINT [CK_SeedTrays_LogicalTrayArea] CHECK ("LogicalTrayArea" >= "TrayArea"),
 	CONSTRAINT [CK_SeedTrays_TotalAmount] CHECK ("TotalAmount" > 0),
 	CONSTRAINT [CK_SeedTrays_Preference] CHECK ("Preference" > 0)
 
