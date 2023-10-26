@@ -21,7 +21,9 @@
 
         <!--DataGrid-->
         <DataGrid x:Name="dgGreenHouses" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5">
-
+            <DataGrid.Columns>
+                <DataGridTextColumn/>
+            </DataGrid.Columns>
         </DataGrid>
 
         <!--Buttons-->
@@ -30,7 +32,7 @@
             <Button x:Name="btnNewGreenHouse" Content="Nuevo" Margin="5 15" Width="70"/>
             <Button x:Name="btnEditGreenHouse" Content="Editar" Margin="5 15" Width="70"/>
             <Button x:Name="btnDeleteGreenHouse" Content="Borrar" Margin="5 15" Width="70"/>
-            <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70"/>
+            <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70" Click="btnCancel_Click"/>
         </StackPanel>
     </Grid>
 </Window>

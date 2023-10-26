@@ -16,51 +16,6 @@
     <Compile Update="CustomControls\TextBoxWithLabel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Forms\AddEditClientWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\AddEditGreenHouseWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\AddEditSpeciesWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\AddOrganizationWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\ClientsWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\ConfigurationWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\DeliveryWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\GreenHousesWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\NewOrderWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\AddEditSeedTrayWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\OrderListWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\OrganizationsWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\ProductsWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\SeedTraysWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\SowWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CustomControls\ComboBoxWithLabel.xaml">
@@ -70,51 +25,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CustomControls\TextBoxWithLabel.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\AddEditClientWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\AddEditGreenHouseWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\AddEditSpeciesWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\AddOrganizationWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\ClientsWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\ConfigurationWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\DeliveryWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\GreenHousesWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\NewOrderWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\AddEditSeedTrayWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\OrderListWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\OrganizationsWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\ProductsWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\SeedTraysWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\SowWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
