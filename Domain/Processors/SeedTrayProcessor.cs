@@ -3,22 +3,27 @@ using DataAccess.Repositories;
 using Domain.Validators;
 using FluentValidation.Results;
 using SupportLayer.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Domain.Processors
 {
-    public class GreenHouseProcessor
+    public class SeedTrayProcessor
     {
-        private IGreenHouseRepository _repository;
+        private ISeedTrayRepository _repository;
         public string Error { get; set; } = null!;
 
-        public GreenHouseProcessor()
+        public SeedTrayProcessor()
         {
-            _repository = new GreenHouseRepository();
+            _repository = new SeedTrayRepository();
         }
 
-        private bool ValidateData(GreenHouse model)
+        private bool ValidateData(SeedTray model)
         {
-            GreenHouseValidator validator = new GreenHouseValidator();
+            SeedTrayValidator validator = new SeedTrayValidator();
             ValidationResult validationResult = validator.Validate(model);
 
             if (validationResult.IsValid)
@@ -32,7 +37,7 @@ namespace Domain.Processors
             }
         }
 
-        public bool SaveGreenHouse(GreenHouse model)
+        public bool SaveSeedTray(SeedTray model)
         {
             if (ValidateData(model) == true)
             {
@@ -58,15 +63,15 @@ namespace Domain.Processors
             return false;
         }
 
-        public void DeleteGreenHouse(GreenHouse model)
+        public void DeleteSeedTray(SeedTray model)
         {
-            //TODO - Create the delete method for green houses
+            //TODO - Create the delete method for seed trays
             throw new NotImplementedException();
         }
 
-        public IEnumerable<GreenHouse> GetAllGreenHouses()
+        public IEnumerable<SeedTray> GetAllSeedTrays()
         {
-            //TODO - Create the GetAll method for green houses
+            //TODO - Create the GetAll method for seed trays
             //throw new NotImplementedException();
             return _repository.GetAll();
         }
