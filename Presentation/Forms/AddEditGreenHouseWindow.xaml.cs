@@ -11,23 +11,23 @@ namespace Presentation.Forms
     public partial class AddEditGreenHouseWindow : Window
     {
 
-        private GreenHouseProcessor processor;
-        private GreenHouse model;
+        private GreenHouseProcessor _processor;
+        private GreenHouse _model;
 
         public AddEditGreenHouseWindow()
         {
             InitializeComponent();
-            processor = new GreenHouseProcessor();
-            model = new GreenHouse();
-            model.Id = 0;
-            PopulateData();
+            _processor = new GreenHouseProcessor();
+            _model = new GreenHouse();
+            _model.Id = 0;
         }
 
         public AddEditGreenHouseWindow(GreenHouse model)
         {
             InitializeComponent();
-            processor = new GreenHouseProcessor();
-            this.model = model;
+            _processor = new GreenHouseProcessor();
+            this._model = model;
+            PopulateData();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -39,7 +39,7 @@ namespace Presentation.Forms
         {
             if (ValidateDataType() == true)
             {
-                if (processor.SaveGreenHouse(model) == true)
+                if (_processor.SaveGreenHouse(_model) == true)
                 {
                     MessageBox.Show("Registro salvado");
                     this.Close();
@@ -53,7 +53,7 @@ namespace Presentation.Forms
 
         private void ShowError()
         {
-            MessageBox.Show(processor.Error);
+            MessageBox.Show(_processor.Error);
         }
 
         private bool ValidateDataType()
@@ -61,15 +61,15 @@ namespace Presentation.Forms
             decimal width = -1;
             decimal length = -1;
 
-            model.Name = tbtxtName.FieldContent;
+            _model.Name = tbtxtName.FieldContent;
 
-            model.Description = txtDescription.Text;
+            _model.Description = txtDescription.Text;
 
             if (tbtxtWidth.FieldContent != string.Empty)
             {
                 if (decimal.TryParse(tbtxtWidth.FieldContent, out width))
                 {
-                    model.Width = width;
+                    _model.Width = width;
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace Presentation.Forms
             {
                 if (decimal.TryParse(tbtxtLength.FieldContent, out length))
                 {
-                    model.Length = length;
+                    _model.Length = length;
                 }
                 else
                 {
@@ -93,12 +93,12 @@ namespace Presentation.Forms
 
             if (width != -1 && length != -1)
             {
-                model.GreenHouseArea = width * length;
+                _model.GreenHouseArea = width * length;
             }
 
             if (decimal.TryParse(tbtxtSeedTrayArea.FieldContent, out decimal seedTrayArea))
             {
-                model.SeedTrayArea = seedTrayArea;
+                _model.SeedTrayArea = seedTrayArea;
             }
             else
             {
@@ -108,7 +108,7 @@ namespace Presentation.Forms
 
             if (byte.TryParse(tbtxtAmountOfBlocks.FieldContent, out byte amountOfBlocks))
             {
-                model.AmountOfBlocks = amountOfBlocks;
+                _model.AmountOfBlocks = amountOfBlocks;
             }
             else
             {
@@ -116,22 +116,19 @@ namespace Presentation.Forms
                 return false;
             }
 
-            model.Active = chkActive.IsChecked ?? false;
+            _model.Active = chkActive.IsChecked ?? false;
 
             return true;
         }
 
         private void PopulateData()
         {
-            //NEXT - Check how works the saving of a null width in the database 
-            //because i have in the database a constraint, so the width 
-            //have to be greater than 0 and less than 50 
-            tbtxtName.FieldContent = model.Name;
-            tbtxtWidth.FieldContent = model.Width.ToString();
-            tbtxtLength.FieldContent = model.Length.ToString();
-            tbtxtSeedTrayArea.FieldContent = model.SeedTrayArea.ToString();
-            tbtxtAmountOfBlocks.FieldContent = model.AmountOfBlocks.ToString();
-            txtDescription.Text = model.Description;
+            tbtxtName.FieldContent = _model.Name;
+            tbtxtWidth.FieldContent = _model.Width.ToString();
+            tbtxtLength.FieldContent = _model.Length.ToString();
+            tbtxtSeedTrayArea.FieldContent = _model.SeedTrayArea.ToString();
+            tbtxtAmountOfBlocks.FieldContent = _model.AmountOfBlocks.ToString();
+            txtDescription.Text = _model.Description;
         }
     }
 }

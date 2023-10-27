@@ -22,6 +22,7 @@ namespace Presentation.Forms
             LoadData();
         }
 
+        //NEXT - When a change is made, refresh the datagrid.
         private void LoadData()
         {
             //_greenHouses.Clear();
@@ -41,6 +42,7 @@ namespace Presentation.Forms
             LoadData();
         }
 
+        //NEXT - Edit a record with a double click on it
         private void btnEditGreenHouse_Click(object sender, RoutedEventArgs e)
         {
             if(dgGreenHouses.SelectedItem is GreenHouse greenHouse)
@@ -50,11 +52,10 @@ namespace Presentation.Forms
             }
         }
 
+        //NEXT - Create the logic to delete a record
         private void btnDeleteGreenHouse_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        //NEXT - Do all the logic for showing all the houses, edit them and delete them
+        }        
     }
 }
