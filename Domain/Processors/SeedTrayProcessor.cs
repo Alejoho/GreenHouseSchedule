@@ -71,8 +71,6 @@ namespace Domain.Processors
 
         public IEnumerable<SeedTray> GetAllSeedTrays()
         {
-            //TODO - Create the GetAll method for seed trays
-            //throw new NotImplementedException();
             return _repository.GetAll();
         }
     }
