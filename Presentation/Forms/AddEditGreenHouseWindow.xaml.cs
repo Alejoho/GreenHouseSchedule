@@ -20,7 +20,7 @@ namespace Presentation.Forms
             processor = new GreenHouseProcessor();
             model = new GreenHouse();
             model.Id = 0;
-            LlenarCasillas();
+            PopulateData();
         }
 
         public AddEditGreenHouseWindow(GreenHouse model)
@@ -121,14 +121,17 @@ namespace Presentation.Forms
             return true;
         }
 
-        private void LlenarCasillas()
+        private void PopulateData()
         {
-            tbtxtName.FieldContent = "casa 9";
-            txtDescription.Text = "esto es una casa grande";
-            tbtxtWidth.FieldContent = "10";
-            tbtxtLength.FieldContent = "25";
-            tbtxtSeedTrayArea.FieldContent = "195";
-            tbtxtAmountOfBlocks.FieldContent = "4";
+            //NEXT - Check how works the saving of a null width in the database 
+            //because i have in the database a constraint, so the width 
+            //have to be greater than 0 and less than 50 
+            tbtxtName.FieldContent = model.Name;
+            tbtxtWidth.FieldContent = model.Width.ToString();
+            tbtxtLength.FieldContent = model.Length.ToString();
+            tbtxtSeedTrayArea.FieldContent = model.SeedTrayArea.ToString();
+            tbtxtAmountOfBlocks.FieldContent = model.AmountOfBlocks.ToString();
+            txtDescription.Text = model.Description;
         }
     }
 }

@@ -66,8 +66,6 @@ namespace Domain.Processors
 
         public IEnumerable<GreenHouse> GetAllGreenHouses()
         {
-            //TODO - Create the GetAll method for green houses
-            //throw new NotImplementedException();
             return _repository.GetAll();
         }
     }

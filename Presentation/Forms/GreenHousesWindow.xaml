@@ -20,18 +20,47 @@
                                 VerticalAlignment="Top" Margin="20 5 0 0" x:Name="lbltxtSearch"/>
 
         <!--DataGrid-->
-        <DataGrid x:Name="dgGreenHouses" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5">
+        <DataGrid x:Name="dgGreenHouses" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5"
+                  AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn/>
+                <DataGridTextColumn Header="Id" CanUserResize="False" CanUserSort="False"
+                                    CanUserReorder="False" Width="auto" IsReadOnly="True"
+                                    Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Nombre" CanUserResize="False" CanUserSort="False"
+                    CanUserReorder="False" Width="auto" IsReadOnly="True"
+                    Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Ancho" CanUserResize="False" CanUserSort="False"
+                    CanUserReorder="False" Width="auto" IsReadOnly="True"
+                    Binding="{Binding Width}"/>
+                <DataGridTextColumn Header="Largo" CanUserResize="False" CanUserSort="False"
+                    CanUserReorder="False" Width="auto" IsReadOnly="True"
+                    Binding="{Binding Length}"/>
+                <DataGridTextColumn Header="Area total" CanUserResize="False" CanUserSort="False"
+                    CanUserReorder="False" Width="auto" IsReadOnly="True"
+                    Binding="{Binding GreenHouseArea}"/>
+                <DataGridTextColumn Header="Area de bandejas" CanUserResize="False" CanUserSort="False"
+                    CanUserReorder="False" Width="auto" IsReadOnly="True"
+                    Binding="{Binding SeedTrayArea}"/>
+                <DataGridTextColumn Header="Bloques" CanUserResize="False" CanUserSort="False"
+                    CanUserReorder="False" Width="auto" IsReadOnly="True"
+                    Binding="{Binding AmountOfBlocks}"/>
+                <DataGridCheckBoxColumn Header="Activa" CanUserResize="False" CanUserSort="False"
+                    CanUserReorder="False" Width="auto" IsReadOnly="True"
+                    Binding="{Binding Active}"/>
+                <DataGridTextColumn Header="Descripcion" CanUserResize="False" CanUserSort="False"
+                    CanUserReorder="False" Width="auto" IsReadOnly="True"
+                    Binding="{Binding Description}"/>
+
+
             </DataGrid.Columns>
         </DataGrid>
 
         <!--Buttons-->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left"
                     Margin="50 0 0 0">
-            <Button x:Name="btnNewGreenHouse" Content="Nuevo" Margin="5 15" Width="70"/>
-            <Button x:Name="btnEditGreenHouse" Content="Editar" Margin="5 15" Width="70"/>
-            <Button x:Name="btnDeleteGreenHouse" Content="Borrar" Margin="5 15" Width="70"/>
+            <Button x:Name="btnNewGreenHouse" Content="Nuevo" Margin="5 15" Width="70" Click="btnNewGreenHouse_Click"/>
+            <Button x:Name="btnEditGreenHouse" Content="Editar" Margin="5 15" Width="70" Click="btnEditGreenHouse_Click"/>
+            <Button x:Name="btnDeleteGreenHouse" Content="Borrar" Margin="5 15" Width="70" Click="btnDeleteGreenHouse_Click"/>
             <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70" Click="btnCancel_Click"/>
         </StackPanel>
     </Grid>

@@ -1,17 +1,9 @@
-﻿using SupportLayer.Models;
+﻿using Domain.Processors;
+using SupportLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Presentation.Forms
 {
@@ -21,48 +13,46 @@ namespace Presentation.Forms
     public partial class GreenHousesWindow : Window
     {
         List<GreenHouse> _greenHouses;
+        GreenHouseProcessor _processor;
         public GreenHousesWindow()
         {
             InitializeComponent();
             _greenHouses = new List<GreenHouse>();
+            _processor = new GreenHouseProcessor();
             LoadData();
         }
 
         private void LoadData()
         {
-            _greenHouses.Add(new GreenHouse()
-            {
-                Id = 1,
-                Name = "casa 1",
-                Description = "es una casa grande",
-                Width = 12,
-                Length = 35,
-                GreenHouseArea = 420,
-                SeedTrayArea = 330,
-                AmountOfBlocks = 4,
-                Active = true
-            });
-
-            _greenHouses.Add(new GreenHouse()
-            {
-                Id = 2,
-                Name = "casa 2",
-                Description = "es una casa pequena",
-                Width = 6,
-                Length = 20,
-                GreenHouseArea = 120,
-                SeedTrayArea = 80,
-                AmountOfBlocks = 2,
-                Active = false
-            });
-
+            //_greenHouses.Clear();
+            _greenHouses = _processor.GetAllGreenHouses().ToList();
             dgGreenHouses.ItemsSource = _greenHouses;
-
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnNewGreenHouse_Click(object sender, RoutedEventArgs e)
+        {
+            AddEditGreenHouseWindow window = new AddEditGreenHouseWindow();
+            window.ShowDialog();
+            LoadData();
+        }
+
+        private void btnEditGreenHouse_Click(object sender, RoutedEventArgs e)
+        {
+            if(dgGreenHouses.SelectedItem is GreenHouse greenHouse)
+            {
+                AddEditGreenHouseWindow window = new AddEditGreenHouseWindow(greenHouse);
+                window.ShowDialog();
+            }
+        }
+
+        private void btnDeleteGreenHouse_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         //NEXT - Do all the logic for showing all the houses, edit them and delete them
