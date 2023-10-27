@@ -12,19 +12,19 @@
         <StackPanel Margin="0 10 0 0" HorizontalAlignment="Center">
             <custom:TextBoxWithLabel FieldLabel="Nombre*" HorizontalAlignment="Right" x:Name="lbltxtName"/>
             <custom:TextBoxWithLabel FieldLabel="Total de alvéolos*" HorizontalAlignment="Right" x:Name="lbltxtTotalAlveolus"/>
-            <custom:TextBoxWithLabel FieldLabel="Alvéolos a lo largo*" HorizontalAlignment="Right" x:Name="lbltxtAlveolusLength"/>
-            <custom:TextBoxWithLabel FieldLabel="Alvéolos a lo ancho*" HorizontalAlignment="Right" x:Name="lbltxtAlveolusWidth"/>
+            <custom:TextBoxWithLabel FieldLabel="Alvéolos a lo largo" HorizontalAlignment="Right" x:Name="lbltxtAlveolusLength"/>
+            <custom:TextBoxWithLabel FieldLabel="Alvéolos a lo ancho" HorizontalAlignment="Right" x:Name="lbltxtAlveolusWidth"/>
             <custom:TextBoxWithLabel FieldLabel="Largo de la bandeja" HorizontalAlignment="Right" x:Name="lbltxtTrayLength"/>
             <custom:TextBoxWithLabel FieldLabel="Ancho de la bandeja" HorizontalAlignment="Right" x:Name="lbltxtTrayWidth"/>
             <!--<custom:TextBoxWithLabel FieldLabel="Área física de la bandeja" HorizontalAlignment="Right" x:Name="lbtxt"/>-->
-            <custom:TextBoxWithLabel FieldLabel="Área lógica de la bandeja" HorizontalAlignment="Right" x:Name="lbltxt"/>
+            <custom:TextBoxWithLabel FieldLabel="Área lógica de la bandeja" HorizontalAlignment="Right" x:Name="lbltxtLogicalArea"/>
             <!--<custom:TextBoxWithLabel FieldLabel="Área de un postura" HorizontalAlignment="Right" x:Name="lbtxt"/>-->
             <custom:TextBoxWithLabel FieldLabel="Cantidad de bandejas*" HorizontalAlignment="Right" x:Name="lbltxtTotalAmount"/>
             <custom:TextBoxWithLabel FieldLabel="Material" HorizontalAlignment="Right" x:Name="lbltxtMaterial"/>
             <CheckBox x:Name="chkActive" Content="Activa" HorizontalAlignment="Center" Margin="0 10 0 0" IsChecked="True"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
                 <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0" Click="btnSave_Click"/>
-                <Button x:Name="btnCancel" Content="Cancelar" Width="80"/>
+                <Button x:Name="btnCancel" Content="Cancelar" Width="80" Click="btnCancel_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>
