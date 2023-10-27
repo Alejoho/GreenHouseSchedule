@@ -97,7 +97,7 @@ namespace Presentation.Forms
 
             if (byte.TryParse(lbltxtAlveolusWidth.FieldContent, out byte alveolusWidth))
             {
-                _model.AlveolusLength = alveolusWidth;
+                _model.AlveolusWidth = alveolusWidth;
             }
             else
             {
