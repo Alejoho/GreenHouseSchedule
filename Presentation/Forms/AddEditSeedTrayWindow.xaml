@@ -17,7 +17,7 @@
             <custom:TextBoxWithLabel FieldLabel="Largo de la bandeja" HorizontalAlignment="Right" x:Name="lbltxtTrayLength"/>
             <custom:TextBoxWithLabel FieldLabel="Ancho de la bandeja" HorizontalAlignment="Right" x:Name="lbltxtTrayWidth"/>
             <!--<custom:TextBoxWithLabel FieldLabel="Área física de la bandeja" HorizontalAlignment="Right" x:Name="lbtxt"/>-->
-            <custom:TextBoxWithLabel FieldLabel="Área lógica de la bandeja" HorizontalAlignment="Right" x:Name="lbltxtLogicalArea"/>
+            <custom:TextBoxWithLabel FieldLabel="Área lógica de la bandeja*" HorizontalAlignment="Right" x:Name="lbltxtLogicalArea"/>
             <!--<custom:TextBoxWithLabel FieldLabel="Área de un postura" HorizontalAlignment="Right" x:Name="lbtxt"/>-->
             <custom:TextBoxWithLabel FieldLabel="Cantidad de bandejas*" HorizontalAlignment="Right" x:Name="lbltxtTotalAmount"/>
             <custom:TextBoxWithLabel FieldLabel="Material" HorizontalAlignment="Right" x:Name="lbltxtMaterial"/>

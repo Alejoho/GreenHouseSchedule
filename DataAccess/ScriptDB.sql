@@ -137,9 +137,9 @@ create table "SeedTrays"(
 	CONSTRAINT [CK_SeedTrays_AlveolusWidth] CHECK ("AlveolusWidth" is null or ("AlveolusWidth" > 0 and "AlveolusWidth" < 50)),
 	CONSTRAINT [CK_SeedTrays_TrayLength] CHECK ("TrayLength" is null or ("TrayLength" > 0 and "TrayLength" < 1.5)),
 	CONSTRAINT [CK_SeedTrays_TrayWidth] CHECK ("TrayWidth" is null or ("TrayWidth" > 0 and "TrayWidth" < 1.5)),
-	CONSTRAINT [CK_SeedTrays_TrayArea] CHECK ("TrayArea" is null or ("TrayArea" > 0 and "TrayArea" < 1.0)),
-	CONSTRAINT [CK_SeedTrays_LogicalTrayArea] CHECK ("LogicalTrayArea" >= "TrayArea"),
-	CONSTRAINT [CK_SeedTrays_TotalAmount] CHECK ("TotalAmount" > 0),
+	CONSTRAINT [CK_SeedTrays_TrayArea] CHECK ("TrayArea" is null or ("TrayArea" > 0 and "TrayArea" < 2.25)),
+	CONSTRAINT [CK_SeedTrays_LogicalTrayArea] CHECK (("LogicalTrayArea" >= "TrayArea") and "LogicalTrayArea" < 4),
+	CONSTRAINT [CK_SeedTrays_TotalAmount] CHECK ("TotalAmount" > 0 and "TotalAmount" < 10000),
 	CONSTRAINT [CK_SeedTrays_Preference] CHECK ("Preference" > 0)
 
 );
