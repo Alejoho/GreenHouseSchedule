@@ -45,7 +45,7 @@ namespace Domain.Processors
                 {
                     if (model.Id == 0)
                     {
-                        //_repository.Insert(model);
+                        _repository.Insert(model);
                     }
                     else
                     {

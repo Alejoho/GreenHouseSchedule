@@ -38,13 +38,13 @@ namespace Domain.Validators
                 .When(x => x.TrayArea != null).WithName("Área de la bandejas")
                 .WithMessage("El {PropertyName} debe estar entre 0 y 2.25.");
             RuleFor(x => x.LogicalTrayArea).NotEmpty().WithName("Área lógica de la bandeja")
-                .WithMessage("El {PropertyName} no debe estar vacío.")
+                .WithMessage("El {PropertyName} no debe estar vacío ni contener el valor 0.")
                 .GreaterThan(x => x.TrayArea)
                 .WithMessage("El {PropertyName} debe ser mayor que el " +
-                "área de la bandeja.")
+                "área de la bandeja \n(Largo de la bandeja * Ancho de la bandeja).")
                 .LessThan(4).WithMessage("El {PropertyName} debe ser menor que 4");
             RuleFor(x => x.TotalAmount).NotEmpty().WithName("Cantidad de bandejas")
-                .WithMessage("El {PropertyName} no debe estar vacío.")
+                .WithMessage("El {PropertyName} no debe estar vacío ni contener el valor 0.")
                 .Must(totalAmount => totalAmount > 0 && totalAmount < 10000)
                 .WithMessage("El {PropertyName} debe estar entre 0 y 10000.");
             RuleFor(x => x.Material).MaximumLength(20).WithName("Material")
