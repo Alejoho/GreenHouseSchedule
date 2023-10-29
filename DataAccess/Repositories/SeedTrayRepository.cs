@@ -24,31 +24,17 @@ namespace DataAccess.Repositories
 
         public bool Insert(SeedTray entity)
         {
-            try
-            {
                 _sowScheduleDB.SeedTrays.Add(entity);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         public bool Remove(int pId)
         {
-            try
-            {
                 SeedTray seedTray = _sowScheduleDB.SeedTrays.Find(pId);
                 _sowScheduleDB.SeedTrays.Remove(seedTray);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         public bool Update(SeedTray entity)

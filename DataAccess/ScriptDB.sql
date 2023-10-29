@@ -131,7 +131,6 @@ create table "SeedTrays"(
 	"Active" bit not null,
 	CONSTRAINT [PK_SeedTrays] primary key ("ID"),
 	CONSTRAINT [UC_SeedTrays_Name] UNIQUE ("Name"),
-	CONSTRAINT [UC_SeedTrays_Preference] UNIQUE ("Preference"),
 	CONSTRAINT [CK_SeedTrays_TotalAlveolus] CHECK ("TotalAlveolus" > 0 and "TotalAlveolus" < 400),
 	CONSTRAINT [CK_SeedTrays_AlveolusLength] CHECK ("AlveolusLength" is null or ("AlveolusLength" > 0 and "AlveolusLength" < 50)),
 	CONSTRAINT [CK_SeedTrays_AlveolusWidth] CHECK ("AlveolusWidth" is null or ("AlveolusWidth" > 0 and "AlveolusWidth" < 50)),
@@ -140,6 +139,7 @@ create table "SeedTrays"(
 	CONSTRAINT [CK_SeedTrays_TrayArea] CHECK ("TrayArea" is null or ("TrayArea" > 0 and "TrayArea" < 2.25)),
 	CONSTRAINT [CK_SeedTrays_LogicalTrayArea] CHECK (("LogicalTrayArea" >= "TrayArea") and "LogicalTrayArea" < 4),
 	CONSTRAINT [CK_SeedTrays_TotalAmount] CHECK ("TotalAmount" > 0 and "TotalAmount" < 10000),
+	CONSTRAINT [UC_SeedTrays_Preference] UNIQUE ("Preference"),
 	CONSTRAINT [CK_SeedTrays_Preference] CHECK ("Preference" > 0)
 
 );
