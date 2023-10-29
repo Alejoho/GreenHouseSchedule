@@ -72,7 +72,7 @@ namespace Presentation.Forms
         {
             decimal trayLength = -1;
             decimal trayWidth = -1;
-            //I dont want validation if the nullable field is empty
+            
             _model.Name = lbltxtName.FieldContent;
 
             if (short.TryParse(lbltxtTotalAlveolus.FieldContent, out short totalAlveolus))
@@ -85,44 +85,56 @@ namespace Presentation.Forms
                 return false;
             }
 
-            if (byte.TryParse(lbltxtAlveolusLength.FieldContent, out byte alveolusLength))
+            if (lbltxtAlveolusLength.FieldContent != string.Empty)
             {
-                _model.AlveolusLength = alveolusLength;
-            }
-            else
-            {
-                MessageBox.Show("Alvéolos a lo largo inválido");
-                return false;
-            }
-
-            if (byte.TryParse(lbltxtAlveolusWidth.FieldContent, out byte alveolusWidth))
-            {
-                _model.AlveolusWidth = alveolusWidth;
-            }
-            else
-            {
-                MessageBox.Show("Alvéolos a lo ancho inválido");
-                return false;
+                if (byte.TryParse(lbltxtAlveolusLength.FieldContent, out byte alveolusLength))
+                {
+                    _model.AlveolusLength = alveolusLength;
+                }
+                else
+                {
+                    MessageBox.Show("Alvéolos a lo largo inválido");
+                    return false;
+                }
             }
 
-            if (decimal.TryParse(lbltxtTrayLength.FieldContent,out trayLength))
+            if (lbltxtAlveolusWidth.FieldContent != string.Empty)
             {
-                _model.TrayLength = trayLength;
-            }
-            else
-            {
-                MessageBox.Show("Largo de la bandeja inválido");
-                return false;
+                if (byte.TryParse(lbltxtAlveolusWidth.FieldContent, out byte alveolusWidth))
+                {
+                    _model.AlveolusWidth = alveolusWidth;
+                }
+                else
+                {
+                    MessageBox.Show("Alvéolos a lo ancho inválido");
+                    return false;
+                }
             }
 
-            if (decimal.TryParse(lbltxtTrayWidth.FieldContent, out trayWidth))
+            if (lbltxtTrayLength.FieldContent != string.Empty)
             {
-                _model.TrayWidth = trayWidth;
+                if (decimal.TryParse(lbltxtTrayLength.FieldContent, out trayLength))
+                {
+                    _model.TrayLength = trayLength;
+                }
+                else
+                {
+                    MessageBox.Show("Largo de la bandeja inválido");
+                    return false;
+                }
             }
-            else
+
+            if (lbltxtTrayWidth.FieldContent != string.Empty)
             {
-                MessageBox.Show("Ancho de la bandeja inválido");
-                return false;
+                if (decimal.TryParse(lbltxtTrayWidth.FieldContent, out trayWidth))
+                {
+                    _model.TrayWidth = trayWidth;
+                }
+                else
+                {
+                    MessageBox.Show("Ancho de la bandeja inválido");
+                    return false;
+                }
             }
 
             if (trayLength!=-1 && trayWidth !=-1)
