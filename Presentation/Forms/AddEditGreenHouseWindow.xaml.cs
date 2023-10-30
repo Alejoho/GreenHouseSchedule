@@ -1,5 +1,6 @@
 ﻿using Domain.Processors;
 using SupportLayer.Models;
+using System;
 using System.Windows;
 
 
@@ -92,8 +93,8 @@ namespace Presentation.Forms
             }
 
             if (width != -1 && length != -1)
-            {
-                _model.GreenHouseArea = width * length;
+            {                
+                _model.GreenHouseArea = Math.Round(width * length, 2);
             }
 
             if (decimal.TryParse(tbtxtSeedTrayArea.FieldContent, out decimal seedTrayArea))
