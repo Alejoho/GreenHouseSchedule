@@ -21,7 +21,7 @@
 
         <!--DataGrid-->
         <DataGrid x:Name="dgGreenHouses" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5"
-                  AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False">
+                  AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" MouseDoubleClick="dgGreenHouses_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" CanUserResize="False" CanUserSort="False"
                                     CanUserReorder="False" Width="auto" IsReadOnly="True"

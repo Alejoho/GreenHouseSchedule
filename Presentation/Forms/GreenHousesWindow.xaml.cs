@@ -22,12 +22,30 @@ namespace Presentation.Forms
             LoadData();
         }
 
-        //NEXT - When a change is made, refresh the datagrid.
         private void LoadData()
-        {
-            //_greenHouses.Clear();
+        {            
             _greenHouses = _processor.GetAllGreenHouses().ToList();
             dgGreenHouses.ItemsSource = _greenHouses;
+        }
+
+        private void RefreshData()
+        {
+            dgGreenHouses.ItemsSource = null;
+            dgGreenHouses.ItemsSource = _greenHouses;
+        }
+
+        private void EditGreenHouse()
+        {
+            if (dgGreenHouses.SelectedItem is GreenHouse greenHouse)
+            {
+                AddEditGreenHouseWindow window = new AddEditGreenHouseWindow(greenHouse);
+                window.ShowDialog();
+                RefreshData();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar el registro que desea editar.");
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -42,20 +60,20 @@ namespace Presentation.Forms
             LoadData();
         }
 
-        //NEXT - Edit a record with a double click on it
         private void btnEditGreenHouse_Click(object sender, RoutedEventArgs e)
         {
-            if(dgGreenHouses.SelectedItem is GreenHouse greenHouse)
-            {
-                AddEditGreenHouseWindow window = new AddEditGreenHouseWindow(greenHouse);
-                window.ShowDialog();
-            }
+            EditGreenHouse();         
+        }
+
+        private void dgGreenHouses_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            EditGreenHouse();
         }
 
         //NEXT - Create the logic to delete a record
         private void btnDeleteGreenHouse_Click(object sender, RoutedEventArgs e)
         {
 
-        }        
+        }
     }
 }
