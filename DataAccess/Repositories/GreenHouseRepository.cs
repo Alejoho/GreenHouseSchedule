@@ -29,7 +29,7 @@ namespace DataAccess.Repositories
 
         public bool Remove(int pId)
         {
-            GreenHouse greenHouse = _sowScheduleDB.GreenHouses.Find(pId);
+            GreenHouse greenHouse = _sowScheduleDB.GreenHouses.Find((byte)pId);
             _sowScheduleDB.GreenHouses.Remove(greenHouse);
             _sowScheduleDB.SaveChanges();
             return true;

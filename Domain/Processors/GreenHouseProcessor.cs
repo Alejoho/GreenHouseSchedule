@@ -58,10 +58,9 @@ namespace Domain.Processors
             return false;
         }
 
-        public void DeleteGreenHouse(GreenHouse model)
+        public void DeleteGreenHouse(int id)
         {
-            //TODO - Create the delete method for green houses
-            throw new NotImplementedException();
+            _repository.Remove(id);
         }
 
         public IEnumerable<GreenHouse> GetAllGreenHouses()

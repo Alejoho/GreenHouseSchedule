@@ -1,6 +1,5 @@
 ﻿using Domain.Processors;
 using SupportLayer.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -22,8 +21,50 @@ namespace Presentation.Forms
             LoadData();
         }
 
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnNewGreenHouse_Click(object sender, RoutedEventArgs e)
+        {
+            AddEditGreenHouseWindow window = new AddEditGreenHouseWindow();
+            window.ShowDialog();
+            LoadData();
+        }
+
+        private void btnEditGreenHouse_Click(object sender, RoutedEventArgs e)
+        {
+            EditGreenHouse();
+        }
+
+        private void dgGreenHouses_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            EditGreenHouse();
+        }
+        
+        private void btnDeleteGreenHouse_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgGreenHouses.SelectedItem is GreenHouse greenHouse)
+            {
+                if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
+                    , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    _processor.DeleteGreenHouse(greenHouse.Id);
+                    _greenHouses.Remove(greenHouse);
+                    RefreshData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar el registro que desea eliminar."
+                    ,"",MessageBoxButton.OK,MessageBoxImage.Information);
+            }
+
+        }
+
         private void LoadData()
-        {            
+        {
             _greenHouses = _processor.GetAllGreenHouses().ToList();
             dgGreenHouses.ItemsSource = _greenHouses;
         }
@@ -46,34 +87,6 @@ namespace Presentation.Forms
             {
                 MessageBox.Show("Debe seleccionar el registro que desea editar.");
             }
-        }
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnNewGreenHouse_Click(object sender, RoutedEventArgs e)
-        {
-            AddEditGreenHouseWindow window = new AddEditGreenHouseWindow();
-            window.ShowDialog();
-            LoadData();
-        }
-
-        private void btnEditGreenHouse_Click(object sender, RoutedEventArgs e)
-        {
-            EditGreenHouse();         
-        }
-
-        private void dgGreenHouses_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            EditGreenHouse();
-        }
-
-        //NEXT - Create the logic to delete a record
-        private void btnDeleteGreenHouse_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
