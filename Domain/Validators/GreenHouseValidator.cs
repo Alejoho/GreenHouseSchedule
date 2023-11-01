@@ -8,23 +8,23 @@ namespace Domain.Validators
         public GreenHouseValidator()
         {
             RuleLevelCascadeMode = CascadeMode.Stop;
-            //NEXT - cambiar los mensajes dejar lo de invalido para la validacion al insertar en el modelo
+            
             RuleFor(x => x.Name).NotEmpty().WithName("Nombre")
-                .WithMessage("{PropertyName} inválido. El {PropertyName} no debe estar vacío.")
+                .WithMessage("El {PropertyName} no debe estar vacío.")
                 .MaximumLength(50)
-                .WithMessage("{PropertyName} inválido. El {PropertyName} no debe exceder los 50 caracteres.");                
+                .WithMessage("El {PropertyName} no debe exceder los 50 caracteres.");                
             RuleFor(x => x.Width).GreaterThan(0).LessThan(200).When(x => x.Width != null)
                 .WithName("Ancho")
-                .WithMessage("{PropertyName} inválido. El {PropertyName} debe estar entre 0 y 200.");
+                .WithMessage("El {PropertyName} debe estar entre 0 y 200.");
             RuleFor(x => x.Length).GreaterThan(0).LessThan(200).When(x => x.Length != null)
                 .WithName("Largo")
-                .WithMessage("{PropertyName} inválido. El {PropertyName} debe estar entre 0 y 200.");
+                .WithMessage("El {PropertyName} debe estar entre 0 y 200.");
             RuleFor(x => x.SeedTrayArea).GreaterThan(0)
                 .WithName("Área de bandejas")
-                .WithMessage("{PropertyName} inválido. El {PropertyName} debe ser mayor que 0.");
+                .WithMessage("El {PropertyName} debe ser mayor que 0.");
             RuleFor(x => x.AmountOfBlocks).Must(amountOfBlocks => amountOfBlocks > 0 && amountOfBlocks < 10)
                 .WithName("Cantidad de bloques")
-                .WithMessage("{PropertyName} inválido. La {PropertyName} debe estar entre 0 y 10.");
+                .WithMessage("La {PropertyName} debe estar entre 0 y 10.");
         }
     }
 }
