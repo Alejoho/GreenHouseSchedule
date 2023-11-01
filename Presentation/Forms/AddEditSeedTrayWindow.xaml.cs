@@ -1,4 +1,5 @@
 ﻿using Domain.Processors;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SupportLayer.Models;
 using System.Windows;
 
@@ -12,17 +13,6 @@ namespace Presentation.Forms
         private SeedTrayProcessor _processor;
         private SeedTray _model;
 
-        //UNDONE - Delete this constructor after the tests.
-        public AddEditSeedTrayWindow()
-        {
-            InitializeComponent();
-            _processor = new SeedTrayProcessor();
-            _model = new SeedTray();
-            _model.Id = 0;
-            _model.Preference = 7;
-            LlenarCasillas();
-        }
-
         public AddEditSeedTrayWindow(byte nextPreferenceValue)
         {
             InitializeComponent();
@@ -30,8 +20,6 @@ namespace Presentation.Forms
             _model = new SeedTray();
             _model.Id = 0;
             _model.Preference = nextPreferenceValue;
-            _model.Preference = 7;
-            LlenarCasillas();
         }
 
         public AddEditSeedTrayWindow(SeedTray model)
@@ -39,7 +27,7 @@ namespace Presentation.Forms
             InitializeComponent();
             _processor = new SeedTrayProcessor();
             this._model = model;
-            //PopulateData();
+            PopulateData();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -166,7 +154,23 @@ namespace Presentation.Forms
             _model.Active = chkActive.IsChecked ?? false;
             return true;
         }
-        //NEXT - Create the PolulateData method
+        private void PopulateData()
+        {
+            lbltxtName.FieldContent = _model.Name;
+            lbltxtTotalAlveolus.FieldContent = _model.TotalAlveolus.ToString();
+            //CHECK - if this property was null would it thrown an error
+            lbltxtAlveolusLength.FieldContent = _model.AlveolusLength.ToString();
+            lbltxtAlveolusWidth.FieldContent = _model.AlveolusWidth.ToString();
+            lbltxtTrayLength.FieldContent = _model.TrayLength.ToString();
+            lbltxtTrayWidth.FieldContent = _model.TrayWidth.ToString();
+            lbltxtLogicalArea.FieldContent = _model.LogicalTrayArea.ToString();
+            lbltxtTotalAmount.FieldContent = _model.TotalAmount.ToString();
+            lbltxtMaterial.FieldContent = _model.Material;
+            chkActive.IsChecked = _model.Active;
+
+
+
+        }
         private void LlenarCasillas()
         {
             lbltxtName.FieldContent = "300 plásticas";

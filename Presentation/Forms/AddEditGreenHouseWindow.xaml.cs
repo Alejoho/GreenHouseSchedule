@@ -130,6 +130,7 @@ namespace Presentation.Forms
             tbtxtSeedTrayArea.FieldContent = _model.SeedTrayArea.ToString();
             tbtxtAmountOfBlocks.FieldContent = _model.AmountOfBlocks.ToString();
             txtDescription.Text = _model.Description;
+            chkActive.IsChecked = _model.Active;
         }
     }
 }
