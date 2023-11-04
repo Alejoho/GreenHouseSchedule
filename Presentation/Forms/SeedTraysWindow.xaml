@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
-        Title="Bandejas" Height="470" Width="700" ResizeMode="NoResize"
+        Title="Bandejas" Height="470" Width="1000" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -18,16 +18,33 @@
         <!--Filter-->
 
         <!--DataGrid-->
-        <DataGrid x:Name="dgSeedTrays" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5">
-
+        <DataGrid x:Name="dgSeedTrays" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5" 
+                    AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
+                    MouseDoubleClick="dgSeedTrays_MouseDoubleClick" CanUserReorderColumns="False"
+                    CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Total de alvéolos" Binding="{Binding TotalAlveolus}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Largo de alvéolos" Binding="{Binding AlveolusLength}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Ancho de alvéolos" Binding="{Binding AlveolusWidth}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Largo" Binding="{Binding TrayLength}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Ancho" Binding="{Binding TrayWidth}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Área" Binding="{Binding TrayArea}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Área lógica" Binding="{Binding LogicalTrayArea}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Cantidad" Binding="{Binding TotalAmount}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Material" Binding="{Binding Material}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Preferencia" Binding="{Binding Preference}" IsReadOnly="False"/>
+                <DataGridCheckBoxColumn Header="Activa" Binding="{Binding Active}" IsReadOnly="True"/>
+            </DataGrid.Columns>
         </DataGrid>
 
         <!--Buttons-->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left"
                     Margin="50 0 0 0">
             <Button x:Name="btnNewSeedTray" Content="Nuevo" Margin="5 15" Width="70" Click="btnNewSeedTray_Click"/>
-            <Button x:Name="btnEditSeedTray" Content="Editar" Margin="5 15" Width="70"/>
-            <Button x:Name="btnDeleteSeedTray" Content="Borrar" Margin="5 15" Width="70"/>
+            <Button x:Name="btnEditSeedTray" Content="Editar" Margin="5 15" Width="70" Click="btnEditSeedTray_Click"/>
+            <Button x:Name="btnDeleteSeedTray" Content="Borrar" Margin="5 15" Width="70" Click="btnDeleteSeedTray_Click"/>
             <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70" Click="btnCancel_Click"/>
         </StackPanel>
 
