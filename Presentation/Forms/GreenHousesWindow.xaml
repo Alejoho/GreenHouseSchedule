@@ -19,35 +19,20 @@
 
         <!--DataGrid-->
         <DataGrid x:Name="dgGreenHouses" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5"
-                  AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" MouseDoubleClick="dgGreenHouses_MouseDoubleClick">
+                    AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" 
+                    MouseDoubleClick="dgGreenHouses_MouseDoubleClick" CanUserReorderColumns="False"
+                    CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
+                    IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" CanUserResize="False" CanUserSort="False"
-                                    CanUserReorder="False" Width="auto" IsReadOnly="True"
-                                    Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="Nombre" CanUserResize="False" CanUserSort="False"
-                    CanUserReorder="False" Width="auto" IsReadOnly="True"
-                    Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Ancho" CanUserResize="False" CanUserSort="False"
-                    CanUserReorder="False" Width="auto" IsReadOnly="True"
-                    Binding="{Binding Width}"/>
-                <DataGridTextColumn Header="Largo" CanUserResize="False" CanUserSort="False"
-                    CanUserReorder="False" Width="auto" IsReadOnly="True"
-                    Binding="{Binding Length}"/>
-                <DataGridTextColumn Header="Area total" CanUserResize="False" CanUserSort="False"
-                    CanUserReorder="False" Width="auto" IsReadOnly="True"
-                    Binding="{Binding GreenHouseArea}"/>
-                <DataGridTextColumn Header="Area de bandejas" CanUserResize="False" CanUserSort="False"
-                    CanUserReorder="False" Width="auto" IsReadOnly="True"
-                    Binding="{Binding SeedTrayArea}"/>
-                <DataGridTextColumn Header="Bloques" CanUserResize="False" CanUserSort="False"
-                    CanUserReorder="False" Width="auto" IsReadOnly="True"
-                    Binding="{Binding AmountOfBlocks}"/>
-                <DataGridCheckBoxColumn Header="Activa" CanUserResize="False" CanUserSort="False"
-                    CanUserReorder="False" Width="auto" IsReadOnly="True"
-                    Binding="{Binding Active}"/>
-                <DataGridTextColumn Header="Descripcion" CanUserResize="False" CanUserSort="False"
-                    CanUserReorder="False" Width="auto" IsReadOnly="True"
-                    Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Ancho" Binding="{Binding Width}"/>
+                <DataGridTextColumn Header="Largo" Binding="{Binding Length}"/>
+                <DataGridTextColumn Header="Area total" Binding="{Binding GreenHouseArea}"/>
+                <DataGridTextColumn Header="Area de bandejas" Binding="{Binding SeedTrayArea}"/>
+                <DataGridTextColumn Header="Bloques" Binding="{Binding AmountOfBlocks}"/>
+                <DataGridCheckBoxColumn Header="Activa" Binding="{Binding Active}"/>
+                <DataGridTextColumn Header="Descripcion" Binding="{Binding Description}"/>
 
 
             </DataGrid.Columns>
