@@ -97,6 +97,7 @@ public partial class SowScheduleContext : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("ID");
+            entity.Property(e => e.Description).HasMaxLength(700);
             entity.Property(e => e.GreenHouseArea).HasColumnType("numeric(5, 2)");
             entity.Property(e => e.Length).HasColumnType("numeric(4, 2)");
             entity.Property(e => e.Name).HasMaxLength(50);
@@ -139,6 +140,7 @@ public partial class SowScheduleContext : DbContext
         modelBuilder.Entity<OrderDetail>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Description).HasMaxLength(700);
             entity.Property(e => e.SeedsSource).HasMaxLength(50);
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)

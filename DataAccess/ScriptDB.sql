@@ -151,7 +151,7 @@ go
 create table "GreenHouses"(
 	"ID" tinyint identity(1,1),
 	"Name" nvarchar(50) not null,
-	"Description" nvarchar(max),
+	"Description" nvarchar(700),
 	"Width" numeric(4,2),
 	"Length" numeric(4,2),
 	"GreenHouseArea" numeric(5,2),
@@ -263,7 +263,7 @@ create table "OrderDetails"(
 	"OrderId" smallint not null,
 	"SeedsSource" nvarchar(50) not null,
 	"Germination" tinyint,
-	"Description" nvarchar(max),
+	"Description" nvarchar(700),
 	CONSTRAINT [PK_OrderDetails] primary key ("ID"),
 	CONSTRAINT [FK_OrderDetails_OrderId] foreign key ("OrderId") 
 	references "Orders" ("ID"),

@@ -8,7 +8,7 @@ public partial class GreenHouse
     public byte Id { get; set; }
 
     public string Name { get; set; } = null!;
-    //TODO - change the type of this property in the database from Nvarchar(Max) to Nvarchar(500)
+
     public string? Description { get; set; }
 
     public decimal? Width { get; set; }

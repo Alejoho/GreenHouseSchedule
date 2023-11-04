@@ -12,7 +12,7 @@ public partial class OrderDetail
     public string SeedsSource { get; set; } = null!;
 
     public byte? Germination { get; set; }
-    //TODO - change the type of this property in the database from Nvarchar(Max) to Nvarchar(500)
+
     public string? Description { get; set; }
 
     public virtual Order Order { get; set; } = null!;
