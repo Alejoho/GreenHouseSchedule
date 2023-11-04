@@ -31,7 +31,7 @@ namespace DataAccess.Repositories
 
         public bool Remove(int pId)
         {
-                SeedTray seedTray = _sowScheduleDB.SeedTrays.Find(pId);
+                SeedTray seedTray = _sowScheduleDB.SeedTrays.Find((byte)pId);
                 _sowScheduleDB.SeedTrays.Remove(seedTray);
                 _sowScheduleDB.SaveChanges();
                 return true;

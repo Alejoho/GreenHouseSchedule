@@ -64,10 +64,9 @@ namespace Domain.Processors
             return false;
         }
 
-        public void DeleteSeedTray(SeedTray model)
+        public void DeleteSeedTray(int id)
         {
-            //TODO - Create the delete method for seed trays
-            throw new NotImplementedException();
+            _repository.Remove(id);
         }
 
         public IEnumerable<SeedTray> GetAllSeedTrays()

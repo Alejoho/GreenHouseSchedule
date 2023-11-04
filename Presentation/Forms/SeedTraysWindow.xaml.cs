@@ -46,7 +46,21 @@ namespace Presentation.Forms
 
         private void btnDeleteSeedTray_Click(object sender, RoutedEventArgs e)
         {
-
+            if(dgSeedTrays.SelectedItem is SeedTray seedTray)
+            {
+                if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
+                    , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    _processor.DeleteSeedTray(seedTray.Id);
+                    _seedTrays.Remove(seedTray);
+                    RefreshData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar el registro que desea eliminar."
+                    , "", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void LoadData()
