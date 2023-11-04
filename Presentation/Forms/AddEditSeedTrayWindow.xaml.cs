@@ -167,9 +167,6 @@ namespace Presentation.Forms
             lbltxtTotalAmount.FieldContent = _model.TotalAmount.ToString();
             lbltxtMaterial.FieldContent = _model.Material;
             chkActive.IsChecked = _model.Active;
-
-
-
         }
         private void LlenarCasillas()
         {

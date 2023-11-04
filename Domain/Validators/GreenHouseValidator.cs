@@ -22,6 +22,8 @@ namespace Domain.Validators
             RuleFor(x => x.SeedTrayArea).GreaterThan(0)
                 .WithName("Área de bandejas")
                 .WithMessage("El {PropertyName} debe ser mayor que 0.");
+            //TODO - add the validator for the SeedTrayArea should be less than
+            //Width * Length
             RuleFor(x => x.AmountOfBlocks).Must(amountOfBlocks => amountOfBlocks > 0 && amountOfBlocks < 10)
                 .WithName("Cantidad de bloques")
                 .WithMessage("La {PropertyName} debe estar entre 0 y 10.");

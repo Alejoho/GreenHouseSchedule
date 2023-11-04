@@ -6,18 +6,16 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
-        Title="Casas de posturas" Height="490" Width="700" ResizeMode="NoResize"
+        Title="Casas de posturas" Height="470" Width="700" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="350"/>
             <RowDefinition Height="61"/>
         </Grid.RowDefinitions>
 
         <!--Filter-->
-        <custom:TextBoxWithLabel FieldLabel="Búsqueda" Grid.Row="0" Width="210" HorizontalAlignment="Left" 
-                                VerticalAlignment="Top" Margin="20 5 0 0" x:Name="lbltxtSearch"/>
 
         <!--DataGrid-->
         <DataGrid x:Name="dgGreenHouses" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5"
