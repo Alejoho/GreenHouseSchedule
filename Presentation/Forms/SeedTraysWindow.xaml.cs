@@ -1,17 +1,9 @@
 ﻿using Domain.Processors;
-using System;
+using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Presentation.Forms
 {
@@ -20,11 +12,14 @@ namespace Presentation.Forms
     /// </summary>
     public partial class SeedTraysWindow : Window
     {
+        List<SeedTray> _seedTrays;
         SeedTrayProcessor _processor;
         public SeedTraysWindow()
         {
             InitializeComponent();
+            _seedTrays = new List<SeedTray>();
             _processor = new SeedTrayProcessor();
+            LoadData();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -34,8 +29,41 @@ namespace Presentation.Forms
 
         private void btnNewSeedTray_Click(object sender, RoutedEventArgs e)
         {
-            int number = _processor.GetNumber();
-            MessageBox.Show($"The number was {number}");
+            AddEditSeedTrayWindow window = new AddEditSeedTrayWindow((byte)(_seedTrays.Max(x => x.Preference) + 1));
+            window.ShowDialog();
+            LoadData();
+        }
+
+        private void btnEditSeedTray_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void dgSeedTrays_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void btnDeleteSeedTray_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LoadData()
+        {
+            _seedTrays = _processor.GetAllSeedTrays().ToList();
+            dgSeedTrays.ItemsSource = _seedTrays;
+        }
+
+        private void RefreshData()
+        {
+            dgSeedTrays.ItemsSource = null;
+            dgSeedTrays.ItemsSource = _seedTrays;
+        }
+
+        private void EditGreenHouse()
+        {
+
         }
 
         //NEXT - Create all the logic of the SeedTraysWindows

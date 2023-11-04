@@ -74,11 +74,5 @@ namespace Domain.Processors
         {
             return _repository.GetAll();
         }
-
-        public int GetNumber()
-        {            
-            int.TryParse(ConfigurationManager.AppSettings["MinimumLimitOfSow"],out int output);
-            return output;
-        }
     }
 }
