@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Domain.ValuableObjects;
 using System.Collections;
+using System.Configuration;
 
 namespace Domain
 {
@@ -119,7 +120,8 @@ namespace Domain
             LinkedList<OrderModel> ordersToSow = (LinkedList<OrderModel>)SeedBedStatus.Orders
                 .Where(order => order.EstimateSowDate <= SeedBedStatus.IteratorDate && order.Complete == false);
 
-            int minimumLimitOfSow = 50; //TODO - Esta variable se saca del archivo de configuracion
+            int minimumLimitOfSow;
+            int.TryParse(ConfigurationManager.AppSettings["MinimumLimitOfSow"], out minimumLimitOfSow);
 
             foreach (OrderModel order in ordersToSow)
             {

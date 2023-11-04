@@ -5,6 +5,7 @@ using FluentValidation.Results;
 using SupportLayer.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,6 +73,12 @@ namespace Domain.Processors
         public IEnumerable<SeedTray> GetAllSeedTrays()
         {
             return _repository.GetAll();
+        }
+
+        public int GetNumber()
+        {            
+            int.TryParse(ConfigurationManager.AppSettings["MinimumLimitOfSow"],out int output);
+            return output;
         }
     }
 }

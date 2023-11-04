@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Processors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,11 @@ namespace Presentation.Forms
     /// </summary>
     public partial class SeedTraysWindow : Window
     {
+        SeedTrayProcessor _processor;
         public SeedTraysWindow()
         {
             InitializeComponent();
+            _processor = new SeedTrayProcessor();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -31,7 +34,8 @@ namespace Presentation.Forms
 
         private void btnNewSeedTray_Click(object sender, RoutedEventArgs e)
         {
-
+            int number = _processor.GetNumber();
+            MessageBox.Show($"The number was {number}");
         }
 
         //NEXT - Create all the logic of the SeedTraysWindows

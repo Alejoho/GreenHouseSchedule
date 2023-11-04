@@ -1,6 +1,7 @@
 using DataAccess.Repositories;
 using Domain.Models;
 using System.Collections;
+using System.Configuration;
 
 namespace Domain
 {
@@ -41,13 +42,16 @@ namespace Domain
         public SeedBedStatus()
         {
             //OrderModel minee= new OrderModel();
-            // TODO - el -90 hay que sacarlo del archivo de configuracion _iteratorDate.Month 
-            _iteratorDate = DateTime.Now.AddDays(-90); 
+
+            int daysToMoveBack;
+            int.TryParse(ConfigurationManager.AppSettings["DaysToMoveBack"], out daysToMoveBack);
+            _iteratorDate = DateTime.Now.AddDays(daysToMoveBack); 
 
             _presentDate = DateTime.Now;
 
-            // TODO - el 500 hay que sacarlo delarchivo de configuracion           
-            _amountOfSowSeedTrayPerDay = 500; 
+            int seedTraysPerDay;
+            int.TryParse(ConfigurationManager.AppSettings["SeedTraysPerDay"], out seedTraysPerDay);
+            _amountOfSowSeedTrayPerDay = seedTraysPerDay; 
 
             _greenHouseRepository = new GreenHouseRepository();
             _seedTrayRepository = new SeedTrayRepository();
