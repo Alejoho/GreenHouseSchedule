@@ -20,6 +20,7 @@ namespace Presentation.Forms
             _model = new SeedTray();
             _model.Id = 0;
             _model.Preference = nextPreferenceValue;
+            LlenarCasillas();
         }
 
         public AddEditSeedTrayWindow(SeedTray model)

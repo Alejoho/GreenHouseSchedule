@@ -36,12 +36,12 @@ namespace Presentation.Forms
 
         private void btnEditSeedTray_Click(object sender, RoutedEventArgs e)
         {
-
+            EditSeedTray();
         }
 
         private void dgSeedTrays_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            EditSeedTray();
         }
 
         private void btnDeleteSeedTray_Click(object sender, RoutedEventArgs e)
@@ -75,11 +75,18 @@ namespace Presentation.Forms
             dgSeedTrays.ItemsSource = _seedTrays;
         }
 
-        private void EditGreenHouse()
-        {
-
+        private void EditSeedTray()
+        {            
+            if(dgSeedTrays.SelectedItem is SeedTray seedTray)
+            {
+                AddEditSeedTrayWindow window = new AddEditSeedTrayWindow(seedTray);
+                window.ShowDialog();
+                RefreshData();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar el registro que desea editar.");
+            }
         }
-
-        //NEXT - Create all the logic of the SeedTraysWindows
     }
 }

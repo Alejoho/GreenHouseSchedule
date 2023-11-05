@@ -509,7 +509,7 @@ namespace Domain
 
         #region Properties
 
-        //TODO - Evaluar si quitar estas propiedades ya que no se usan fuera de la clase
+        //LATER - Evaluar si quitar estas propiedades ya que no se usan fuera de la clase
 
 
         public SeedBedStatus SeedBedStatus { get => _seedBedStatus; set => _seedBedStatus = value; }

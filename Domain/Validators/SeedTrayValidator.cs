@@ -16,7 +16,10 @@ namespace Domain.Validators
             RuleFor(x => x.TotalAlveolus).NotEmpty().WithName("Total de alvéolos")
                 .WithMessage("El {PropertyName} no debe estar vacío.")
                 .Must(totalAlveolus => totalAlveolus > 0 && totalAlveolus < 400)
-                .WithMessage("El {PropertyName} debe estar entre 0 y 400.");
+                .WithMessage("El {PropertyName} debe estar entre 0 y 400.")
+                .Equal(x => (short)(x.AlveolusLength * x.AlveolusWidth))
+                .When(x => x.AlveolusLength != null && x.AlveolusWidth != null)
+                .WithMessage("El {PropertyName} no se corresponde con largo y ancho de alvéolos.");
             RuleFor(x => x.AlveolusLength)
                 .Must(alveolusLength => alveolusLength > 0 && alveolusLength < 50)
                 .When(x => x.AlveolusLength != null).WithName("Alvéolos a lo largo")
@@ -39,8 +42,8 @@ namespace Domain.Validators
                 .WithMessage("El {PropertyName} debe estar entre 0 y 2.25.");
             RuleFor(x => x.LogicalTrayArea).NotEmpty().WithName("Área lógica de la bandeja")
                 .WithMessage("El {PropertyName} no debe estar vacío ni contener el valor 0.")
-                .GreaterThan(x => x.TrayArea)
-                .WithMessage("El {PropertyName} debe ser mayor que el " +
+                .GreaterThanOrEqualTo(x => x.TrayArea)
+                .WithMessage("El {PropertyName} debe ser mayor o igual que el " +
                 "área de la bandeja \n(Largo de la bandeja * Ancho de la bandeja).")
                 .LessThan(4).WithMessage("El {PropertyName} debe ser menor que 4");
             RuleFor(x => x.TotalAmount).NotEmpty().WithName("Cantidad de bandejas")
