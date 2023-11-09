@@ -15,6 +15,10 @@ namespace DataAccess.Repositories
         { 
         }
 
+        public SpeciesRepository()
+        {           
+        }
+
         public IEnumerable<Species> GetAll()
         {
             return _sowScheduleDB.Species;

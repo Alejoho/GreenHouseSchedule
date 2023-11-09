@@ -1,27 +1,26 @@
 ﻿using DataAccess.Contracts;
 using DataAccess.Repositories;
 using Domain.Validators;
-using FluentValidation.Results;
 using SupportLayer.Models;
+using FluentValidation.Results;
 
 namespace Domain.Processors
 {
-    public class SeedTrayProcessor
+    public class SpeciesProcessor
     {
-        private ISeedTrayRepository _repository;
+        private IGenericRepository<Species> _repository;
         public string Error { get; set; } = null!;
-
-        public SeedTrayProcessor()
+        public SpeciesProcessor()
         {
-            _repository = new SeedTrayRepository();
+            _repository = new SpeciesRepository();
         }
 
-        private bool ValidateData(SeedTray model)
+        public bool ValidateData(Species model)
         {
-            SeedTrayValidator validator = new SeedTrayValidator();
+            SpeciesValidator validator = new SpeciesValidator();
             ValidationResult validationResult = validator.Validate(model);
 
-            if (validationResult.IsValid)
+            if(validationResult.IsValid)
             {
                 return true;
             }
@@ -32,13 +31,13 @@ namespace Domain.Processors
             }
         }
 
-        public bool SaveSeedTray(SeedTray model)
+        public bool SaveSpecies(Species model)
         {
-            if (ValidateData(model) == true)
+            if (ValidateData(model))
             {
                 try
                 {
-                    if (model.Id == 0)
+                    if(model.Id == 0)
                     {
                         _repository.Insert(model);
                     }
@@ -58,12 +57,12 @@ namespace Domain.Processors
             return false;
         }
 
-        public void DeleteSeedTray(int id)
+        public void DeleteSpecies(int id)
         {
             _repository.Remove(id);
         }
 
-        public IEnumerable<SeedTray> GetAllSeedTrays()
+        public IEnumerable<Species> GetAllSpecies()
         {
             return _repository.GetAll();
         }
