@@ -16,8 +16,8 @@
             <custom:TextBoxWithLabel FieldLabel="Semillas en una hectárea*" HorizontalAlignment="Right" x:Name="lbltxtAmountOfSeedsPerHectare"/>
             <custom:TextBoxWithLabel FieldLabel="Peso de una hectárea de semillas*" HorizontalAlignment="Right" x:Name="lbltxtWeightOfSeedsPerHectare"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
-                <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0"/>
-                <Button x:Name="btnCancel" Content="Cancelar" Width="80"/>
+                <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0" Click="btnSave_Click"/>
+                <Button x:Name="btnCancel" Content="Cancelar" Width="80" Click="btnCancel_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>
