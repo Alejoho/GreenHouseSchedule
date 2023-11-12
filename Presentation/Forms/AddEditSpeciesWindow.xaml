@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
-        Title="Añadir/Editar especie" Height="220" Width="360" ResizeMode="NoResize"
+        Title="Añadir/Editar especie" Height="240" Width="360" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel Margin="0 10 0 0" HorizontalAlignment="Center" Width="340">

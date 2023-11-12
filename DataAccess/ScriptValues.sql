@@ -78,6 +78,7 @@ insert into "Products" values
 	(2,'KK-Cross'),
 	(2,'Globe Master'),
 	(2,'King of King Cross'),
+	(2, 'N.I. '),
 	(3,'California'),
 	(3,'N.I.');
 

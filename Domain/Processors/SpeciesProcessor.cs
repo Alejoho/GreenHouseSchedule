@@ -8,7 +8,7 @@ namespace Domain.Processors
 {
     public class SpeciesProcessor
     {
-        private IGenericRepository<Species> _repository;
+        private ISpeciesRepository _repository;
         public string Error { get; set; } = null!;
         public SpeciesProcessor()
         {
