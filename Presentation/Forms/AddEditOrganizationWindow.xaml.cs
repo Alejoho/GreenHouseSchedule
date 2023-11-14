@@ -15,11 +15,14 @@ using System.Windows.Shapes;
 namespace Presentation.Forms
 {
     /// <summary>
-    /// Interaction logic for AddOrganizationWindow.xaml
+    /// Interaction logic for AddEditOrganizationWindow.xaml
     /// </summary>
-    public partial class AddOrganizationWindow : Window
+    public partial class AddEditOrganizationWindow : Window
     {
-        public AddOrganizationWindow()
+        //NEXT - complete the addeditorganization window.
+        //primero crear otro form con el nombre correcto para este window
+        //agregar el campo tipo de organizacion
+        public AddEditOrganizationWindow()
         {
             InitializeComponent();
         }

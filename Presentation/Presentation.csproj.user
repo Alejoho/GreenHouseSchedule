@@ -10,10 +10,16 @@
     <Compile Update="CustomControls\ComboBoxWithLabel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="CustomControls\ComboBoxWithLabelNoButton.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="CustomControls\DatePickerWithLabel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="CustomControls\TextBoxWithLabel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\AddEditOrganizationWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -21,10 +27,16 @@
     <Page Update="CustomControls\ComboBoxWithLabel.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="CustomControls\ComboBoxWithLabelNoButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="CustomControls\DatePickerWithLabel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CustomControls\TextBoxWithLabel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\AddEditOrganizationWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

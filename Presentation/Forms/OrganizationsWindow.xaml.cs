@@ -19,6 +19,7 @@ namespace Presentation.Forms
     /// </summary>
     public partial class OrganizationsWindow : Window
     {
+        //NEXT - do the logic of the organizations window
         public OrganizationsWindow()
         {
             InitializeComponent();
