@@ -46,7 +46,7 @@ insert into "Municipalities" values
 	('Bauta', 3),
 	('Guines', 4),
 	('Calvario', 2),
-	('N.I.', 6);
+	('N.I.', 17);
 
 go
 insert into "Organizations" values

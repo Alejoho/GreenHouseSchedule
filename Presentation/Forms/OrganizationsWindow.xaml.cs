@@ -14,7 +14,7 @@ namespace Presentation.Forms
     public partial class OrganizationsWindow : Window
     {
         //NEXT - finish the logic of the organizations window
-        //NEXT - Prepare the columns of the organization datagrid
+        //NEXT - Review the columns of the organization datagrid
         //NEXT - Prepare the columns of the municipality datagrid
         List<Organization> _organizations;
         OrganizationProcessor _organizationProcessor;
@@ -58,6 +58,9 @@ namespace Presentation.Forms
             ProvinceProcessor processor = new ProvinceProcessor();
             cmbProvince.ItemsSource = processor.GetAllProvinces().ToList();
             cmbProvince.DisplayMemberPath = "Name";
+
+            _organizations = _organizationProcessor.GetAllOrganizations().ToList();
+            dgOrganizations.ItemsSource = _organizations;
 
 
         }

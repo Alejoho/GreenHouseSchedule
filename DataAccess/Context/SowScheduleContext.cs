@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Proxies;
 using SupportLayer.Models;
 
 namespace DataAccess.Context;
@@ -48,7 +49,7 @@ public partial class SowScheduleContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["SowScheduleDB"].ConnectionString;
-        optionsBuilder.UseSqlServer(connectionString);
+        optionsBuilder.UseLazyLoadingProxies().UseSqlServer(connectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

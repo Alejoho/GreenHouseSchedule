@@ -34,9 +34,9 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Tipo" Binding="{Binding }"/>
-                <DataGridTextColumn Header="Provincia" Binding="{Binding }"/>
-                <DataGridTextColumn Header="Municipio" Binding="{Binding }"/>
+                <DataGridTextColumn Header="Tipo" Binding="{Binding TypeOfOrganizationName}"/>
+                <DataGridTextColumn Header="Provincia" Binding="{Binding ProvinceName}"/>
+                <DataGridTextColumn Header="Municipio" Binding="{Binding MunicipalityName}"/>
             </DataGrid.Columns>
         </DataGrid>
         
