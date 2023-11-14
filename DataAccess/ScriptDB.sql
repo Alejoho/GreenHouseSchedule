@@ -52,11 +52,11 @@ go
 create table "Organizations"(
 	"ID" smallint identity(1,1),
 	"Name" nvarchar(50) not null,
-	"MunicipalitiesId" smallint not null,
+	"MunicipalityId" smallint not null,
 	"TypeOfOrganizationId" tinyint not null,
 	CONSTRAINT [PK_Organizations] primary key ("ID"),
 	CONSTRAINT [UC_Organizations_Name] UNIQUE ("Name"),
-	CONSTRAINT [FK_Organizations_MunicipalityId] foreign key ("MunicipalitiesId") 
+	CONSTRAINT [FK_Organizations_MunicipalityId] foreign key ("MunicipalityId") 
 	references "Municipalities" ("ID"),
 	CONSTRAINT [FK_Organizations_TypesOfOrganizationId] foreign key ("TypeOfOrganizationId") 
 	references "TypesOfOrganization" ("ID")

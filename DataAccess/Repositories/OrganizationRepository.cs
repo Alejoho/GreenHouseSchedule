@@ -56,7 +56,7 @@ namespace DataAccess.Repositories
             if (organization != null)
             {
                 organization.Name = entity.Name;
-                organization.MunicipalitiesId = entity.MunicipalitiesId;
+                organization.MunicipalityId = entity.MunicipalityId;
                 organization.TypeOfOrganizationId = entity.TypeOfOrganizationId;
                 _sowScheduleDB.SaveChanges();
                 return true;

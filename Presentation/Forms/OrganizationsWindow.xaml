@@ -26,8 +26,18 @@
                                 VerticalAlignment="Top" Margin="20 5 0 0" x:Name="lbltxtSearch"/>
 
         <!--DataGrid of organizations-->
-        <DataGrid x:Name="dgOrganizations" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5" MouseDoubleClick="dgOrganizations_MouseDoubleClick">
-
+        <DataGrid x:Name="dgOrganizations" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5" 
+                    AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
+                    MouseDoubleClick="dgOrganizations_MouseDoubleClick" CanUserReorderColumns="False"
+                    CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
+                    IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Tipo" Binding="{Binding }"/>
+                <DataGridTextColumn Header="Provincia" Binding="{Binding }"/>
+                <DataGridTextColumn Header="Municipio" Binding="{Binding }"/>
+            </DataGrid.Columns>
         </DataGrid>
         
         <!--Municipalities and provinces-->

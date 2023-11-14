@@ -179,8 +179,8 @@ public partial class SowScheduleContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Name).HasMaxLength(50);
 
-            entity.HasOne(d => d.Municipalities).WithMany(p => p.Organizations)
-                .HasForeignKey(d => d.MunicipalitiesId)
+            entity.HasOne(d => d.Municipality).WithMany(p => p.Organizations)
+                .HasForeignKey(d => d.MunicipalityId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Organizations_MunicipalityId");
 

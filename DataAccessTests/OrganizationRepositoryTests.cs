@@ -79,7 +79,7 @@ public class OrganizationRepositoryTests
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
 
         recordUpdated.Name.Should().Be(newRecordData.Name);
-        recordUpdated.MunicipalitiesId.Should().Be(newRecordData.MunicipalitiesId);
+        recordUpdated.MunicipalityId.Should().Be(newRecordData.MunicipalityId);
         recordUpdated.TypeOfOrganizationId.Should().Be(newRecordData.TypeOfOrganizationId);
     }
 
@@ -104,7 +104,7 @@ public class OrganizationRepositoryTests
         return new Faker<Organization>()
             .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.Name, f => f.Company.CompanyName())
-            .RuleFor(x => x.MunicipalitiesId, f => f.Random.Short(1,150))
+            .RuleFor(x => x.MunicipalityId, f => f.Random.Short(1,150))
             .RuleFor(x => x.TypeOfOrganizationId, f => f.Random.Byte(1,6));
     }
 }
