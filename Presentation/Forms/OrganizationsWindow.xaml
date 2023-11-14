@@ -64,7 +64,7 @@
             <Button x:Name="btnNewOrganization" Content="Nueva" Margin="5 15" Width="70"/>
             <Button x:Name="btnEditOrganization" Content="Editar" Margin="5 15" Width="70"/>
             <Button x:Name="btnDeleteOrganization" Content="Borrar" Margin="5 15" Width="70"/>
-            <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70"/>
+            <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70" Click="btnCancel_Click"/>
         </StackPanel>
     </Grid>
 </Window>

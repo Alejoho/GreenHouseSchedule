@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+using Domain.Processors;
+using SupportLayer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,19 @@ namespace Presentation.Forms
         public OrganizationsWindow()
         {
             InitializeComponent();
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            ProvinceProcessor processor = new ProvinceProcessor();
+            cmbProvince.ItemsSource = processor.GetAllProvinces().ToList();
+            cmbProvince.DisplayMemberPath = "Name";
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
