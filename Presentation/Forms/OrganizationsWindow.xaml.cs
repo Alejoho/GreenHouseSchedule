@@ -1,19 +1,10 @@
 ﻿
 using Domain.Processors;
 using SupportLayer.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Presentation.Forms
 {
@@ -22,23 +13,63 @@ namespace Presentation.Forms
     /// </summary>
     public partial class OrganizationsWindow : Window
     {
-        //NEXT - do the logic of the organizations window
+        //NEXT - finish the logic of the organizations window
+        //NEXT - Prepare the columns of the organization datagrid
+        //NEXT - Prepare the columns of the municipality datagrid
+        List<Organization> _organizations;
+        OrganizationProcessor _organizationProcessor;
+        MunicipalityProcessor _municipalityProcessor;
+
         public OrganizationsWindow()
         {
             InitializeComponent();
+            _organizations = new List<Organization>();
+            _organizationProcessor = new OrganizationProcessor();
+            _municipalityProcessor = new MunicipalityProcessor();
             LoadData();
-        }
-
-        private void LoadData()
-        {
-            ProvinceProcessor processor = new ProvinceProcessor();
-            cmbProvince.ItemsSource = processor.GetAllProvinces().ToList();
-            cmbProvince.DisplayMemberPath = "Name";
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnNewOrganization_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEditOrganization_Click(object sender, RoutedEventArgs e)
+        {
+            EditOrganization();
+        }
+
+        private void dgOrganizations_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            EditOrganization();
+        }
+
+        private void btnDeleteOrganization_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void LoadData()
+        {
+            ProvinceProcessor processor = new ProvinceProcessor();
+            cmbProvince.ItemsSource = processor.GetAllProvinces().ToList();
+            cmbProvince.DisplayMemberPath = "Name";
+
+
+        }
+
+        private void RefreshData()
+        {
+
+        }
+
+        private void EditOrganization()
+        {
+
         }
     }
 }

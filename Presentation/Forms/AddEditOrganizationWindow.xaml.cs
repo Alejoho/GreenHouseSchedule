@@ -19,9 +19,7 @@ namespace Presentation.Forms
     /// </summary>
     public partial class AddEditOrganizationWindow : Window
     {
-        //NEXT - complete the addeditorganization window.
-        //primero crear otro form con el nombre correcto para este window
-        //agregar el campo tipo de organizacion
+
         public AddEditOrganizationWindow()
         {
             InitializeComponent();
