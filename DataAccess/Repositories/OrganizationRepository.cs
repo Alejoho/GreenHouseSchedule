@@ -12,6 +12,10 @@ namespace DataAccess.Repositories
         {
         }
 
+        public OrganizationRepository()
+        {            
+        }
+
         public IEnumerable<Organization> GetAll()
         {
             return _sowScheduleDB.Organizations;
