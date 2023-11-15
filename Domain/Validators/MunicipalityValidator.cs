@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
 using SupportLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Validators
 {
@@ -12,7 +7,13 @@ namespace Domain.Validators
     {
         public MunicipalityValidator()
         {
-            //NEXT - do the ctor of the validator of municipalities
+            //CHECK - do the ctor of the validator of municipalities
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
+            RuleFor(x => x.Name).NotEmpty().WithName("Nombre")
+                .WithMessage("El {PropertyName} no debe estar vacío.")
+                .MaximumLength(50)
+                .WithMessage("El {PropertyName} no debe exceder los 50 caracteres.");
         }
     }
 }

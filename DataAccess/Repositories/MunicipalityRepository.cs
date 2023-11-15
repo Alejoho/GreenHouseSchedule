@@ -8,6 +8,10 @@ namespace DataAccess.Repositories
 {
     public class MunicipalityRepository : GenericRepository, IMunicipalityRepository
     {
+        public MunicipalityRepository()
+        {            
+        }
+
         public MunicipalityRepository(SowScheduleContext dbContex) : base(dbContex)
         {
         }

@@ -6,6 +6,7 @@ public partial class Organization
     {
         get { return Municipality.Name; }
     }
+
     public string TypeOfOrganizationName
     {
         get { return TypeOfOrganization.Name; }
@@ -14,7 +15,5 @@ public partial class Organization
     public string ProvinceName
     {
         get { return Municipality.Province.Name; }
-    }
-
-
+    }    
 }
