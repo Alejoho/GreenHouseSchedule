@@ -61,7 +61,6 @@ namespace Presentation.Forms
                 MessageBox.Show("Debe seleccionar el registro que desea eliminar."
                     ,"",MessageBoxButton.OK,MessageBoxImage.Information);
             }
-
         }
 
         private void LoadData()

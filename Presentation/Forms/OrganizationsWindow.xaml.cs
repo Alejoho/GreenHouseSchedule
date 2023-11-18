@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace Presentation.Forms
 {
@@ -14,9 +13,9 @@ namespace Presentation.Forms
     /// </summary>
     public partial class OrganizationsWindow : Window
     {
-        //NEXT - finish the logic of the organizations window
-        //NEXT - Review the columns of the organization datagrid
-        //NEXT - Prepare the columns of the municipality datagrid
+        //NEXT - finish the logic of the organizations window        
+        //CHECK - Review the columns of the organization datagrid
+        //CHECK - Review the columns of the municipality datagrid
         List<Organization> _organizations;
         List<Municipality> _municipalities;
         OrganizationProcessor _organizationProcessor;
@@ -29,7 +28,7 @@ namespace Presentation.Forms
             _municipalities = new List<Municipality>();
             _organizationProcessor = new OrganizationProcessor();
             _municipalityProcessor = new MunicipalityProcessor();
-            LoadData();
+            LoadAndRefreshData();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -56,47 +55,59 @@ namespace Presentation.Forms
         {
             throw new NotImplementedException();
         }
+        
+        //NEXT - do the logic to edit a municipality
 
         //TODO - este boton tiene un textblock dentro de el, el area de hacer click es el del boton mas el de el textblock el cual sobresale del boton. arreglar este detalle.
         private void btnAddMunicipality_Click(object sender, RoutedEventArgs e)
         {
             Municipality model = ValidateDataType();
-            if (model.Name != string.Empty)
+
+            if (_municipalityProcessor.SaveMunicipality(model) == true)
             {
-                if (_municipalityProcessor.SaveMunicipality(model) == true)
-                {
-                    MessageBox.Show("Registro salvado");
-                    this.Close();
-                }
-                else
-                {
-                    ShowError();
-                }
+                MessageBox.Show("Registro salvado");
+                LoadAndRefreshData();
+                txtMunicipality.Text = "";
+            }
+            else
+            {
+                ShowError();
             }
         }
 
         //TODO - este boton tiene un textblock dentro de el, el area de hacer click es el del boton mas el de el textblock el cual sobresale del boton. arreglar este detalle.
         private void btnRemoveMunicipality_Click(object sender, RoutedEventArgs e)
         {
-
+            if (dgMunicipalities.SelectedItem is Municipality municipality)
+            {
+                if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
+                    , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    _municipalityProcessor.DeleteMunicipality(municipality.Id);
+                    _municipalities.Remove(municipality);
+                    LoadAndRefreshData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar el registro que desea eliminar."
+                    , "", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
-        private void LoadData()
+        private void LoadAndRefreshData()
         {
             ProvinceProcessor processor = new ProvinceProcessor();
             cmbProvince.ItemsSource = processor.GetAllProvinces();
             cmbProvince.DisplayMemberPath = "Name";
 
             _organizations = _organizationProcessor.GetAllOrganizations().ToList();
+            dgOrganizations.ItemsSource = null;
             dgOrganizations.ItemsSource = _organizations;
 
-            _municipalities = _municipalityProcessor.GetAllMunicipalities().ToList();
+            _municipalities = _municipalityProcessor.GetAllMunicipalities().ToList();            
+            dgMunicipalities.ItemsSource = null;
             dgMunicipalities.ItemsSource = _municipalities;
-        }
-
-        private void RefreshData()
-        {
-            throw new NotImplementedException();
         }
 
         private void EditOrganization()
@@ -106,13 +117,20 @@ namespace Presentation.Forms
 
         private void ShowError()
         {
-            throw new NotImplementedException();
+            MessageBox.Show(_municipalityProcessor.Error);
         }
 
         private Municipality ValidateDataType()
         {
-            //NEXT - do this method
-            throw new NotImplementedException();
+            Municipality output = new Municipality();
+
+            output.Name = txtMunicipality.Text;
+
+            output.ProvinceId = cmbProvince.SelectedItem != null ?
+                ((Province)cmbProvince.SelectedItem).Id :
+                (byte)0;
+
+            return output;
         }
 
         private void PopulateData()

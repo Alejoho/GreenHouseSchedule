@@ -14,6 +14,8 @@ namespace Domain.Validators
                 .WithMessage("El {PropertyName} no debe estar vacío.")
                 .MaximumLength(50)
                 .WithMessage("El {PropertyName} no debe exceder los 50 caracteres.");
+            RuleFor(x => x.ProvinceId).GreaterThan((byte)0).WithName("Provincia")
+                .WithMessage("La {PropertyName} no debe estar vacía.");
         }
     }
 }

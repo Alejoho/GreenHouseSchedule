@@ -66,7 +66,7 @@ namespace Domain.Processors
 
         public IEnumerable<Municipality> GetAllMunicipalities()
         {
-            //TODO - do in the al the processors the ordering
+            //TODO - do the ordering in all the processors 
             return _repository.GetAll().OrderBy(x => x.ProvinceName).ThenBy(x => x.Name);
         }
     }
