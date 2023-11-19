@@ -13,11 +13,12 @@ namespace Presentation.Forms
     /// </summary>
     public partial class OrganizationsWindow : Window
     {
-        //NEXT - finish the logic of the organizations window        
+        //NEXT - do the logic of the organizations part of this windows        
         //CHECK - Review the columns of the organization datagrid
         //CHECK - Review the columns of the municipality datagrid
         List<Organization> _organizations;
         List<Municipality> _municipalities;
+        List<Province> _provinces;
         OrganizationProcessor _organizationProcessor;
         MunicipalityProcessor _municipalityProcessor;
         Municipality _municipalityModel;
@@ -27,6 +28,7 @@ namespace Presentation.Forms
             InitializeComponent();
             _organizations = new List<Organization>();
             _municipalities = new List<Municipality>();
+            _provinces = new List<Province>();
             _organizationProcessor = new OrganizationProcessor();
             _municipalityProcessor = new MunicipalityProcessor();
             _municipalityModel = new Municipality();
@@ -58,7 +60,7 @@ namespace Presentation.Forms
             throw new NotImplementedException();
         }
 
-        //NEXT - do the logic to edit a municipality
+        //LATER - Shearch how to select the edited or added item
 
         //TODO - este boton tiene un textblock dentro de el, el area de hacer click es el del boton mas el de el textblock el cual sobresale del boton. arreglar este detalle.
         private void btnAddMunicipality_Click(object sender, RoutedEventArgs e)
@@ -67,11 +69,11 @@ namespace Presentation.Forms
 
             if (_municipalityProcessor.SaveMunicipality(_municipalityModel) == true)
             {
-                MessageBox.Show("Registro salvado");
                 LoadAndRefreshData();
                 txtMunicipality.Text = "";
                 _municipalityModel = new Municipality();
                 btnRemoveMunicipality.IsEnabled = true;
+                
             }
             else
             {
@@ -102,7 +104,8 @@ namespace Presentation.Forms
         private void LoadAndRefreshData()
         {
             ProvinceProcessor processor = new ProvinceProcessor();
-            cmbProvince.ItemsSource = processor.GetAllProvinces();
+            _provinces = processor.GetAllProvinces().ToList();
+            cmbProvince.ItemsSource = _provinces;
             cmbProvince.DisplayMemberPath = "Name";
 
             _organizations = _organizationProcessor.GetAllOrganizations().ToList();
@@ -158,8 +161,8 @@ namespace Presentation.Forms
             {
                 _municipalityModel = municipality;
                 txtMunicipality.Text = municipality.Name;
-                cmbProvince.SelectedItem = (object)municipality.Province;
-                cmbProvince.Text = municipality.Name;
+                cmbProvince.SelectedItem = _provinces.Where(province => province.Id == municipality.ProvinceId).Single();
+                //cmbProvince.Text = municipality.Name;
                 btnRemoveMunicipality.IsEnabled = false;
             }
             else
