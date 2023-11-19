@@ -20,6 +20,7 @@ namespace Presentation.Forms
         List<Municipality> _municipalities;
         OrganizationProcessor _organizationProcessor;
         MunicipalityProcessor _municipalityProcessor;
+        Municipality _municipalityModel;
 
         public OrganizationsWindow()
         {
@@ -28,6 +29,7 @@ namespace Presentation.Forms
             _municipalities = new List<Municipality>();
             _organizationProcessor = new OrganizationProcessor();
             _municipalityProcessor = new MunicipalityProcessor();
+            _municipalityModel = new Municipality();
             LoadAndRefreshData();
         }
 
@@ -55,19 +57,21 @@ namespace Presentation.Forms
         {
             throw new NotImplementedException();
         }
-        
+
         //NEXT - do the logic to edit a municipality
 
         //TODO - este boton tiene un textblock dentro de el, el area de hacer click es el del boton mas el de el textblock el cual sobresale del boton. arreglar este detalle.
         private void btnAddMunicipality_Click(object sender, RoutedEventArgs e)
         {
-            Municipality model = ValidateDataType();
+            ValidateDataType(_municipalityModel);
 
-            if (_municipalityProcessor.SaveMunicipality(model) == true)
+            if (_municipalityProcessor.SaveMunicipality(_municipalityModel) == true)
             {
                 MessageBox.Show("Registro salvado");
                 LoadAndRefreshData();
                 txtMunicipality.Text = "";
+                _municipalityModel = new Municipality();
+                btnRemoveMunicipality.IsEnabled = true;
             }
             else
             {
@@ -105,7 +109,7 @@ namespace Presentation.Forms
             dgOrganizations.ItemsSource = null;
             dgOrganizations.ItemsSource = _organizations;
 
-            _municipalities = _municipalityProcessor.GetAllMunicipalities().ToList();            
+            _municipalities = _municipalityProcessor.GetAllMunicipalities().ToList();
             dgMunicipalities.ItemsSource = null;
             dgMunicipalities.ItemsSource = _municipalities;
         }
@@ -120,22 +124,59 @@ namespace Presentation.Forms
             MessageBox.Show(_municipalityProcessor.Error);
         }
 
-        private Municipality ValidateDataType()
+        //private Municipality ValidateDataType()
+        //{
+        //    Municipality output = new Municipality();
+
+        //    output.Name = txtMunicipality.Text;
+
+        //    output.ProvinceId = cmbProvince.SelectedItem != null ?
+        //        ((Province)cmbProvince.SelectedItem).Id :
+        //        (byte)0;
+
+        //    return output;
+        //}
+
+        private void ValidateDataType(Municipality model)
         {
-            Municipality output = new Municipality();
+            model.Name = txtMunicipality.Text;
 
-            output.Name = txtMunicipality.Text;
-
-            output.ProvinceId = cmbProvince.SelectedItem != null ?
+            model.ProvinceId = cmbProvince.SelectedItem != null ?
                 ((Province)cmbProvince.SelectedItem).Id :
                 (byte)0;
-
-            return output;
         }
 
         private void PopulateData()
         {
             throw new NotImplementedException();
+        }
+
+        private void dgMunicipalities_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+            if (dgMunicipalities.SelectedItem is Municipality municipality)
+            {
+                _municipalityModel = municipality;
+                txtMunicipality.Text = municipality.Name;
+                cmbProvince.SelectedItem = (object)municipality.Province;
+                cmbProvince.Text = municipality.Name;
+                btnRemoveMunicipality.IsEnabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar el registro que desea editar.");
+            }
+        }
+
+        private void dgMunicipalities_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (_municipalityModel.Id != 0)
+            {
+                _municipalityModel = new Municipality();
+                btnRemoveMunicipality.IsEnabled = true;
+                txtMunicipality.Text = "";
+                cmbProvince.SelectedItem = null;
+            }
         }
     }
 }

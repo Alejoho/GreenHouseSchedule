@@ -46,7 +46,7 @@
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
                     CanUserReorderColumns="False"
                     CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
-                    IsReadOnly="True">
+                    IsReadOnly="True" MouseDoubleClick="dgMunicipalities_MouseDoubleClick" SelectionChanged="dgMunicipalities_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                     <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
