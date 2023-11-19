@@ -15,5 +15,5 @@ public partial class Organization
     public string ProvinceName
     {
         get { return Municipality.Province.Name; }
-    }    
+    }
 }

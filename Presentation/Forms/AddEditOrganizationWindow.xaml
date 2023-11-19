@@ -11,8 +11,8 @@
     <Grid>
         <StackPanel Margin="0 10 0 0" HorizontalAlignment="Center">
             <custom:TextBoxWithLabel FieldLabel="Nombre*" HorizontalAlignment="Right" x:Name="lbltxtName"/>
-            <custom:ComboBoxWithLabelNoButton FieldLabel="Tipo*" HorizontalAlignment="Right" x:Name="lblcmbbtnLocation" />
-            <custom:ComboBoxWithLabelNoButton FieldLabel="Locación*" HorizontalAlignment="Right" x:Name="lblcmbbtnType"/>
+            <custom:ComboBoxWithLabelNoButton FieldLabel="Tipo*" HorizontalAlignment="Right" x:Name="lblcmbType" />
+            <custom:ComboBoxWithLabelNoButton FieldLabel="Locación*" HorizontalAlignment="Right" x:Name="lblcmbLocation"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
                 <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0"/>
                 <Button x:Name="btnCancel" Content="Cancelar" Width="80"/>

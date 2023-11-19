@@ -6,5 +6,10 @@
         {
             get { return Province.Name; }
         }
+
+        public string Location
+        {
+            get { return $"{Name}, {Province.Name}"; }
+        }
     }
 }
