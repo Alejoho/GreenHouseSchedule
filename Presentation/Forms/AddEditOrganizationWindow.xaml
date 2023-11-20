@@ -14,8 +14,8 @@
             <custom:ComboBoxWithLabelNoButton FieldLabel="Tipo*" HorizontalAlignment="Right" x:Name="lblcmbType" />
             <custom:ComboBoxWithLabelNoButton FieldLabel="Locación*" HorizontalAlignment="Right" x:Name="lblcmbLocation"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
-                <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0"/>
-                <Button x:Name="btnCancel" Content="Cancelar" Width="80"/>
+                <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0" Click="btnSave_Click"/>
+                <Button x:Name="btnCancel" Content="Cancelar" Width="80" Click="btnCancel_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>
