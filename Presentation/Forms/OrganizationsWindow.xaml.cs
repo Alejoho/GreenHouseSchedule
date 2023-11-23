@@ -13,7 +13,7 @@ namespace Presentation.Forms
     /// </summary>
     public partial class OrganizationsWindow : Window
     {
-        //NEXT - do the logic of the organizations part of this windows        
+        //NEXT - the type, municipality and province don't update when I edit a record     
         //CHECK - Review the columns of the organization datagrid
         //CHECK - Review the columns of the municipality datagrid
         List<Organization> _organizations;
@@ -148,7 +148,16 @@ namespace Presentation.Forms
 
         private void EditOrganization()
         {
-            throw new NotImplementedException();
+            if (dgOrganizations.SelectedItem is Organization organization)
+            {
+                AddEditOrganizationWindow window = new AddEditOrganizationWindow(organization);
+                window.ShowDialog();
+                LoadAndRefreshData();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar el registro que desea editar.");
+            }
         }
 
         private void ShowError()
@@ -168,8 +177,6 @@ namespace Presentation.Forms
         private void PopulateData()
         {
             throw new NotImplementedException();
-        }
-
-        
+        }  
     }
 }

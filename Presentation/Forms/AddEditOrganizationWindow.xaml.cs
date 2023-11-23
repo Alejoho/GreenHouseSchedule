@@ -99,9 +99,13 @@ public partial class AddEditOrganizationWindow : Window
         lblcmbLocation.ComboBox.ItemsSource = _locations;
         lblcmbLocation.ComboBox.DisplayMemberPath = "Location";
     }
-    //NEXT - do this method to be able to update a record
+
     private void PopulateData()
     {
-        throw new NotImplementedException();
+        lbltxtName.FieldContent = _model.Name;
+        lblcmbType.ComboBox.SelectedItem = _typesOfOrganizations
+            .Where(type => type.Id == _model.TypeOfOrganizationId).Single();
+        lblcmbLocation.ComboBox.SelectedItem = _locations
+            .Where(x => x.Id == _model.MunicipalityId).Single();
     }
 }

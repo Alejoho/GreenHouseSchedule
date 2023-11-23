@@ -7,8 +7,6 @@ public class OrganizationValidator : AbstractValidator<Organization>
 {
     public OrganizationValidator()
     {
-        //NEXT - do the ctor of the validator of organizations
-
         RuleLevelCascadeMode = CascadeMode.Stop;
 
         RuleFor(x => x.Name).NotEmpty().WithName("Nombre")
