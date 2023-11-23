@@ -26,31 +26,17 @@ namespace DataAccess.Repositories
 
         public bool Insert(Species entity)
         {
-            try
-            {
                 _sowScheduleDB.Species.Add(entity);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         public bool Remove(int pId)
         {
-            try
-            {
                 Species species = _sowScheduleDB.Species.Find(pId);
                 _sowScheduleDB.Species.Remove(species);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         public bool Update(Species entity)

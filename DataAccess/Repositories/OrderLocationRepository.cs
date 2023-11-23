@@ -24,16 +24,9 @@ namespace DataAccess.Repositories
 
         public bool Insert(OrderLocation entity)
         {
-            try
-            {
                 _sowScheduleDB.OrderLocations.Add(entity);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
         }
 
         public bool Remove(int pId)

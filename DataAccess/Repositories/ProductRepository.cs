@@ -20,31 +20,17 @@ namespace DataAccess.Repositories
 
         public bool Insert(Product entity)
         {
-            try
-            {
                 _sowScheduleDB.Products.Add(entity);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         public bool Remove(int pId)
         {
-            try
-            {
                 Product product = _sowScheduleDB.Products.Find(pId);
                 _sowScheduleDB.Products.Remove(product);
                 _sowScheduleDB.SaveChanges();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+                return true;S
         }
 
         public bool Update(Product entity)

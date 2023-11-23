@@ -26,30 +26,17 @@ namespace DataAccess.Repositories
 
         public bool Insert(DeliveryDetail entity)
         {
-            try
-            {
                 _sowScheduleDB.DeliveryDetails.Add(entity);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
         }
 
         public bool Remove(int pId)
         {
-            try
-            {
                 DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(pId);
                 _sowScheduleDB.DeliveryDetails.Remove(deliveryDetail);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }catch (Exception ex)
-            {
-                return false;
-            }
         }
 
         public bool Update(DeliveryDetail entity)

@@ -19,29 +19,16 @@ namespace DataAccess.Repositories
 
         public bool Insert(Block entity)
         {
-            try
-            {
                 _sowScheduleDB.Blocks.Add(entity);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         public bool Remove(int pId)
         {
-            try
-            {
                 Block block = _sowScheduleDB.Blocks.Find(pId);
                 _sowScheduleDB.Blocks.Remove(block);
                 _sowScheduleDB.SaveChanges();
-                return true;
-            }
-            catch (Exception)
-            {
                 return true;
             }
         }

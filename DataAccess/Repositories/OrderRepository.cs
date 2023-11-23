@@ -24,31 +24,17 @@ namespace DataAccess.Repositories
 
         public bool Insert(Order entity)
         {
-            try
-            {
                 _sowScheduleDB.Orders.Add(entity);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         public bool Remove(int pId)
         {
-            try
-            {
                 Order order = _sowScheduleDB.Orders.Find(pId);
                 _sowScheduleDB.Orders.Remove(order);
                 _sowScheduleDB.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         public bool Update(Order entity)
