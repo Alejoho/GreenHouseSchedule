@@ -59,7 +59,21 @@ namespace Presentation.Forms
 
         private void btnDeleteOrganization_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (dgOrganizations.SelectedItem is Organization organization)
+            {
+                if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
+                    , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    _organizationProcessor.DeleteOrganization(organization.Id);
+                    _organizations.Remove(organization);
+                    LoadAndRefreshData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar el registro que desea eliminar."
+                    , "", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         //LATER - Shearch how to select the edited or added item

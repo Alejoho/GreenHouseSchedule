@@ -1,51 +1,47 @@
-﻿using DataAccess.Contracts;
-using System;
-using System.Collections.Generic;
+﻿using DataAccess.Context;
+using DataAccess.Contracts;
 using SupportLayer.Models;
-using DataAccess.Context;
 
-namespace DataAccess.Repositories
+namespace DataAccess.Repositories;
+
+public class BlockRepository : GenericRepository, IBlockRepository
 {
-    public class BlockRepository : GenericRepository, IBlockRepository
+    public BlockRepository(SowScheduleContext dbContex) : base(dbContex)
     {
-        public BlockRepository(SowScheduleContext dbContex) : base(dbContex)
-        {
-        }
+    }
 
-        public IEnumerable<Block> GetAll()
-        {
-            return _sowScheduleDB.Blocks;
-        }
+    public IEnumerable<Block> GetAll()
+    {
+        return _sowScheduleDB.Blocks;
+    }
 
-        public bool Insert(Block entity)
-        {
-                _sowScheduleDB.Blocks.Add(entity);
-                _sowScheduleDB.SaveChanges();
-                return true;
-        }
+    public bool Insert(Block entity)
+    {
+        _sowScheduleDB.Blocks.Add(entity);
+        _sowScheduleDB.SaveChanges();
+        return true;
+    }
 
-        public bool Remove(int pId)
-        {
-                Block block = _sowScheduleDB.Blocks.Find(pId);
-                _sowScheduleDB.Blocks.Remove(block);
-                _sowScheduleDB.SaveChanges();
-                return true;
-            }
-        }
+    public bool Remove(int pId)
+    {
+        Block block = _sowScheduleDB.Blocks.Find(pId);
+        _sowScheduleDB.Blocks.Remove(block);
+        _sowScheduleDB.SaveChanges();
+        return true;
+    }
 
-        public bool Update(Block entity)
+    public bool Update(Block entity)
+    {
+        Block block = _sowScheduleDB.Blocks.Find(entity.Id);
+        if (block != null)
         {
-            Block block = _sowScheduleDB.Blocks.Find(entity.Id);
-            if (block != null)
-            {
-                block.OrderLocationId = entity.OrderLocationId;
-                block.BlockNumber = entity.BlockNumber;
-                block.SeedTrayAmount = entity.SeedTrayAmount;
-                block.NumberWithinThBlock = entity.NumberWithinThBlock;
-                _sowScheduleDB.SaveChanges();
-                return true;
-            }
-            return false;
-        } 
+            block.OrderLocationId = entity.OrderLocationId;
+            block.BlockNumber = entity.BlockNumber;
+            block.SeedTrayAmount = entity.SeedTrayAmount;
+            block.NumberWithinThBlock = entity.NumberWithinThBlock;
+            _sowScheduleDB.SaveChanges();
+            return true;
+        }
+        return false;
     }
 }

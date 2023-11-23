@@ -30,7 +30,7 @@ namespace DataAccess.Repositories
                 Product product = _sowScheduleDB.Products.Find(pId);
                 _sowScheduleDB.Products.Remove(product);
                 _sowScheduleDB.SaveChanges();
-                return true;S
+                return true;
         }
 
         public bool Update(Product entity)
