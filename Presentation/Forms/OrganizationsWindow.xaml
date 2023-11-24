@@ -23,7 +23,8 @@
 
         <!--Filter-->
         <custom:TextBoxWithLabel FieldLabel="Búsqueda" Grid.Row="0" Width="210" HorizontalAlignment="Left" 
-                                VerticalAlignment="Top" Margin="20 5 0 0" x:Name="lbltxtSearch"/>
+                                VerticalAlignment="Top" Margin="20 5 0 0" x:Name="lbltxtSearch"
+                                TextChanged="lbltxtSearch_TextChanged"/>
 
         <!--DataGrid of organizations-->
         <DataGrid x:Name="dgOrganizations" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5" 

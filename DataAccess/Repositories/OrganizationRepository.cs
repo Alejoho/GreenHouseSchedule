@@ -1,9 +1,7 @@
-﻿using DataAccess.Contracts;
-using System;
-using System.Collections.Generic;
-using SupportLayer.Models;
-using DataAccess.Context;
+﻿using DataAccess.Context;
+using DataAccess.Contracts;
 using Microsoft.EntityFrameworkCore;
+using SupportLayer.Models;
 
 namespace DataAccess.Repositories
 {
@@ -14,7 +12,7 @@ namespace DataAccess.Repositories
         }
 
         public OrganizationRepository()
-        {            
+        {
         }
 
         public IEnumerable<Organization> GetAll()
@@ -22,19 +20,24 @@ namespace DataAccess.Repositories
             return _sowScheduleDB.Organizations;
         }
 
+        public IEnumerable<Organization> GetSome(string filter)
+        {
+            return _sowScheduleDB.Organizations;
+        }
+
         public bool Insert(Organization entity)
         {
-                _sowScheduleDB.Organizations.Add(entity);
-                _sowScheduleDB.SaveChanges();
-                return true;            
+            _sowScheduleDB.Organizations.Add(entity);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Remove(int pId)
         {
-                Organization organization = _sowScheduleDB.Organizations.Find((short)pId);
-                _sowScheduleDB.Organizations.Remove(organization);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            Organization organization = _sowScheduleDB.Organizations.Find((short)pId);
+            _sowScheduleDB.Organizations.Remove(organization);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Update(Organization entity)

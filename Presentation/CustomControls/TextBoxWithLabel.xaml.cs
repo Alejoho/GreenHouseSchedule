@@ -26,12 +26,13 @@ namespace Presentation.CustomControls
             this.DataContext = this;
         }
 
-        public event TextChangedEventHandler TextChanged;
+        public event TextChangedEventHandler TextChanged;    
         private string _fieldLabel;
         private string _fieldContent;
 
         public string FieldLabel { get => _fieldLabel; set => _fieldLabel = value; }
-        public string FieldContent { get => _fieldContent; set => _fieldContent = value; }
+        public string FieldContent { get => _fieldContent; 
+            set => _fieldContent = value; }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

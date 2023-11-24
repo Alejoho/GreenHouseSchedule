@@ -3,6 +3,7 @@ using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Presentation.Forms;
 
@@ -35,7 +36,7 @@ public partial class OrganizationsWindow : Window
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
+        this.Close();        
     }
 
     private void btnNewOrganization_Click(object sender, RoutedEventArgs e)
@@ -85,6 +86,7 @@ public partial class OrganizationsWindow : Window
         {
             RefreshData();
             txtMunicipality.Text = "";
+            cmbProvince.SelectedItem = null;
             _municipalityModel = new Municipality();
             btnRemoveMunicipality.IsEnabled = true;
 
@@ -160,7 +162,17 @@ public partial class OrganizationsWindow : Window
 
     private void RefreshData()
     {
-        _organizations = _organizationProcessor.GetAllOrganizations().ToList();
+        //TODO - maybe I will have to put an if statment here
+        if (lbltxtSearch.TextBox.Text == string.Empty)
+        {
+            _organizations = _organizationProcessor.GetAllOrganizations().ToList();
+        }
+        else
+        {
+            string filter = lbltxtSearch.TextBox.Text;
+            _organizations = _organizationProcessor.GetSomeOrganizations(filter).ToList();
+        }
+
         dgOrganizations.ItemsSource = null;
         dgOrganizations.ItemsSource = _organizations;
 
@@ -196,4 +208,13 @@ public partial class OrganizationsWindow : Window
             ((Province)cmbProvince.SelectedItem).Id :
             (byte)0;
     }
+
+    private void lbltxtSearch_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        string filter = lbltxtSearch.TextBox.Text;
+        _organizations = _organizationProcessor.GetSomeOrganizations(filter).ToList();
+        dgOrganizations.ItemsSource = null;
+        dgOrganizations.ItemsSource = _organizations;
+    }
+
 }

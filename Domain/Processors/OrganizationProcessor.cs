@@ -68,5 +68,20 @@ namespace Domain.Processors
             _repository = new OrganizationRepository();
             return _repository.GetAll().OrderBy(x => x.Name);
         }
+
+        public IEnumerable<Organization> GetSomeOrganizations(string filter)
+        {
+            _repository = new OrganizationRepository();
+            List<Organization> organizations = _repository.GetSome(filter).ToList();
+
+            IEnumerable<Organization> output = organizations
+                .Where(x => x.Name.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.TypeOfOrganizationName.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.MunicipalityName.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.ProvinceName.Contains(filter, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(x => x.Name);
+
+            return output;
+        }
     }
 }
