@@ -4,70 +4,69 @@ using Domain.Validators;
 using FluentValidation.Results;
 using SupportLayer.Models;
 
-namespace Domain.Processors
+namespace Domain.Processors;
+
+public class MunicipalityProcessor
 {
-    public class MunicipalityProcessor
+    private IGenericRepository<Municipality> _repository;
+    public string Error { get; set; } = null!;
+
+    public MunicipalityProcessor()
     {
-        //CHECK - do this processor
-        private IGenericRepository<Municipality> _repository;
-        public string Error { get; set; } = null!;
+        _repository = new MunicipalityRepository();
+    }
 
-        public MunicipalityProcessor()
+    private bool ValidateData(Municipality model)
+    {
+        MunicipalityValidator validator = new MunicipalityValidator();
+        ValidationResult validationResult = validator.Validate(model);
+
+        if (validationResult.IsValid)
         {
-            _repository = new MunicipalityRepository();
+            return true;
         }
-
-        private bool ValidateData(Municipality model)
+        else
         {
-            MunicipalityValidator validator = new MunicipalityValidator();
-            ValidationResult validationResult = validator.Validate(model);
+            Error = validationResult.Errors.First().ErrorMessage;
+            return false;
+        }
+    }
 
-            if (validationResult.IsValid)
+    public bool SaveMunicipality(Municipality model)
+    {
+        if (ValidateData(model) == true)
+        {
+            try
             {
+                if (model.Id == 0)
+                {
+                    _repository.Insert(model);
+                }
+                else
+                {
+                    _repository.Update(model);
+                }
                 return true;
             }
-            else
+            catch (Exception ex)
             {
-                Error = validationResult.Errors.First().ErrorMessage;
+                //LATER - Add the code to log the errors
+                Error = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 return false;
             }
         }
 
-        public bool SaveMunicipality(Municipality model)
-        {
-            if (ValidateData(model) == true)
-            {
-                try
-                {
-                    if (model.Id == 0)
-                    {
-                        _repository.Insert(model);
-                    }
-                    else
-                    {
-                        _repository.Update(model);
-                    }
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    //LATER - Add the code to log the errors
-                    Error = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
-                    return false;
-                }
-            }
-            return false;
-        }
+        return false;
+    }
 
-        public void DeleteMunicipality(int id)
-        {
-            _repository.Remove(id);
-        }
+    public void DeleteMunicipality(int id)
+    {
+        _repository.Remove(id);
+    }
 
-        public IEnumerable<Municipality> GetAllMunicipalities()
-        {
-            //TODO - do the ordering in all the processors 
-            return _repository.GetAll().OrderBy(x => x.ProvinceName).ThenBy(x => x.Name);
-        }
+    public IEnumerable<Municipality> GetAllMunicipalities()
+    {
+        //TODO - do the ordering in all the processors 
+        return _repository.GetAll().OrderBy(x => x.ProvinceName).ThenBy(x => x.Name);
     }
 }

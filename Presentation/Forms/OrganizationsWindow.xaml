@@ -20,13 +20,13 @@
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-
-        <!--Filter-->
+        <!--#region Filter-->        
         <custom:TextBoxWithLabel FieldLabel="Búsqueda" Grid.Row="0" Width="210" HorizontalAlignment="Left" 
                                 VerticalAlignment="Top" Margin="20 5 0 0" x:Name="lbltxtSearch"
                                 TextChanged="lbltxtSearch_TextChanged"/>
-
-        <!--DataGrid of organizations-->
+        <!--#endregion-->
+        
+        <!--#region DataGrid of organizations-->
         <DataGrid x:Name="dgOrganizations" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5" 
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
                     MouseDoubleClick="dgOrganizations_MouseDoubleClick" CanUserReorderColumns="False"
@@ -40,8 +40,9 @@
                 <DataGridTextColumn Header="Municipio" Binding="{Binding MunicipalityName}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <!--#endregion-->
         
-        <!--Municipalities and provinces-->
+        <!--#region Municipalities and provinces-->
         <StackPanel Grid.Row="1" Grid.Column="1">
             <DataGrid x:Name="dgMunicipalities" Grid.Row="1" Grid.Column="1" Margin="5" Height="270"
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
@@ -79,8 +80,9 @@
                 </Button>
             </Grid>
         </StackPanel>
-
-        <!--Buttons-->
+        <!--#endregion-->
+        
+        <!--#region Buttons-->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left"
                     Margin="50 0 0 0">
             <Button x:Name="btnNewOrganization" Content="Nueva" Margin="5 15" Width="70" Click="btnNewOrganization_Click"/>
@@ -88,5 +90,6 @@
             <Button x:Name="btnDeleteOrganization" Content="Borrar" Margin="5 15" Width="70" Click="btnDeleteOrganization_Click"/>
             <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70" Click="btnCancel_Click"/>
         </StackPanel>
+        <!--#endregion-->
     </Grid>
 </Window>

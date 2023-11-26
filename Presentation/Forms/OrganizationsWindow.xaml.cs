@@ -12,9 +12,6 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class OrganizationsWindow : Window
 {
-    //NEXT - do the logic of the search txt of organization window  
-    //CHECK - Review the columns of the organization datagrid
-    //CHECK - Review the columns of the municipality datagrid
     List<Organization> _organizations;
     List<Municipality> _municipalities;
     List<Province> _provinces;
@@ -73,6 +70,14 @@ public partial class OrganizationsWindow : Window
             MessageBox.Show("Debe seleccionar el registro que desea eliminar."
                 , "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+    }
+
+    private void lbltxtSearch_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        string filter = lbltxtSearch.TextBox.Text;
+        _organizations = _organizationProcessor.GetFilteredOrganizations(filter).ToList();
+        dgOrganizations.ItemsSource = null;
+        dgOrganizations.ItemsSource = _organizations;
     }
 
     //LATER - Shearch how to select the edited or added item
@@ -161,8 +166,7 @@ public partial class OrganizationsWindow : Window
     }
 
     private void RefreshData()
-    {
-        //TODO - maybe I will have to put an if statment here
+    {        
         if (lbltxtSearch.TextBox.Text == string.Empty)
         {
             _organizations = _organizationProcessor.GetAllOrganizations().ToList();
@@ -170,7 +174,7 @@ public partial class OrganizationsWindow : Window
         else
         {
             string filter = lbltxtSearch.TextBox.Text;
-            _organizations = _organizationProcessor.GetSomeOrganizations(filter).ToList();
+            _organizations = _organizationProcessor.GetFilteredOrganizations(filter).ToList();
         }
 
         dgOrganizations.ItemsSource = null;
@@ -208,13 +212,4 @@ public partial class OrganizationsWindow : Window
             ((Province)cmbProvince.SelectedItem).Id :
             (byte)0;
     }
-
-    private void lbltxtSearch_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        string filter = lbltxtSearch.TextBox.Text;
-        _organizations = _organizationProcessor.GetSomeOrganizations(filter).ToList();
-        dgOrganizations.ItemsSource = null;
-        dgOrganizations.ItemsSource = _organizations;
-    }
-
 }
