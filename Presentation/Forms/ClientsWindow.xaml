@@ -7,7 +7,7 @@
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
         Title="Clientes" Height="490" Width="700" ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -15,25 +15,37 @@
             <RowDefinition Height="61"/>
         </Grid.RowDefinitions>
 
-        <!--Filter-->
+        <!--#region Filter-->
         <custom:TextBoxWithLabel FieldLabel="Búsqueda" Grid.Row="0" Width="210" HorizontalAlignment="Left" 
                                 VerticalAlignment="Top" Margin="20 5 0 0" x:Name="lbltxtSearch"/>
+        <!--#endregion-->
 
-        <!--DataGrid-->
-        <DataGrid x:Name="dgClients" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5">
-
+        <!--#region DataGrid-->
+        <DataGrid x:Name="dgClients" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5"
+                    AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" 
+                    MouseDoubleClick="dgClients_MouseDoubleClick"  CanUserReorderColumns="False"
+                    CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
+                    IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Apodo" Binding="{Binding NickName}"/>
+                <DataGridTextColumn Header="Celular" Binding="{Binding PhoneNumber}"/>
+                <DataGridTextColumn Header="Teléfono" Binding="{Binding OtherNumber}"/>
+                <DataGridTextColumn Header="Organización" Binding="{Binding TypeAndOrganizationName}"/>
+            </DataGrid.Columns>
         </DataGrid>
-
-        <!--Buttons-->
+        <!--#endregion-->
+        
+        <!--#region Buttons-->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left"
                     Margin="50 0 0 0">
             <Button x:Name="btnNewClient" Content="Nuevo" Margin="5 15" Width="70"/>
             <Button x:Name="btnEditClient" Content="Editar" Margin="5 15" Width="70"/>
             <Button x:Name="btnDeleteClient" Content="Borrar" Margin="5 15" Width="70"/>
-            <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70" Click="Button_Click"/>
+            <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70"/>
         </StackPanel>
-
-
-
+        <!--#endregion-->
+        
     </Grid>
 </Window>
