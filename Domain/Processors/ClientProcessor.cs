@@ -60,7 +60,7 @@ public class ClientProcessor
         return false;
     }
 
-    public void DeleteOrganization(int id)
+    public void DeleteClient(int id)
     {
         _repository.Remove(id);
     }

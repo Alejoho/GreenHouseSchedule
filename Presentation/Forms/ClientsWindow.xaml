@@ -40,10 +40,10 @@
         <!--#region Buttons-->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left"
                     Margin="50 0 0 0">
-            <Button x:Name="btnNewClient" Content="Nuevo" Margin="5 15" Width="70"/>
-            <Button x:Name="btnEditClient" Content="Editar" Margin="5 15" Width="70"/>
-            <Button x:Name="btnDeleteClient" Content="Borrar" Margin="5 15" Width="70"/>
-            <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70"/>
+            <Button x:Name="btnNewClient" Content="Nuevo" Margin="5 15" Width="70" Click="btnNewClient_Click"/>
+            <Button x:Name="btnEditClient" Content="Editar" Margin="5 15" Width="70" Click="btnEditClient_Click"/>
+            <Button x:Name="btnDeleteClient" Content="Borrar" Margin="5 15" Width="70" Click="btnDeleteClient_Click"/>
+            <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70" Click="btnCancel_Click"/>
         </StackPanel>
         <!--#endregion-->
         
