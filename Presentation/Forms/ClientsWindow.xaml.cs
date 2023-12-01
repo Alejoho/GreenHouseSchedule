@@ -70,6 +70,7 @@ public partial class ClientsWindow : Window
     private void LoadData()
     {
         _clients = _processor.GetAllClients().ToList();
+        //dgClients.ItemsSource = _clients;
         dgClients.DataContext = _clients;
     }
 
@@ -85,7 +86,7 @@ public partial class ClientsWindow : Window
         {
             AddEditClientWindow window = new AddEditClientWindow(client);
             window.ShowDialog();
-            RefreshData();
+            //RefreshData();
         }
         else
         {

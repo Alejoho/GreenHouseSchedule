@@ -25,14 +25,14 @@
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" 
                     MouseDoubleClick="dgClients_MouseDoubleClick"  CanUserReorderColumns="False"
                     CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
-                    IsReadOnly="True">
+                    IsReadOnly="True" ItemsSource="{Binding}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Apodo" Binding="{Binding NickName}"/>
                 <DataGridTextColumn Header="Celular" Binding="{Binding PhoneNumber}"/>
                 <DataGridTextColumn Header="Teléfono" Binding="{Binding OtherNumber}"/>
-                <DataGridTextColumn Header="Organización" Binding="{Binding TypeAndOrganizationName}"/>
+                <DataGridTextColumn Header="Organización" Binding="{Binding TypeAndOrganizationNamei}"/>
             </DataGrid.Columns>
         </DataGrid>
         <!--#endregion-->

@@ -16,4 +16,9 @@ public partial class Organization
     {
         get { return Municipality.Province.Name; }
     }
+
+    public string TypeAndOrganizationNamei
+    {
+        get { return $"{TypeOfOrganization.Name} - {Name}"; }
+    }
 }

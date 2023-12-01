@@ -22,7 +22,9 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Client> GetAll()
         {
-            return _sowScheduleDB.Clients;            
+            var algo = _sowScheduleDB.Clients;
+            return algo;
+            //return _sowScheduleDB.Clients;            
         }
 
         public bool Insert(Client entity)
@@ -34,7 +36,7 @@ namespace DataAccess.Repositories
 
         public bool Remove(int pId)
         {
-                Client client = _sowScheduleDB.Clients.Find(pId);
+                Client client = _sowScheduleDB.Clients.Find((short)pId);
                 _sowScheduleDB.Clients.Remove(client);
                 _sowScheduleDB.SaveChanges();
                 return true;
