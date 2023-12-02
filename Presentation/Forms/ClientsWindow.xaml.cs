@@ -13,8 +13,6 @@ namespace Presentation.Forms;
 /// 
 public partial class ClientsWindow : Window
 {
-    //NEXT - do the logic of the txtsearch of the clients window
-    //CHECK - evaluate the entire window of clients
     private List<Client> _clients;
     private ClientProcessor _processor;
 
@@ -70,14 +68,14 @@ public partial class ClientsWindow : Window
     private void LoadData()
     {
         _clients = _processor.GetAllClients().ToList();
-        //dgClients.ItemsSource = _clients;
-        dgClients.DataContext = _clients;
+        dgClients.ItemsSource = _clients;
     }
 
     private void RefreshData()
     {
-        dgClients.DataContext = null;
-        dgClients.DataContext = _clients;
+        _clients = _processor.GetAllClients().ToList();
+        dgClients.ItemsSource = null;
+        dgClients.ItemsSource = _clients;
     }
 
     private void EditClient()
@@ -86,11 +84,19 @@ public partial class ClientsWindow : Window
         {
             AddEditClientWindow window = new AddEditClientWindow(client);
             window.ShowDialog();
-            //RefreshData();
+            RefreshData();
         }
         else
         {
             MessageBox.Show("Debe seleccionar el registro que desea editar.");
         }
+    }
+
+    private void lbltxtSearch_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+        string filter = lbltxtSearch.TextBox.Text;
+        _clients = _processor.GetFilteredClients(filter).ToList();
+        dgClients.ItemsSource = null;
+        dgClients.ItemsSource = _clients;
     }
 }

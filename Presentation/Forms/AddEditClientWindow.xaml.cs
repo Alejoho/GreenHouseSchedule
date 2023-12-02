@@ -1,10 +1,8 @@
 ﻿using Domain.Processors;
 using SupportLayer.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace Presentation.Forms;
 
@@ -13,7 +11,7 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class AddEditClientWindow : Window
 {
-    //NEXT - do the logic of the AddEdit Clients window
+    //NEXT - do the logic of the button to add a new organization in the  AddEditClients window
     private ClientProcessor _processor;
     private Client _model;
     private List<Organization> _organizations;
@@ -44,9 +42,9 @@ public partial class AddEditClientWindow : Window
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
-        if(ValidateDataType() == true)
+        if (ValidateDataType() == true)
         {
-            if (_processor.SaveClient(_model)==true)
+            if (_processor.SaveClient(_model) == true)
             {
                 MessageBox.Show("Registro salvado");
                 this.Close();
@@ -69,13 +67,18 @@ public partial class AddEditClientWindow : Window
         bool output = true;
 
         _model.Name = lbltxtName.FieldContent;
-        _model.NickName = lbltxtNickName.FieldContent;
-        _model.PhoneNumber = lbltxtPhoneNumber.FieldContent;
-        _model.OtherNumber = lbltxtOtherNumber.FieldContent;
+        _model.NickName = lbltxtNickName.FieldContent ?? "";
+        _model.PhoneNumber = lbltxtPhoneNumber.FieldContent ?? "";
+        _model.OtherNumber = lbltxtOtherNumber.FieldContent ?? "";
 
-        if(lblcmbbtnOrganization.ComboBox.SelectedItem!=null)
+        if (lblcmbbtnOrganization.ComboBox.SelectedItem != null)
         {
             _model.OrganizationId = ((Organization)lblcmbbtnOrganization.ComboBox.SelectedItem).Id;
+            //CHECK - After I edit a client, the clients window refreshes the field organization
+            //by insstanciating again the ClientRepository in the ClientProcessor by calling
+            //the method GetAllClient. Evaluate if 
+            //is better reasign the Organization property in the model like the next line.
+            //_model.Organization = (Organization)lblcmbbtnOrganization.ComboBox.SelectedItem;
         }
 
         return output;
@@ -84,9 +87,9 @@ public partial class AddEditClientWindow : Window
     private void LoadData()
     {
         OrganizationProcessor organizationProcessor = new OrganizationProcessor();
-        
+
         _organizations = organizationProcessor.GetAllOrganizations().ToList();
-        
+
         lblcmbbtnOrganization.ComboBox.ItemsSource = _organizations;
         lblcmbbtnOrganization.ComboBox.DisplayMemberPath = "TypeAndOrganizationName";
     }
@@ -94,12 +97,11 @@ public partial class AddEditClientWindow : Window
     private void PopulateData()
     {
         lbltxtName.FieldContent = _model.Name;
-        //LATER - Evaluate if the nullable properties value should be set "nulo when display their values"
-        lbltxtNickName.FieldContent = _model.NickName ?? "nulo";
-        lbltxtPhoneNumber.FieldContent = _model.PhoneNumber ?? "nulo";
-        lbltxtOtherNumber.FieldContent = _model.OtherNumber ?? "nulo";
-
-        lblcmbbtnOrganization.ComboBox.SelectedItem =
-            _organizations.Where(organization => organization.Id == _model.Id).Single();
+        //LATER - Evaluate if the nullable properties value should be set "nulo" when display their values"
+        lbltxtNickName.FieldContent = _model.NickName;
+        lbltxtPhoneNumber.FieldContent = _model.PhoneNumber;
+        lbltxtOtherNumber.FieldContent = _model.OtherNumber;
+        lblcmbbtnOrganization.ComboBox.SelectedItem = _organizations.Where(organization =>
+        organization.Id == _model.OrganizationId).Single();
     }
 }

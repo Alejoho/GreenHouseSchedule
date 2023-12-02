@@ -14,7 +14,7 @@
 
             <ComboBox Grid.Column="1" VerticalContentAlignment="Center" DockPanel.Dock="Right"
                  HorizontalAlignment="Right" Padding="5 0 0 0" Margin="0 3"
-                 Width="132" x:Name="ComboBox" Text="{Binding Path=FieldContent}">
+                 Width="132" x:Name="ComboBox">
             </ComboBox>
 
             <TextBlock Grid.Column="0" Text="{Binding Path=FieldLabel}" VerticalAlignment="Center" 

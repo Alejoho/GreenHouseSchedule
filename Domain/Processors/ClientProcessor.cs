@@ -67,14 +67,23 @@ public class ClientProcessor
 
     public IEnumerable<Client> GetAllClients()
     {
+        _repository = new ClientRepository();
         return _repository.GetAll().OrderBy(x => x.Name);
     }
 
-    public IEnumerable<Client> GetFilteredClients()
+    public IEnumerable<Client> GetFilteredClients(string filter)
     {
-        throw new NotImplementedException();
-        //List<Client> organizations = _repository.GetAll().ToList();
-        //IEnumerable<Client> output;
-        //return output;
+        _repository = new ClientRepository();
+        List<Client> clients = _repository.GetAll().ToList();
+
+        IEnumerable<Client> output = clients
+            .Where(x => x.Name.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.NickName.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.PhoneNumber.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.OtherNumber.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.TypeAndOrganizationName.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            ).OrderBy(x => x.Name);
+
+        return output;
     }
 }

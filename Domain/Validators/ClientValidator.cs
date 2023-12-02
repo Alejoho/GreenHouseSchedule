@@ -16,7 +16,7 @@ public class ClientValidator : AbstractValidator<Client>
         RuleFor(x => x.NickName).MaximumLength(50).When(x => x.NickName != "")
             .WithName("Apodo")
             .WithMessage("El {PropertyName} no debe exceder los 50 caracteres.");
-        //TODO - use a regular expresion to validate the numbers
+        //NEXT - use a regular expresion to validate the numbers
         RuleFor(x => x.PhoneNumber).MaximumLength(20).When(x => x.PhoneNumber != "")
             .WithName("Celular")
             .WithMessage("El {PropertyName} no debe exceder los 20 caracteres.");

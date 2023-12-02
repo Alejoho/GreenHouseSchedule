@@ -9,7 +9,7 @@
     <Grid>
         <DockPanel  Margin="0 0 0 0">
 
-            <TextBox Text="{Binding Path=FieldContent, Mode=TwoWay}" VerticalContentAlignment="Center"
+            <TextBox Text="{Binding Path=FieldContent}" VerticalContentAlignment="Center"
                  HorizontalAlignment="Stretch" Padding="5 0 0 0" Margin="0 3" DockPanel.Dock="Right"
                  Width="150" x:Name="TextBox" TextChanged="TextBox_TextChanged"/>
 
