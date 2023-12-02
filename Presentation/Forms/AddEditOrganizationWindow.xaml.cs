@@ -16,6 +16,7 @@ public partial class AddEditOrganizationWindow : Window
     private Organization _model;
     private List<TypesOfOrganization> _typesOfOrganizations;
     private List<Municipality> _locations;
+    IOrganizationRequester _requester;
 
     public AddEditOrganizationWindow()
     {
@@ -23,6 +24,16 @@ public partial class AddEditOrganizationWindow : Window
         _processor = new OrganizationProcessor();
         _model = new Organization();
         _model.Id = 0;
+        LoadData();
+    }
+
+    public AddEditOrganizationWindow(IOrganizationRequester requestingWindow)
+    {
+        InitializeComponent();
+        _processor = new OrganizationProcessor();
+        _model = new Organization();
+        _model.Id = 0;
+        _requester = requestingWindow;
         LoadData();
     }
 
@@ -46,7 +57,8 @@ public partial class AddEditOrganizationWindow : Window
         {
             if (_processor.SaveOrganization(_model) == true)
             {
-                MessageBox.Show("Registro salvado");
+                //MessageBox.Show("Registro salvado");
+                _requester.OrganizationComplete();
                 this.Close();
             }
             else

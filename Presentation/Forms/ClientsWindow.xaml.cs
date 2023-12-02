@@ -65,6 +65,14 @@ public partial class ClientsWindow : Window
         }
     }
 
+    private void lbltxtSearch_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+        string filter = lbltxtSearch.TextBox.Text;
+        _clients = _processor.GetFilteredClients(filter).ToList();
+        dgClients.ItemsSource = null;
+        dgClients.ItemsSource = _clients;
+    }
+
     private void LoadData()
     {
         _clients = _processor.GetAllClients().ToList();
@@ -90,13 +98,5 @@ public partial class ClientsWindow : Window
         {
             MessageBox.Show("Debe seleccionar el registro que desea editar.");
         }
-    }
-
-    private void lbltxtSearch_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-    {
-        string filter = lbltxtSearch.TextBox.Text;
-        _clients = _processor.GetFilteredClients(filter).ToList();
-        dgClients.ItemsSource = null;
-        dgClients.ItemsSource = _clients;
     }
 }

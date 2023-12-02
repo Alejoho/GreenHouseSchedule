@@ -9,9 +9,8 @@ namespace Presentation.Forms;
 /// <summary>
 /// Interaction logic for ClientsWindow.xaml
 /// </summary>
-public partial class AddEditClientWindow : Window
+public partial class AddEditClientWindow : Window, IOrganizationRequester
 {
-    //NEXT - do the logic of the button to add a new organization in the  AddEditClients window
     private ClientProcessor _processor;
     private Client _model;
     private List<Organization> _organizations;
@@ -103,5 +102,20 @@ public partial class AddEditClientWindow : Window
         lbltxtOtherNumber.FieldContent = _model.OtherNumber;
         lblcmbbtnOrganization.ComboBox.SelectedItem = _organizations.Where(organization =>
         organization.Id == _model.OrganizationId).Single();
+    }
+
+    private void lblcmbbtnOrganization_ButtonClick(object sender, RoutedEventArgs e)
+    {
+        AddEditOrganizationWindow window = new AddEditOrganizationWindow(this);
+        window.ShowDialog();
+
+
+    }
+
+    public void OrganizationComplete()
+    {
+        LoadData();
+        Organization organization = _organizations.OrderByDescending(x => x.Id).First();
+        lblcmbbtnOrganization.ComboBox.SelectedItem = organization;
     }
 }
