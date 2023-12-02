@@ -12,8 +12,8 @@
         <StackPanel Margin="0 10 0 0" HorizontalAlignment="Center">
             <custom:TextBoxWithLabel FieldLabel="Nombre*" HorizontalAlignment="Right" x:Name="lbltxtName"/>
             <custom:TextBoxWithLabel FieldLabel="Apodo" HorizontalAlignment="Right" x:Name="lbltxtNickName"/>
-            <custom:TextBoxWithLabel FieldLabel="Celular" HorizontalAlignment="Right" x:Name="lbltxtPhoneNumber"/>
-            <custom:TextBoxWithLabel FieldLabel="Fijo" HorizontalAlignment="Right" x:Name="lbltxtOtherNumber"/>
+            <custom:TextBoxWithLabel FieldLabel="Número celular" HorizontalAlignment="Right" x:Name="lbltxtPhoneNumber"/>
+            <custom:TextBoxWithLabel FieldLabel="Número fijo" HorizontalAlignment="Right" x:Name="lbltxtOtherNumber"/>
             <custom:ComboBoxWithLabel FieldLabel="Organización*" HorizontalAlignment="Right" x:Name="lblcmbbtnOrganization"
                                     ButtonClick="lblcmbbtnOrganization_ButtonClick"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using SupportLayer.Models;
+using System.Text.RegularExpressions;
 
 namespace Domain.Validators;
 
@@ -16,13 +17,18 @@ public class ClientValidator : AbstractValidator<Client>
         RuleFor(x => x.NickName).MaximumLength(50).When(x => x.NickName != "")
             .WithName("Apodo")
             .WithMessage("El {PropertyName} no debe exceder los 50 caracteres.");
-        //NEXT - use a regular expresion to validate the numbers
-        RuleFor(x => x.PhoneNumber).MaximumLength(20).When(x => x.PhoneNumber != "")
-            .WithName("Celular")
-            .WithMessage("El {PropertyName} no debe exceder los 20 caracteres.");
-        RuleFor(x => x.OtherNumber).MaximumLength(20).When(x => x.OtherNumber != "")
-            .WithName("Teléfono")
-            .WithMessage("El {PropertyName} no debe exceder los 20 caracteres.");
+        RuleFor(x => x.PhoneNumber)
+            .Must(x => Regex.IsMatch(x, @"\+53[0-9]{8}$") || Regex.IsMatch(x, @"^\d{8}$"))
+            .When(x => x.PhoneNumber != "")
+            .WithName("Número celular")
+            .WithMessage("El {PropertyName} no esta en el formato correcto." +
+                "\nFormato correcto: +53xxxxxxxx ó xxxxxxxx");
+        RuleFor(x => x.OtherNumber)
+            .Must(x => Regex.IsMatch(x, @"\+53[0-9]{8}$") || Regex.IsMatch(x, @"^\d{8}$"))
+            .When(x => x.OtherNumber != "")
+            .WithName("Número fijo")
+            .WithMessage("El {PropertyName} no esta en el formato correcto." +
+                "\nFormato correcto: +53xxxxxxxx ó xxxxxxxx");
         RuleFor(x => x.OrganizationId).GreaterThan((short)0).WithName("Organización")
             .WithMessage("La {PropertyName} no debe estar vacía.");
     }
