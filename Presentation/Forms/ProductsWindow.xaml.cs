@@ -23,7 +23,7 @@ public partial class ProductsWindow : Window
         _speciesProcessor = new SpeciesProcessor();
         LoadData();
         //dgProducts.DataContext = this;
-        //this.DataContext = this;
+        //this.DataContext = this;        
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -49,6 +49,6 @@ public partial class ProductsWindow : Window
     private void LoadData()
     {
         _species = new ObservableCollection<Species>(_speciesProcessor.GetAllSpecies());
-        dgProducts.ItemsSource = _species;
+        //dgProducts.ItemsSource = _species;
     }
 }

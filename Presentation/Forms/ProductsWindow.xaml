@@ -9,7 +9,6 @@
         Title="Productos" Height="455" Width="975" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="350"/>
