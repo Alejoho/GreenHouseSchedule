@@ -1,8 +1,8 @@
 ﻿using DataAccess.Contracts;
 using DataAccess.Repositories;
 using Domain.Validators;
-using SupportLayer.Models;
 using FluentValidation.Results;
+using SupportLayer.Models;
 
 namespace Domain.Processors
 {
@@ -20,7 +20,7 @@ namespace Domain.Processors
             SpeciesValidator validator = new SpeciesValidator();
             ValidationResult validationResult = validator.Validate(model);
 
-            if(validationResult.IsValid)
+            if (validationResult.IsValid)
             {
                 return true;
             }
@@ -37,7 +37,7 @@ namespace Domain.Processors
             {
                 try
                 {
-                    if(model.Id == 0)
+                    if (model.Id == 0)
                     {
                         _repository.Insert(model);
                     }

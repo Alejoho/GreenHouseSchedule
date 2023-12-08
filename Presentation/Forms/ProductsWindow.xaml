@@ -26,8 +26,7 @@
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" 
                     CanUserReorderColumns="False" CanUserResizeColumns="False"
                     CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
-                    HeadersVisibility="Column" HorizontalScrollBarVisibility="Disabled"
-                    MouseDoubleClick="dgProducts_MouseDoubleClick">
+                    HeadersVisibility="Column" HorizontalScrollBarVisibility="Disabled">
             
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
