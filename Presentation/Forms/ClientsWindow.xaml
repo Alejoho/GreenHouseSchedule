@@ -24,9 +24,14 @@
         <!--#region DataGrid-->
         <DataGrid x:Name="dgClients" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5"
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" 
-                    MouseDoubleClick="dgClients_MouseDoubleClick"  CanUserReorderColumns="False"
+                      CanUserReorderColumns="False"
                     CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
-                    IsReadOnly="True">
+                    IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
@@ -35,6 +40,18 @@
                 <DataGridTextColumn Header="Teléfono" Binding="{Binding OtherNumber}"/>
                 <DataGridTextColumn Header="Organización" Binding="{Binding TypeAndOrganizationName}"/>
             </DataGrid.Columns>
+
+            <DataGrid.RowHeaderTemplate>
+                <DataTemplate>
+                    <Expander Expanded="Expander_Process" Collapsed="Expander_Process"/>
+                </DataTemplate>
+            </DataGrid.RowHeaderTemplate>
+
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Hola soy yo" Margin="10,5,0,0" />
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
         </DataGrid>
         <!--#endregion-->
         

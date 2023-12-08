@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation.Forms"
+        xmlns:model="clr-namespace:SupportLayer.Models;assembly=SupportLayer"
         mc:Ignorable="d"
-        Title="Productos" Height="455" Width="700" ResizeMode="NoResize"
+        Title="Productos" Height="455" Width="975" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="350"/>
@@ -14,14 +17,28 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="663"/>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
 
         <!--DataGrid-->
-        <DataGrid x:Name="dgProducts" Grid.Row="0" Grid.Column="0" Margin="20 10 5 5">
-            
+        <DataGrid x:Name="dgProducts" Grid.Row="0" Grid.Column="0" Margin="20 10 5 5"
+                    AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" 
+                    CanUserReorderColumns="False" CanUserResizeColumns="False"
+                    CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
+                    HeadersVisibility="Column" HorizontalScrollBarVisibility="Disabled" 
+                    ItemsSource="{Binding _species}">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Días de producción" Binding="{Binding ProductionDays}"/>
+                <DataGridTextColumn Header="Peso de 1000 semillas" Binding="{Binding WeightOf1000Seeds}"/>
+                <DataGridTextColumn Header="Semillas en una hectárea" Binding="{Binding AmountOfSeedsPerHectare}"/>
+                <DataGridTextColumn Header="Peso de una hectárea de semillas" Binding="{Binding WeightOfSeedsPerHectare}"/>
+            </DataGrid.Columns>
+
         </DataGrid>
         
         <!--Variety-->
@@ -41,10 +58,10 @@
         <!--Buttons-->
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Left"
                     Margin="50 0 0 0">
-            <Button x:Name="btnNewProduct" Content="Nuevo" Margin="5 15" Width="70"/>
-            <Button x:Name="btnEditProduct" Content="Editar" Margin="5 15" Width="70"/>
-            <Button x:Name="btnDeleteProduct" Content="Borrar" Margin="5 15" Width="70"/>
-            <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70"/>
+            <Button x:Name="btnNewProduct" Content="Nuevo" Margin="5 15" Width="70" Click="btnNewProduct_Click"/>
+            <Button x:Name="btnEditProduct" Content="Editar" Margin="5 15" Width="70" Click="btnEditProduct_Click"/>
+            <Button x:Name="btnDeleteProduct" Content="Borrar" Margin="5 15" Width="70" Click="btnDeleteProduct_Click"/>
+            <Button x:Name="btnCancel" Content="Atrás" Margin="5 15" Width="70" Click="btnCancel_Click"/>
         </StackPanel>
         
         

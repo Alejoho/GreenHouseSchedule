@@ -1,4 +1,5 @@
 ﻿using Domain.Processors;
+using Microsoft.EntityFrameworkCore.Metadata;
 using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace Presentation.Forms
     /// </summary>
     public partial class GreenHousesWindow : Window
     {
-        List<GreenHouse> _greenHouses;
-        GreenHouseProcessor _processor;
+        //LATER - disable the row header in all the data grid that not need it.
+        private List<GreenHouse> _greenHouses;
+        private GreenHouseProcessor _processor;
         public GreenHousesWindow()
         {
             InitializeComponent();
