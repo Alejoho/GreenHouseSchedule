@@ -1,6 +1,8 @@
-﻿namespace Presentation;
+﻿using SupportLayer.Models;
+
+namespace Presentation;
 
 public interface ISpeciesRequestor
 {
-    void SpeciesComplete();
+    void SpeciesComplete(Species model);
 }

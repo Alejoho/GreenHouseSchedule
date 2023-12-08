@@ -11,13 +11,15 @@ namespace Presentation.Forms
     {
         private SpeciesProcessor _processor;
         private Species _model;
+        private ISpeciesRequestor _requestor;
 
-        public AddEditSpeciesWindow()
+        public AddEditSpeciesWindow(ISpeciesRequestor requestor)
         {
             InitializeComponent();
             _processor = new SpeciesProcessor();
             _model = new Species();
-            _model.Id = 0;
+            _model.Id = 0;            
+            _requestor = requestor;
             LlenarCasillas();
         }
 
@@ -41,6 +43,7 @@ namespace Presentation.Forms
                 if (_processor.SaveSpecies(_model) == true)
                 {
                     MessageBox.Show("Registro salvado");
+                    _requestor?.SpeciesComplete(_model);
                     this.Close();
                 }
                 else

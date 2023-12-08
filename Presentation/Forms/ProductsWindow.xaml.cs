@@ -1,7 +1,5 @@
 ﻿using Domain.Processors;
 using SupportLayer.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -13,15 +11,15 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class ProductsWindow : Window, ISpeciesRequestor
 {
-    public List<Species> _species;
+    public ObservableCollection<Species> _species;
     private SpeciesProcessor _speciesProcessor;
 
     public ProductsWindow()
     {
         InitializeComponent();
-        _species = new List<Species>();
+        _species = new ObservableCollection<Species>();
         _speciesProcessor = new SpeciesProcessor();
-        LoadData();       
+        LoadData();
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -31,9 +29,8 @@ public partial class ProductsWindow : Window, ISpeciesRequestor
 
     public void btnNewProduct_Click(object sender, RoutedEventArgs e)
     {
-        AddEditSpeciesWindow  window = new AddEditSpeciesWindow();
-        window.ShowDialog();        
-        LoadData();
+        AddEditSpeciesWindow window = new AddEditSpeciesWindow(this);
+        window.ShowDialog();
     }
 
     private void btnEditProduct_Click(object sender, RoutedEventArgs e)
@@ -65,7 +62,7 @@ public partial class ProductsWindow : Window, ISpeciesRequestor
             {
                 _speciesProcessor.DeleteSpecies(species.Id);
                 _species.Remove(species);
-                RefreshData();
+                //RefreshData();
             }
         }
         else
@@ -83,13 +80,17 @@ public partial class ProductsWindow : Window, ISpeciesRequestor
 
     private void LoadData()
     {
-        _species = _speciesProcessor.GetAllSpecies().ToList();
+        _species = new ObservableCollection<Species>(_speciesProcessor.GetAllSpecies());
         dgProducts.ItemsSource = null;
+        dgProducts.DataContext = this;
         dgProducts.ItemsSource = _species;
     }
 
-    public void SpeciesComplete()
+    public void SpeciesComplete(Species model)
     {
-        throw new NotImplementedException();
+        //if (_species.FirstOrDefault(x => x.Id == model.Id, null) == null)
+        //{
+            _species.Add(model);
+        //}
     }
 }

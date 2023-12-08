@@ -33,7 +33,7 @@ namespace DataAccess.Repositories
 
         public bool Remove(int pId)
         {
-                Species species = _sowScheduleDB.Species.Find(pId);
+                Species species = _sowScheduleDB.Species.Find((byte)pId);
                 _sowScheduleDB.Species.Remove(species);
                 _sowScheduleDB.SaveChanges();
                 return true;
