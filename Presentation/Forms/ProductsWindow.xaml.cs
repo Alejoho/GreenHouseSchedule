@@ -48,17 +48,19 @@ public partial class ProductsWindow : Window, ISpeciesRequestor
 
     private void EditSpecies()
     {
-        if (dgProducts.SelectedItem is Species species)
+        if (dgSpecies.SelectedItem is Species species)
         {
             AddEditSpeciesWindow window = new AddEditSpeciesWindow(species);
             window.ShowDialog();
-            dgProducts.Items.Refresh();
+            dgSpecies.Items.Refresh();
         }
     }
 
+    //LATER - Review what I want to do when I delete a record with associate records in another table
+    //Because in the database I have set DeleteRestric
     private void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
     {
-        if (dgProducts.SelectedItem is Species species)
+        if (dgSpecies.SelectedItem is Species species)
         {
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
                 , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
@@ -77,8 +79,8 @@ public partial class ProductsWindow : Window, ISpeciesRequestor
     private void LoadData()
     {
         _species = new ObservableCollection<Species>(_speciesProcessor.GetAllSpecies());
-        dgProducts.DataContext = this;
-        dgProducts.ItemsSource = _species;
+        dgSpecies.DataContext = this;
+        dgSpecies.ItemsSource = _species;
         lstVarieties.DisplayMemberPath = "Variety";
     }
 
@@ -89,7 +91,7 @@ public partial class ProductsWindow : Window, ISpeciesRequestor
 
     private void dgProducts_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
-        if (dgProducts.SelectedItem is Species species)
+        if (dgSpecies.SelectedItem is Species species)
         {
             lstVarieties.ItemsSource = species.Products.OrderBy(x => x.Variety);            
         }
@@ -98,17 +100,16 @@ public partial class ProductsWindow : Window, ISpeciesRequestor
     private void btnAddVariety_Click(object sender, RoutedEventArgs e)
     {
         //LATER - Create an string extension method in the SupportLayer project to check if a string is null or whitespace(this is whitespace"   ")
-        if (txtNewVariety.Text != string.Empty && dgProducts.SelectedItem is Species species)
+        if (txtNewVariety.Text != string.Empty && dgSpecies.SelectedItem is Species species)
         {
             Product newProduct = new Product();
             newProduct.SpecieId = species.Id;
             newProduct.Variety = txtNewVariety.Text;
-            newProduct.Specie = species;
 
             _productProcessor.SaveProduct(newProduct);
 
             species.Products.Add(newProduct);
-            
+
             RefreshListBox();
 
             txtNewVariety.Text = "";
@@ -117,16 +118,21 @@ public partial class ProductsWindow : Window, ISpeciesRequestor
 
     private void RefreshListBox()
     {
-        if (dgProducts.SelectedItem is Species species)
-        {
+            Species species = (Species)dgSpecies.SelectedItem;            
             lstVarieties.ItemsSource = null;
             lstVarieties.ItemsSource = species.Products.OrderBy(x => x.Variety);
-        }
     }
 
     private void btnRemoveVariety_Click(object sender, RoutedEventArgs e)
     {
+            Species species = (Species)dgSpecies.SelectedItem;        
+            Product product = (Product)lstVarieties.SelectedItem;
+        
+            _productProcessor.DeleteProduct(product.Id);
 
+            species.Products.Remove(product);
+
+            RefreshListBox();      
     }
 
     private void lstVarieties_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

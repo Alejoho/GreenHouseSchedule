@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:model="clr-namespace:SupportLayer.Models;assembly=SupportLayer"
         mc:Ignorable="d"
-        Title="Productos" Height="455" Width="965" ResizeMode="NoResize"
+        Title="Productos" Height="455" Width="975" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
@@ -16,13 +16,13 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="665"/>
+            <ColumnDefinition Width="670"/>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
 
         <!--DataGrid-->
-        <DataGrid x:Name="dgProducts" Grid.Row="0" Grid.Column="0" Margin="20 10 5 5"
+        <DataGrid x:Name="dgSpecies" Grid.Row="0" Grid.Column="0" Margin="20 10 5 5"
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" 
                     CanUserReorderColumns="False" CanUserResizeColumns="False"
                     CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
