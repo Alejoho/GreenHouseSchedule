@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:model="clr-namespace:SupportLayer.Models;assembly=SupportLayer"
         mc:Ignorable="d"
-        Title="Productos" Height="455" Width="975" ResizeMode="NoResize"
+        Title="Productos" Height="455" Width="965" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="663"/>
+            <ColumnDefinition Width="665"/>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
@@ -26,7 +26,7 @@
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" 
                     CanUserReorderColumns="False" CanUserResizeColumns="False"
                     CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
-                    HeadersVisibility="Column" HorizontalScrollBarVisibility="Disabled">
+                    HeadersVisibility="Column" SelectionChanged="dgProducts_SelectionChanged">
             
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
@@ -47,15 +47,16 @@
         
         <!--Variety-->
         <StackPanel Grid.Row="0" Grid.Column="1">
-            <ListBox x:Name="lstVarieties" Height="290" Margin="5 10 5 5"/>
+            <ListBox x:Name="lstVarieties" Height="290" Margin="5 10 5 5" MouseDoubleClick="lstVarieties_MouseDoubleClick"
+                     />
             <StackPanel Orientation="Horizontal" Margin="5 5 5 5">
                 <TextBox x:Name="txtNewVariety" Text="nueva variedad" Width="110"/>
-                <Button x:Name="btnAddVariety" Content="Agregar" Margin="20 0 0 0"/>
+                <Button x:Name="btnAddVariety" Content="Agregar" Margin="20 0 0 0" Click="btnAddVariety_Click"/>
             </StackPanel>
         </StackPanel>
 
         <Button Grid.Row="0" Grid.Column="2" Height="40" Width="70" Margin="5 20 0 0" VerticalAlignment="Top" 
-                HorizontalAlignment="Left" x:Name="btnRemoveVariety">
+                HorizontalAlignment="Left" x:Name="btnRemoveVariety" Click="btnRemoveVariety_Click">
             <TextBlock Text="Borrar variedad" TextWrapping="Wrap" TextAlignment="Center"/>
         </Button>
         

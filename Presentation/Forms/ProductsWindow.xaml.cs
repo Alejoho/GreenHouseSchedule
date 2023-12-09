@@ -1,4 +1,5 @@
 ﻿using Domain.Processors;
+using Microsoft.IdentityModel.Tokens;
 using SupportLayer.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,14 +12,16 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class ProductsWindow : Window, ISpeciesRequestor
 {
-    public ObservableCollection<Species> _species;
+    private ObservableCollection<Species> _species;
     private SpeciesProcessor _speciesProcessor;
+    private ProductProcessor _productProcessor;
 
     public ProductsWindow()
     {
         InitializeComponent();
         _species = new ObservableCollection<Species>();
         _speciesProcessor = new SpeciesProcessor();
+        _productProcessor = new ProductProcessor();
         LoadData();
     }
 
@@ -62,7 +65,6 @@ public partial class ProductsWindow : Window, ISpeciesRequestor
             {
                 _speciesProcessor.DeleteSpecies(species.Id);
                 _species.Remove(species);
-                //RefreshData();
             }
         }
         else
@@ -72,25 +74,65 @@ public partial class ProductsWindow : Window, ISpeciesRequestor
         }
     }
 
-    private void RefreshData()
-    {
-        dgProducts.ItemsSource = null;
-        dgProducts.ItemsSource = _species;
-    }
-
     private void LoadData()
     {
         _species = new ObservableCollection<Species>(_speciesProcessor.GetAllSpecies());
-        dgProducts.ItemsSource = null;
         dgProducts.DataContext = this;
         dgProducts.ItemsSource = _species;
+        lstVarieties.DisplayMemberPath = "Variety";
     }
 
     public void SpeciesComplete(Species model)
     {
-        //if (_species.FirstOrDefault(x => x.Id == model.Id, null) == null)
-        //{
-            _species.Add(model);
-        //}
+        _species.Add(model);
     }
+
+    private void dgProducts_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        if (dgProducts.SelectedItem is Species species)
+        {
+            lstVarieties.ItemsSource = species.Products.OrderBy(x => x.Variety);            
+        }
+    }
+
+    private void btnAddVariety_Click(object sender, RoutedEventArgs e)
+    {
+        //LATER - Create an string extension method in the SupportLayer project to check if a string is null or whitespace(this is whitespace"   ")
+        if (txtNewVariety.Text != string.Empty && dgProducts.SelectedItem is Species species)
+        {
+            Product newProduct = new Product();
+            newProduct.SpecieId = species.Id;
+            newProduct.Variety = txtNewVariety.Text;
+            newProduct.Specie = species;
+
+            _productProcessor.SaveProduct(newProduct);
+
+            species.Products.Add(newProduct);
+            
+            RefreshListBox();
+
+            txtNewVariety.Text = "";
+        }
+    }
+
+    private void RefreshListBox()
+    {
+        if (dgProducts.SelectedItem is Species species)
+        {
+            lstVarieties.ItemsSource = null;
+            lstVarieties.ItemsSource = species.Products.OrderBy(x => x.Variety);
+        }
+    }
+
+    private void btnRemoveVariety_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void lstVarieties_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+
+    }
+
+
 }
