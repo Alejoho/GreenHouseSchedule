@@ -13,6 +13,10 @@ namespace DataAccess.Repositories
         {
         }
 
+        public ProductRepository()
+        {            
+        }
+
         public IEnumerable<Product> GetAll()
         {
             return _sowScheduleDB.Products;
@@ -27,7 +31,7 @@ namespace DataAccess.Repositories
 
         public bool Remove(int pId)
         {
-                Product product = _sowScheduleDB.Products.Find(pId);
+                Product product = _sowScheduleDB.Products.Find((byte)pId);
                 _sowScheduleDB.Products.Remove(product);
                 _sowScheduleDB.SaveChanges();
                 return true;
