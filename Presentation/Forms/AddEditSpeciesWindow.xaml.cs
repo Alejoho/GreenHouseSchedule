@@ -58,6 +58,9 @@ namespace Presentation.Forms
             MessageBox.Show(_processor.Error);
         }
 
+        //TODO - I have a problem here. When a update a record if the model has an error in the
+        //validateDataType it launches the error mesagge. The record isn,t save to the 
+        //database but the model link to the datagrid changes.
         private bool ValidateDataType()
         {
             _model.Name = lbltxtName.FieldContent;

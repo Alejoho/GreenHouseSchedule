@@ -70,6 +70,7 @@ public class OrganizationProcessor
         return _repository.GetAll().OrderBy(x => x.Name);
     }
 
+    //LATER - Create this method for all of the processors despite whether I use it
     public IEnumerable<Organization> GetFilteredOrganizations(string filter)
     {
         _repository = new OrganizationRepository();
