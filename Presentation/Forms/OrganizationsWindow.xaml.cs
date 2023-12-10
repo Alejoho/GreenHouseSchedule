@@ -85,7 +85,7 @@ public partial class OrganizationsWindow : Window
     //LATER - este boton tiene un textblock dentro de el, el area de hacer click es el del boton mas el de el textblock el cual sobresale del boton. arreglar este detalle.
     private void btnAddMunicipality_Click(object sender, RoutedEventArgs e)
     {
-        ValidateDataType(_municipalityModel);
+        ValidateDataType();
 
         if (_municipalityProcessor.SaveMunicipality(_municipalityModel) == true)
         {
@@ -134,7 +134,8 @@ public partial class OrganizationsWindow : Window
         }
         else
         {
-            MessageBox.Show("Debe seleccionar el registro que desea editar.");
+            MessageBox.Show("Debe seleccionar el registro que desea editar."
+                , "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 
@@ -195,7 +196,8 @@ public partial class OrganizationsWindow : Window
         }
         else
         {
-            MessageBox.Show("Debe seleccionar el registro que desea editar.");
+            MessageBox.Show("Debe seleccionar el registro que desea editar."
+                , "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 
@@ -204,11 +206,12 @@ public partial class OrganizationsWindow : Window
         MessageBox.Show(_municipalityProcessor.Error);
     }
 
-    private void ValidateDataType(Municipality model)
+    //LATER - think If I have to change the name of this method to something else clearer
+    private void ValidateDataType()
     {
-        model.Name = txtMunicipality.Text;
+        _municipalityModel.Name = txtMunicipality.Text;
 
-        model.ProvinceId = cmbProvince.SelectedItem != null ?
+        _municipalityModel.ProvinceId = cmbProvince.SelectedItem != null ?
             ((Province)cmbProvince.SelectedItem).Id :
             (byte)0;
     }
