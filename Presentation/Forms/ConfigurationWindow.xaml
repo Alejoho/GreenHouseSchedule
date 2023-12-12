@@ -15,25 +15,41 @@
 
         <StackPanel Grid.Row="0" HorizontalAlignment="Center">
             <custom:TextBoxWithLabel FieldLabel="Días de retroceso" HorizontalAlignment="Right" Margin="0 10 0 0"
-                                     x:Name="lbltxtRegressionDays"/>
+                                     x:Name="lbltxtRegressionDays" IsTipVisible="Visible"
+    Tip="Cantidad de días que se va a regresar a partir del día presente para comenzar a llenar el semillero."/>
+            
             <custom:TextBoxWithLabel FieldLabel="Potencial de siembra diario" HorizontalAlignment="Right" 
-                                     x:Name="lbltxtDailySowingPotential"/>
+                                     x:Name="lbltxtDailySowingPotential" IsTipVisible="Visible"
+    Tip="Cantidad de bandejas que se pueden sembrar en un día."/>
+            
+            <custom:TextBoxWithLabel FieldLabel="Siembra diaria mínima" HorizontalAlignment="Right" 
+                                     x:Name="lbltxtMinimumLimitOfSowPerDay" IsTipVisible="Visible"
+    Tip="Cantidad de bandejas mínima para sembrar en un día."/>
+
             <custom:TextBoxWithLabel FieldLabel="Bandejas mínima de una locación" HorizontalAlignment="Right" 
-                                     x:Name="lbltxtLocationMinimumSeedTray"/>
+                                     x:Name="lbltxtLocationMinimumSeedTray" IsTipVisible="Visible"
+    Tip="Cantidad de bandejas mínima para una locación."/>
+
             <custom:TextBoxWithLabel FieldLabel="Multiplicador de posturas" HorizontalAlignment="Right" 
-                                     x:Name="lbltxtSeedlingMultiplier"/>
+                                     x:Name="lbltxtSeedlingMultiplier" IsTipVisible="Visible"
+    Tip="Multiplicador para determinar las posturas adicionales que necesita el cliente teniendo en cuenta la supervivencia en el campo."/>
+               
             <custom:TextBoxWithLabel FieldLabel="Rango de muestra de siembra" HorizontalAlignment="Right" 
-                                     x:Name="lbltxtSowShowRange"/>
+                                     x:Name="lbltxtSowShowRange" IsTipVisible="Visible"
+    Tip="Cantidad de días a partir del día presente que desea que se muestren las siembras pendientes."/>
+          
             <custom:TextBoxWithLabel FieldLabel="Rango de muestra de entregas" HorizontalAlignment="Right" 
-                                     x:Name="lbltxtDeliveryShowRange"/>
-            <Button x:Name="btnOrganization" Content="Organizaciones" Height="40" Width="210" Margin="0 20 0 0"/>
+                                     x:Name="lbltxtDeliveryShowRange" IsTipVisible="Visible"
+    Tip="Cantidad de días a partir del día presente que desea que se muestren las entregas pendientes."/>
+            
+            <Button x:Name="btnOrganization" Content="Organizaciones" Height="40" Width="210" Margin="0 20 0 0" Click="btnOrganization_Click"/>
 
         </StackPanel>
 
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
-            <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0"/>
-            <Button x:Name="btnBack" Content="Atrás" Width="80"/>
+            <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0" Click="btnSave_Click"/>
+            <Button x:Name="btnBack" Content="Atrás" Width="80" Click="btnBack_Click"/>
         </StackPanel>
     </Grid>
 </Window>
