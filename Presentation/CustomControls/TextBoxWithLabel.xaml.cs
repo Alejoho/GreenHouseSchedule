@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Presentation.CustomControls
 {
@@ -24,6 +12,7 @@ namespace Presentation.CustomControls
         private string _fieldLabel;
         private string _fieldContent;
         private string _Tip;
+        private Visibility _isTipVisible = Visibility.Collapsed;
 
         public TextBoxWithLabel()
         {
@@ -32,9 +21,13 @@ namespace Presentation.CustomControls
         }
 
         public string FieldLabel { get => _fieldLabel; set => _fieldLabel = value; }
-        public string FieldContent { get => _fieldContent; 
-            set => _fieldContent = value; }
-        public string Tip { get; set; }
+        public string FieldContent
+        {
+            get => _fieldContent;
+            set => _fieldContent = value;
+        }
+        public string Tip { get => _Tip; set => _Tip = value; }
+        public Visibility IsTipVisible { get => _isTipVisible; set => _isTipVisible = value; }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

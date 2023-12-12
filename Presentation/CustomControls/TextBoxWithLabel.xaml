@@ -13,7 +13,7 @@
                  HorizontalAlignment="Stretch" Padding="5 0 0 0" Margin="0 3" DockPanel.Dock="Right"
                  Width="150" x:Name="TextBox" TextChanged="TextBox_TextChanged">
                 <TextBox.ToolTip>
-                    <ToolTip>
+                    <ToolTip Visibility="{Binding IsTipVisible}">
                         <TextBlock Text="{Binding Tip}" TextWrapping="Wrap" Width="150"
                                    TextAlignment="Left"/>
                     </ToolTip>
