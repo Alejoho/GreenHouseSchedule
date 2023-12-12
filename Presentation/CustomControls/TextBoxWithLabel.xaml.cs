@@ -23,6 +23,7 @@ namespace Presentation.CustomControls
         public event TextChangedEventHandler TextChanged;
         private string _fieldLabel;
         private string _fieldContent;
+        private string _Tip;
 
         public TextBoxWithLabel()
         {
@@ -33,6 +34,7 @@ namespace Presentation.CustomControls
         public string FieldLabel { get => _fieldLabel; set => _fieldLabel = value; }
         public string FieldContent { get => _fieldContent; 
             set => _fieldContent = value; }
+        public string Tip { get; set; }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

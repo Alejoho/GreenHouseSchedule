@@ -11,11 +11,25 @@
 
             <TextBox Text="{Binding Path=FieldContent}" VerticalContentAlignment="Center"
                  HorizontalAlignment="Stretch" Padding="5 0 0 0" Margin="0 3" DockPanel.Dock="Right"
-                 Width="150" x:Name="TextBox" TextChanged="TextBox_TextChanged"/>
+                 Width="150" x:Name="TextBox" TextChanged="TextBox_TextChanged">
+                <TextBox.ToolTip>
+                    <ToolTip>
+                        <TextBlock Text="{Binding Tip}" TextWrapping="Wrap" Width="150"
+                                   TextAlignment="Left"/>
+                    </ToolTip>
+                </TextBox.ToolTip>
+            </TextBox>
 
             <TextBlock Text="{Binding Path=FieldLabel}" VerticalAlignment="Center" 
                 Margin="0 0 5 0" DockPanel.Dock="Right" HorizontalAlignment="Right" x:Name="Label"
-                       TextAlignment="Right"/>
+                       TextAlignment="Right">
+                <TextBlock.ToolTip>
+                    <ToolTip>
+                        <TextBlock Text="{Binding Tip}" TextWrapping="Wrap" Width="150"
+                                   TextAlignment="Left"/>
+                    </ToolTip>
+                </TextBlock.ToolTip>
+            </TextBlock>
         </DockPanel>
     </Grid>
 </UserControl>
