@@ -1,5 +1,6 @@
 using DataAccess.Repositories;
 using Domain.Models;
+using SupportLayer;
 using System.Collections;
 using System.Configuration;
 
@@ -44,13 +45,13 @@ namespace Domain
             //OrderModel minee= new OrderModel();
 
             int daysToMoveBack;
-            int.TryParse(ConfigurationManager.AppSettings["DaysToMoveBack"], out daysToMoveBack);
+            int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.RegressionDays], out daysToMoveBack);
             _iteratorDate = DateTime.Now.AddDays(daysToMoveBack); 
 
             _presentDate = DateTime.Now;
 
             int seedTraysPerDay;
-            int.TryParse(ConfigurationManager.AppSettings["SeedTraysPerDay"], out seedTraysPerDay);
+            int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.DailySowingPotential], out seedTraysPerDay);
             _amountOfSowSeedTrayPerDay = seedTraysPerDay; 
 
             _greenHouseRepository = new GreenHouseRepository();
