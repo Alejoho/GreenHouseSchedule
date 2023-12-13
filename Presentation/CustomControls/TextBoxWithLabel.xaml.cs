@@ -12,7 +12,7 @@ namespace Presentation.CustomControls
         private string _fieldLabel;
         private string _fieldContent;
         private string _Tip;
-        private Visibility _isTipVisible = Visibility.Collapsed;
+        private Visibility _tipVisibility = Visibility.Collapsed;
 
         public TextBoxWithLabel()
         {
@@ -27,7 +27,7 @@ namespace Presentation.CustomControls
             set => _fieldContent = value;
         }
         public string Tip { get => _Tip; set => _Tip = value; }
-        public Visibility IsTipVisible { get => _isTipVisible; set => _isTipVisible = value; }
+        public Visibility TipVisibility { get => _tipVisibility; set => _tipVisibility = value; }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
