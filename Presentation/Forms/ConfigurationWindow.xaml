@@ -34,7 +34,7 @@
                                      x:Name="lbltxtSeedlingMultiplier" TipVisibility="Visible"
     Tip="Multiplicador para determinar las posturas adicionales que necesita el cliente teniendo en cuenta la supervivencia en el campo."/>
                
-            <custom:TextBoxWithLabel FieldLabel="Rango de muestra de siembra" HorizontalAlignment="Right" 
+            <custom:TextBoxWithLabel FieldLabel="Rango de muestra de siembras" HorizontalAlignment="Right" 
                                      x:Name="lbltxtSowShowRange" TipVisibility="Visible"
     Tip="Cantidad de días a partir del día presente que desea que se muestren las siembras pendientes."/>
           

@@ -1,4 +1,5 @@
-﻿using SupportLayer;
+﻿using Domain;
+using SupportLayer;
 using System.Configuration;
 using System.Windows;
 
@@ -9,9 +10,11 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class ConfigurationWindow : Window
 {
+    Configurations _model;
     public ConfigurationWindow()
     {
         InitializeComponent();
+        //_model = new Configurations();
         LoadData();
     }
 
@@ -47,10 +50,10 @@ public partial class ConfigurationWindow : Window
     }
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
-    {
-        //NEXT - Do the logic to save the configurations
+    {        
         if (ValidateDataType() == true)
         {
+            //NEXT - Move this logic to a processor in the Domain layer
             ConfigurationManager.AppSettings[ConfigurationNames.RegressionDays] =
                 lbltxtRegressionDays.FieldContent;
             ConfigurationManager.AppSettings[ConfigurationNames.DailySowingPotential] =
@@ -76,29 +79,85 @@ public partial class ConfigurationWindow : Window
 
     private bool ValidateDataType()
     {
-        bool output = true;
+        _model = new Configurations();
 
-        output = int.TryParse(lbltxtRegressionDays.FieldContent, out int C1) == false ?
-            false : output;
+        if (int.TryParse(lbltxtRegressionDays.FieldContent, 
+            out int regressionDays) == true)
+        {
+            _model.RegressionDays = regressionDays;
+        }
+        else
+        {
+            MessageBox.Show("Días de retroceso inválido");
+            return false;
+        }      
 
-        output = int.TryParse(lbltxtDailySowingPotential.FieldContent, out int C2) == false ?
-            false : output;
+        if(int.TryParse(lbltxtDailySowingPotential.FieldContent, 
+            out int dailySowingPotential) == true)
+        {
+            _model.DailySowingPotential = dailySowingPotential;
+        }
+        else
+        {
+            MessageBox.Show("Potencial de siembra diario inválido");
+            return false;
+        }
 
-        output = int.TryParse(lbltxtMinimumLimitOfSowPerDay.FieldContent, out int C3) == false ?
-            false : output;
+        if(int.TryParse(lbltxtMinimumLimitOfSowPerDay.FieldContent, 
+            out int minimumLimitOfSowPerDay) == true)
+        {
+            _model.MinimumLimitOfSowPerDay = minimumLimitOfSowPerDay;
+        }
+        else
+        {
+            MessageBox.Show("Siembra diaria mínima inválida");
+            return false;
+        }
 
-        output = int.TryParse(lbltxtLocationMinimumSeedTray.FieldContent, out int C4) == false ?
-            false : output;
+        if(int.TryParse(lbltxtLocationMinimumSeedTray.FieldContent, 
+            out int locationMinimumSeedTray) == true)
+        {
+            _model.LocationMinimumSeedTray = locationMinimumSeedTray;
+        }
+        else
+        {
+            MessageBox.Show("Bandejas mínimas de una locación inválida");
+            return false;
+        }
 
-        output = double.TryParse(lbltxtSeedlingMultiplier.FieldContent, out double C5) == false ?
-            false : output;
+        if(double.TryParse(lbltxtSeedlingMultiplier.FieldContent, 
+            out double seedlingMultiplier) == true)
+        {
+            _model.SeedlingMultiplier = seedlingMultiplier;
+        }
+        else
+        {
+            MessageBox.Show("Multiplicador de posturas inválido");
+            return false;
+        }
 
-        output = int.TryParse(lbltxtSowShowRange.FieldContent, out int C6) == false ?
-            false : output;
+        if(int.TryParse(lbltxtSowShowRange.FieldContent, 
+            out int sowShowRange) == true)
+        {
+            _model.SowShowRange = sowShowRange;
+        }
+        else
+        {
+            MessageBox.Show("Rango de muestra de siembra inválido");
+            return false;
+        }
 
-        output = int.TryParse(lbltxtDeliveryShowRange.FieldContent, out int C7) == false ?
-            false : output;
+        if (int.TryParse(lbltxtDeliveryShowRange.FieldContent,
+            out int deliveryShowRange) == true)
+        {
+            _model.SowShowRange = deliveryShowRange;
+        }
+        else
+        {
+            MessageBox.Show("Rango de muestra de entregas inválido");
+            return false;
+        }
 
-        return output;
+        return true;
     }
 }
