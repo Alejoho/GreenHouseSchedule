@@ -1,5 +1,7 @@
 ﻿using Domain;
+using Domain.Processors;
 using SupportLayer;
+using System;
 using System.Configuration;
 using System.Windows;
 
@@ -10,10 +12,12 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class ConfigurationWindow : Window
 {
+    ConfigurationProcessor _processor;
     Configurations _model;
     public ConfigurationWindow()
     {
         InitializeComponent();
+        _processor = new ConfigurationProcessor();
         //_model = new Configurations();
         LoadData();
     }
@@ -54,27 +58,21 @@ public partial class ConfigurationWindow : Window
         if (ValidateDataType() == true)
         {
             //NEXT - Move this logic to a processor in the Domain layer
-            ConfigurationManager.AppSettings[ConfigurationNames.RegressionDays] =
-                lbltxtRegressionDays.FieldContent;
-            ConfigurationManager.AppSettings[ConfigurationNames.DailySowingPotential] =
-                lbltxtDailySowingPotential.FieldContent;
-            ConfigurationManager.AppSettings[ConfigurationNames.MinimumLimitOfSowPerDay] =
-                lbltxtMinimumLimitOfSowPerDay.FieldContent;
-            ConfigurationManager.AppSettings[ConfigurationNames.LocationMinimumSeedTray] =
-                lbltxtLocationMinimumSeedTray.FieldContent;
-            ConfigurationManager.AppSettings[ConfigurationNames.SeedlingMultiplier] =
-                lbltxtSeedlingMultiplier.FieldContent;
-            ConfigurationManager.AppSettings[ConfigurationNames.SowShowRange] =
-                lbltxtSowShowRange.FieldContent;
-            ConfigurationManager.AppSettings[ConfigurationNames.DeliveryShowRange] =
-                lbltxtDeliveryShowRange.FieldContent;            
-            this.Close();
+            if(_processor.SaveConfigurations(_model) == true)
+            {
+                MessageBox.Show("Registro salvado");
+                this.Close();
+            }
+            else
+            {
+                ShowError();
+            }            
         }
-        else
-        {
-            MessageBox.Show("Algunas de las configuraciones es invalida. Revíselas");
-        }
+    }
 
+    private void ShowError()
+    {
+        MessageBox.Show(_processor.Error);
     }
 
     private bool ValidateDataType()
@@ -150,7 +148,7 @@ public partial class ConfigurationWindow : Window
         if (int.TryParse(lbltxtDeliveryShowRange.FieldContent,
             out int deliveryShowRange) == true)
         {
-            _model.SowShowRange = deliveryShowRange;
+            _model.DeliveryShowRange = deliveryShowRange;
         }
         else
         {
