@@ -42,6 +42,11 @@ public partial class ClientsWindow : Window
         EditClient();
     }
 
+    private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        EditClient();
+    }
+
     //private void dgClients_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     //{
     //    EditClient();
@@ -99,22 +104,5 @@ public partial class ClientsWindow : Window
         {
             MessageBox.Show("Debe seleccionar el registro que desea editar.");
         }
-    }
-
-    private void Expander_Process(object sender, RoutedEventArgs e)
-    {
-        if (sender is Expander expander)
-        {
-            var row = DataGridRow.GetRowContainingElement(expander);
-
-            row.DetailsVisibility = expander.IsExpanded ? Visibility.Visible
-                                                        : Visibility.Collapsed;
-
-        }
-    }
-
-    private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-    {
-        MessageBox.Show("ahora si soy yo");
     }
 }
