@@ -12,6 +12,7 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class ConfigurationWindow : Window
 {
+    //NEXT - this window is reading from the config file but is not writing to it. Fix this behavior.
     ConfigurationProcessor _processor;
     Configurations _model;
     public ConfigurationWindow()
@@ -24,6 +25,7 @@ public partial class ConfigurationWindow : Window
 
     private void LoadData()
     {
+        //NEXT - Move this code to the processor
         lbltxtRegressionDays.FieldContent = ConfigurationManager
             .AppSettings[ConfigurationNames.RegressionDays] ?? "null";
         lbltxtDailySowingPotential.FieldContent = ConfigurationManager
@@ -44,6 +46,7 @@ public partial class ConfigurationWindow : Window
     //but in code it's named btnCanel. Changed its name to btnBack.
     private void btnBack_Click(object sender, RoutedEventArgs e)
     {
+        //string algo = _processor.GetUserSettingsDirectory();
         this.Close();
     }
 
@@ -56,8 +59,7 @@ public partial class ConfigurationWindow : Window
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {        
         if (ValidateDataType() == true)
-        {
-            //NEXT - Move this logic to a processor in the Domain layer
+        {            
             if(_processor.SaveConfigurations(_model) == true)
             {
                 MessageBox.Show("Registro salvado");
