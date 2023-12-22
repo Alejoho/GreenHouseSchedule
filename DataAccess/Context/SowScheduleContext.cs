@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Proxies;
+﻿using Microsoft.EntityFrameworkCore;
 using SupportLayer.Models;
+using System.Configuration;
 
 namespace DataAccess.Context;
 
@@ -259,4 +256,16 @@ public partial class SowScheduleContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        base.ConfigureConventions(configurationBuilder);
+
+        configurationBuilder.Properties<DateOnly>()
+            .HaveConversion<DateOnlyConverter, DateOnlyComparer>()
+            .HaveColumnType("date");
+
+        configurationBuilder.Properties<TimeOnly>()
+            .HaveConversion<TimeOnlyConverter, TimeOnlyComparer>();
+    }
 }
