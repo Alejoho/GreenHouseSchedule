@@ -31,7 +31,7 @@ namespace DataAccess.Repositories
 
         public bool Remove(int pId)
         {
-                Order order = _sowScheduleDB.Orders.Find(pId);
+                Order order = _sowScheduleDB.Orders.Find((short)pId);
                 _sowScheduleDB.Orders.Remove(order);
                 _sowScheduleDB.SaveChanges();
                 return true;

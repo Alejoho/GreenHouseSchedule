@@ -12,7 +12,7 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class ConfigurationWindow : Window
 {
-    //NEXT - this window is reading from the config file but is not writing to it. Fix this behavior.
+    //EXT - this window is reading from the config file but is not writing to it. Fix this behavior.
     ConfigurationProcessor _processor;
     Configurations _model;
     public ConfigurationWindow()
@@ -25,7 +25,7 @@ public partial class ConfigurationWindow : Window
 
     private void LoadData()
     {
-        //NEXT - Move this code to the processor
+        //EXT - Move this code to the processor
         lbltxtRegressionDays.FieldContent = ConfigurationManager
             .AppSettings[ConfigurationNames.RegressionDays] ?? "null";
         lbltxtDailySowingPotential.FieldContent = ConfigurationManager

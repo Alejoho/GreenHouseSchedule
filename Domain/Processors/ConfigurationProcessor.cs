@@ -46,7 +46,7 @@ namespace Domain.Processors
 
                 //Configuration config = ConfigurationManager
                 //.OpenExeConfiguration(UserSettingsDirectory);
-                //NEXT - Object not set to an instance of an object
+                //EXT - Object not set to an instance of an object
                 string algo = config.AppSettings.Settings["RegressionDaysq"].Value;
                 //config.AppSettings.Settings["RegressionDaysq"].Value = 
                 //    model.RegressionDays.ToString();

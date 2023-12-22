@@ -7,6 +7,9 @@
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
         Title="Lista de órdenes" Height="450" Width="800">
+    <!--<Window.DataContext>
+        <local:OrderListWindow/>
+    </Window.DataContext>-->
 
     <Grid>
         <Grid.RowDefinitions>
@@ -25,6 +28,7 @@
             
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Cliente" Binding="{Binding Client.Name}"/>
                 <DataGridTextColumn Header="Posturas pedidas" Binding="{Binding AmountofWishedSeedlings}"/>
                 <DataGridTextColumn Header="Posturas calculadas" Binding="{Binding AmountofAlgorithmSeedlings}"/>
                 <DataGridTextColumn Header="Fecha requerida" Binding="{Binding WishDate}"/>
