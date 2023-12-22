@@ -14,9 +14,9 @@ namespace Domain.Models
         private readonly int _orderID;
         private int _seedTrayAmount;
         private readonly int _seedlingAmount;
-        private DateTime? _sowDate;
-        private DateTime? _estimateDeliveryDate;
-        private DateTime? _realDeliveryDate;
+        private DateOnly? _sowDate;
+        private DateOnly? _estimateDeliveryDate;
+        private DateOnly? _realDeliveryDate;
         private List<DeliveryDetailModel> _deliveryDetails;
         private bool _sown;
 
@@ -33,7 +33,7 @@ namespace Domain.Models
         /// <param name="pEstimateDeliveryDate">The estimate date on which this order location is delivered.</param>
         /// <param name="pRealDeliveryDate">The real date on which this order location is delivered.</param>
         /// <param name="pSown">This indicates whether this order location is sown.</param>
-        public OrderLocationModel(int pID, int pGreenHouse, int pSeedTrayType, int pOrderID, int pSeedTrayAmount, int pSeedlingAmount, DateTime? pSowDate, DateTime? pEstimateDeliveryDate, DateTime? pRealDeliveryDate, bool pSown)
+        public OrderLocationModel(int pID, int pGreenHouse, int pSeedTrayType, int pOrderID, int pSeedTrayAmount, int pSeedlingAmount, DateOnly? pSowDate, DateOnly? pEstimateDeliveryDate, DateOnly? pRealDeliveryDate, bool pSown)
         {
             _ID = pID;
             _greenHouse = pGreenHouse;
@@ -133,17 +133,17 @@ namespace Domain.Models
         /// <value>
         /// Gets or sets the date on which this order location is sown.
         /// </value>
-        public DateTime? SowDate { get => _sowDate; set => _sowDate = value; }
+        public DateOnly? SowDate { get => _sowDate; set => _sowDate = value; }
 
         /// <value>
         /// Gets or sets the estimate date on which this order location is delivered.
         /// </value>
-        public DateTime? EstimateDeliveryDate { get => _estimateDeliveryDate; set => _estimateDeliveryDate = value; }
+        public DateOnly? EstimateDeliveryDate { get => _estimateDeliveryDate; set => _estimateDeliveryDate = value; }
 
         /// <value>
         /// Gets or sets the real date on which this order location is delivered.
         /// </value>
-        public DateTime? RealDeliveryDate { get => _realDeliveryDate; set => _realDeliveryDate = value; }
+        public DateOnly? RealDeliveryDate { get => _realDeliveryDate; set => _realDeliveryDate = value; }
 
         /// <value>
         /// Gets or sets the <c>List</c> of delivery detatils that belongs to this order location.

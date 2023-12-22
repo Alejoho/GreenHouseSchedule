@@ -15,17 +15,17 @@ public partial class Order
 
     public int AmountofAlgorithmSeedlings { get; set; }
 
-    public DateTime WishDate { get; set; }
+    public DateOnly WishDate { get; set; }
 
-    public DateTime DateOfRequest { get; set; }
+    public DateOnly DateOfRequest { get; set; }
 
-    public DateTime EstimateSowDate { get; set; }
+    public DateOnly EstimateSowDate { get; set; }
 
-    public DateTime EstimateDeliveryDate { get; set; }
+    public DateOnly EstimateDeliveryDate { get; set; }
 
-    public DateTime? RealSowDate { get; set; }
+    public DateOnly? RealSowDate { get; set; }
 
-    public DateTime? RealDeliveryDate { get; set; }
+    public DateOnly? RealDeliveryDate { get; set; }
 
     public bool Complete { get; set; }
 

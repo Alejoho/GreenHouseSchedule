@@ -18,11 +18,11 @@ namespace Domain.Models
         private readonly ClientModel _client;
         private readonly ProductModel _product;
         private int _seedlingAmount;
-        private readonly DateTime _requestDate;
-        private readonly DateTime? _estimateSowDate;
-        private readonly DateTime? _estimateDeliveryDate;
-        private DateTime? _realSowDate;
-        private DateTime? _realDeliveryDate;
+        private readonly DateOnly _requestDate;
+        private readonly DateOnly? _estimateSowDate;
+        private readonly DateOnly? _estimateDeliveryDate;
+        private DateOnly? _realSowDate;
+        private DateOnly? _realDeliveryDate;
         private LinkedList<OrderLocationModel> _orderLocations;
         private bool _complete;
 
@@ -39,7 +39,7 @@ namespace Domain.Models
         /// <param name="pRealSowDate">The real date on which the order is started to sow.</param>
         /// <param name="pRealDeliveryDate">The real date on which the order is started to deliver.</param>
         /// <param name="pSown">This indicates whether this order is completely sown.</param>
-        public OrderModel(int pID, ClientModel pClient, ProductModel pProduct, int pSeedlingAmount, DateTime pRequestDate, DateTime pEstimateSowDate, DateTime pEstimateDeliveryDate, DateTime? pRealSowDate, DateTime? pRealDeliveryDate,bool pComplete)
+        public OrderModel(int pID, ClientModel pClient, ProductModel pProduct, int pSeedlingAmount, DateOnly pRequestDate, DateOnly pEstimateSowDate, DateOnly pEstimateDeliveryDate, DateOnly? pRealSowDate, DateOnly? pRealDeliveryDate,bool pComplete)
         {
             _ID = pID;
             _client = pClient;
@@ -101,27 +101,27 @@ namespace Domain.Models
         /// <value>
         /// Gets the date on which this order is made up.
         /// </value>
-        public DateTime RequestDate => _requestDate;
+        public DateOnly RequestDate => _requestDate;
 
         /// <value>
         /// Gets the estimate date on which the order must be sown.
         /// </value>
-        public DateTime? EstimateSowDate => _estimateSowDate;
+        public DateOnly? EstimateSowDate => _estimateSowDate;
 
         /// <value>
         /// Gets estimate date on which the order must be delivered.
         /// </value>
-        public DateTime? EstimateDeliveryDate => _estimateDeliveryDate;
+        public DateOnly? EstimateDeliveryDate => _estimateDeliveryDate;
 
         /// <value>
         /// Gets the real date on which the order is started to sow.
         /// </value>
-        public DateTime? RealSowDate { get => _realSowDate; set => _realSowDate = value; }
+        public DateOnly? RealSowDate { get => _realSowDate; set => _realSowDate = value; }
 
         /// <value>
         /// Gets the real date on which the order is started to deliver.
         /// </value>
-        public DateTime? RealDeliveryDate { get => _realDeliveryDate; set => _realDeliveryDate = value; }
+        public DateOnly? RealDeliveryDate { get => _realDeliveryDate; set => _realDeliveryDate = value; }
 
         /// <value>
         /// Gets or sets the <c>Linkedlist</c> of order locations that belongs to this order.

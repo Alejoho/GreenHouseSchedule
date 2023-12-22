@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using DataAccess;
 using DataAccess.Repositories;
 using FluentAssertions;
 using Moq;
@@ -106,7 +105,7 @@ public class OrderLocationRepositoryTests
     public Faker<OrderLocation> GetFaker()
     {
         short[] alveolus = new short[] { 0, 160, 260, 264, 180, 150, 260, 264 };
-        short[] productionDays = new short[] { 30,45};
+        short[] productionDays = new short[] { 30, 45 };
         short index = 1;
         return new Faker<OrderLocation>()
             .RuleFor(x => x.Id, f => index++)
@@ -115,7 +114,12 @@ public class OrderLocationRepositoryTests
             .RuleFor(x => x.OrderId, f => f.Random.Short(1, 500))
             .RuleFor(x => x.SeedTrayAmount, f => f.Random.Short(200, 750))
             .RuleFor(x => x.SeedlingAmount, (f, u) => u.SeedTrayAmount * alveolus[u.SeedTrayId])
-            .RuleFor(x => x.SowDate, f => f.Date.Between(new DateTime(2023,1,1), new DateTime(2023, 12, 31)))
+            .RuleFor(x => x.SowDate, f =>
+                DateOnly.FromDateTime(
+                    f.Date.Between(new DateTime(2023, 1, 1),
+                        new DateTime(2023, 12, 31))
+                    )
+                )
             .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.SowDate)
             .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);
     }

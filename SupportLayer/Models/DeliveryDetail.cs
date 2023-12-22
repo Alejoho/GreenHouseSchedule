@@ -9,7 +9,7 @@ public partial class DeliveryDetail
 
     public int BlockId { get; set; }
 
-    public DateTime DeliveryDate { get; set; }
+    public DateOnly DeliveryDate { get; set; }
 
     public short SeedTrayAmountDelivered { get; set; }
 

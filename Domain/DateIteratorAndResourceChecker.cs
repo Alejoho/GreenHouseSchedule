@@ -392,7 +392,7 @@ namespace Domain
         {
             bool output = false;
 
-            DateTime limitDate = SeedBedStatus.IteratorDate.AddDays(_orderInProcess.Product.ProductionInterval);
+            DateOnly limitDate = SeedBedStatus.IteratorDate.AddDays(_orderInProcess.Product.ProductionInterval);
 
             foreach (SeedTrayPermutation seedTrayPermutation in _seedTrayPermutations)
             {

@@ -13,8 +13,8 @@ namespace Domain
     public class SeedBedStatus
     {
         #region Fields      
-        private DateTime _iteratorDate;
-        private DateTime _presentDate;
+        private DateOnly _iteratorDate;
+        private DateOnly _presentDate;
         private List<GreenHouseModel> _greenHouses;
         private List<SeedTrayModel> _seedTrays;
         private LinkedList<OrderModel> _orders;
@@ -46,9 +46,9 @@ namespace Domain
 
             int daysToMoveBack;
             int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.RegressionDays], out daysToMoveBack);
-            _iteratorDate = DateTime.Now.AddDays(daysToMoveBack); 
-
-            _presentDate = DateTime.Now;
+            _iteratorDate = DateOnly.FromDateTime(DateTime.Now.AddDays(daysToMoveBack)); 
+            
+            _presentDate = DateOnly.FromDateTime(DateTime.Now);
 
             int seedTraysPerDay;
             int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.DailySowingPotential], out seedTraysPerDay);
@@ -585,12 +585,12 @@ namespace Domain
         /// <value>
         /// Gets or sets the date on which the algorithm is iterating right now.
         /// </value>
-        public DateTime IteratorDate { get => _iteratorDate; internal set => _iteratorDate = value; }
+        public DateOnly IteratorDate { get => _iteratorDate; internal set => _iteratorDate = value; }
 
         /// <value>
         /// Gets or sets the present date.
         /// </value>
-        public DateTime PresentDate { get => _presentDate; internal set => _presentDate = value; }
+        public DateOnly PresentDate { get => _presentDate; internal set => _presentDate = value; }
 
         /// <value>
         /// Gets or sets the list of greenhouses.

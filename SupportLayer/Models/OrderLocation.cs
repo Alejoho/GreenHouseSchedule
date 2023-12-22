@@ -17,11 +17,11 @@ public partial class OrderLocation
 
     public int SeedlingAmount { get; set; }
 
-    public DateTime? SowDate { get; set; }
+    public DateOnly? SowDate { get; set; }
 
-    public DateTime? EstimateDeliveryDate { get; set; }
+    public DateOnly? EstimateDeliveryDate { get; set; }
 
-    public DateTime? RealDeliveryDate { get; set; }
+    public DateOnly? RealDeliveryDate { get; set; }
 
     public virtual ICollection<Block> Blocks { get; set; } = new List<Block>();
 

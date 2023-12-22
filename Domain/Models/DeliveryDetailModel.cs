@@ -7,7 +7,7 @@ namespace Domain.Models
     {
         private readonly long _ID;
         private readonly int _orderLocationID;
-        private readonly DateTime _deliveryDate;
+        private readonly DateOnly _deliveryDate;
         private readonly int _seedTrayAmountDelivered;
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace Domain.Models
         /// <param name="pOrderLocationID">The single ID of the order location to wich the delivery belongs.</param>
         /// <param name="pDeliveryDate">The real date on wich the delivery it is done.</param>
         /// <param name="pSeedTrayAmountDelivered">The amount of seedtrays delivered.</param>
-        public DeliveryDetailModel(long pID, int pOrderLocationID, DateTime pDeliveryDate, int pSeedTrayAmountDelivered)
+        public DeliveryDetailModel(long pID, int pOrderLocationID, DateOnly pDeliveryDate, int pSeedTrayAmountDelivered)
         {
             _ID = pID;
             _orderLocationID = pOrderLocationID;
@@ -41,7 +41,7 @@ namespace Domain.Models
 
         public int OrderLocationID => _orderLocationID;
 
-        public DateTime DeliveryDate => _deliveryDate;
+        public DateOnly DeliveryDate => _deliveryDate;
 
         public int SeedTrayAmountDelivered => _seedTrayAmountDelivered;
     }

@@ -102,13 +102,14 @@ public class DeliveryDetailsRepositoryTests
 
     public Faker<DeliveryDetail> GetFaker()
     {
-        DateTime starDate = new DateTime(2023, 1, 1);
+        DateTime startDate = new DateTime(2023, 1, 1);
         DateTime endDate = new DateTime(2023, 12, 31);
         int index = 1;
         return new Faker<DeliveryDetail>()
             .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.BlockId, f => f.Random.Int(1, 200))
-            .RuleFor(x => x.DeliveryDate, f => f.Date.Between(starDate, endDate))
+            .RuleFor(x => x.DeliveryDate, f => 
+                DateOnly.FromDateTime(f.Date.Between(startDate, endDate)))
             .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(1, 1000));
     }
 }
