@@ -12,7 +12,7 @@ public partial class OrderListWindow : Window
 {
     public ObservableCollection<Order> _orders;
     private OrderProcessor _processor;
-    //NEXT - Load the data to the dgOrderList
+    //NEXT - Create the row detail to show in each order their order locations
     public OrderListWindow()
     {
         InitializeComponent();
@@ -42,7 +42,7 @@ public partial class OrderListWindow : Window
                 , "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
-
+    //NEXT - Look a way to show the time date in this format "05/15/2023"
     private void LoadData()
     {
         _orders = new ObservableCollection<Order>(_processor.GetAllOrders());
