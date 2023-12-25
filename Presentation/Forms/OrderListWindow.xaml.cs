@@ -2,6 +2,7 @@
 using SupportLayer.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Presentation.Forms;
 
@@ -10,6 +11,7 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class OrderListWindow : Window
 {
+    //LATER - Add HeadersVisibility="Column" to the datagrids across the board
     public ObservableCollection<Order> _orders;
     private OrderProcessor _processor;
     //NEXT - Create the row detail to show in each order their order locations
@@ -42,11 +44,19 @@ public partial class OrderListWindow : Window
                 , "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
-    //NEXT - Look a way to show the time date in this format "05/15/2023"
+
     private void LoadData()
     {
         _orders = new ObservableCollection<Order>(_processor.GetAllOrders());
         dgOrderList.DataContext = this;
         dgOrderList.ItemsSource = _orders;
+    }
+
+    private void btnRowDetail_Click(object sender, RoutedEventArgs e)
+    {
+        var row = DataGridRow.GetRowContainingElement((Button)sender);
+
+        row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ?
+        Visibility.Collapsed : Visibility.Visible;
     }
 }
