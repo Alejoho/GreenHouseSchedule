@@ -201,7 +201,7 @@ create table "Blocks"(
 	"NumberWithinThBlock" tinyint not null,
 	CONSTRAINT [PK_Blocks] primary key ("ID"),
 	CONSTRAINT [FK_Blocks_OrderLocationId] foreign key ("OrderLocationId") 
-	references "OrderLocations" ("ID"),
+	references "OrderLocations" ("ID") ON DELETE CASCADE,
 	CONSTRAINT [CK_Blocks_SeedTrayAmount] CHECK ("SeedTrayAmount" > 0),
 	CONSTRAINT [CK_Blocks_BlockNumber] CHECK ("BlockNumber" > 0),
 	CONSTRAINT [CK_Blocks_NumberWithinThBlock] CHECK ("NumberWithinThBlock" > 0)
@@ -217,7 +217,7 @@ create table "DeliveryDetails"(
 	"SeedTrayAmountDelivered" smallint not null,
 	CONSTRAINT [PK_DeliveryDetails] primary key ("ID"),
 	CONSTRAINT [FK_DeliveryDetails_BlockId] foreign key ("BlockId") 
-	references "Blocks" ("ID"),
+	references "Blocks" ("ID") ON DELETE CASCADE,
 	CONSTRAINT [CK_DeliveryDetails_SeedTrayAmountDelivered] CHECK ("SeedTrayAmountDelivered" > 0)
 );
 
@@ -252,7 +252,7 @@ create table "Orders"(
 go
 alter table "OrderLocations"
 add CONSTRAINT [FK_OrderLocations_OrderId] foreign key ("OrderId") 
-references "Orders" ("ID");
+references "Orders" ("ID") ON DELETE CASCADE;
 
 
 go
@@ -266,7 +266,7 @@ create table "OrderDetails"(
 	"Description" nvarchar(700),
 	CONSTRAINT [PK_OrderDetails] primary key ("ID"),
 	CONSTRAINT [FK_OrderDetails_OrderId] foreign key ("OrderId") 
-	references "Orders" ("ID"),
+	references "Orders" ("ID") ON DELETE CASCADE,
 	CONSTRAINT [CK_OrderDetails_Germination] CHECK ("Germination" > 0 and "Germination" < 100)
 );
 
