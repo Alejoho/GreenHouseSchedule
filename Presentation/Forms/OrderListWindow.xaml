@@ -8,7 +8,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         xmlns:local1="clr-namespace:Presentation"
         mc:Ignorable="d"
-        Title="Lista de órdenes" Height="450" Width="800">
+        Title="Lista de órdenes" Height="650" Width="1300">
     <!--<Window.DataContext>
         <local:OrderListWindow/>
     </Window.DataContext>-->
@@ -28,7 +28,7 @@
         <custom:TextBoxWithLabel FieldLabel="Búsqueda" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" 
                                 VerticalAlignment="Top" Margin="20 5 0 5" x:Name="lbltxtSearch" Width="210"/>
 
-        <DataGrid Grid.Row="1" x:Name="dgOrderList" Height="300" Margin="20 0 20 0"
+        <DataGrid Grid.Row="1" x:Name="dgOrderList" Height="500" Margin="20 0 20 0"
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
                     CanUserReorderColumns="False" CanUserResizeColumns="False" 
                     CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
@@ -82,8 +82,8 @@
                             <DataGridTextColumn Header="Cantidad de bandejas" Binding="{Binding SeedTrayAmount}"/>
                             <DataGridTextColumn Header="Cantidad de posturas" Binding="{Binding SeedlingAmount}"/>
                             <DataGridTextColumn Header="Fecha de siembra" Binding="{Binding SowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                            <DataGridTextColumn Header="Fecha de entraga estimada" Binding="{Binding EstimateDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                            <DataGridTextColumn Header="Fecha de entraga real" Binding="{Binding RealDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Fecha de entrega estimada" Binding="{Binding EstimateDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Fecha de entrega real" Binding="{Binding RealDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DataTemplate>

@@ -27,6 +27,7 @@ public partial class OrderListWindow : Window
         this.Close();
     }
 
+    //NEXT - Check the behavior of deleting an order  , bacause an order has many order detail records in the database
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
         if (dgOrderList.SelectedItem is Order order)
