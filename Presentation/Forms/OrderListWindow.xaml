@@ -32,7 +32,12 @@
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
                     CanUserReorderColumns="False" CanUserResizeColumns="False" 
                     CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
-                    HeadersVisibility="Column">
+                    HeadersVisibility="Column" ItemsSource="{Binding Orders}" 
+                    RowDetailsVisibilityMode="Collapsed">
+
+            <DataGrid.DataContext>
+                <local:DataContextHolderClass/>
+            </DataGrid.DataContext>
             
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
@@ -44,8 +49,8 @@
                                 <TextBlock Text="{Binding Path=DetailsVisibility,
                                     RelativeSource={RelativeSource AncestorType=DataGridRow},                                    
                                     Converter={StaticResource Converter}}" 
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Margin="1 -1 0 0"/>
+                                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        Margin="1 -1 0 0"/>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -61,8 +66,29 @@
                 <DataGridTextColumn Header="Fecha de siembra real" Binding="{Binding RealSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                 <DataGridTextColumn Header="Fecha de entrega real" Binding="{Binding RealDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                 <DataGridCheckBoxColumn Header="Completada" Binding="{Binding Complete}"/>
-            </DataGrid.Columns>    
-            
+            </DataGrid.Columns>
+
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <DataGrid Margin="20 5 20 5" AutoGenerateColumns="False" HorizontalAlignment="Left"
+                        SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" 
+                        CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
+                        IsReadOnly="True" ItemsSource="{Binding OrderLocations}" 
+                        HeadersVisibility="Column" Width="742" HorizontalScrollBarVisibility="Hidden">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Casa" Binding="{Binding GreenHouse.Name}"/>
+                            <DataGridTextColumn Header="Bandeja" Binding="{Binding SeedTray.Name}"/>
+                            <DataGridTextColumn Header="Cantidad de bandejas" Binding="{Binding SeedTrayAmount}"/>
+                            <DataGridTextColumn Header="Cantidad de posturas" Binding="{Binding SeedlingAmount}"/>
+                            <DataGridTextColumn Header="Fecha de siembra" Binding="{Binding SowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Fecha de entraga estimada" Binding="{Binding EstimateDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Fecha de entraga real" Binding="{Binding RealDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="150 10 0 0" Height="50">

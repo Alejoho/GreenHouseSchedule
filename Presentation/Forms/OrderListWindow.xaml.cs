@@ -60,3 +60,10 @@ public partial class OrderListWindow : Window
         Visibility.Collapsed : Visibility.Visible;
     }
 }
+
+public class DataContextHolderClass
+{
+    private ObservableCollection<Order> _orders;
+
+    public ObservableCollection<Order> Orders { get; set; }
+}
