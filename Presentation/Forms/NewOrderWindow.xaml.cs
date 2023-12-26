@@ -1,32 +1,41 @@
-﻿using System;
+﻿using Domain.Processors;
+using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace Presentation.Forms
+namespace Presentation.Forms;
+
+/// <summary>
+/// Interaction logic for NewOrderWindow.xaml
+/// </summary>
+public partial class NewOrderWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for NewOrderWindow.xaml
-    /// </summary>
-    public partial class NewOrderWindow : Window
+    private ClientProcessor _clientProcessor;
+    private ProductProcessor _productProcessor;
+    private List<Client> _clients;
+    private List<Product> _products;
+    public NewOrderWindow()
     {
-        public NewOrderWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        _clientProcessor = new ClientProcessor();
+        _productProcessor = new ProductProcessor();
+        LoadData();
+    }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+    private void LoadData()
+    {
+        _clients = _clientProcessor.GetAllClients().ToList();
+        lblcmbbtnClient.ComboBox.ItemsSource = _clients;
+        lblcmbbtnClient.ComboBox.DisplayMemberPath = "Name";
+
+        _products = _productProcessor.GetAllProducts().ToList();
+        lblcmbbtnProduct.ComboBox.ItemsSource = _products;
+        lblcmbbtnProduct.ComboBox.DisplayMemberPath = "SpeciesAndVariety";
+    }
+
+    private void btnCancel_Click(object sender, RoutedEventArgs e)
+    {
+        this.Close();
     }
 }

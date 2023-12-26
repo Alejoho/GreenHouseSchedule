@@ -108,8 +108,6 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
     {
         AddEditOrganizationWindow window = new AddEditOrganizationWindow(this);
         window.ShowDialog();
-
-
     }
 
     public void OrganizationComplete()

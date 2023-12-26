@@ -63,8 +63,10 @@ public class ProductProcessor
         _repository.Remove(id);
     }
 
-    public IEnumerable<Product> GetAllOrganizations()
+    public IEnumerable<Product> GetAllProducts()
     {        
-        return _repository.GetAll().OrderBy(x => x.Variety);
+        return _repository.GetAll()
+            .OrderBy(x => x.Specie.Name)
+            .ThenBy(x => x.Variety);
     }
 }

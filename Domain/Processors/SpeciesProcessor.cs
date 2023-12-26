@@ -64,7 +64,7 @@ namespace Domain.Processors
 
         public IEnumerable<Species> GetAllSpecies()
         {
-            return _repository.GetAll();
+            return _repository.GetAll().OrderBy(x => x.Name);
         }
     }
 }
