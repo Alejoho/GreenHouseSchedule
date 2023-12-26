@@ -48,13 +48,13 @@ public class SeedTrayRepositoryTests
         int idOfTheRecordToRemove = _seedTrays.Last().Id;
         var recordToRemove = _seedTrays.Find(x => x.Id == idOfTheRecordToRemove);
 
-        _mockSowScheduleDbContex.Setup(x => x.SeedTrays.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
+        _mockSowScheduleDbContex.Setup(x => x.SeedTrays.Find((byte)idOfTheRecordToRemove)).Returns(recordToRemove);
 
         bool actual = _seedTrayRepository.Remove(idOfTheRecordToRemove);
 
         actual.Should().BeTrue();
         _seedTrays.Count.Should().Be(4);
-        _mockSowScheduleDbContex.Verify(x => x.SeedTrays.Find(idOfTheRecordToRemove), Times.Once());
+        _mockSowScheduleDbContex.Verify(x => x.SeedTrays.Find((byte)idOfTheRecordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SeedTrays.Remove(recordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }

@@ -50,13 +50,13 @@ public class SpeciesRepositoryTests
         int idOfTheRecordToRemove = _species.Last().Id;
         var recordToRemove = _species.Find(x => x.Id == idOfTheRecordToRemove);
 
-        _mockSowScheduleDbContex.Setup(x => x.Species.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
+        _mockSowScheduleDbContex.Setup(x => x.Species.Find((byte)idOfTheRecordToRemove)).Returns(recordToRemove);
 
         bool actual = _speciesRepository.Remove(idOfTheRecordToRemove);
 
         actual.Should().BeTrue();
         _species.Count.Should().Be(4);
-        _mockSowScheduleDbContex.Verify(x => x.Species.Find(idOfTheRecordToRemove), Times.Once());
+        _mockSowScheduleDbContex.Verify(x => x.Species.Find((byte)idOfTheRecordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.Species.Remove(recordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }

@@ -49,13 +49,13 @@ public class GreenHouseRepositoryTests
         int idOfTheRecordToRemove = _greenHouses.Last().Id;
         var recordToRemove = _greenHouses.Find(x => x.Id == idOfTheRecordToRemove);
 
-        _mockSowScheduleDbContex.Setup(x => x.GreenHouses.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
+        _mockSowScheduleDbContex.Setup(x => x.GreenHouses.Find((byte)idOfTheRecordToRemove)).Returns(recordToRemove);
 
         bool actual = _greenHouseRepository.Remove(idOfTheRecordToRemove);
 
         actual.Should().BeTrue();
         _greenHouses.Count.Should().Be(4);
-        _mockSowScheduleDbContex.Verify(x => x.GreenHouses.Find(idOfTheRecordToRemove), Times.Once());
+        _mockSowScheduleDbContex.Verify(x => x.GreenHouses.Find((byte)idOfTheRecordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.GreenHouses.Remove(recordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }

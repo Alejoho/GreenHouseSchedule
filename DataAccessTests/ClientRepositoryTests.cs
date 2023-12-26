@@ -48,13 +48,13 @@ public class ClientRepositoryTests
         int idOfTheRecordToRemove = _clients.Last().Id;
         var recordToRemove = _clients.Find(x => x.Id == idOfTheRecordToRemove);
 
-        _mockSowScheduleDbContex.Setup(x => x.Clients.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
+        _mockSowScheduleDbContex.Setup(x => x.Clients.Find((short)idOfTheRecordToRemove)).Returns(recordToRemove);
 
         bool actual = _clientRepository.Remove(idOfTheRecordToRemove);
 
         actual.Should().BeTrue();
         _clients.Count.Should().Be(4);
-        _mockSowScheduleDbContex.Verify(x => x.Clients.Find(idOfTheRecordToRemove), Times.Once());
+        _mockSowScheduleDbContex.Verify(x => x.Clients.Find((short)idOfTheRecordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.Clients.Remove(recordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }

@@ -47,13 +47,13 @@ public class ProductRepositoryTests
         int idOfTheRecordToRemove = _products.Last().Id;
         var recordToRemove = _products.Find(x => x.Id == idOfTheRecordToRemove);
 
-        _mockSowScheduleDbContex.Setup(x => x.Products.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
+        _mockSowScheduleDbContex.Setup(x => x.Products.Find((byte)idOfTheRecordToRemove)).Returns(recordToRemove);
 
         bool actual = _productRepository.Remove(idOfTheRecordToRemove);
 
         actual.Should().BeTrue();
         _products.Count.Should().Be(4);
-        _mockSowScheduleDbContex.Verify(x => x.Products.Find(idOfTheRecordToRemove), Times.Once());
+        _mockSowScheduleDbContex.Verify(x => x.Products.Find((byte)idOfTheRecordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.Products.Remove(recordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }

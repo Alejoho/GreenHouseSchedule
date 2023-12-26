@@ -48,13 +48,13 @@ public class OrganizationRepositoryTests
         int idOfTheRecordToRemove = _organizations.Last().Id;
         var recordToRemove = _organizations.Find(x => x.Id == idOfTheRecordToRemove);
 
-        _mockSowScheduleDbContex.Setup(x => x.Organizations.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
+        _mockSowScheduleDbContex.Setup(x => x.Organizations.Find((short)idOfTheRecordToRemove)).Returns(recordToRemove);
 
         bool actual = _organizationRepository.Remove(idOfTheRecordToRemove);
 
         actual.Should().BeTrue();
         _organizations.Count.Should().Be(4);
-        _mockSowScheduleDbContex.Verify(x => x.Organizations.Find(idOfTheRecordToRemove), Times.Once());
+        _mockSowScheduleDbContex.Verify(x => x.Organizations.Find((short)idOfTheRecordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.Organizations.Remove(recordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }

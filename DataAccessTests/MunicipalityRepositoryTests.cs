@@ -54,13 +54,13 @@ public class MunicipalityRepositoryTests
         int idOfTheRecordToRemove = _municipalities.Last().Id;
         var recordToRemove = _municipalities.Find(x => x.Id == idOfTheRecordToRemove);
 
-        _mockSowScheduleDbContex.Setup(x => x.Municipalities.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
+        _mockSowScheduleDbContex.Setup(x => x.Municipalities.Find((short)idOfTheRecordToRemove)).Returns(recordToRemove);
 
         bool actual = _municipalityRepository.Remove(idOfTheRecordToRemove);
 
         actual.Should().BeTrue();
         _municipalities.Count.Should().Be(4);
-        _mockSowScheduleDbContex.Verify(x => x.Municipalities.Find(idOfTheRecordToRemove), Times.Once());
+        _mockSowScheduleDbContex.Verify(x => x.Municipalities.Find((short)idOfTheRecordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.Municipalities.Remove(recordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }

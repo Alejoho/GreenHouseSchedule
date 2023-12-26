@@ -47,13 +47,13 @@ public class OrderRepostioryTests
         int idOfTheRecordToRemove = _orders.Last().Id;
         var recordToRemove = _orders.Find(x => x.Id == idOfTheRecordToRemove);
 
-        _mockSowScheduleDbContex.Setup(x => x.Orders.Find(idOfTheRecordToRemove)).Returns(recordToRemove);
+        _mockSowScheduleDbContex.Setup(x => x.Orders.Find((short)idOfTheRecordToRemove)).Returns(recordToRemove);
 
         bool actual = _orderRepository.Remove(idOfTheRecordToRemove);
 
         actual.Should().BeTrue();
         _orders.Count.Should().Be(4);
-        _mockSowScheduleDbContex.Verify(x => x.Orders.Find(idOfTheRecordToRemove), Times.Once());
+        _mockSowScheduleDbContex.Verify(x => x.Orders.Find((short)idOfTheRecordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.Orders.Remove(recordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }
