@@ -199,7 +199,7 @@ namespace Domain
                     order.Id,
                     new ClientModel(order.Client.Id, order.Client.Name, order.Client.NickName),
                     new ProductModel(order.Product.Id, order.Product.Variety, order.Product.Specie.Name, order.Product.Specie.ProductionDays),
-                    order.AmountofAlgorithmSeedlings,
+                    order.AmountOfAlgorithmSeedlings,
                     order.DateOfRequest,
                     order.EstimateSowDate,
                     order.EstimateDeliveryDate,

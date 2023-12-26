@@ -45,8 +45,8 @@ namespace DataAccess.Repositories
                 order.Id = entity.Id;
                 order.ClientId = entity.ClientId;
                 order.ProductId = entity.ProductId;
-                order.AmountofWishedSeedlings = entity.AmountofWishedSeedlings;
-                order.AmountofAlgorithmSeedlings = entity.AmountofAlgorithmSeedlings;
+                order.AmountOfWishedSeedlings = entity.AmountOfWishedSeedlings;
+                order.AmountOfAlgorithmSeedlings = entity.AmountOfAlgorithmSeedlings;
                 order.WishDate = entity.WishDate;
                 order.DateOfRequest = entity.DateOfRequest;
                 order.EstimateSowDate = entity.EstimateSowDate;

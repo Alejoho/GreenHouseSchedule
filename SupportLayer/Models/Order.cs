@@ -11,9 +11,9 @@ public partial class Order
 
     public byte ProductId { get; set; }
 
-    public int AmountofWishedSeedlings { get; set; }
+    public int AmountOfWishedSeedlings { get; set; }
 
-    public int AmountofAlgorithmSeedlings { get; set; }
+    public int AmountOfAlgorithmSeedlings { get; set; }
 
     public DateOnly WishDate { get; set; }
 

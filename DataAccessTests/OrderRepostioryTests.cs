@@ -79,8 +79,8 @@ public class OrderRepostioryTests
 
         recordUpdated.ClientId.Should().Be(newRecordData.ClientId);
         recordUpdated.ProductId.Should().Be(newRecordData.ProductId);
-        recordUpdated.AmountofWishedSeedlings.Should().Be(newRecordData.AmountofWishedSeedlings);
-        recordUpdated.AmountofAlgorithmSeedlings.Should().Be(newRecordData.AmountofAlgorithmSeedlings);
+        recordUpdated.AmountOfWishedSeedlings.Should().Be(newRecordData.AmountOfWishedSeedlings);
+        recordUpdated.AmountOfAlgorithmSeedlings.Should().Be(newRecordData.AmountOfAlgorithmSeedlings);
         recordUpdated.WishDate.Should().Be(newRecordData.WishDate);
         recordUpdated.DateOfRequest.Should().Be(newRecordData.DateOfRequest);
         recordUpdated.EstimateSowDate.Should().Be(newRecordData.EstimateSowDate);
@@ -113,8 +113,8 @@ public class OrderRepostioryTests
             .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.ClientId, f => f.Random.Short(1, 300))
             .RuleFor(x => x.ProductId, f => f.Random.Byte(1, 60))
-            .RuleFor(x => x.AmountofWishedSeedlings, f => f.Random.Int(20000, 80000))
-            .RuleFor(x => x.AmountofAlgorithmSeedlings, (f, u) => Convert.ToInt32(u.AmountofWishedSeedlings * 1.2))
+            .RuleFor(x => x.AmountOfWishedSeedlings, f => f.Random.Int(20000, 80000))
+            .RuleFor(x => x.AmountOfAlgorithmSeedlings, (f, u) => Convert.ToInt32(u.AmountOfWishedSeedlings * 1.2))
             .RuleFor(x => x.WishDate, f =>
                 DateOnly.FromDateTime(
                     f.Date.Between(new DateTime(2023, 1, 1),
