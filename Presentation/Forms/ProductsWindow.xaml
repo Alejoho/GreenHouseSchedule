@@ -52,7 +52,7 @@
 
             </ListBox>
             <StackPanel Orientation="Horizontal" Margin="5 5 5 5">
-                <TextBox x:Name="txtNewVariety" Text="nueva variedad" Width="110"/>
+                <TextBox x:Name="txtNewVariety" Width="110"/>
                 <Button x:Name="btnAddVariety" Content="Agregar" Margin="20 0 0 0" Click="btnAddVariety_Click"/>
             </StackPanel>
         </StackPanel>

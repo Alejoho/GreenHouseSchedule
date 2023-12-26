@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Presentation.Forms;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Presentation
 {
@@ -20,9 +8,69 @@ namespace Presentation
     /// </summary>
     public partial class MainWindow : Window
     {
+        //LATER - Review the startup of all windows. (WindowStartUpLocation, WindowState) 
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnGreenHouses_Click(object sender, RoutedEventArgs e)
+        {
+            GreenHousesWindow window = new GreenHousesWindow();
+            window.ShowDialog();
+        }
+
+        private void btnSeedTrays_Click(object sender, RoutedEventArgs e)
+        {
+            SeedTraysWindow window = new SeedTraysWindow();
+            window.ShowDialog();
+        }
+
+        private void btnClients_Click(object sender, RoutedEventArgs e)
+        {
+            ClientsWindow window = new ClientsWindow();
+            window.ShowDialog();
+        }
+
+        private void btnProducts_Click(object sender, RoutedEventArgs e)
+        {
+            ProductsWindow window = new ProductsWindow();
+            window.ShowDialog();
+        }
+
+        private void btnOrganizations_Click(object sender, RoutedEventArgs e)
+        {
+            OrganizationsWindow window = new OrganizationsWindow();
+            window.ShowDialog();
+        }
+
+        private void btnOrderList_Click(object sender, RoutedEventArgs e)
+        {
+            OrderListWindow window = new OrderListWindow();
+            window.ShowDialog();
+        }
+
+        private void btnNewOrder_Click(object sender, RoutedEventArgs e)
+        {
+            NewOrderWindow window = new NewOrderWindow();
+            window.ShowDialog();
+        }
+
+        private void btnDeliveries_Click(object sender, RoutedEventArgs e)
+        {
+            DeliveryWindow window = new DeliveryWindow();
+            window.ShowDialog();
+        }
+
+        private void btnSows_Click(object sender, RoutedEventArgs e)
+        {
+            SowWindow window = new SowWindow();
+            window.ShowDialog();
+        }
+
+        private void btnOrderDistribution_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("You need to create this window first!!!!!");
         }
     }
 }

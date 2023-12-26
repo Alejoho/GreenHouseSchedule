@@ -101,7 +101,7 @@
         <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal"
                     VerticalAlignment="Top">
             <Button x:Name="btnSave" Content="Guardar" Height="35" Width="100" Margin="110 0 30 0" FontSize="15"/>
-            <Button x:Name="btnCancel" Content="Cancelar" Height="35" Width="100" Margin="30 0 0 0" FontSize="15"/>
+            <Button x:Name="btnCancel" Content="Cancelar" Height="35" Width="100" Margin="30 0 0 0" FontSize="15" Click="btnCancel_Click"/>
         </StackPanel>
 
         <!--#endregion-->
