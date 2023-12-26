@@ -11,10 +11,10 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class OrderListWindow : Window
 {
-    //LATER - Add HeadersVisibility="Column" to the datagrids across the board
+    //LATER - Add HeadersVisibility = "Column" to the datagrids across the board
     public ObservableCollection<Order> _orders;
     private OrderProcessor _processor;
-    //NEXT - Create the row detail to show in each order their order locations
+    //NEXT - implement the look up text box
     public OrderListWindow()
     {
         InitializeComponent();
@@ -27,7 +27,6 @@ public partial class OrderListWindow : Window
         this.Close();
     }
 
-    //NEXT - Check the behavior of deleting an order  , bacause an order has many order detail records in the database
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
         if (dgOrderList.SelectedItem is Order order)
@@ -60,8 +59,20 @@ public partial class OrderListWindow : Window
         row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ?
         Visibility.Collapsed : Visibility.Visible;
     }
+
+    private void lbltxtSearch_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        //LATER - Change the implementation of all SearchTextBoxes.
+        //Every time the text change a call to the database is made that is not performant
+        //I'd rather to retrieve all records from the db and  then filter in the processor.
+        string filter = lbltxtSearch.TextBox.Text;
+        _orders = new ObservableCollection<Order>(_processor.GetFilteredOrganizations(filter));
+        dgOrderList.ItemsSource = null;
+        dgOrderList.ItemsSource = _orders;
+    }
 }
 
+//LATER - Give to this class a better name
 public class DataContextHolderClass
 {
     private ObservableCollection<Order> _orders;

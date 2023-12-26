@@ -68,20 +68,25 @@ public class OrderProcessor
         return _repository.GetAll();
     }
 
-    public IEnumerable<Organization> GetFilteredOrganizations(string filter)
+    public IEnumerable<Order> GetFilteredOrganizations(string filter)
     {
-        //_repository = new OrganizationRepository();
-        //List<Organization> organizations = _repository.GetAll().ToList();
+        _repository = new OrderRepository();
+        List<Order> orders = _repository.GetAll().ToList();
 
-        //IEnumerable<Organization> output = organizations
-        //    .Where(x => x.Name.Contains(filter, StringComparison.OrdinalIgnoreCase)
-        //|| x.TypeOfOrganizationName.Contains(filter, StringComparison.OrdinalIgnoreCase)
-        //|| x.MunicipalityName.Contains(filter, StringComparison.OrdinalIgnoreCase)
-        //|| x.ProvinceName.Contains(filter, StringComparison.OrdinalIgnoreCase))
-        //.OrderBy(x => x.Name);
+        IEnumerable<Order> output = orders
+            .Where(x => x.Client.Name.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.Product.Specie.Name.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.Product.Variety.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.AmountOfWishedSeedlings.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.AmountOfAlgorithmSeedlings.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.WishDate.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.DateOfRequest.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.EstimateSowDate.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.EstimateDeliveryDate.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.RealSowDate.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || x.RealDeliveryDate.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase)
+            ).OrderBy(x => x.Client.Name);
 
-        //return output;
-        
-        throw new NotImplementedException();
+        return output;       
     }
 }

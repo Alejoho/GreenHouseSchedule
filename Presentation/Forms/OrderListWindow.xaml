@@ -8,7 +8,8 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         xmlns:local1="clr-namespace:Presentation"
         mc:Ignorable="d"
-        Title="Lista de órdenes" Height="650" Width="1300">
+        Title="Lista de órdenes" Height="650" Width="1300" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <!--<Window.DataContext>
         <local:OrderListWindow/>
     </Window.DataContext>-->
@@ -26,9 +27,10 @@
         </Grid.RowDefinitions>
 
         <custom:TextBoxWithLabel FieldLabel="Búsqueda" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" 
-                                VerticalAlignment="Top" Margin="20 5 0 5" x:Name="lbltxtSearch" Width="210"/>
+                                VerticalAlignment="Top" Margin="20 5 0 5" x:Name="lbltxtSearch" Width="210"
+                                 TextChanged="lbltxtSearch_TextChanged"/>
 
-        <DataGrid Grid.Row="1" x:Name="dgOrderList" Height="500" Margin="20 0 20 0"
+        <DataGrid Grid.Row="1" x:Name="dgOrderList" Height="620" Margin="20 0 20 0"
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
                     CanUserReorderColumns="False" CanUserResizeColumns="False" 
                     CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
@@ -57,8 +59,10 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Cliente" Binding="{Binding Client.Name}"/>
-                <DataGridTextColumn Header="Posturas pedidas" Binding="{Binding AmountofWishedSeedlings}"/>
-                <DataGridTextColumn Header="Posturas calculadas" Binding="{Binding AmountofAlgorithmSeedlings}"/>
+                <DataGridTextColumn Header="Especie" Binding="{Binding Product.Specie.Name}"/>
+                <DataGridTextColumn Header="Variedad" Binding="{Binding Product.Variety}"/>
+                <DataGridTextColumn Header="Posturas pedidas" Binding="{Binding AmountOfWishedSeedlings}"/>
+                <DataGridTextColumn Header="Posturas calculadas" Binding="{Binding AmountOfAlgorithmSeedlings}"/>
                 <DataGridTextColumn Header="Fecha requerida" Binding="{Binding WishDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                 <DataGridTextColumn Header="Fecha de pedido" Binding="{Binding DateOfRequest, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                 <DataGridTextColumn Header="Fecha de siembra estimada" Binding="{Binding EstimateSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
