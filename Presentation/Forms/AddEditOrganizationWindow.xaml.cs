@@ -58,7 +58,7 @@ public partial class AddEditOrganizationWindow : Window
             if (_processor.SaveOrganization(_model) == true)
             {
                 //MessageBox.Show("Registro salvado");
-                _requester.OrganizationComplete();
+                _requester?.OrganizationComplete();
                 this.Close();
             }
             else
