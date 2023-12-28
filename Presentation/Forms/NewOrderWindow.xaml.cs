@@ -9,7 +9,7 @@ namespace Presentation.Forms;
 /// <summary>
 /// Interaction logic for NewOrderWindow.xaml
 /// </summary>
-public partial class NewOrderWindow : Window
+public partial class NewOrderWindow : Window, IClientRequester
 {
     private ClientProcessor _clientProcessor;
     private ProductProcessor _productProcessor;
@@ -41,7 +41,7 @@ public partial class NewOrderWindow : Window
 
     private void lblcmbbtnClient_ButtonClick(object sender, RoutedEventArgs e)
     {
-        AddEditClientWindow window = new AddEditClientWindow();
+        AddEditClientWindow window = new AddEditClientWindow(this);
         window.ShowDialog();
     }
 
@@ -49,5 +49,12 @@ public partial class NewOrderWindow : Window
     {
         AddProductWindow window = new AddProductWindow();
         window.ShowDialog();
+    }
+
+    public void ClientComplete(Client model)
+    {
+        _clients.Add(model);
+        lblcmbbtnClient.ComboBox.Items.Refresh();
+        lblcmbbtnClient.ComboBox.SelectedItem = model;
     }
 }

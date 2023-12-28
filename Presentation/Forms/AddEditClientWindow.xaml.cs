@@ -11,17 +11,28 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class AddEditClientWindow : Window, IOrganizationRequester
 {
+    //TODO - Set in all TextBoxWithLabels the tipvisibility to hide.
     private ClientProcessor _processor;
     private Client _model;
     private List<Organization> _organizations;
+    private IClientRequester _requester;
 
     public AddEditClientWindow()
     {
         InitializeComponent();
         _processor = new ClientProcessor();
         _model = new Client();
-        //CHECK - If I remove the next statement will the id propertie remain with the same value
-        _model.Id = 0;
+        //TODO - Remove the assigment of the id in all the models
+        //_model.Id = 0;
+        LoadData();
+    }
+
+    public AddEditClientWindow(IClientRequester requestingWindow)
+    {
+        InitializeComponent();
+        _processor = new ClientProcessor();
+        _model = new Client();        
+        _requester = requestingWindow;
         LoadData();
     }
 
@@ -46,6 +57,7 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
             if (_processor.SaveClient(_model) == true)
             {
                 MessageBox.Show("Registro salvado");
+                _requester?.ClientComplete(_model);
                 this.Close();
             }
             else
