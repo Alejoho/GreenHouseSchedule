@@ -38,4 +38,16 @@ public partial class NewOrderWindow : Window
     {
         this.Close();
     }
+
+    private void lblcmbbtnClient_ButtonClick(object sender, RoutedEventArgs e)
+    {
+        AddEditClientWindow window = new AddEditClientWindow();
+        window.ShowDialog();
+    }
+
+    private void lblcmbbtnProduct_ButtonClick(object sender, RoutedEventArgs e)
+    {
+        AddProductWindow window = new AddProductWindow();
+        window.ShowDialog();
+    }
 }

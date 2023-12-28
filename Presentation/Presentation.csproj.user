@@ -22,6 +22,9 @@
     <Compile Update="Forms\AddEditOrganizationWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\AddProductWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CustomControls\ComboBoxWithLabel.xaml">
@@ -40,6 +43,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\AddEditOrganizationWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\AddProductWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
