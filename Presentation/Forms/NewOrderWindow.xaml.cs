@@ -9,7 +9,7 @@ namespace Presentation.Forms;
 /// <summary>
 /// Interaction logic for NewOrderWindow.xaml
 /// </summary>
-public partial class NewOrderWindow : Window, IClientRequester
+public partial class NewOrderWindow : Window, IClientRequester, IProductRequester
 {
     private ClientProcessor _clientProcessor;
     private ProductProcessor _productProcessor;
@@ -47,7 +47,7 @@ public partial class NewOrderWindow : Window, IClientRequester
 
     private void lblcmbbtnProduct_ButtonClick(object sender, RoutedEventArgs e)
     {
-        AddProductWindow window = new AddProductWindow();
+        AddProductWindow window = new AddProductWindow(this);
         window.ShowDialog();
     }
 
@@ -56,5 +56,14 @@ public partial class NewOrderWindow : Window, IClientRequester
         _clients.Add(model);
         lblcmbbtnClient.ComboBox.Items.Refresh();
         lblcmbbtnClient.ComboBox.SelectedItem = model;
+    }
+
+    public void ProductComplete(Product model)
+    {
+        //TODO - Look up how to order the items of the combobox after adding a new item
+        Product newProduct = _productProcessor.GetAProductById(model.Id);
+        _products.Add(newProduct);        
+        lblcmbbtnProduct.ComboBox.Items.Refresh();
+        lblcmbbtnProduct.ComboBox.SelectedItem = newProduct;
     }
 }
