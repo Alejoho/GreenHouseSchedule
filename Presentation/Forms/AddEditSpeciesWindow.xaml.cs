@@ -11,9 +11,9 @@ namespace Presentation.Forms
     {
         private SpeciesProcessor _processor;
         private Species _model;
-        private ISpeciesRequestor _requestor;
+        private ISpeciesRequester _requestor;
 
-        public AddEditSpeciesWindow(ISpeciesRequestor requestor)
+        public AddEditSpeciesWindow(ISpeciesRequester requestor)
         {
             InitializeComponent();
             _processor = new SpeciesProcessor();

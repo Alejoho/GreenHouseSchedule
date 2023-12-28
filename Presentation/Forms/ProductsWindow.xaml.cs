@@ -9,7 +9,7 @@ namespace Presentation.Forms;
 /// <summary>
 /// Interaction logic for Products.xaml
 /// </summary>
-public partial class ProductsWindow : Window, ISpeciesRequestor
+public partial class ProductsWindow : Window, ISpeciesRequester
 {
     private ObservableCollection<Species> _species;
     private SpeciesProcessor _speciesProcessor;

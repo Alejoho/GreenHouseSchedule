@@ -2,7 +2,7 @@
 
 namespace Presentation;
 
-public interface ISpeciesRequestor
+public interface ISpeciesRequester
 {
     void SpeciesComplete(Species model);
 }
