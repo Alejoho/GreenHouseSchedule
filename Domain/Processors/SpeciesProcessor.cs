@@ -66,5 +66,11 @@ namespace Domain.Processors
         {
             return _repository.GetAll().OrderBy(x => x.Name);
         }
+
+        public Species GetASpeciesByID(int id)
+        {
+            Species output = ((SpeciesRepository)_repository).GetByID(id);
+            return output;
+        }
     }
 }

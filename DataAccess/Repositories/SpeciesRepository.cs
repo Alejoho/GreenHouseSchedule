@@ -24,6 +24,11 @@ namespace DataAccess.Repositories
             return _sowScheduleDB.Species;
         }
 
+        public Species GetByID(int pId)
+        {
+            return _sowScheduleDB.Species.Find((byte)pId);
+        }
+
         public bool Insert(Species entity)
         {
                 _sowScheduleDB.Species.Add(entity);

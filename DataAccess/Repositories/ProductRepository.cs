@@ -22,6 +22,11 @@ namespace DataAccess.Repositories
             return _sowScheduleDB.Products;
         }
 
+        public Product GetById(int pId)
+        {
+            return _sowScheduleDB.Products.Find((byte)pId);
+        }
+
         public bool Insert(Product entity)
         {
                 _sowScheduleDB.Products.Add(entity);

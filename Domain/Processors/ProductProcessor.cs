@@ -10,6 +10,7 @@ public class ProductProcessor
 {
     private IProductRepository _repository;
     public string Error { get; set; } = null!;
+
     public ProductProcessor()
     {
         _repository = new ProductRepository();
@@ -68,5 +69,11 @@ public class ProductProcessor
         return _repository.GetAll()
             .OrderBy(x => x.Specie.Name)
             .ThenBy(x => x.Variety);
+    }
+
+    public Product GetAProductById(int id)
+    {
+        Product output = ((ProductRepository)_repository).GetById(id);
+        return output;
     }
 }
