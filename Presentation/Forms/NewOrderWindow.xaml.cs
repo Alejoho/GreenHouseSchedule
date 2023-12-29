@@ -57,13 +57,12 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         lblcmbbtnClient.ComboBox.Items.Refresh();
         lblcmbbtnClient.ComboBox.SelectedItem = model;
     }
-
+    //CHECK - that all of the combobox with button order their items when a new item is inserted
     public void ProductComplete(Product model)
-    {
-        //TODO - Look up how to order the items of the combobox after adding a new item
+    {        
         Product newProduct = _productProcessor.GetAProductById(model.Id);
         _products.Add(newProduct);        
-        lblcmbbtnProduct.ComboBox.Items.Refresh();
+        lblcmbbtnProduct.ComboBox.ItemsSource = _products.OrderBy(x => x.SpeciesAndVariety);        
         lblcmbbtnProduct.ComboBox.SelectedItem = newProduct;
     }
 }

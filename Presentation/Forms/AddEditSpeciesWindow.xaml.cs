@@ -9,6 +9,10 @@ namespace Presentation.Forms
     /// </summary>
     public partial class AddEditSpeciesWindow : Window
     {
+        //LATER - Make a warnning if an user wnat to change the data of a specie
+        //I think to show a message that says. Este registro no se puede editar
+        //en cambio lo que puede hacer es crear otro registro con los nuevos datos y 
+        //usar ese.
         private SpeciesProcessor _processor;
         private Species _model;
         private ISpeciesRequester _requestor;

@@ -1,6 +1,5 @@
 ﻿using Domain.Processors;
 using SupportLayer.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -23,7 +22,7 @@ public partial class AddProductWindow : Window, ISpeciesRequester
         _processor = new ProductProcessor();
         _model = new Product();
         _requester = requestingWindow;
-        LoadData();        
+        LoadData();
     }
 
     private void LoadData()
@@ -76,11 +75,14 @@ public partial class AddProductWindow : Window, ISpeciesRequester
 
     private void lblcmbbtnSpecies_ButtonClick(object sender, RoutedEventArgs e)
     {
-
+        AddEditSpeciesWindow window = new AddEditSpeciesWindow(this);
+        window.ShowDialog();
     }
 
     public void SpeciesComplete(Species model)
     {
-        throw new System.NotImplementedException();
+        _species.Add(model);
+        lblcmbbtnSpecies.ComboBox.ItemsSource = _species.OrderBy(x => x.Name);
+        lblcmbbtnSpecies.ComboBox.SelectedItem = model;
     }
 }

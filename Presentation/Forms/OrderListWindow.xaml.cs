@@ -14,7 +14,7 @@ public partial class OrderListWindow : Window
     //LATER - Add HeadersVisibility = "Column" to the datagrids across the board
     public ObservableCollection<Order> _orders;
     private OrderProcessor _processor;
-    //NEXT - implement the look up text box
+
     public OrderListWindow()
     {
         InitializeComponent();
