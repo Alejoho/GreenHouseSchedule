@@ -67,5 +67,11 @@ namespace Domain.Processors
         {
             return _repository.GetAll();
         }
+
+        public IEnumerable<SeedTray> GetActiveSeedTrays()
+        {
+            return _repository.GetAll().Where(x => x.Active == true)
+                .OrderBy(x => x.Name);
+        }
     }
 }
