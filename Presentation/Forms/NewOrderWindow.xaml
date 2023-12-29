@@ -28,12 +28,13 @@
 
         <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
             <custom:ComboBoxWithLabel x:Name="lblcmbbtnClient" FieldLabel="Cliente" HorizontalAlignment="Right" 
-                                      ButtonClick="lblcmbbtnClient_ButtonClick"/>
+                                        ButtonClick="lblcmbbtnClient_ButtonClick"/>
             <custom:ComboBoxWithLabel x:Name="lblcmbbtnProduct" FieldLabel="Producto" HorizontalAlignment="Right"
-                                      ButtonClick="lblcmbbtnProduct_ButtonClick"/>
+                                        ButtonClick="lblcmbbtnProduct_ButtonClick"/>
             <custom:TextBoxWithLabel x:Name="txtAmountOfSeedlings" FieldLabel="Cantidad de posturas" HorizontalAlignment="Right"/>
             <custom:DatePickerWithLabel x:Name="dtpWishDate" FieldLabel="Fecha deseada"/>
-            <Button x:Name="btnSearchAvailability" Content="buscar disponibilidad" Height="35" Width="150" Margin="0 10 0 0"/>
+            <Button x:Name="btnSearchAvailability" Content="Buscar disponibilidad" Height="35" Width="150" Margin="0 10 0 0"
+                    />
         </StackPanel>
         <!--NEXT: Wire up this datagrid -->
         <DataGrid x:Name="dgSeedTraySelector" Grid.Row="1" Grid.Column="1" Width="150" Height="150" HorizontalAlignment="Left" 

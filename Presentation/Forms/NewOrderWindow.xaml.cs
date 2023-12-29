@@ -1,9 +1,9 @@
 ﻿using Domain.Processors;
 using SupportLayer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Presentation.Forms;
 
@@ -24,7 +24,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         _productProcessor = new ProductProcessor();
         LoadData();
     }
-    //NEXT - Wire up the SeedTraySelector datagrid
+
     private void LoadData()
     {
         _clients = _clientProcessor.GetAllClients().ToList();
@@ -38,7 +38,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         //----------------------------------------------------------------
 
         SeedTrayProcessor seedTrayProcessor = new SeedTrayProcessor();
-        _seedTrays = seedTrayProcessor.GetAllSeedTrays().ToList();
+        _seedTrays = seedTrayProcessor.GetActiveSeedTrays().ToList();
         dgSeedTraySelector.DataContext = this;
         dgSeedTraySelector.ItemsSource = _seedTrays;
 
@@ -69,10 +69,11 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     }
     //CHECK - that all of the combobox with button order their items when a new item is inserted
     public void ProductComplete(Product model)
-    {        
+    {
         Product newProduct = _productProcessor.GetAProductById(model.Id);
-        _products.Add(newProduct);        
-        lblcmbbtnProduct.ComboBox.ItemsSource = _products.OrderBy(x => x.SpeciesAndVariety);        
+        _products.Add(newProduct);
+        lblcmbbtnProduct.ComboBox.ItemsSource = _products.OrderBy(x => x.SpeciesAndVariety);
         lblcmbbtnProduct.ComboBox.SelectedItem = newProduct;
     }
+
 }
