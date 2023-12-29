@@ -3,6 +3,7 @@ using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Presentation.Forms;
 
@@ -15,6 +16,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     private ProductProcessor _productProcessor;
     private List<Client> _clients;
     private List<Product> _products;
+    private List<SeedTray> _seedTrays;
     public NewOrderWindow()
     {
         InitializeComponent();
@@ -22,7 +24,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         _productProcessor = new ProductProcessor();
         LoadData();
     }
-
+    //NEXT - Wire up the SeedTraySelector datagrid
     private void LoadData()
     {
         _clients = _clientProcessor.GetAllClients().ToList();
@@ -32,6 +34,14 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         _products = _productProcessor.GetAllProducts().ToList();
         lblcmbbtnProduct.ComboBox.ItemsSource = _products;
         lblcmbbtnProduct.ComboBox.DisplayMemberPath = "SpeciesAndVariety";
+
+        //----------------------------------------------------------------
+
+        SeedTrayProcessor seedTrayProcessor = new SeedTrayProcessor();
+        _seedTrays = seedTrayProcessor.GetAllSeedTrays().ToList();
+        dgSeedTraySelector.DataContext = this;
+        dgSeedTraySelector.ItemsSource = _seedTrays;
+
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
