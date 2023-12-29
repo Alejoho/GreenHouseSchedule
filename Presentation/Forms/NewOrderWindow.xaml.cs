@@ -76,4 +76,68 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         lblcmbbtnProduct.ComboBox.SelectedItem = newProduct;
     }
 
+    private void btnSearchAvailability_Click(object sender, RoutedEventArgs e)
+    {
+        if (ValidateData() == true)
+        {
+            MessageBox.Show("todo bien");
+        }
+    }
+
+    private bool ValidateData()
+    {
+        if (lblcmbbtnClient.ComboBox.SelectedItem == null)
+        {
+            MessageBox.Show("Debe seleccionar un cliente.", "Dato faltante"
+                , MessageBoxButton.OK, MessageBoxImage.Information);
+            lblcmbbtnProduct.ComboBox.Focus();
+            return false;
+        }
+
+        if (lblcmbbtnProduct.ComboBox.SelectedItem == null)
+        {
+            MessageBox.Show("Debe seleccionar un producto.", "Dato faltante"
+                , MessageBoxButton.OK, MessageBoxImage.Information);
+            lblcmbbtnProduct.ComboBox.Focus();
+            return false;
+        }
+
+        if (txtAmountOfSeedlings.FieldContent == null
+            || txtAmountOfSeedlings.FieldContent == "")
+        {
+            MessageBox.Show("Debe especificar la cantidad de posturas.", "Dato faltante"
+                , MessageBoxButton.OK, MessageBoxImage.Information);
+            txtAmountOfSeedlings.TextBox.Focus();
+            return false;
+        }
+        else if (int.TryParse(txtAmountOfSeedlings.FieldContent, out int amountOfSeedlings) == false)
+        {
+            MessageBox.Show("La cantidad de posturas no esta en el formato correcto."
+                , "Cantidad de posturas inválida"
+                , MessageBoxButton.OK, MessageBoxImage.Warning);
+            txtAmountOfSeedlings.TextBox.Focus();
+            return false;
+        }
+
+        if (dtpWishDate.TimePicker.SelectedDate == null)
+        {
+            MessageBox.Show("Debe especificar la fecha en la que el cliente " +
+                "desea las posturas.", "Dato faltante"
+                , MessageBoxButton.OK, MessageBoxImage.Information);
+            dtpWishDate.TimePicker.Focus();
+            return false;
+        }
+        else if (dtpWishDate.TimePicker.SelectedDate.Value < DateTime.Now)
+        {
+            MessageBox.Show("La fecha especificada es mas antigua que el dia presente "
+                ,"Fecha inválida"
+            , MessageBoxButton.OK, MessageBoxImage.Warning);
+            dtpWishDate.TimePicker.Focus();
+            return false;
+        }
+
+        //NEXT - Validate that at least one seedtray type is selected
+
+        return true;
+    }
 }
