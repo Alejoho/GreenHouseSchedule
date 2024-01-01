@@ -1,14 +1,9 @@
 ﻿using Domain.Processors;
 using SupportLayer.Models;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
 
 namespace Presentation.Forms;
 
@@ -135,7 +130,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         }
         else if (dtpWishDate.TimePicker.SelectedDate.Value < DateTime.Now)
         {
-            MessageBox.Show("La fecha especificada es mas antigua que el dia presente "
+            MessageBox.Show("La fecha especificada es mas antigua que el dia presente."
                 ,"Fecha inválida"
             , MessageBoxButton.OK, MessageBoxImage.Warning);
             dtpWishDate.TimePicker.Focus();
@@ -144,17 +139,23 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         */
         //NEXT - Validate that at least one seedtray type is selected
 
-        foreach(SeedTray item in dgSeedTraySelector.Items)
+        bool isAnySelected = false;
+
+        foreach (SeedTray item in dgSeedTraySelector.Items)
         {
-            if(item.IsSelected == true)
+            if (item.IsSelected == true)
             {
-                MessageBox.Show("ahora si");
+                isAnySelected = true;
             }
         }
 
-       
-
-
+        if (isAnySelected == false)
+        {
+            MessageBox.Show("Debe seleccionar al menos un tipo de bandeja."
+                , "Dato faltante"
+                , MessageBoxButton.OK, MessageBoxImage.Warning);
+            return false;
+        }
 
         return true;
     }
