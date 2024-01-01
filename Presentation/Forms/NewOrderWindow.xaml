@@ -46,7 +46,8 @@
                 <DataGridTemplateColumn Header="">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox x:Name="chkSelected" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                            <CheckBox x:Name="chkSelected" IsChecked="{Binding IsSelected, Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
