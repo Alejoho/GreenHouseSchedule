@@ -1,9 +1,14 @@
 ﻿using Domain.Processors;
 using SupportLayer.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
 namespace Presentation.Forms;
 
@@ -86,6 +91,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private bool ValidateData()
     {
+        /*
         if (lblcmbbtnClient.ComboBox.SelectedItem == null)
         {
             MessageBox.Show("Debe seleccionar un cliente.", "Dato faltante"
@@ -135,8 +141,20 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             dtpWishDate.TimePicker.Focus();
             return false;
         }
-
+        */
         //NEXT - Validate that at least one seedtray type is selected
+
+        foreach(SeedTray item in dgSeedTraySelector.Items)
+        {
+            if(item.IsSelected == true)
+            {
+                MessageBox.Show("ahora si");
+            }
+        }
+
+       
+
+
 
         return true;
     }
