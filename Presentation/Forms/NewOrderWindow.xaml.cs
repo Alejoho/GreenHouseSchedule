@@ -1,5 +1,6 @@
 ﻿using Domain.Processors;
 using SupportLayer.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -85,8 +86,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     }
 
     private bool ValidateData()
-    {
-        /*
+    {       
         if (lblcmbbtnClient.ComboBox.SelectedItem == null)
         {
             MessageBox.Show("Debe seleccionar un cliente.", "Dato faltante"
@@ -135,9 +135,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             , MessageBoxButton.OK, MessageBoxImage.Warning);
             dtpWishDate.TimePicker.Focus();
             return false;
-        }
-        */
-        //NEXT - Validate that at least one seedtray type is selected
+        }        
 
         bool isAnySelected = false;
 
@@ -153,7 +151,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         {
             MessageBox.Show("Debe seleccionar al menos un tipo de bandeja."
                 , "Dato faltante"
-                , MessageBoxButton.OK, MessageBoxImage.Warning);
+                , MessageBoxButton.OK, MessageBoxImage.Information);
             return false;
         }
 
