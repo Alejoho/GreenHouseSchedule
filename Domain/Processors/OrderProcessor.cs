@@ -68,7 +68,7 @@ public class OrderProcessor
         return _repository.GetAll();
     }
 
-    public IEnumerable<Order> GetFilteredOrganizations(string filter)
+    public IEnumerable<Order> GetFilteredOrders(string filter)
     {
         _repository = new OrderRepository();
         List<Order> orders = _repository.GetAll().ToList();
@@ -88,5 +88,17 @@ public class OrderProcessor
             ).OrderBy(x => x.Client.Name);
 
         return output;       
+    }
+
+    public IEnumerable<Order> GetOrdersFromADateOn(DateOnly date)
+    {
+        IEnumerable<Order> output = null!;
+
+        if(_repository is OrderRepository orderRepository)
+        {
+            output = orderRepository.GetByDateOn(date);
+        }
+
+        return output;
     }
 }
