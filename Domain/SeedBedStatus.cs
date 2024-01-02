@@ -1,5 +1,6 @@
 using DataAccess.Repositories;
 using Domain.Models;
+using Domain.Processors;
 using SupportLayer;
 using System.Collections;
 using System.Configuration;
@@ -24,11 +25,15 @@ namespace Domain
         //private DateTime _daysOfProduction;
         private readonly int _amountOfSowSeedTrayPerDay;
         private int _remainingAmountOfSowSeedTrayPerDay;
+
         private GreenHouseRepository _greenHouseRepository;
         private SeedTrayRepository _seedTrayRepository;
         private OrderRepository _orderRepository;
         private OrderLocationRepository _orderLocationRepository;
         private DeliveryDetailRepository _deliveryDetailRepository;
+
+        private OrderProcessor _orderProcessor;
+
         private ArrayList _ordersToDelete;
         private ArrayList _orderLocationsToDelete;
         private ArrayList _orderLocationsToAdd;
@@ -47,10 +52,13 @@ namespace Domain
 
             int daysToMoveBack;
             int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.RegressionDays], out daysToMoveBack);
-            _iteratorDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-daysToMoveBack)); 
-            
-            _presentDate = DateOnly.FromDateTime(DateTime.Now);
+            //_iteratorDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-daysToMoveBack));
 
+            //_presentDate = DateOnly.FromDateTime(DateTime.Now);
+
+            _presentDate = new DateOnly(2023, 6, 10);
+            _iteratorDate = _presentDate.AddDays(-daysToMoveBack);
+            
             int seedTraysPerDay;
             int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.DailySowingPotential], out seedTraysPerDay);
             _amountOfSowSeedTrayPerDay = seedTraysPerDay; 
@@ -60,6 +68,8 @@ namespace Domain
             _orderRepository = new OrderRepository();
             _orderLocationRepository = new OrderLocationRepository();
             _deliveryDetailRepository = new DeliveryDetailRepository();
+
+            _orderProcessor = new OrderProcessor();
 
             //NEXT - I think these are useless intanciations
             _greenHouses = new List<GreenHouseModel>();
@@ -195,7 +205,8 @@ namespace Domain
         /// <returns>Returns a <c> LinkedList<OrderModel></c>.</returns>
         private LinkedList<OrderModel> GetMajorityDataOfOrders()
         {
-            var orderList = _orderRepository.GetAll().ToList();
+            var orderList = _orderProcessor.GetOrdersFromADateOn(_iteratorDate).ToList();
+    
             LinkedList<OrderModel> orderModelLinkedList = new LinkedList<OrderModel>();
 
             foreach (var order in orderList)
