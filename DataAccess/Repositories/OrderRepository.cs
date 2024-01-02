@@ -22,6 +22,12 @@ namespace DataAccess.Repositories
             return _sowScheduleDB.Orders;
         }
 
+        public IEnumerable<Order> GetByDateOn(DateOnly date)
+        {
+            return _sowScheduleDB.Orders.Where(x => x.EstimateSowDate > date);
+        }
+
+
         public bool Insert(Order entity)
         {
                 _sowScheduleDB.Orders.Add(entity);
