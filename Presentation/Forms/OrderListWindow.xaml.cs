@@ -66,7 +66,7 @@ public partial class OrderListWindow : Window
         //Every time the text change a call to the database is made that is not performant
         //I'd rather to retrieve all records from the db and  then filter in the processor.
         string filter = lbltxtSearch.TextBox.Text;
-        _orders = new ObservableCollection<Order>(_processor.GetFilteredOrganizations(filter));
+        _orders = new ObservableCollection<Order>(_processor.GetFilteredOrders(filter));
         dgOrderList.ItemsSource = null;
         dgOrderList.ItemsSource = _orders;
     }
