@@ -22,9 +22,9 @@ namespace DataAccess.Repositories
             return _sowScheduleDB.Orders;
         }
 
-        public IEnumerable<Order> GetByDateOn(DateOnly date)
+        public IEnumerable<Order> GetByARealSowDateOn(DateOnly date)
         {
-            return _sowScheduleDB.Orders.Where(x => x.EstimateSowDate > date);
+            return _sowScheduleDB.Orders.Where(x => x.RealSowDate > date || x.RealSowDate == null);
         }
 
 

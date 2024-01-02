@@ -96,7 +96,7 @@ public class OrderProcessor
 
         if(_repository is OrderRepository orderRepository)
         {
-            output = orderRepository.GetByDateOn(date)
+            output = orderRepository.GetByARealSowDateOn(date)
                 .OrderBy(x => x.EstimateSowDate)
                 .ThenBy(x => x.DateOfRequest);
         }

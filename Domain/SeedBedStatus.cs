@@ -90,9 +90,9 @@ namespace Domain
             _orderLocations = GetOrderLocations();
             _deliveryDetails = GetDeliveryDetails();
 
-            FillOrderLocations();
+            //FillOrderLocations();
 
-            DayByDayToCurrentDate();
+            //DayByDayToCurrentDate();
 
         }
 
@@ -254,8 +254,9 @@ namespace Domain
         /// <returns>Returns a <c>LinkedList<OrderLocationModel></c>.</returns>
         private LinkedList<OrderLocationModel> GetOrderLocations()
         {
-            var orderLocations = _orderLocationRepository.GetAll();
+            var orderLocations = _orderLocationRepository.GetAll().ToList();
             LinkedList<OrderLocationModel> orderLocationModelLinkedList = new LinkedList<OrderLocationModel>();
+            
             foreach (var orderLocation in orderLocations)
             {
                 orderLocationModelLinkedList.AddLast(new OrderLocationModel(
@@ -271,6 +272,7 @@ namespace Domain
                     orderLocation.SowDate == null ? false : true
                     ));
             }
+
             return orderLocationModelLinkedList;
         }
 
@@ -300,7 +302,7 @@ namespace Domain
         /// <returns>Returns a List<DeliveryDetailModel></returns>
         private List<DeliveryDetailModel> GetDeliveryDetails()
         {
-            var deliveryDetails = _deliveryDetailRepository.GetAll();
+            var deliveryDetails = _deliveryDetailRepository.GetAll().ToList();
             List<DeliveryDetailModel> deliveryDetailModelList = new List<DeliveryDetailModel>();
             foreach (var deliveryDetail in deliveryDetails)
             {
