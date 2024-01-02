@@ -224,11 +224,11 @@ namespace Domain
                     order.Complete
                     ));
             }
-            orderModelLinkedList = (LinkedList<OrderModel>)(from order in orderModelLinkedList
-                                                            orderby order.RequestDate, order.EstimateSowDate
-                                                            select order);
-           
-            //orderModelLinkedList.OrderBy(order => order.EstimateSowDate);
+            orderModelLinkedList = new LinkedList<OrderModel>(
+                from order in orderModelLinkedList
+                orderby order.RequestDate, order.EstimateSowDate
+                select order);
+
             return orderModelLinkedList;
         }
 
