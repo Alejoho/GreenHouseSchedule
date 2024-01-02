@@ -1,4 +1,5 @@
-﻿using Domain.Processors;
+﻿using Domain;
+using Domain.Processors;
 using SupportLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -79,14 +80,16 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void btnSearchAvailability_Click(object sender, RoutedEventArgs e)
     {
-        if (ValidateData() == true)
-        {
-            MessageBox.Show("todo bien");
-        }
+        //if (ValidateData() == true)
+        //{
+            SeedBedStatus seedBed = new SeedBedStatus();
+            MessageBox.Show("SeedBedStatus ready.");
+        //}
     }
 
     private bool ValidateData()
-    {       
+    {   
+        //LATER - Break down in smaller pieces this method
         if (lblcmbbtnClient.ComboBox.SelectedItem == null)
         {
             MessageBox.Show("Debe seleccionar un cliente.", "Dato faltante"

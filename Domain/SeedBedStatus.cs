@@ -17,6 +17,7 @@ namespace Domain
         private DateOnly _presentDate;
         private List<GreenHouseModel> _greenHouses;
         private List<SeedTrayModel> _seedTrays;
+        //NEXT - Check which data structure is more performant List or LinkedList
         private LinkedList<OrderModel> _orders;
         private LinkedList<OrderLocationModel> _orderLocations;
         private List<DeliveryDetailModel> _deliveryDetails;
@@ -46,7 +47,7 @@ namespace Domain
 
             int daysToMoveBack;
             int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.RegressionDays], out daysToMoveBack);
-            _iteratorDate = DateOnly.FromDateTime(DateTime.Now.AddDays(daysToMoveBack)); 
+            _iteratorDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-daysToMoveBack)); 
             
             _presentDate = DateOnly.FromDateTime(DateTime.Now);
 
@@ -60,11 +61,14 @@ namespace Domain
             _orderLocationRepository = new OrderLocationRepository();
             _deliveryDetailRepository = new DeliveryDetailRepository();
 
+            //NEXT - I think these are useless intanciations
             _greenHouses = new List<GreenHouseModel>();
             _seedTrays = new List<SeedTrayModel>();
             _orders = new LinkedList<OrderModel>();
             _orderLocations = new LinkedList<OrderLocationModel>();
             _deliveryDetails = new List<DeliveryDetailModel>();
+
+
             _ordersToDelete = new ArrayList();
             _orderLocationsToDelete = new ArrayList();
             _orderLocationsToAdd = new ArrayList();
@@ -110,6 +114,7 @@ namespace Domain
 
             foreach (GreenHouseModel greenHouseModel in pOriginalSeedBedStatus.GreenHouses)
             {
+                //NEXT - Use the copy constructor in the lists inside each foreach
                 this._greenHouses.Add(greenHouseModel);
             }
 
@@ -211,6 +216,7 @@ namespace Domain
             orderModelLinkedList = (LinkedList<OrderModel>)(from order in orderModelLinkedList
                                                             orderby order.RequestDate, order.EstimateSowDate
                                                             select order);
+           
             //orderModelLinkedList.OrderBy(order => order.EstimateSowDate);
             return orderModelLinkedList;
         }
