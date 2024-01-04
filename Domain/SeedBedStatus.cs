@@ -97,7 +97,7 @@ namespace Domain
             //NEXT - Continue the debbuging with this method
             FillOrderLocations();
 
-            //DayByDayToCurrentDate();
+            DayByDayToCurrentDate();
 
         }
 
@@ -242,11 +242,11 @@ namespace Domain
             FillDeliveryDetails(orderLocationModelLinkedList);
             foreach (var order in _orders)
             {
-                order.OrderLocations = (LinkedList<OrderLocationModel>)
-                                        (from orderLocationElement in orderLocationModelLinkedList
-                                         where orderLocationElement.OrderID == order.ID
-                                         orderby orderLocationElement.ID
-                                         select orderLocationElement);
+                order.OrderLocations = new LinkedList<OrderLocationModel>( 
+                    (from orderLocationElement in orderLocationModelLinkedList
+                    where orderLocationElement.OrderID == order.ID
+                    orderby orderLocationElement.ID
+                    select orderLocationElement));
                 //order.OrderLocations = (LinkedList<OrderLocationModel>)
                 //                        orderLocationModelLinkedList.
                 //                        Where(orderLocationElement => orderLocationElement.OrderID == order.ID);
@@ -293,11 +293,11 @@ namespace Domain
             List<DeliveryDetailModel> deliveryDetailList = GetDeliveryDetails();
             foreach (var orderLocation in pOrderLocationModelLinkedList)
             {
-                orderLocation.DeliveryDetails = (List<DeliveryDetailModel>)
+                orderLocation.DeliveryDetails = 
                     (from deliveryDetailElement in deliveryDetailList
-                     where deliveryDetailElement.OrderLocationID == orderLocation.ID
-                     orderby deliveryDetailElement.DeliveryDate
-                     select deliveryDetailElement);
+                    where deliveryDetailElement.OrderLocationID == orderLocation.ID
+                    orderby deliveryDetailElement.DeliveryDate
+                    select deliveryDetailElement).ToList();
                 //orderLocation.DeliveryDetails = (List<DeliveryDetailModel>)
                 //                                deliveryDetailList.
                 //                                Where(n => n.OrderLocationID == orderLocation.ID);
