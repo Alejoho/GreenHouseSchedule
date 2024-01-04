@@ -18,7 +18,6 @@ namespace Domain
         private DateOnly _presentDate;
         private List<GreenHouseModel> _greenHouses;
         private List<SeedTrayModel> _seedTrays;
-        //NEXT - Check which data structure is more performant List or LinkedList
         private LinkedList<OrderModel> _orders;
         private LinkedList<OrderLocationModel> _orderLocations;
         private List<DeliveryDetailModel> _deliveryDetails;
@@ -33,6 +32,7 @@ namespace Domain
         private DeliveryDetailRepository _deliveryDetailRepository;
 
         private OrderProcessor _orderProcessor;
+        private OrderLocationProcessor _orderLocationProcessor;
 
         private ArrayList _ordersToDelete;
         private ArrayList _orderLocationsToDelete;
@@ -70,11 +70,9 @@ namespace Domain
             _deliveryDetailRepository = new DeliveryDetailRepository();
 
             _orderProcessor = new OrderProcessor();
+            _orderLocationProcessor = new OrderLocationProcessor();
 
             //NEXT - I think these are useless intanciations
-            _greenHouses = new List<GreenHouseModel>();
-            _seedTrays = new List<SeedTrayModel>();
-            _orders = new LinkedList<OrderModel>();
             _orderLocations = new LinkedList<OrderLocationModel>();
             _deliveryDetails = new List<DeliveryDetailModel>();
 
@@ -87,7 +85,11 @@ namespace Domain
             _greenHouses = GetGreenHouses();
             _seedTrays = GetSeedTrays();
             _orders = GetMajorityDataOfOrders();
+            //LATER - this method give me the to orderlocations of 3 months back from the 
+            //present day. This include some order location that aren't in the orders
+            //retrieve by the previous method. See if can I do somethig about it
             _orderLocations = GetOrderLocations();
+            //LATER - this is the same situation than above.
             _deliveryDetails = GetDeliveryDetails();
 
             //FillOrderLocations();
@@ -254,7 +256,10 @@ namespace Domain
         /// <returns>Returns a <c>LinkedList<OrderLocationModel></c>.</returns>
         private LinkedList<OrderLocationModel> GetOrderLocations()
         {
-            var orderLocations = _orderLocationRepository.GetAll().ToList();
+            var orderLocations = _orderLocationProcessor
+                .GetOrderLocationsFromADateOn(_iteratorDate)
+                .ToList();
+
             LinkedList<OrderLocationModel> orderLocationModelLinkedList = new LinkedList<OrderLocationModel>();
             
             foreach (var orderLocation in orderLocations)
@@ -302,6 +307,7 @@ namespace Domain
         /// <returns>Returns a List<DeliveryDetailModel></returns>
         private List<DeliveryDetailModel> GetDeliveryDetails()
         {
+            //NEXT - Review this method
             var deliveryDetails = _deliveryDetailRepository.GetAll().ToList();
             List<DeliveryDetailModel> deliveryDetailModelList = new List<DeliveryDetailModel>();
             foreach (var deliveryDetail in deliveryDetails)
