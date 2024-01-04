@@ -8,6 +8,7 @@ namespace Domain.Processors;
 
 public class OrderProcessor
 {
+    //CHECK - If want to keep this interface type instead of change it to the class itself.
     private IOrderRepository _repository;
     public string Error { get; set; } = null!;
 

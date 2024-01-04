@@ -33,6 +33,7 @@ namespace Domain
 
         private OrderProcessor _orderProcessor;
         private OrderLocationProcessor _orderLocationProcessor;
+        private DeliveryDetailProcessor _deliveryDetailProcessor;
 
         private ArrayList _ordersToDelete;
         private ArrayList _orderLocationsToDelete;
@@ -71,6 +72,7 @@ namespace Domain
 
             _orderProcessor = new OrderProcessor();
             _orderLocationProcessor = new OrderLocationProcessor();
+            _deliveryDetailProcessor = new DeliveryDetailProcessor();
 
             //NEXT - I think these are useless intanciations
             _orderLocations = new LinkedList<OrderLocationModel>();
@@ -92,7 +94,8 @@ namespace Domain
             //LATER - this is the same situation than above.
             _deliveryDetails = GetDeliveryDetails();
 
-            //FillOrderLocations();
+            //NEXT - Continue the debbuging with this method
+            FillOrderLocations();
 
             //DayByDayToCurrentDate();
 
@@ -307,9 +310,12 @@ namespace Domain
         /// <returns>Returns a List<DeliveryDetailModel></returns>
         private List<DeliveryDetailModel> GetDeliveryDetails()
         {
-            //NEXT - Review this method
-            var deliveryDetails = _deliveryDetailRepository.GetAll().ToList();
+            var deliveryDetails = _deliveryDetailProcessor
+                .GetDeliveryDetailFromADateOn(_iteratorDate)
+                .ToList();
+
             List<DeliveryDetailModel> deliveryDetailModelList = new List<DeliveryDetailModel>();
+
             foreach (var deliveryDetail in deliveryDetails)
             {
                 deliveryDetailModelList.Add(new DeliveryDetailModel(
@@ -318,6 +324,7 @@ namespace Domain
                     deliveryDetail.DeliveryDate,
                     deliveryDetail.SeedTrayAmountDelivered));
             }
+
             return deliveryDetailModelList;
         }
 
