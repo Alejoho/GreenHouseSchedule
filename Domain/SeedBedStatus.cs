@@ -344,7 +344,7 @@ namespace Domain
                 ImplementReservation();
                 UpdateObjects();
                 ClearArrayLists();
-                _iteratorDate.AddDays(1);
+                _iteratorDate =_iteratorDate.AddDays(1);
             } while (_iteratorDate <= _presentDate);
             ImplementDelayRelease();
             UpdateObjects();
@@ -459,13 +459,19 @@ namespace Domain
         /// </summary>
         private void AddOrderLocations()
         {
+            //CHECK - here there is something wrong
             foreach (OrderLocationModel orderLocation in _orderLocationsToAdd)
             {
+                //Extracts the order of the current orderlocation
                 OrderModel order = _orders.First(order => order.ID == orderLocation.OrderID);
-
+                //extracts the last OrderLocationModel of the linkedlist of the order
                 LinkedListNode<OrderLocationModel> node = order.OrderLocations.Last;
-
+                //Adds the current orderlocation to the linked list of the order
                 order.OrderLocations.AddLast(orderLocation);
+
+                //NEXT - look up how to find an specific node in a linked list
+                LinkedListNode<OrderLocationModel> node = _orderLocations
+                    .Find(orderLocation => orderLocation.ID == node.Value.ID);
 
                 _orderLocations.AddAfter(node, orderLocation);
             }

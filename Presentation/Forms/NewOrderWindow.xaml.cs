@@ -82,8 +82,16 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     {
         //if (ValidateData() == true)
         //{
-            SeedBedStatus seedBed = new SeedBedStatus();
-            MessageBox.Show("SeedBedStatus ready.");
+        //DateOnly date = new DateOnly(2023, 3, 12);
+
+        //date = date.AddDays(1);
+        //date = date.AddDays(1);
+        //date = date.AddDays(1);
+        //date = date.AddDays(1);
+        //date = date.AddDays(1);
+        //date = date.AddDays(1);
+        SeedBedStatus seedBed = new SeedBedStatus();
+        MessageBox.Show("SeedBedStatus ready.");
         //}
     }
 
