@@ -1,11 +1,10 @@
-namespace DomainTests
-{
-    public class UnitTest1
-    {
-        [Fact]
-        public void Test1()
-        {
+namespace DomainTests;
 
-        }
+public class UnitTest1
+{
+    [Fact]
+    public void Test1()
+    {
+
     }
 }

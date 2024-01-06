@@ -470,8 +470,8 @@ namespace Domain
                 order.OrderLocations.AddLast(orderLocation);
 
                 //NEXT - look up how to find an specific node in a linked list
-                LinkedListNode<OrderLocationModel> node = _orderLocations
-                    .Find(orderLocation => orderLocation.ID == node.Value.ID);
+                //LinkedListNode<OrderLocationModel> node = _orderLocations
+                //    .Find(orderLocation => orderLocation.ID == node.Value.ID);
 
                 _orderLocations.AddAfter(node, orderLocation);
             }
