@@ -42,6 +42,10 @@ namespace Domain
 
         #endregion
 
+        public SeedBedStatus(int a)
+        {
+            
+        }
 
         #region Constructors
         /// <summary>
@@ -485,6 +489,11 @@ namespace Domain
             _ordersToDelete.Clear();
             _orderLocationsToDelete.Clear();
             _orderLocationsToAdd.Clear();
+        }
+
+        private int Test()
+        {
+            return 1;
         }
 
 
