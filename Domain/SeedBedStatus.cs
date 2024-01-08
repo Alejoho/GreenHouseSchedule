@@ -1,3 +1,4 @@
+using DataAccess.Contracts;
 using DataAccess.Repositories;
 using Domain.Models;
 using Domain.Processors;
@@ -25,8 +26,8 @@ namespace Domain
         private readonly int _amountOfSowSeedTrayPerDay;
         private int _remainingAmountOfSowSeedTrayPerDay;
 
-        private GreenHouseRepository _greenHouseRepository;
-        private SeedTrayRepository _seedTrayRepository;
+        private IGreenHouseRepository _greenHouseRepository;
+        private ISeedTrayRepository _seedTrayRepository;
         private OrderRepository _orderRepository;
         private OrderLocationRepository _orderLocationRepository;
         private DeliveryDetailRepository _deliveryDetailRepository;
@@ -41,10 +42,14 @@ namespace Domain
 
 
         #endregion
-
-        public SeedBedStatus(int a)
+        public SeedBedStatus(string a)
         {
             
+        }
+        public SeedBedStatus(IGreenHouseRepository greenHouseRepo = null, ISeedTrayRepository seedTrayRepo = null)
+        {
+            _greenHouseRepository = greenHouseRepo;
+            _seedTrayRepository = seedTrayRepo;
         }
 
         #region Constructors
@@ -63,10 +68,10 @@ namespace Domain
 
             _presentDate = new DateOnly(2023, 6, 10);
             _iteratorDate = _presentDate.AddDays(-daysToMoveBack);
-            
+
             int seedTraysPerDay;
             int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.DailySowingPotential], out seedTraysPerDay);
-            _amountOfSowSeedTrayPerDay = seedTraysPerDay; 
+            _amountOfSowSeedTrayPerDay = seedTraysPerDay;
 
             _greenHouseRepository = new GreenHouseRepository();
             _seedTrayRepository = new SeedTrayRepository();
@@ -215,7 +220,7 @@ namespace Domain
         private LinkedList<OrderModel> GetMajorityDataOfOrders()
         {
             var orderList = _orderProcessor.GetOrdersFromADateOn(_iteratorDate).ToList();
-    
+
             LinkedList<OrderModel> orderModelLinkedList = new LinkedList<OrderModel>();
 
             foreach (var order in orderList)
@@ -246,11 +251,11 @@ namespace Domain
             FillDeliveryDetails(orderLocationModelLinkedList);
             foreach (var order in _orders)
             {
-                order.OrderLocations = new LinkedList<OrderLocationModel>( 
+                order.OrderLocations = new LinkedList<OrderLocationModel>(
                     (from orderLocationElement in orderLocationModelLinkedList
-                    where orderLocationElement.OrderID == order.ID
-                    orderby orderLocationElement.ID
-                    select orderLocationElement));
+                     where orderLocationElement.OrderID == order.ID
+                     orderby orderLocationElement.ID
+                     select orderLocationElement));
                 //order.OrderLocations = (LinkedList<OrderLocationModel>)
                 //                        orderLocationModelLinkedList.
                 //                        Where(orderLocationElement => orderLocationElement.OrderID == order.ID);
@@ -268,7 +273,7 @@ namespace Domain
                 .ToList();
 
             LinkedList<OrderLocationModel> orderLocationModelLinkedList = new LinkedList<OrderLocationModel>();
-            
+
             foreach (var orderLocation in orderLocations)
             {
                 orderLocationModelLinkedList.AddLast(new OrderLocationModel(
@@ -297,11 +302,11 @@ namespace Domain
             List<DeliveryDetailModel> deliveryDetailList = GetDeliveryDetails();
             foreach (var orderLocation in pOrderLocationModelLinkedList)
             {
-                orderLocation.DeliveryDetails = 
+                orderLocation.DeliveryDetails =
                     (from deliveryDetailElement in deliveryDetailList
-                    where deliveryDetailElement.OrderLocationID == orderLocation.ID
-                    orderby deliveryDetailElement.DeliveryDate
-                    select deliveryDetailElement).ToList();
+                     where deliveryDetailElement.OrderLocationID == orderLocation.ID
+                     orderby deliveryDetailElement.DeliveryDate
+                     select deliveryDetailElement).ToList();
                 //orderLocation.DeliveryDetails = (List<DeliveryDetailModel>)
                 //                                deliveryDetailList.
                 //                                Where(n => n.OrderLocationID == orderLocation.ID);
@@ -348,7 +353,7 @@ namespace Domain
                 ImplementReservation();
                 UpdateObjects();
                 ClearArrayLists();
-                _iteratorDate =_iteratorDate.AddDays(1);
+                _iteratorDate = _iteratorDate.AddDays(1);
             } while (_iteratorDate <= _presentDate);
             ImplementDelayRelease();
             UpdateObjects();
