@@ -108,8 +108,8 @@ public class GreenHouseRepositoryTests
     {
         byte index = 1;
         return new Faker<GreenHouse>()
+            .RuleFor(x => x.Name, f => $"Casa {index}")
             .RuleFor(x => x.Id, f => index++)
-            .RuleFor(x => x.Name, f => f.Person.FullName)
             .RuleFor(x => x.Description, f => f.Commerce.ProductDescription())
             .RuleFor(x => x.Width, f => f.Random.Short(6, 20))
             .RuleFor(x => x.Length, f => f.Random.Short(50, 100))
