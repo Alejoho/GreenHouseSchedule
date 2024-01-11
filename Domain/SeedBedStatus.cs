@@ -103,7 +103,7 @@ namespace Domain
             //LATER - this is the same situation than above.
             _deliveryDetails = GetDeliveryDetails();
 
-            //NEXT - Continue the debbuging with this method
+            //NEXT - Create the tests for the sub methods related to this method.
             FillOrderLocations();
 
             DayByDayToCurrentDate();
@@ -478,7 +478,7 @@ namespace Domain
                 //Adds the current orderlocation to the linked list of the order
                 order.OrderLocations.AddLast(orderLocation);
 
-                //NEXT - look up how to find an specific node in a linked list
+                //NEXT - Look up how to find an specific node in a linked list
                 //LinkedListNode<OrderLocationModel> node = _orderLocations
                 //    .Find(orderLocation => orderLocation.ID == node.Value.ID);
 
