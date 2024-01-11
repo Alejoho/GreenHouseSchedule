@@ -7,19 +7,20 @@ using Moq;
 using System.Reflection;
 
 namespace DomainTests;
-
+//TODO - Maybe implement a foreach to iterate through the actual variable and make sure
+// that none value was changed.
 public class SeedBedStatusTests
 {
     [Fact]
     public void GetGreenHouses_ShouldReturnAllGreenHouses()
     {
         var collection = GenerateGreenHouses(5);
-        Mock<IGreenHouseRepository> greenHouseRepository =
+        Mock<IGreenHouseRepository> mockGreenHouseRepository =
             new Mock<IGreenHouseRepository>();
-        greenHouseRepository.Setup(x => x.GetAll()).Returns(collection);
+        mockGreenHouseRepository.Setup(x => x.GetAll()).Returns(collection);
 
         SeedBedStatus status = new SeedBedStatus(
-            greenHouseRepo: greenHouseRepository.Object);
+            greenHouseRepo: mockGreenHouseRepository.Object);
 
         MethodInfo methodInfo = typeof(SeedBedStatus)
             .GetMethod("GetGreenHouses",
@@ -30,6 +31,7 @@ public class SeedBedStatusTests
 
         actual.Should().HaveCount(5);
         actual[0].Should().BeOfType(typeof(GreenHouseModel));
+        mockGreenHouseRepository.Verify(x =>x.GetAll(),Times.Once());
     }
 
     public IEnumerable<GreenHouse> GenerateGreenHouses(int count)
@@ -70,11 +72,11 @@ public class SeedBedStatusTests
     public void GetSeedTrays_ShouldReturnAllSeedTrays()
     {
         var collection = GenerateSeedTrays(5);
-        Mock<ISeedTrayRepository> seedTrayRepository = new Mock<ISeedTrayRepository>();
-        seedTrayRepository.Setup(x => x.GetAll()).Returns(collection);
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
+        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(collection);
 
         SeedBedStatus status = new SeedBedStatus(
-            seedTrayRepo: seedTrayRepository.Object);
+            seedTrayRepo: mockSeedTrayRepository.Object);
 
         MethodInfo methodInfo = typeof(SeedBedStatus)
             .GetMethod("GetSeedTrays",
@@ -84,6 +86,7 @@ public class SeedBedStatusTests
 
         actual.Should().HaveCount(5);
         actual[0].Should().BeOfType(typeof(SeedTrayModel));
+        mockSeedTrayRepository.Verify(x =>x.GetAll(),Times.Once());
     }
 
     public IEnumerable<SeedTray> GenerateSeedTrays(int count)
@@ -124,13 +127,13 @@ public class SeedBedStatusTests
         var filteredCollection = collection
             .Where(x => x.RealSowDate > date || x.RealSowDate == null);
 
-        Mock<IOrderProcessor> orderProcessor = new Mock<IOrderProcessor>();
+        Mock<IOrderProcessor> mockOrderProcessor = new Mock<IOrderProcessor>();
 
-        orderProcessor.Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
+        mockOrderProcessor.Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
             .Returns(filteredCollection);
 
         SeedBedStatus status = new SeedBedStatus(
-            orderProcessor: orderProcessor.Object);
+            orderProcessor: mockOrderProcessor.Object);
 
         MethodInfo methodInfo = typeof(SeedBedStatus)
             .GetMethod("GetMajorityDataOfOrders",
@@ -142,6 +145,8 @@ public class SeedBedStatusTests
         int count = filteredCollection.Count();
         actual.Count.Should().Be(count);
         actual.First.Should().BeOfType(typeof(LinkedListNode<OrderModel>));
+        mockOrderProcessor.Verify(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()),
+            Times.Once());
 
     }
 
