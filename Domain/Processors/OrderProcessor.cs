@@ -6,7 +6,7 @@ using SupportLayer.Models;
 
 namespace Domain.Processors;
 
-public class OrderProcessor
+public class OrderProcessor : IOrderProcessor
 {
     //CHECK - If want to keep this interface type instead of change it to the class itself.
     private IOrderRepository _repository;
@@ -88,14 +88,14 @@ public class OrderProcessor
             || x.RealDeliveryDate.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase)
             ).OrderBy(x => x.Client.Name);
 
-        return output;       
+        return output;
     }
 
     public IEnumerable<Order> GetOrdersFromADateOn(DateOnly date)
     {
         IEnumerable<Order> output = null!;
 
-        if(_repository is OrderRepository orderRepository)
+        if (_repository is OrderRepository orderRepository)
         {
             output = orderRepository.GetByARealSowDateOn(date)
                 .OrderBy(x => x.EstimateSowDate)
