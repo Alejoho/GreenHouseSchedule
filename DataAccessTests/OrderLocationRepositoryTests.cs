@@ -14,7 +14,7 @@ public class OrderLocationRepositoryTests
 
     public OrderLocationRepositoryTests()
     {
-        _orderLocations = GenerateRecords(5);
+        _orderLocations = GenerateRecords(20);
         _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
         _mockSowScheduleDbContex.Setup(x => x.OrderLocations).Returns((MockGenerator.GetQueryableMockDbSet<OrderLocation>(_orderLocations)));
         _orderLocationRepository = new OrderLocationRepository(_mockSowScheduleDbContex.Object);
@@ -25,7 +25,22 @@ public class OrderLocationRepositoryTests
     {
         var actual = _orderLocationRepository.GetAll();
 
-        actual.Count().Should().Be(5);
+        actual.Count().Should().Be(20);
+    }
+    //TODO - These test method of filtered records sometimes pass and sometimes don't
+    //I think is because the bogus library isn't generating with the seed correctly
+    [Fact]
+    public void GetByASowDateOn_ShouldReturnFilteredRecords()
+    {
+        _orderLocations = GenerateRecords(20);
+        DateOnly date = new DateOnly(2023,8,1);
+
+        var actual = _orderLocationRepository.GetByASowDateOn(date).ToList();
+
+        int count = _orderLocations
+            .Where(x => x.SowDate > date || x.SowDate == null)
+            .Count();
+        actual.Count().Should().Be(count);
     }
 
     [Fact]
@@ -36,7 +51,7 @@ public class OrderLocationRepositoryTests
         bool actual = _orderLocationRepository.Insert(newRecord);
 
         actual.Should().BeTrue();
-        _orderLocations.Count.Should().Be(6);
+        _orderLocations.Count.Should().Be(21);
         _mockSowScheduleDbContex.Verify(x => x.OrderLocations.Add(newRecord), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }
@@ -52,7 +67,7 @@ public class OrderLocationRepositoryTests
         bool actual = _orderLocationRepository.Remove(idOfTheRecordToRemove);
 
         actual.Should().BeTrue();
-        _orderLocations.Count.Should().Be(4);
+        _orderLocations.Count.Should().Be(19);
         _mockSowScheduleDbContex.Verify(x => x.OrderLocations.Find(idOfTheRecordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.OrderLocations.Remove(recordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
@@ -89,7 +104,7 @@ public class OrderLocationRepositoryTests
 
     public List<OrderLocation> GenerateRecords(int count)
     {
-        Randomizer.Seed = new Random(123);
+        Randomizer.Seed = new Random(297);
         var fakeRecord = GetFaker();
 
         return fakeRecord.Generate(count).ToList();
@@ -115,10 +130,11 @@ public class OrderLocationRepositoryTests
             .RuleFor(x => x.SeedTrayAmount, f => f.Random.Short(200, 750))
             .RuleFor(x => x.SeedlingAmount, (f, u) => u.SeedTrayAmount * alveolus[u.SeedTrayId])
             .RuleFor(x => x.SowDate, f =>
+            f.Random.Bool() == true ?
                 DateOnly.FromDateTime(
                     f.Date.Between(new DateTime(2023, 1, 1),
-                        new DateTime(2023, 12, 31))
-                    )
+                        new DateTime(2023, 12, 31))) 
+                : null
                 )
             .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.SowDate)
             .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);

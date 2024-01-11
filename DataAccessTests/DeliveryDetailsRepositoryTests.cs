@@ -1,6 +1,4 @@
 ﻿using Bogus;
-using DataAccess;
-using DataAccess.Contracts;
 using DataAccess.Repositories;
 using FluentAssertions;
 using Moq;
@@ -15,7 +13,7 @@ public class DeliveryDetailsRepositoryTests
 
     public DeliveryDetailsRepositoryTests()
     {
-        _deliveryDetails = GenerateRecords(5);
+        _deliveryDetails = GenerateRecords(20);
         _mockSowScheduleDbContex = new Mock<SowScheduleContext>();
         _mockSowScheduleDbContex.Setup(x => x.DeliveryDetails).Returns((MockGenerator.GetQueryableMockDbSet<DeliveryDetail>(_deliveryDetails)));
         _deliveryDetailRepository = new DeliveryDetailRepository(_mockSowScheduleDbContex.Object);
@@ -26,8 +24,21 @@ public class DeliveryDetailsRepositoryTests
     {
         var actual = _deliveryDetailRepository.GetAll();
 
-        actual.Count().Should().Be(5);
+        actual.Count().Should().Be(20);
     }
+
+    [Fact]
+    public void GetByADeliveryDateOn_ShouldReturnFilteredRecords()
+    {
+        _deliveryDetails = GenerateRecords(20);
+        DateOnly date = new DateOnly(2023, 8, 1);
+
+        var actual = _deliveryDetailRepository.GetByADeliveryDateOn(date).ToList();
+
+        int count = _deliveryDetails.Where(x => x.DeliveryDate > date).Count();
+        actual.Count().Should().Be(count);
+    }
+    
 
     [Fact]
     public void Insert_ShouldInsertARecord()
@@ -37,7 +48,7 @@ public class DeliveryDetailsRepositoryTests
         bool actual = _deliveryDetailRepository.Insert(newRecord);
 
         actual.Should().BeTrue();
-        _deliveryDetails.Count.Should().Be(6);
+        _deliveryDetails.Count.Should().Be(21);
         _mockSowScheduleDbContex.Verify(x => x.DeliveryDetails.Add(newRecord), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
     }
@@ -53,7 +64,7 @@ public class DeliveryDetailsRepositoryTests
         bool actual = _deliveryDetailRepository.Remove(idOfTheRecordToRemove);
 
         actual.Should().BeTrue();
-        _deliveryDetails.Count.Should().Be(4);
+        _deliveryDetails.Count.Should().Be(19);
         _mockSowScheduleDbContex.Verify(x => x.DeliveryDetails.Find(idOfTheRecordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.DeliveryDetails.Remove(recordToRemove), Times.Once());
         _mockSowScheduleDbContex.Verify(x => x.SaveChanges(), Times.Once());
@@ -86,7 +97,7 @@ public class DeliveryDetailsRepositoryTests
 
     public List<DeliveryDetail> GenerateRecords(int count)
     {
-        Randomizer.Seed = new Random(123);
+        Randomizer.Seed = new Random(759);
         var fakeDeliveryDetail = GetFaker();
 
         return fakeDeliveryDetail.Generate(count).ToList();
@@ -108,7 +119,7 @@ public class DeliveryDetailsRepositoryTests
         return new Faker<DeliveryDetail>()
             .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.BlockId, f => f.Random.Int(1, 200))
-            .RuleFor(x => x.DeliveryDate, f => 
+            .RuleFor(x => x.DeliveryDate, f =>
                 DateOnly.FromDateTime(f.Date.Between(startDate, endDate)))
             .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(1, 1000));
     }

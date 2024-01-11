@@ -1,8 +1,6 @@
-﻿using DataAccess.Contracts;
-using System;
-using System.Collections.Generic;
+﻿using DataAccess.Context;
+using DataAccess.Contracts;
 using SupportLayer.Models;
-using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -30,17 +28,17 @@ namespace DataAccess.Repositories
 
         public bool Insert(Order entity)
         {
-                _sowScheduleDB.Orders.Add(entity);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            _sowScheduleDB.Orders.Add(entity);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Remove(int pId)
         {
-                Order order = _sowScheduleDB.Orders.Find((short)pId);
-                _sowScheduleDB.Orders.Remove(order);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            Order order = _sowScheduleDB.Orders.Find((short)pId);
+            _sowScheduleDB.Orders.Remove(order);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Update(Order entity)
