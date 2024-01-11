@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using DataAccess;
 using DataAccess.Repositories;
 using FluentAssertions;
 using Moq;
@@ -85,6 +84,7 @@ public class SeedTrayRepositoryTests
         recordUpdated.TrayLength.Should().Be(newRecordData.TrayLength);
         recordUpdated.TrayWidth.Should().Be(newRecordData.TrayWidth);
         recordUpdated.TrayArea.Should().Be(newRecordData.TrayArea);
+        recordUpdated.LogicalTrayArea.Should().Be(newRecordData.LogicalTrayArea);
         recordUpdated.TotalAmount.Should().Be(newRecordData.TotalAmount);
         recordUpdated.Material.Should().Be(newRecordData.Material);
         recordUpdated.Preference.Should().Be(newRecordData.Preference);
@@ -112,14 +112,15 @@ public class SeedTrayRepositoryTests
         byte index = 1;
         byte preference = 1;
         return new Faker<SeedTray>()
-            .RuleFor(x => x.Id, f => index++)
-            .RuleFor(x => x.Name, f => f.Person.FirstName)
+            .RuleFor(x => x.Id, f => index++)            
             .RuleFor(x => x.AlveolusLength, f => f.Random.Byte(10, 25))
             .RuleFor(x => x.AlveolusWidth, f => f.Random.Byte(8, 14))
             .RuleFor(x => x.TotalAlveolus, (f, u) => Convert.ToInt16(u.AlveolusLength * u.AlveolusWidth))
+            .RuleFor(x => x.Name, (f, u) => $"Badejas de {u.TotalAlveolus}")
             .RuleFor(x => x.TrayLength, f => Convert.ToDecimal(f.Random.Double(0.6, 1.0)))
             .RuleFor(x => x.TrayWidth, f => Convert.ToDecimal(f.Random.Double(0.3, 0.5)))
             .RuleFor(x => x.TrayArea, (f, u) => u.TrayLength * u.TrayWidth)
+            .RuleFor(x => x.LogicalTrayArea, (f, u) => u.TrayArea * f.Random.Decimal(1, 1.2M))
             .RuleFor(x => x.TotalAmount, f => f.Random.Short(300, 1500))
             .RuleFor(x => x.Material, f => f.Vehicle.Type())
             .RuleFor(x => x.Preference, f => preference++)

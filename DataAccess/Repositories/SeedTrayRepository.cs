@@ -49,6 +49,7 @@ namespace DataAccess.Repositories
                 seedTray.TrayLength = entity.TrayLength;
                 seedTray.TrayWidth = entity.TrayWidth;
                 seedTray.TrayArea = entity.TrayArea;
+                seedTray.LogicalTrayArea = entity.LogicalTrayArea;
                 seedTray.TotalAmount = entity.TotalAmount;
                 seedTray.Material = entity.Material;
                 seedTray.Preference = entity.Preference;
