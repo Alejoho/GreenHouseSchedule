@@ -3,6 +3,7 @@ using DataAccess.Repositories;
 using Domain.Models;
 using Domain.Processors;
 using SupportLayer;
+using SupportLayer.Models;
 using System.Collections;
 using System.Configuration;
 
@@ -32,7 +33,7 @@ namespace Domain
         private OrderLocationRepository _orderLocationRepository;
         private DeliveryDetailRepository _deliveryDetailRepository;
 
-        private OrderProcessor _orderProcessor;
+        private IOrderProcessor _orderProcessor;
         private OrderLocationProcessor _orderLocationProcessor;
         private DeliveryDetailProcessor _deliveryDetailProcessor;
 
@@ -46,10 +47,12 @@ namespace Domain
         {
             
         }
-        public SeedBedStatus(IGreenHouseRepository greenHouseRepo = null, ISeedTrayRepository seedTrayRepo = null)
+        public SeedBedStatus(IGreenHouseRepository greenHouseRepo = null, ISeedTrayRepository seedTrayRepo = null,
+            IOrderProcessor orderProcessor = null)
         {
             _greenHouseRepository = greenHouseRepo;
             _seedTrayRepository = seedTrayRepo;
+            _orderProcessor = orderProcessor;
         }
 
         #region Constructors
