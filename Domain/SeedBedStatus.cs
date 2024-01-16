@@ -34,7 +34,7 @@ namespace Domain
         private DeliveryDetailRepository _deliveryDetailRepository;
 
         private IOrderProcessor _orderProcessor;
-        private OrderLocationProcessor _orderLocationProcessor;
+        private IOrderLocationProcessor _orderLocationProcessor;
         private DeliveryDetailProcessor _deliveryDetailProcessor;
 
         private ArrayList _ordersToDelete;
@@ -47,12 +47,15 @@ namespace Domain
         {
             
         }
-        public SeedBedStatus(IGreenHouseRepository greenHouseRepo = null, ISeedTrayRepository seedTrayRepo = null,
-            IOrderProcessor orderProcessor = null)
+        public SeedBedStatus(IGreenHouseRepository greenHouseRepo = null, 
+            ISeedTrayRepository seedTrayRepo = null,
+            IOrderProcessor orderProcessor = null,
+            IOrderLocationProcessor orderLocationProcessor = null)
         {
             _greenHouseRepository = greenHouseRepo;
             _seedTrayRepository = seedTrayRepo;
             _orderProcessor = orderProcessor;
+            _orderLocationProcessor = orderLocationProcessor;
         }
 
         #region Constructors
@@ -270,7 +273,7 @@ namespace Domain
         /// </summary>
         /// <returns>Returns a <c>LinkedList<OrderLocationModel></c>.</returns>
         private LinkedList<OrderLocationModel> GetOrderLocations()
-        {
+        {            
             var orderLocations = _orderLocationProcessor
                 .GetOrderLocationsFromADateOn(_iteratorDate)
                 .ToList();
@@ -322,6 +325,7 @@ namespace Domain
         /// <returns>Returns a List<DeliveryDetailModel></returns>
         private List<DeliveryDetailModel> GetDeliveryDetails()
         {
+            //NEXT - this is the next method to create its test
             var deliveryDetails = _deliveryDetailProcessor
                 .GetDeliveryDetailFromADateOn(_iteratorDate)
                 .ToList();

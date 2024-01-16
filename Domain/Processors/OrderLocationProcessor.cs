@@ -3,7 +3,7 @@ using SupportLayer.Models;
 
 namespace Domain.Processors;
 
-public class OrderLocationProcessor
+public class OrderLocationProcessor : IOrderLocationProcessor
 {
     private OrderLocationRepository _repository;
 
