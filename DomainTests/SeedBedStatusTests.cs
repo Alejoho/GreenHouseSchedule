@@ -31,7 +31,7 @@ public class SeedBedStatusTests
 
         actual.Should().HaveCount(5);
         actual[0].Should().BeOfType(typeof(GreenHouseModel));
-        mockGreenHouseRepository.Verify(x =>x.GetAll(),Times.Once());
+        mockGreenHouseRepository.Verify(x => x.GetAll(), Times.Once());
     }
 
     public IEnumerable<GreenHouse> GenerateGreenHouses(int count)
@@ -86,7 +86,7 @@ public class SeedBedStatusTests
 
         actual.Should().HaveCount(5);
         actual[0].Should().BeOfType(typeof(SeedTrayModel));
-        mockSeedTrayRepository.Verify(x =>x.GetAll(),Times.Once());
+        mockSeedTrayRepository.Verify(x => x.GetAll(), Times.Once());
     }
 
     public IEnumerable<SeedTray> GenerateSeedTrays(int count)
@@ -185,5 +185,78 @@ public class SeedBedStatusTests
             .RuleFor(x => x.Client, f => new Client())
             .RuleFor(x => x.Product, f => new Product()
             { Specie = new Species() });
+    }
+
+    [Fact]
+    public void GetOrderLocations_ShouldRetrieveTheOrderLocations()
+    {
+        var collection = GenerateOrderLocations(20);
+
+        DateOnly date = new DateOnly(2023, 7, 1);
+
+        var filteredCollection = collection
+            .Where(x => x.SowDate > date || x.SowDate == null);
+
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = new Mock<IOrderLocationProcessor>();
+
+        mockOrderLocationProcessor
+            .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(filteredCollection);
+
+        SeedBedStatus status = new SeedBedStatus(
+            orderLocationProcessor: mockOrderLocationProcessor.Object);
+
+        MethodInfo methodInfo = typeof(SeedBedStatus)
+            .GetMethod("GetOrderLocations",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        LinkedList<OrderLocationModel> actual =
+                (LinkedList<OrderLocationModel>)methodInfo.Invoke(status, null);
+
+        int count = filteredCollection.Count();
+        actual.Count.Should().Be(count);
+        actual.First.Should().BeOfType(typeof(LinkedListNode<OrderLocationModel>));
+        mockOrderLocationProcessor.
+            Verify(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()),
+            Times.Once());
+    }
+
+    private IEnumerable<OrderLocation> GenerateOrderLocations(int count)
+    {
+        Randomizer.Seed = new Random(765);
+        var fakeRecord = GetOrderLocationFaker();
+
+        return fakeRecord.Generate(count);
+    }
+
+    private Faker<OrderLocation> GetOrderLocationFaker()
+    {
+        int[] productionDays = new[] { 30, 45 };
+        short index = 1;
+        return new Faker<OrderLocation>()
+            .RuleFor(x => x.Id, f => index++)
+            .RuleFor(x => x.GreenHouseId, f => f.Random.Byte(1, 8))
+            .RuleFor(x => x.SeedTrayId, f => f.Random.Byte(1, 7))
+            .RuleFor(x => x.OrderId, f => f.Random.Short(1, 12))
+            .RuleFor(x => x.SeedTrayAmount, f => f.Random.Short(50, 500))
+            .RuleFor(x => x.SeedlingAmount, f => f.Random.Int(5000, 35000))
+            .RuleFor(x => x.SowDate,
+                f => f.Random.Bool() == true ?
+                    DateOnly.FromDateTime(
+                        f.Date.Between(
+                            new DateTime(2023, 1, 1),
+                            new DateTime(2023, 12, 31)
+                            )
+                        )
+                    : null
+                    )
+            .RuleFor(x => x.EstimateDeliveryDate, 
+                (f, u) => u.SowDate?.AddDays(f.PickRandom(productionDays)))
+            .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);            
+            
+
+                //.RuleFor(x => x.RealSowDate, (f, u) =>
+                //f.Random.Bool() ? u.EstimateSowDate : null
+                //)
     }
 }
