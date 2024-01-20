@@ -41,7 +41,7 @@ public class SeedBedStatusTests
 
         return fakeRecord.Generate(count);
     }
-    //NEXT  - Round the decimal values to 2 precision digits.
+
     private Faker<GreenHouse> GetGreenHouseModelFaker()
     {
         byte index = 1;
@@ -250,13 +250,79 @@ public class SeedBedStatusTests
                         )
                     : null
                     )
-            .RuleFor(x => x.EstimateDeliveryDate, 
+            .RuleFor(x => x.EstimateDeliveryDate,
                 (f, u) => u.SowDate?.AddDays(f.PickRandom(productionDays)))
-            .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);            
-            
+            .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);
 
-                //.RuleFor(x => x.RealSowDate, (f, u) =>
-                //f.Random.Bool() ? u.EstimateSowDate : null
-                //)
+
+        //.RuleFor(x => x.RealSowDate, (f, u) =>
+        //f.Random.Bool() ? u.EstimateSowDate : null
+        //)
+    }
+
+    [Fact]
+    public void GetDeliveryDetails_ShouldRetrieveTheDeliveryDetails()
+    {
+        var collection = GenerateDeliveryDetails(20);
+
+        DateOnly date = new DateOnly(2023, 7, 1);
+
+        var filteredCollection = collection
+            .Where(x => x.DeliveryDate > date);
+
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = new Mock<IDeliveryDetailProcessor>();
+
+        mockDeliveryDetailProcessor
+            .Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(filteredCollection);
+
+        SeedBedStatus status = new SeedBedStatus(
+            deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
+
+        MethodInfo methodInfo = typeof(SeedBedStatus)
+            .GetMethod("GetDeliveryDetails",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        List<DeliveryDetailModel> actual =
+                (List<DeliveryDetailModel>)methodInfo.Invoke(status, null);
+
+        int count = filteredCollection.Count();
+        actual.Count.Should().Be(count);
+        actual.First().Should().BeOfType(typeof(DeliveryDetailModel));
+        mockDeliveryDetailProcessor.
+            Verify(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>()),
+            Times.Once());
+    }
+
+    private IEnumerable<DeliveryDetail> GenerateDeliveryDetails(int count)
+    {
+        Randomizer.Seed = new Random(834);
+        var fakeRecord = GetDeliveryDetailFaker();
+
+        return fakeRecord.Generate(count);
+    }
+
+    private Faker<DeliveryDetail> GetDeliveryDetailFaker()
+    {
+        short index = 1;
+        return new Faker<DeliveryDetail>()
+            .RuleFor(x => x.Id, f => index++)
+            .RuleFor(x => x.Block, 
+            f => new Block() { OrderLocationId = f.Random.Int(1, 15) })
+            .RuleFor(x => x.DeliveryDate,
+            f => DateOnly.FromDateTime(
+                f.Date.Between(
+                    new DateTime(2023, 1, 1),
+                    new DateTime(2023, 12, 31)
+                    )
+                )
+            )
+            .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(50, 500));
+    }
+
+    [Fact]
+    public void FillDeliveryDetails_ShouldPopulateTheDeliveryDetailsOfTheOrderLocations()
+    {
+        
     }
 }
