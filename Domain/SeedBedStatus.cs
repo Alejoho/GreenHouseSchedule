@@ -3,7 +3,6 @@ using DataAccess.Repositories;
 using Domain.Models;
 using Domain.Processors;
 using SupportLayer;
-using SupportLayer.Models;
 using System.Collections;
 using System.Configuration;
 
@@ -45,9 +44,9 @@ namespace Domain
         #endregion
         public SeedBedStatus(string a)
         {
-            
+
         }
-        public SeedBedStatus(IGreenHouseRepository greenHouseRepo = null, 
+        public SeedBedStatus(IGreenHouseRepository greenHouseRepo = null,
             ISeedTrayRepository seedTrayRepo = null,
             IOrderProcessor orderProcessor = null,
             IOrderLocationProcessor orderLocationProcessor = null)
@@ -88,11 +87,6 @@ namespace Domain
             _orderProcessor = new OrderProcessor();
             _orderLocationProcessor = new OrderLocationProcessor();
             _deliveryDetailProcessor = new DeliveryDetailProcessor();
-
-            //NEXT - I think these are useless intanciations
-            _orderLocations = new LinkedList<OrderLocationModel>();
-            _deliveryDetails = new List<DeliveryDetailModel>();
-
 
             _ordersToDelete = new ArrayList();
             _orderLocationsToDelete = new ArrayList();
@@ -144,28 +138,27 @@ namespace Domain
 
             foreach (GreenHouseModel greenHouseModel in pOriginalSeedBedStatus.GreenHouses)
             {
-                //NEXT - Use the copy constructor in the lists inside each foreach
-                this._greenHouses.Add(greenHouseModel);
+                this._greenHouses.Add(new GreenHouseModel(greenHouseModel));
             }
 
             foreach (SeedTrayModel seedTrayModel in pOriginalSeedBedStatus.SeedTrays)
             {
-                this._seedTrays.Add(seedTrayModel);
+                this._seedTrays.Add(new SeedTrayModel(seedTrayModel));
             }
 
             foreach (OrderModel orderModel in pOriginalSeedBedStatus.Orders)
             {
-                this._orders.AddLast(orderModel);
+                this._orders.AddLast(new OrderModel(orderModel));
             }
 
             foreach (OrderLocationModel orderLocationModel in pOriginalSeedBedStatus.OrderLocations)
             {
-                this._orderLocations.AddLast(orderLocationModel);
+                this._orderLocations.AddLast(new OrderLocationModel(orderLocationModel));
             }
 
             foreach (DeliveryDetailModel deliveryDetailModel in pOriginalSeedBedStatus.DeliveryDetails)
             {
-                this._deliveryDetails.Add(deliveryDetailModel);
+                this._deliveryDetails.Add(new DeliveryDetailModel(deliveryDetailModel));
             }
         }
 
@@ -273,7 +266,7 @@ namespace Domain
         /// </summary>
         /// <returns>Returns a <c>LinkedList<OrderLocationModel></c>.</returns>
         private LinkedList<OrderLocationModel> GetOrderLocations()
-        {            
+        {
             var orderLocations = _orderLocationProcessor
                 .GetOrderLocationsFromADateOn(_iteratorDate)
                 .ToList();
