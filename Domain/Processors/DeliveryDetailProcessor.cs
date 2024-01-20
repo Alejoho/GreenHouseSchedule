@@ -3,7 +3,7 @@ using SupportLayer.Models;
 
 namespace Domain.Processors;
 
-public class DeliveryDetailProcessor
+public class DeliveryDetailProcessor : IDeliveryDetailProcessor
 {
     private DeliveryDetailRepository _repository;
 

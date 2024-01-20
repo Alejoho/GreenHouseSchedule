@@ -34,7 +34,7 @@ namespace Domain
 
         private IOrderProcessor _orderProcessor;
         private IOrderLocationProcessor _orderLocationProcessor;
-        private DeliveryDetailProcessor _deliveryDetailProcessor;
+        private IDeliveryDetailProcessor _deliveryDetailProcessor;
 
         private ArrayList _ordersToDelete;
         private ArrayList _orderLocationsToDelete;
@@ -49,12 +49,14 @@ namespace Domain
         public SeedBedStatus(IGreenHouseRepository greenHouseRepo = null,
             ISeedTrayRepository seedTrayRepo = null,
             IOrderProcessor orderProcessor = null,
-            IOrderLocationProcessor orderLocationProcessor = null)
+            IOrderLocationProcessor orderLocationProcessor = null,
+            IDeliveryDetailProcessor deliveryDetailProcessor = null)
         {
             _greenHouseRepository = greenHouseRepo;
             _seedTrayRepository = seedTrayRepo;
             _orderProcessor = orderProcessor;
             _orderLocationProcessor = orderLocationProcessor;
+            _deliveryDetailProcessor = deliveryDetailProcessor;
         }
 
         #region Constructors
@@ -103,7 +105,6 @@ namespace Domain
             //LATER - this is the same situation than above.
             _deliveryDetails = GetDeliveryDetails();
 
-            //NEXT - Create the tests for the sub methods related to this method.
             FillOrderLocations();
 
             DayByDayToCurrentDate();
@@ -246,6 +247,7 @@ namespace Domain
         /// </summary>
         private void FillOrderLocations()
         {
+            //NEXT - this is the other method to create its test
             LinkedList<OrderLocationModel> orderLocationModelLinkedList = GetOrderLocations();
             FillDeliveryDetails(orderLocationModelLinkedList);
             foreach (var order in _orders)
@@ -298,6 +300,7 @@ namespace Domain
         /// <param name="pOrderLocationModelLinkedList">LinkedList<OrderLocationModel> to fill with their delivery details.</param>
         private void FillDeliveryDetails(LinkedList<OrderLocationModel> pOrderLocationModelLinkedList)
         {
+            //NEXT - this is the next method to create its test
             List<DeliveryDetailModel> deliveryDetailList = GetDeliveryDetails();
             foreach (var orderLocation in pOrderLocationModelLinkedList)
             {
@@ -318,7 +321,6 @@ namespace Domain
         /// <returns>Returns a List<DeliveryDetailModel></returns>
         private List<DeliveryDetailModel> GetDeliveryDetails()
         {
-            //NEXT - this is the next method to create its test
             var deliveryDetails = _deliveryDetailProcessor
                 .GetDeliveryDetailFromADateOn(_iteratorDate)
                 .ToList();
