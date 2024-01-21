@@ -346,4 +346,75 @@ public class SeedBedStatusTests
         //luego iterar sobre los orderlocations, generar los delivery details y agregarlos a una lista
     }
 
+    //NEXT - Finish the generator of complete orders
+    private void PopulateLists(int count)
+    {
+        Randomizer.Seed = new Random(2467);
+        var fakeOrderRecord = GetOrderFaker();
+
+        _orders = fakeOrderRecord.Generate(count);
+
+        foreach(var order in _orders) 
+        { 
+            //aqui se agregan los OrderLocations a su lista 
+        }
+
+        foreach(var orderLocation in _orderLocations)
+        {
+            //aqui se agregan los DeliveryDetails a su lista
+        }
+    }
+
+    private List<Order> _orders;
+    private List<OrderLocation> _orderLocations;
+    private List<DeliveryDetail> _deliveryDetails;
+
+    private Faker<OrderLocation> GetOrderLocationFaker(IEnumerable<Order> orders)
+    {
+        int[] productionDays = new[] { 30, 45 };
+        short index = 1;
+        return new Faker<OrderLocation>()
+            .RuleFor(x => x.Id, f => index++)
+            .RuleFor(x => x.GreenHouseId, f => f.Random.Byte(1, 8))
+            .RuleFor(x => x.SeedTrayId, f => f.Random.Byte(1, 7))
+            .RuleFor(x => x.OrderId, f => f.Random.Short(1, 12))
+            .RuleFor(x => x.SeedTrayAmount, f => f.Random.Short(50, 500))
+            .RuleFor(x => x.SeedlingAmount, f => f.Random.Int(5000, 35000))
+            .RuleFor(x => x.SowDate,
+                f => f.Random.Bool() == true ?
+                    DateOnly.FromDateTime(
+                        f.Date.Between(
+                            new DateTime(2023, 1, 1),
+                            new DateTime(2023, 12, 31)
+                            )
+                        )
+                    : null
+                    )
+            .RuleFor(x => x.EstimateDeliveryDate,
+                (f, u) => u.SowDate?.AddDays(f.PickRandom(productionDays)))
+            .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);
+
+
+        //.RuleFor(x => x.RealSowDate, (f, u) =>
+        //f.Random.Bool() ? u.EstimateSowDate : null
+        //)
+    }
+
+    private Faker<DeliveryDetail> GetDeliveryDetailFaker(IEnumerable<OrderLocation> orderLocations)
+    {
+        short index = 1;
+        return new Faker<DeliveryDetail>()
+            .RuleFor(x => x.Id, f => index++)
+            .RuleFor(x => x.Block,
+            f => new Block() { OrderLocationId = f.Random.Int(1, 15) })
+            .RuleFor(x => x.DeliveryDate,
+            f => DateOnly.FromDateTime(
+                f.Date.Between(
+                    new DateTime(2023, 1, 1),
+                    new DateTime(2023, 12, 31)
+                    )
+                )
+            )
+            .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(50, 500));
+    }
 }
