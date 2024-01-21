@@ -160,12 +160,19 @@ public class SeedBedStatusTests
 
     private Faker<Order> GetOrderFaker()
     {
-        int[] productionDays = new[] { 30, 45 };
+        byte[] productionDays = new byte[] { 30, 45 };
         short index = 1;
         return new Faker<Order>()
             .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.ClientId, f => f.Random.Short(1, 300))
             .RuleFor(x => x.ProductId, f => f.Random.Byte(1, 60))
+            .RuleFor(x => x.Client, f => new Client())
+            .RuleFor(x => x.Product,
+                f => new Product()
+                {
+                    Specie = new Species()
+                    { ProductionDays = f.PickRandom(productionDays) }
+                })
             .RuleFor(x => x.AmountOfWishedSeedlings, f => f.Random.Int(20000, 80000))
             .RuleFor(x => x.AmountOfAlgorithmSeedlings, (f, u) => Convert.ToInt32(u.AmountOfWishedSeedlings * 1.2))
             .RuleFor(x => x.WishDate, f =>
@@ -174,17 +181,28 @@ public class SeedBedStatusTests
                         new DateTime(2023, 12, 31))
                     )
                 )
-            .RuleFor(x => x.DateOfRequest, (f, u) => u.WishDate.AddDays(-f.Random.Int(90, 180)))
-            .RuleFor(x => x.EstimateSowDate, (f, u) => u.WishDate.AddDays(-f.PickRandom(productionDays)))
+            .RuleFor(x => x.DateOfRequest, (f, u) => u.WishDate.AddDays(-f.Random.Int(50, 180)))
+            .RuleFor(x => x.EstimateSowDate, (f, u) => u.WishDate.AddDays(-u.Product.Specie.ProductionDays))
             .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.WishDate)
             .RuleFor(x => x.RealSowDate, (f, u) =>
-                f.Random.Bool() ? u.EstimateSowDate : null
+                f.Random.Bool() ? u.EstimateSowDate.AddDays(f.Random.Int(0, 7)) : null
                 )
-            .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate)
-            .RuleFor(x => x.Complete, f => f.Random.Bool())
-            .RuleFor(x => x.Client, f => new Client())
-            .RuleFor(x => x.Product, f => new Product()
-            { Specie = new Species() });
+
+            .RuleFor(x => x.RealDeliveryDate,
+                (f, u) => u.RealSowDate == null ? null :
+                    u.RealSowDate?.AddDays(u.Product.Specie.ProductionDays)
+                )
+
+            .RuleFor(x => x.Complete,
+                (f, u) =>
+                {
+                    if (u.RealSowDate != null)
+                    {
+                        return f.Random.Bool();
+                    }
+                    return false;
+                }
+            );
     }
 
     [Fact]
@@ -323,59 +341,9 @@ public class SeedBedStatusTests
     [Fact]
     public void FillDeliveryDetails_ShouldPopulateTheDeliveryDetailsOfTheOrderLocations()
     {
-        //generar 200 orderlocations desde Id 0 al 200
-        //luego
-        //generar 500 delivery details con su respectivo block y dentro del block
-        //en el campo OrderLocationId tirar un random de 0 a 200
-        //para que coincida con el id de los orderlocations
+        //generar 50 orders sin sus orderlocations
+        //luego iterar sobre cada orden, generar sus orderlocations y agregarlas a una lista
+        //luego iterar sobre los orderlocations, generar los delivery details y agregarlos a una lista
     }
 
-    public Faker<Order> GetFullOrderFaker()
-    {
-        byte[] productionDays = new byte[] { 30, 45 };
-        short index = 1;
-        return new Faker<Order>()
-            .RuleFor(x => x.Id, f => index++)
-            .RuleFor(x => x.ClientId, f => f.Random.Short(1, 300))
-            .RuleFor(x => x.ProductId, f => f.Random.Byte(1, 60))
-            .RuleFor(x => x.Client, f => new Client())
-            .RuleFor(x => x.Product, 
-                f => new Product()
-                { 
-                    Specie = new Species()
-                        {ProductionDays = f.PickRandom(productionDays)} 
-                })
-            .RuleFor(x => x.AmountOfWishedSeedlings, f => f.Random.Int(20000, 80000))
-            .RuleFor(x => x.AmountOfAlgorithmSeedlings, (f, u) => Convert.ToInt32(u.AmountOfWishedSeedlings * 1.2))
-            .RuleFor(x => x.WishDate, f =>
-                DateOnly.FromDateTime(
-                    f.Date.Between(new DateTime(2023, 1, 1),
-                        new DateTime(2023, 12, 31))
-                    )
-                )
-            .RuleFor(x => x.DateOfRequest, (f, u) => u.WishDate.AddDays(-f.Random.Int(50, 180)))
-            .RuleFor(x => x.EstimateSowDate, (f, u) => u.WishDate.AddDays(-u.Product.Specie.ProductionDays))
-            .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.WishDate)
-            .RuleFor(x => x.RealSowDate, (f, u) =>
-                f.Random.Bool() ? u.EstimateSowDate.AddDays(f.Random.Int(0, 7)) : null
-                )
-
-            .RuleFor(x => x.RealDeliveryDate,
-                (f, u) => u.RealSowDate == null ? null :
-                    u.RealSowDate?.AddDays(u.Product.Specie.ProductionDays)
-                )
-
-            .RuleFor(x => x.Complete,
-                (f, u) =>
-                { 
-                    if(u.RealSowDate != null)
-                    {
-                        return f.Random.Bool();
-                    }
-                    return false;            
-                }
-            );
-
-
-    }
 }
