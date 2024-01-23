@@ -346,31 +346,66 @@ public class SeedBedStatusTests
         //luego iterar sobre los orderlocations, generar los delivery details y agregarlos a una lista
     }
 
-    //NEXT - Finish the generator of complete orders
     private void PopulateLists(int count)
     {
+        _orders = new List<Order>();
+        _orderLocations = new List<OrderLocation>();
+        _blocks = new List<Block>();
+        _deliveryDetails = new List<DeliveryDetail>();
+
         Randomizer.Seed = new Random(2467);
         var fakeOrderRecord = GetOrderFaker();
 
         _orders = fakeOrderRecord.Generate(count);
 
-        foreach(var order in _orders) 
-        { 
-            //aqui se agregan los OrderLocations a su lista 
+        foreach (var order in _orders)
+        {
+            int amount = 4;
+
+            var fakeOrderLocationRecord = GetOrderLocationFaker(order);
+
+            List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
+
+            order.OrderLocations = newOrderLocations;
+
+            _orderLocations.AddRange(newOrderLocations);
         }
 
-        foreach(var orderLocation in _orderLocations)
+        foreach (var orderLocation in _orderLocations)
         {
-            //aqui se agregan los DeliveryDetails a su lista
+            int amount = 3;
+
+            var fakeBlockRecord = GetBlockFaker(orderLocation);
+
+            List<Block> newBlocks = fakeBlockRecord.Generate(amount);
+
+            orderLocation.Blocks = newBlocks;
+
+            _blocks.AddRange(newBlocks);
+        }
+
+        foreach (var block in _blocks)
+        {
+            int amount = 5;
+
+            var fakeDeliveryDetail = GetDeliveryDetailFaker(block);
+
+            List<DeliveryDetail> newDeliveryDetails = fakeDeliveryDetail.Generate(amount);
+
+            block.DeliveryDetails = newDeliveryDetails;
+
+            _deliveryDetails.AddRange(newDeliveryDetails);
         }
     }
 
     private List<Order> _orders;
     private List<OrderLocation> _orderLocations;
+    private List<Block> _blocks;
     private List<DeliveryDetail> _deliveryDetails;
 
-    private Faker<OrderLocation> GetOrderLocationFaker(IEnumerable<Order> orders)
+    private Faker<OrderLocation> GetOrderLocationFaker(Order order)
     {
+        //NEXT - Review the OrderLocation generator
         int[] productionDays = new[] { 30, 45 };
         short index = 1;
         return new Faker<OrderLocation>()
@@ -400,8 +435,15 @@ public class SeedBedStatusTests
         //)
     }
 
-    private Faker<DeliveryDetail> GetDeliveryDetailFaker(IEnumerable<OrderLocation> orderLocations)
+    private Faker<Block> GetBlockFaker(OrderLocation orderLocation)
     {
+        //NEXT - Make the block generator
+        throw new NotImplementedException();
+    }
+
+    private Faker<DeliveryDetail> GetDeliveryDetailFaker(Block block)
+    {
+        //NEXT - Review the delivery detail generator
         short index = 1;
         return new Faker<DeliveryDetail>()
             .RuleFor(x => x.Id, f => index++)
