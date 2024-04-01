@@ -346,6 +346,28 @@ public class SeedBedStatusTests
         //luego iterar sobre los orderlocations, generar los delivery details y agregarlos a una lista
     }
 
+    private List<Order> _orders;
+    private List<OrderLocation> _orderLocations;
+    private List<Block> _blocks;
+    private List<DeliveryDetail> _deliveryDetails;
+    private List<SeedTray> _seedTrays;
+    private List<GreenHouse> _greenHouses;
+
+    private int[] GenerateRandomArray(int targetSum)
+    {        
+        int[] output = new int[3];
+        Random random = new Random(59);
+
+        for (int i = 0; i < 3; i++)
+        {
+            output[i] = random.Next(Convert.ToInt32(targetSum * 0.2), Convert.ToInt32(targetSum * 0.5));
+        }
+
+        output[2] = targetSum - output[0] - output[1];
+
+        return output;
+    }
+
     private void PopulateLists(int count)
     {
         _orders = new List<Order>();
@@ -357,9 +379,16 @@ public class SeedBedStatusTests
 
         Randomizer.Seed = new Random(2467);
 
-        _orders = GetCompleteOrderFaker().Generate(count);
+        int[] balanceOfOrders = GenerateRandomArray(count);        
 
-        foreach (var order in _orders)
+        const int numberOfCompletedOrder = 0;
+        const int numberOfPartialOrder = 1;
+        const int numberOfEmptyOrder = 2;
+        
+
+        List<Order> completeOrders = GetCompleteOrderFaker().Generate(balanceOfOrders[numberOfCompletedOrder]);
+
+        foreach (var order in completeOrders)
         {
             //TODO - Randomize this amount
             int amount = 4;
@@ -373,7 +402,9 @@ public class SeedBedStatusTests
             _orderLocations.AddRange(newOrderLocations);
         }
 
-        List<Order> partialOrders = GetPartialOrderFaker().Generate(15);
+        _orders.AddRange(completeOrders);
+
+        List<Order> partialOrders = GetPartialOrderFaker().Generate(balanceOfOrders[numberOfPartialOrder]);
 
         foreach(Order order in partialOrders)
         {
@@ -383,7 +414,7 @@ public class SeedBedStatusTests
         _orders.AddRange(partialOrders);
 
 
-        List<Order> emptyOrders = GetEmptyOrderFaker().Generate(40);
+        List<Order> emptyOrders = GetEmptyOrderFaker().Generate(balanceOfOrders[numberOfEmptyOrder]);
 
         foreach (Order order in emptyOrders)
         {
@@ -422,13 +453,6 @@ public class SeedBedStatusTests
             _deliveryDetails.AddRange(newDeliveryDetails);
         }
     }
-
-    private List<Order> _orders;
-    private List<OrderLocation> _orderLocations;
-    private List<Block> _blocks;
-    private List<DeliveryDetail> _deliveryDetails;
-    private List<SeedTray> _seedTrays;
-    private List<GreenHouse> _greenHouses;
 
     private Faker<Order> GetCompleteOrderFaker()
     {
