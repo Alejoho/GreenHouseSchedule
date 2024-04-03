@@ -368,9 +368,9 @@ public class SeedBedStatusTests
         return output;
     }
 
-    private int[] GetOrderLocationSeedlingDivision(int amountOfSeedlings, int orderLocationAmount)
+    private int[] GetSeedlingDivision(int amountOfSeedlings, int amountOfDivisions)
     {
-        int[] output = new int[orderLocationAmount];
+        int[] output = new int[amountOfDivisions];
         Random random = new Random(59);
         int sum = 0;
 
@@ -401,6 +401,7 @@ public class SeedBedStatusTests
         _greenHouses = GenerateGreenHouses(8).ToList();
 
         Randomizer.Seed = new Random(2467);
+        Random random = new Random(95);
 
         int[] balanceOfOrders = GenerateRandomArray(count);
 
@@ -413,11 +414,10 @@ public class SeedBedStatusTests
 
         foreach (var order in completeOrders)
         {
-            //TODO - Randomize this amount
-            int amount = 4;
+            int amount = random.Next(2, 5);
 
             int[] seedlingDivision = amount > 1 ?
-                GetOrderLocationSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
+                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
                 new int[1] { order.AmountOfAlgorithmSeedlings };
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, 0);
@@ -435,13 +435,11 @@ public class SeedBedStatusTests
 
         foreach (Order order in partialOrders)
         {
-            //parte de los order locations estan completos y parte no
-            //TODO - Randomize this amount
-            int amount = 3;
+            int amount = random.Next(2, 5);
             int completedOrderLocations = amount / 2;
 
             int[] seedlingDivision = amount > 1 ?
-                GetOrderLocationSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
+                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
                 new int[1] { order.AmountOfAlgorithmSeedlings };
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, completedOrderLocations);
@@ -460,12 +458,10 @@ public class SeedBedStatusTests
 
         foreach (Order order in emptyOrders)
         {
-            //ningun order location esta completo
-            //TODO - Randomize this amount
-            int amount = 3;
+            int amount = random.Next(1, 3); ;
 
             int[] seedlingDivision = amount > 1 ?
-                GetOrderLocationSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
+                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
                 new int[1] { order.AmountOfAlgorithmSeedlings };
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, 0);
@@ -483,12 +479,13 @@ public class SeedBedStatusTests
 
         foreach (var orderLocation in _orderLocations)
         {
-            if (orderLocation.SowDate != null && orderLocation.SowDate < new DateOnly(2023, 6, 5))
-            {
-                //TODO - Randomize this amount
-                int amount = 3;
+            if (orderLocation.SowDate != null && orderLocation.SowDate < new DateOnly(2023, 6, 8))
+            {                
+                int amount = random.Next(1, 4);
 
-                var fakeBlockRecord = GetBlockFaker(orderLocation);
+                int[] seedlingDivision = GetSeedlingDivision(orderLocation.SeedlingAmount, amount);
+
+                var fakeBlockRecord = GetBlockFaker(orderLocation, seedlingDivision);
 
                 List<Block> newBlocks = fakeBlockRecord.Generate(amount);
 
@@ -496,11 +493,21 @@ public class SeedBedStatusTests
 
                 _blocks.AddRange(newBlocks);
             }
-            else if (orderLocation.SowDate != null && orderLocation.SowDate >= new DateOnly(2023, 6, 5))
-            {
+            //else if (orderLocation.SowDate != null && orderLocation.SowDate >= new DateOnly(2023, 6, 7))
+            //{
+            //    //TODO - Randomize this amount
+            //    int amount = random.Next(2, 4);
 
-            }
+            //    int[] seedlingDivision = GetSeedlingDivision(orderLocation.SeedlingAmount, amount);
 
+            //    var fakeBlockRecord = GetBlockFaker(orderLocation, seedlingDivision);
+
+            //    List<Block> newBlocks = fakeBlockRecord.Generate(amount);
+
+            //    orderLocation.Blocks = newBlocks;
+
+            //    _blocks.AddRange(newBlocks);
+            //}
         }
 
         foreach (var block in _blocks)
@@ -569,7 +576,7 @@ public class SeedBedStatusTests
             .RuleFor(x => x.AmountOfAlgorithmSeedlings, (f, u) => Convert.ToInt32(u.AmountOfWishedSeedlings * 1.2))
             .RuleFor(x => x.EstimateSowDate, f =>
                 DateOnly.FromDateTime(
-                    f.Date.Between(new DateTime(2023, 6, 5),
+                    f.Date.Between(new DateTime(2023, 6, 8),
                         new DateTime(2023, 6, 10))
                     )
                 )
@@ -665,10 +672,10 @@ public class SeedBedStatusTests
             .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);
     }
 
-    private Faker<Block> GetBlockFaker(OrderLocation orderLocation, int[] seedlingDivision, int completedAmount = 0)
+    private Faker<Block> GetBlockFaker(OrderLocation orderLocation, int[] seedlingDivision)
     {
-        //NEXT - Make the block generator
         short index = 1;
+        int indexOfSeedlingDivision = 0;
         return new Faker<Block>()
             .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.OrderLocationId, orderLocation.Id)
@@ -676,7 +683,7 @@ public class SeedBedStatusTests
             .RuleFor(x => x.BlockNumber, f => f.Random.Byte(1, orderLocation.GreenHouse.AmountOfBlocks))
             .RuleFor(x => x.SeedTrayAmount, () =>
             {
-                return 45;
+                return seedlingDivision[indexOfSeedlingDivision++];
             });
     }
 
