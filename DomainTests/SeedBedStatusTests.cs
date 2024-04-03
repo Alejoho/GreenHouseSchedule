@@ -354,7 +354,7 @@ public class SeedBedStatusTests
     private List<GreenHouse> _greenHouses;
 
     private int[] GenerateRandomArray(int targetSum)
-    {        
+    {
         int[] output = new int[3];
         Random random = new Random(59);
 
@@ -364,6 +364,29 @@ public class SeedBedStatusTests
         }
 
         output[2] = targetSum - output[0] - output[1];
+
+        return output;
+    }
+
+    private int[] GetOrderLocationSeedlingDivision(int amountOfSeedlings, int orderLocationAmount)
+    {
+        int[] output = new int[orderLocationAmount];
+        Random random = new Random(59);
+        int sum = 0;
+
+        for (int i = 0; i < output.Length; i++)
+        {
+            if (i != output.Length - 1)
+            {
+                output[i] = random.Next(Convert.ToInt32(amountOfSeedlings * 0.1), Convert.ToInt32(amountOfSeedlings * 0.3));
+                amountOfSeedlings -= output[i];
+                //sum += output[i];
+            }
+            else
+            {
+                output[i] = amountOfSeedlings;
+            }
+        }
 
         return output;
     }
@@ -379,12 +402,12 @@ public class SeedBedStatusTests
 
         Randomizer.Seed = new Random(2467);
 
-        int[] balanceOfOrders = GenerateRandomArray(count);        
+        int[] balanceOfOrders = GenerateRandomArray(count);
 
         const int numberOfCompletedOrder = 0;
         const int numberOfPartialOrder = 1;
         const int numberOfEmptyOrder = 2;
-        
+
 
         List<Order> completeOrders = GetCompleteOrderFaker().Generate(balanceOfOrders[numberOfCompletedOrder]);
 
@@ -393,7 +416,11 @@ public class SeedBedStatusTests
             //TODO - Randomize this amount
             int amount = 4;
 
-            var fakeOrderLocationRecord = GetOrderLocationFaker(order);
+            int[] seedlingDivision = amount > 1 ?
+                GetOrderLocationSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
+                new int[1] { order.AmountOfAlgorithmSeedlings };
+
+            var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, 0);
 
             List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
 
@@ -406,9 +433,24 @@ public class SeedBedStatusTests
 
         List<Order> partialOrders = GetPartialOrderFaker().Generate(balanceOfOrders[numberOfPartialOrder]);
 
-        foreach(Order order in partialOrders)
+        foreach (Order order in partialOrders)
         {
+            //parte de los order locations estan completos y parte no
+            //TODO - Randomize this amount
+            int amount = 3;
+            int completedOrderLocations = amount / 2;
 
+            int[] seedlingDivision = amount > 1 ?
+                GetOrderLocationSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
+                new int[1] { order.AmountOfAlgorithmSeedlings };
+
+            var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, completedOrderLocations);
+
+            List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
+
+            order.OrderLocations = newOrderLocations;
+
+            _orderLocations.AddRange(newOrderLocations);
         }
 
         _orders.AddRange(partialOrders);
@@ -418,7 +460,21 @@ public class SeedBedStatusTests
 
         foreach (Order order in emptyOrders)
         {
+            //ningun order location esta completo
+            //TODO - Randomize this amount
+            int amount = 3;
 
+            int[] seedlingDivision = amount > 1 ?
+                GetOrderLocationSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
+                new int[1] { order.AmountOfAlgorithmSeedlings };
+
+            var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, 0);
+
+            List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
+
+            order.OrderLocations = newOrderLocations;
+
+            _orderLocations.AddRange(newOrderLocations);
         }
 
         _orders.AddRange(emptyOrders);
@@ -485,7 +541,7 @@ public class SeedBedStatusTests
                 u.EstimateDeliveryDate < new DateOnly(2023, 6, 10) ? u.EstimateDeliveryDate : null)
             .RuleFor(x => x.Complete, true);
     }
-   
+
     private Faker<Order> GetPartialOrderFaker()
     {
         byte[] productionDays = new byte[] { 30, 45 };
@@ -548,17 +604,24 @@ public class SeedBedStatusTests
             .RuleFor(x => x.Complete, false);
     }
 
-    private Faker<OrderLocation> GetOrderLocationFaker(Order order)
+    private Faker<OrderLocation> GetOrderLocationFaker(Order order, int[] seedlingDivision, int completedAmount)
     {
         //NEXT - Review the OrderLocation generator
         short index = 1;
+        int indexOfSeedlingDivision = 0;
         DateTime? actualSowDate = order.RealSowDate != null ? order.RealSowDate?.ToDateTime(TimeOnly.MinValue) : null;
         return new Faker<OrderLocation>()
             .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.GreenHouseId, f => f.Random.Byte(1, 8))
             .RuleFor(x => x.SeedTrayId, f => f.Random.Byte(1, 7))
             .RuleFor(x => x.OrderId, () => order.Id)
-            .RuleFor(x => x.SeedlingAmount, f => f.Random.Int(1000, order.AmountOfAlgorithmSeedlings))
+            .RuleFor(x => x.SeedlingAmount, f =>
+            {
+                //f.Random.Int(1000, remainingSeedlings)
+                return seedlingDivision[indexOfSeedlingDivision++];
+            }
+
+            )
 
             .RuleFor(x => x.SeedTrayAmount, (f, u) =>
             {
@@ -571,11 +634,15 @@ public class SeedBedStatusTests
 
             .RuleFor(x => x.SowDate, (f, u) =>
             {
-                if (order.RealSowDate != null)
+                if (order.RealSowDate != null && completedAmount > 0)
                 {
                     DateOnly sowDate = DateOnly.FromDateTime((DateTime)actualSowDate);
                     actualSowDate?.AddDays(f.Random.Int(0, 1));
                     return sowDate;
+                }
+                else if (order.RealSowDate != null && completedAmount == 0)
+                {
+                    return null;
                 }
                 else
                 {
