@@ -4,7 +4,6 @@ using Domain;
 using Domain.Models;
 using FluentAssertions;
 using Moq;
-using SupportLayer.Models;
 using System.Reflection;
 
 namespace DomainTests;
@@ -485,7 +484,7 @@ public class SeedBedStatusTests
         foreach (var orderLocation in _orderLocations)
         {
             if (orderLocation.SowDate != null && orderLocation.SowDate < new DateOnly(2023, 6, 8))
-            {                
+            {
                 int amount = random.Next(1, 4);
 
                 int[] seedlingDivision = GetSeedlingDivision(orderLocation.SeedlingAmount, amount);
@@ -517,24 +516,47 @@ public class SeedBedStatusTests
 
         foreach (var block in _blocks)
         {
-            int amount = random.Next(1, 3);
+            if (block.OrderLocation.RealDeliveryDate != null)
+            {
+                if (block.OrderLocation.RealDeliveryDate < (new DateOnly(2023, 6, 10)).AddDays(-30))
+                {
+                    int amount = random.Next(1, 3);
 
-            int[] seedlingDivision = GetSeedlingDivision(block.SeedTrayAmount, amount);
+                    int[] seedlingDivision = GetSeedlingDivision(block.SeedTrayAmount, amount);
 
-            var fakeDeliveryDetail = GetDeliveryDetailFaker(block, seedlingDivision);
+                    var fakeDeliveryDetail = GetDeliveryDetailFaker(block, seedlingDivision);
 
-            List<DeliveryDetail> newDeliveryDetails = fakeDeliveryDetail.Generate(amount);
+                    List<DeliveryDetail> newDeliveryDetails = fakeDeliveryDetail.Generate(amount);
 
-            block.DeliveryDetails = newDeliveryDetails;
+                    block.DeliveryDetails = newDeliveryDetails;
 
-            _deliveryDetails.AddRange(newDeliveryDetails);
+                    _deliveryDetails.AddRange(newDeliveryDetails);
+                }
+                else
+                {
+                    if (random.Next(1, 3) == 1)
+                    {
+                        int amount = random.Next(2, 3);
+
+                        int[] seedlingDivision = GetSeedlingDivision(block.SeedTrayAmount, amount);
+
+                        var fakeDeliveryDetail = GetDeliveryDetailFaker(block, seedlingDivision);
+
+                        List<DeliveryDetail> newDeliveryDetails = fakeDeliveryDetail.Generate(amount - 1);
+
+                        block.DeliveryDetails = newDeliveryDetails;
+
+                        _deliveryDetails.AddRange(newDeliveryDetails);
+                    }
+                }
+            }
         }
     }
 
     private Faker<Order> GetCompleteOrderFaker()
     {
         short index = 1;
-        byte[] productionDays = new byte[] { 30, 45 };      
+        byte[] productionDays = new byte[] { 30, 45 };
         return new Faker<Order>()
             .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.ClientId, f => f.Random.Short(1, 300))
@@ -641,9 +663,7 @@ public class SeedBedStatusTests
             {
                 //f.Random.Int(1000, remainingSeedlings)
                 return seedlingDivision[indexOfSeedlingDivision++];
-            }
-
-            )
+            })
 
             .RuleFor(x => x.SeedTrayAmount, (f, u) =>
             {
@@ -678,7 +698,7 @@ public class SeedBedStatusTests
     }
 
     private Faker<Block> GetBlockFaker(OrderLocation orderLocation, int[] seedlingDivision)
-    {      
+    {
         int indexOfSeedlingDivision = 0;
         return new Faker<Block>()
             .RuleFor(x => x.Id, f => _blockIndex++)
@@ -691,18 +711,24 @@ public class SeedBedStatusTests
     private Faker<DeliveryDetail> GetDeliveryDetailFaker(Block block, int[] seedlingDivision)
     {
         int indexOfSeedlingDivision = 0;
+
+        DateOnly actualDeliveryDate = (DateOnly)block.OrderLocation.RealDeliveryDate;
+
+        DateOnly AddOneDay(DateOnly date)
+        {
+            DateOnly output = new DateOnly(date.Year, date.Month, date.Day);
+            if (date <= new DateOnly(2023, 6, 10))
+            {
+                date = date.AddDays(1);
+            }
+            return output;
+        }
+
         return new Faker<DeliveryDetail>()
             .RuleFor(x => x.Id, f => _deliveryDetailIndex++)
             .RuleFor(x => x.BlockId, block.Id)
             .RuleFor(x => x.Block, block)
-            .RuleFor(x => x.DeliveryDate,
-            f => DateOnly.FromDateTime(
-                f.Date.Between(
-                    new DateTime(2023, 1, 1),
-                    new DateTime(2023, 12, 31)
-                    )
-                )
-            )
+            .RuleFor(x => x.DeliveryDate, AddOneDay(actualDeliveryDate))
             .RuleFor(x => x.SeedTrayAmountDelivered, seedlingDivision[indexOfSeedlingDivision++]);
     }
 }
