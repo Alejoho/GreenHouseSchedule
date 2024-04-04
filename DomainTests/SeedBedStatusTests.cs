@@ -362,10 +362,9 @@ public class SeedBedStatusTests
         int[] output = new int[3];
         Random random = new Random(59);
 
-        for (int i = 0; i < 3; i++)
-        {
-            output[i] = random.Next(Convert.ToInt32(targetSum * 0.2), Convert.ToInt32(targetSum * 0.5));
-        }
+        output[0] = random.Next(Convert.ToInt32(targetSum * 0.2), Convert.ToInt32(targetSum * 0.5));
+
+        output[1] = 20;
 
         output[2] = targetSum - output[0] - output[1];
 
