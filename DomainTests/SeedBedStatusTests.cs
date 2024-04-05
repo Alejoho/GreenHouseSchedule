@@ -430,7 +430,7 @@ public class SeedBedStatusTests
                 GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, amount) :
                 new int[1] { order.AmountOfAlgorithmSeedlings };
 
-            var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, 0);
+            var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, amount);
 
             List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
 
@@ -500,9 +500,9 @@ public class SeedBedStatusTests
             {
                 int amount = random.Next(1, 4);
 
-                int[] seedlingDivision = GetSeedlingDivision(orderLocation.SeedlingAmount, amount);
+                int[] seedTrayDivision = GetSeedlingDivision(orderLocation.SeedTrayAmount, amount);
 
-                var fakeBlockRecord = GetBlockFaker(orderLocation, seedlingDivision);
+                var fakeBlockRecord = GetBlockFaker(orderLocation, seedTrayDivision);
 
                 List<Block> newBlocks = fakeBlockRecord.Generate(amount);
 
@@ -677,7 +677,8 @@ public class SeedBedStatusTests
                 if (order.RealSowDate != null && completedAmount > 0)
                 {
                     DateOnly sowDate = DateOnly.FromDateTime((DateTime)actualSowDate);
-                    actualSowDate?.AddDays(f.Random.Int(0, 1));
+                    actualSowDate = actualSowDate?.AddDays(f.Random.Int(0, 1));
+                    completedAmount--;
                     return sowDate;
                 }
                 else if (order.RealSowDate != null && completedAmount == 0)
@@ -695,15 +696,15 @@ public class SeedBedStatusTests
             .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);
     }
 
-    private Faker<Block> GetBlockFaker(OrderLocation orderLocation, int[] seedlingDivision)
+    private Faker<Block> GetBlockFaker(OrderLocation orderLocation, int[] seedTrayDivision)
     {
         int indexOfSeedlingDivision = 0;
         return new Faker<Block>()
-            .RuleFor(x => x.Id, f => _blockIndex++)
+            .RuleFor(x => x.Id, _blockIndex++)
             .RuleFor(x => x.OrderLocationId, orderLocation.Id)
             .RuleFor(x => x.OrderLocation, orderLocation)
             .RuleFor(x => x.BlockNumber, f => f.Random.Byte(1, orderLocation.GreenHouse.AmountOfBlocks))
-            .RuleFor(x => x.SeedTrayAmount, seedlingDivision[indexOfSeedlingDivision++]);
+            .RuleFor(x => x.SeedTrayAmount, seedTrayDivision[indexOfSeedlingDivision++]);
     }
 
     private Faker<DeliveryDetail> GetDeliveryDetailFaker(Block block, int[] seedlingDivision)
