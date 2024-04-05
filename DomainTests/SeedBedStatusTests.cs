@@ -377,7 +377,7 @@ public class SeedBedStatusTests
         return output;
     }
 
-    private int[] GetSeedlingDivision(int amountOfSeedlings, int amountOfDivisions)
+    private int[] GetAmountDivision(int amountOfSeedlings, int amountOfDivisions)
     {
         int[] output = new int[amountOfDivisions];
         Random random = new Random(59);
@@ -427,7 +427,7 @@ public class SeedBedStatusTests
             int amount = random.Next(2, 5);
 
             int[] seedlingDivision = amount > 1 ?
-                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, amount) :
+                GetAmountDivision(order.AmountOfAlgorithmSeedlings, amount) :
                 new int[1] { order.AmountOfAlgorithmSeedlings };
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, amount);
@@ -454,7 +454,7 @@ public class SeedBedStatusTests
             int completedOrderLocations = amount / 2;
 
             int[] seedlingDivision = amount > 1 ?
-                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, amount) :
+                GetAmountDivision(order.AmountOfAlgorithmSeedlings, amount) :
                 new int[1] { order.AmountOfAlgorithmSeedlings };
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, completedOrderLocations);
@@ -476,7 +476,7 @@ public class SeedBedStatusTests
             int amount = random.Next(1, 3); ;
 
             int[] seedlingDivision = amount > 1 ?
-                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, amount) :
+                GetAmountDivision(order.AmountOfAlgorithmSeedlings, amount) :
                 new int[1] { order.AmountOfAlgorithmSeedlings };
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, 0);
@@ -500,7 +500,7 @@ public class SeedBedStatusTests
             {
                 int amount = random.Next(1, 4);
 
-                int[] seedTrayDivision = GetSeedlingDivision(orderLocation.SeedTrayAmount, amount);
+                int[] seedTrayDivision = GetAmountDivision(orderLocation.SeedTrayAmount, amount);
 
                 var fakeBlockRecord = GetBlockFaker(orderLocation, seedTrayDivision);
 
@@ -520,7 +520,7 @@ public class SeedBedStatusTests
                 {
                     int amount = random.Next(1, 3);
 
-                    int[] seedlingDivision = GetSeedlingDivision(block.SeedTrayAmount, amount);
+                    int[] seedlingDivision = GetAmountDivision(block.SeedTrayAmount, amount);
 
                     var fakeDeliveryDetail = GetDeliveryDetailFaker(block, seedlingDivision);
 
@@ -536,7 +536,7 @@ public class SeedBedStatusTests
                     {
                         int amount = random.Next(2, 3);
 
-                        int[] seedlingDivision = GetSeedlingDivision(block.SeedTrayAmount, amount);
+                        int[] seedlingDivision = GetAmountDivision(block.SeedTrayAmount, amount);
 
                         var fakeDeliveryDetail = GetDeliveryDetailFaker(block, seedlingDivision);
 
