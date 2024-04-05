@@ -372,7 +372,7 @@ public class SeedBedStatusTests
         {
             if (i != output.Length - 1)
             {
-                output[i] = random.Next(Convert.ToInt32(amountToDivide * 0.1), Convert.ToInt32(amountToDivide * 0.3));
+                output[i] = random.Next(Convert.ToInt32(amountToDivide * 0.25), Convert.ToInt32(amountToDivide * 0.44));
                 amountToDivide -= output[i];
             }
             else
@@ -529,6 +529,12 @@ public class SeedBedStatusTests
                 }
             }
         }
+
+        List<Order> monthSelection = completeOrders.Where(x => x.RealDeliveryDate != null && x.RealDeliveryDate > (new DateOnly(2023, 6, 10)).AddDays(-30)).ToList();
+        List<Order> weekSelection = completeOrders.Where(x => x.RealSowDate != null && x.RealSowDate > (new DateOnly(2023, 6, 10)).AddDays(-7)).ToList();
+        List<Order> fourdDaysSelection = completeOrders.Where(x => x.RealSowDate != null && x.RealSowDate > (new DateOnly(2023, 6, 10)).AddDays(-4)).ToList();
+
+        int seedTrayAmount = partialOrders.Sum(x => x.OrderLocations.Where(y => y.SowDate != null).Sum(y => y.SeedTrayAmount));
     }
 
     private Faker<Order> GetCompleteOrderFaker()
@@ -637,7 +643,7 @@ public class SeedBedStatusTests
             .RuleFor(x => x.SeedTray, (f, u) => _seedTrays.Where(x => x.Id == u.SeedTrayId).First())
             .RuleFor(x => x.OrderId, () => order.Id)
             .RuleFor(x => x.Order, () => order)
-            .RuleFor(x => x.SeedlingAmount, () =>seedlingDivision[indexOfSeedlingDivision++])
+            .RuleFor(x => x.SeedlingAmount, () => seedlingDivision[indexOfSeedlingDivision++])
             .RuleFor(x => x.SeedTrayAmount, (f, u) =>
             {
                 int seedTrayAlveolus = _seedTrays.Where(x => x.Id == u.SeedTrayId).First().TotalAlveolus;
@@ -647,7 +653,7 @@ public class SeedBedStatusTests
 
             .RuleFor(x => x.SowDate, (f, u) =>
             {
-                if (order.RealSowDate != null && completedAmount > 0)
+                if (order.RealSowDate != null && completedAmount > 0 && actualSowDate < new DateTime(2023,6,10))
                 {
                     DateOnly sowDate = DateOnly.FromDateTime((DateTime)actualSowDate);
                     actualSowDate = actualSowDate?.AddDays(f.Random.Int(0, 1));
@@ -686,8 +692,9 @@ public class SeedBedStatusTests
         int indexOfSeedlingDivision = 0;
 
         DateOnly actualDeliveryDate = (DateOnly)block.OrderLocation.RealDeliveryDate;
-
-        DateOnly AddOneDay(DateOnly date)
+        //NEXT - check this breakpoint and in the delivery details contiguous the delivery date should increment 
+        //one day at a time.
+        DateOnly AddOneDay(ref DateOnly date)
         {
             DateOnly output = new DateOnly(date.Year, date.Month, date.Day);
             if (date <= new DateOnly(2023, 6, 10))
@@ -701,7 +708,7 @@ public class SeedBedStatusTests
             .RuleFor(x => x.Id, () => _deliveryDetailIndex++)
             .RuleFor(x => x.BlockId, () => block.Id)
             .RuleFor(x => x.Block, () => block)
-            .RuleFor(x => x.DeliveryDate, () => AddOneDay(actualDeliveryDate))
+            .RuleFor(x => x.DeliveryDate, () => AddOneDay(ref actualDeliveryDate))
             .RuleFor(x => x.SeedTrayAmountDelivered, () => Convert.ToInt16(seedTrayDivision[indexOfSeedlingDivision++]));
     }
 }
