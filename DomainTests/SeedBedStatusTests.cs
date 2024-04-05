@@ -61,20 +61,10 @@ public class SeedBedStatusTests
     private Faker<GreenHouse> GetGreenHouseModelFaker()
     {
         byte index = 1;
-        //return new Faker<GreenHouse>()
-        //    .RuleFor(x => x.Id, f => index++)
-        //    .RuleFor(x => x.Name, f => f.Commerce.Department())
-        //    .RuleFor(x => x.Description, f => f.Commerce.ProductDescription())
-        //    .RuleFor(x => x.Width, f => f.Random.Decimal(10, 25))
-        //    .RuleFor(x => x.Length, f => f.Random.Decimal(20, 60))
-        //    .RuleFor(x => x.GreenHouseArea, (f, x) => x.Width * x.Length)
-        //    .RuleFor(x => x.SeedTrayArea,
-        //        (f, x) => x.GreenHouseArea * f.Random.Decimal((decimal)0.7, (decimal)0.9))
-        //    .RuleFor(x => x.AmountOfBlocks, f => f.Random.Byte(1, 4))
-        //    .RuleFor(x => x.Active, f => f.Random.Bool());
+
         return new Faker<GreenHouse>()
-            .RuleFor(x => x.Name, f => $"Casa {index}")
-            .RuleFor(x => x.Id, f => index++)
+            .RuleFor(x => x.Name, () => $"Casa {index}")
+            .RuleFor(x => x.Id, () => index++)
             .RuleFor(x => x.Description, f => f.Commerce.ProductDescription())
             .RuleFor(x => x.Width, f => f.Random.Short(6, 20))
             .RuleFor(x => x.Length, f => f.Random.Short(50, 100))
@@ -118,7 +108,7 @@ public class SeedBedStatusTests
         byte index = 1;
         byte preference = 1;
         return new Faker<SeedTray>()
-            .RuleFor(x => x.Id, f => index++)
+            .RuleFor(x => x.Id, () => index++)
             .RuleFor(x => x.AlveolusLength, f => f.Random.Byte(10, 20))
             .RuleFor(x => x.AlveolusWidth, f => f.Random.Byte(8, 14))
             .RuleFor(x => x.TotalAlveolus, (f, u) => Convert.ToInt16(u.AlveolusLength * u.AlveolusWidth))
@@ -179,10 +169,10 @@ public class SeedBedStatusTests
         byte[] productionDays = new byte[] { 30, 45 };
         short index = 1;
         return new Faker<Order>()
-            .RuleFor(x => x.Id, f => index++)
+            .RuleFor(x => x.Id, () => index++)
             .RuleFor(x => x.ClientId, f => f.Random.Short(1, 300))
             .RuleFor(x => x.ProductId, f => f.Random.Byte(1, 60))
-            .RuleFor(x => x.Client, f => new Client())
+            .RuleFor(x => x.Client, () => new Client())
             .RuleFor(x => x.Product,
                 f => new Product()
                 {
@@ -268,7 +258,7 @@ public class SeedBedStatusTests
         int[] productionDays = new[] { 30, 45 };
         short index = 1;
         return new Faker<OrderLocation>()
-            .RuleFor(x => x.Id, f => index++)
+            .RuleFor(x => x.Id, () => index++)
             .RuleFor(x => x.GreenHouseId, f => f.Random.Byte(1, 8))
             .RuleFor(x => x.SeedTrayId, f => f.Random.Byte(1, 7))
             .RuleFor(x => x.OrderId, f => f.Random.Short(1, 12))
@@ -287,11 +277,6 @@ public class SeedBedStatusTests
             .RuleFor(x => x.EstimateDeliveryDate,
                 (f, u) => u.SowDate?.AddDays(f.PickRandom(productionDays)))
             .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);
-
-
-        //.RuleFor(x => x.RealSowDate, (f, u) =>
-        //f.Random.Bool() ? u.EstimateSowDate : null
-        //)
     }
 
     [Fact]
@@ -340,7 +325,7 @@ public class SeedBedStatusTests
     {
         short index = 1;
         return new Faker<DeliveryDetail>()
-            .RuleFor(x => x.Id, f => index++)
+            .RuleFor(x => x.Id, () => index++)
             .RuleFor(x => x.Block,
             f => new Block() { OrderLocationId = f.Random.Int(1, 15) })
             .RuleFor(x => x.DeliveryDate,
@@ -389,7 +374,6 @@ public class SeedBedStatusTests
             {
                 output[i] = random.Next(Convert.ToInt32(amountOfSeedlings * 0.1), Convert.ToInt32(amountOfSeedlings * 0.3));
                 amountOfSeedlings -= output[i];
-                //sum += output[i];
             }
             else
             {
@@ -417,9 +401,7 @@ public class SeedBedStatusTests
         const int numberOfCompletedOrder = 0;
         const int numberOfPartialOrder = 1;
         const int numberOfEmptyOrder = 2;
-        //NEXT - ver en que lugar implemento lo de la igual de la cantidad de bandejas * el total de aveolos a la cantidad 
-        //de posturas en el order location
-        //ver si implementarla aqui o en el bucle foreach de los order locations
+
         List<Order> completeOrders = GetCompleteOrderFaker().Generate(balanceOfOrders[numberOfCompletedOrder]);
 
         foreach (var order in completeOrders)
@@ -490,8 +472,6 @@ public class SeedBedStatusTests
 
         _orders.AddRange(emptyOrders);
 
-
-
         foreach (var orderLocation in _orderLocations)
         {
             orderLocation.SeedlingAmount = orderLocation.SeedTrayAmount * orderLocation.SeedTray.TotalAlveolus;
@@ -556,10 +536,10 @@ public class SeedBedStatusTests
         short index = 1;
         byte[] productionDays = new byte[] { 30, 45 };
         return new Faker<Order>()
-            .RuleFor(x => x.Id, f => index++)
+            .RuleFor(x => x.Id, () => index++)
             .RuleFor(x => x.ClientId, f => f.Random.Short(1, 300))
             .RuleFor(x => x.ProductId, f => f.Random.Byte(1, 60))
-            .RuleFor(x => x.Client, f => new Client())
+            .RuleFor(x => x.Client, () => new Client())
             .RuleFor(x => x.Product,
                 f => new Product()
                 {
@@ -580,7 +560,7 @@ public class SeedBedStatusTests
             .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.WishDate)
             .RuleFor(x => x.RealDeliveryDate, (f, u) =>
                 u.EstimateDeliveryDate < new DateOnly(2023, 6, 10) ? u.EstimateDeliveryDate : null)
-            .RuleFor(x => x.Complete, true);
+            .RuleFor(x => x.Complete, () => true);
     }
 
     private Faker<Order> GetPartialOrderFaker()
@@ -591,7 +571,7 @@ public class SeedBedStatusTests
             .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.ClientId, f => f.Random.Short(1, 300))
             .RuleFor(x => x.ProductId, f => f.Random.Byte(1, 60))
-            .RuleFor(x => x.Client, f => new Client())
+            .RuleFor(x => x.Client, () => new Client())
             .RuleFor(x => x.Product,
                 f => new Product()
                 {
@@ -611,7 +591,7 @@ public class SeedBedStatusTests
             .RuleFor(x => x.DateOfRequest, (f, u) => u.WishDate.AddDays(-f.Random.Int(60, 180)))
             .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.WishDate)
             .RuleFor(x => x.RealDeliveryDate, () => null)
-            .RuleFor(x => x.Complete, false);
+            .RuleFor(x => x.Complete, () => false);
     }
 
     private Faker<Order> GetEmptyOrderFaker()
@@ -619,10 +599,10 @@ public class SeedBedStatusTests
         byte[] productionDays = new byte[] { 30, 45 };
         short index = (short)(_orders.OrderByDescending(x => x.Id).First().Id + 1);
         return new Faker<Order>()
-            .RuleFor(x => x.Id, f => index++)
+            .RuleFor(x => x.Id, () => index++)
             .RuleFor(x => x.ClientId, f => f.Random.Short(1, 300))
             .RuleFor(x => x.ProductId, f => f.Random.Byte(1, 60))
-            .RuleFor(x => x.Client, f => new Client())
+            .RuleFor(x => x.Client, () => new Client())
             .RuleFor(x => x.Product,
                 f => new Product()
                 {
@@ -642,7 +622,7 @@ public class SeedBedStatusTests
             .RuleFor(x => x.DateOfRequest, (f, u) => u.WishDate.AddDays(-f.Random.Int(80, 180)))
             .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.WishDate)
             .RuleFor(x => x.RealDeliveryDate, () => null)
-            .RuleFor(x => x.Complete, false);
+            .RuleFor(x => x.Complete, () => false);
     }
 
     private Faker<OrderLocation> GetOrderLocationFaker(Order order, int[] seedlingDivision, int completedAmount)
@@ -650,26 +630,19 @@ public class SeedBedStatusTests
         int indexOfSeedlingDivision = 0;
         DateTime? actualSowDate = order.RealSowDate != null ? order.RealSowDate?.ToDateTime(TimeOnly.MinValue) : null;
         return new Faker<OrderLocation>()
-            .RuleFor(x => x.Id, f => _orderLocationIndex++)
+            .RuleFor(x => x.Id, () => _orderLocationIndex++)
             .RuleFor(x => x.GreenHouseId, f => f.Random.Byte(1, 8))
             .RuleFor(x => x.GreenHouse, (f, u) => _greenHouses.Where(x => x.Id == u.GreenHouseId).First())
             .RuleFor(x => x.SeedTrayId, f => f.Random.Byte(1, 7))
             .RuleFor(x => x.SeedTray, (f, u) => _seedTrays.Where(x => x.Id == u.SeedTrayId).First())
             .RuleFor(x => x.OrderId, () => order.Id)
-            .RuleFor(x => x.Order, order)
-            .RuleFor(x => x.SeedlingAmount, f =>
-            {
-                //f.Random.Int(1000, remainingSeedlings)
-                return seedlingDivision[indexOfSeedlingDivision++];
-            })
-
+            .RuleFor(x => x.Order, () => order)
+            .RuleFor(x => x.SeedlingAmount, () =>seedlingDivision[indexOfSeedlingDivision++])
             .RuleFor(x => x.SeedTrayAmount, (f, u) =>
             {
-
                 int seedTrayAlveolus = _seedTrays.Where(x => x.Id == u.SeedTrayId).First().TotalAlveolus;
                 short seedTrayAmount = (short)Math.Ceiling((double)(u.SeedlingAmount / seedTrayAlveolus));
                 return seedTrayAmount;
-
             })
 
             .RuleFor(x => x.SowDate, (f, u) =>
@@ -700,11 +673,12 @@ public class SeedBedStatusTests
     {
         int indexOfSeedlingDivision = 0;
         return new Faker<Block>()
-            .RuleFor(x => x.Id, _blockIndex++)
-            .RuleFor(x => x.OrderLocationId, orderLocation.Id)
-            .RuleFor(x => x.OrderLocation, orderLocation)
+            .RuleFor(x => x.Id, () => _blockIndex++)
+            .RuleFor(x => x.OrderLocationId, () => orderLocation.Id)
+            .RuleFor(x => x.OrderLocation, () => orderLocation)
             .RuleFor(x => x.BlockNumber, f => f.Random.Byte(1, orderLocation.GreenHouse.AmountOfBlocks))
-            .RuleFor(x => x.SeedTrayAmount, Convert.ToInt16(seedTrayDivision[indexOfSeedlingDivision++]));
+            .RuleFor(x => x.SeedTrayAmount, () => Convert.ToInt16(seedTrayDivision[indexOfSeedlingDivision++]));
+
     }
 
     private Faker<DeliveryDetail> GetDeliveryDetailFaker(Block block, int[] seedTrayDivision)
@@ -724,10 +698,10 @@ public class SeedBedStatusTests
         }
 
         return new Faker<DeliveryDetail>()
-            .RuleFor(x => x.Id, f => _deliveryDetailIndex++)
-            .RuleFor(x => x.BlockId, block.Id)
-            .RuleFor(x => x.Block, block)
-            .RuleFor(x => x.DeliveryDate, AddOneDay(actualDeliveryDate))
-            .RuleFor(x => x.SeedTrayAmountDelivered, Convert.ToInt16(seedTrayDivision[indexOfSeedlingDivision++]));
+            .RuleFor(x => x.Id, () => _deliveryDetailIndex++)
+            .RuleFor(x => x.BlockId, () => block.Id)
+            .RuleFor(x => x.Block, () => block)
+            .RuleFor(x => x.DeliveryDate, () => AddOneDay(actualDeliveryDate))
+            .RuleFor(x => x.SeedTrayAmountDelivered, () => Convert.ToInt16(seedTrayDivision[indexOfSeedlingDivision++]));
     }
 }
