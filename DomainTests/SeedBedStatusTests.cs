@@ -348,14 +348,14 @@ public class SeedBedStatusTests
         //recordar que entre los orderlocations y los delivery details van los blocks
     }
 
-    private int[] GenerateRandomArray(int totalOfOrders)
+    private int[] GenerateBalanceOfOrderTypes(int totalOfOrders)
     {
         int[] output = new int[3];
         Random random = new Random(59);
 
         output[0] = random.Next(Convert.ToInt32(totalOfOrders * 0.2), Convert.ToInt32(totalOfOrders * 0.5));
 
-        output[1] = 20;
+        output[1] = 8;
 
         output[2] = totalOfOrders - output[0] - output[1];
 
@@ -372,7 +372,7 @@ public class SeedBedStatusTests
         {
             if (i != output.Length - 1)
             {
-                output[i] = random.Next(Convert.ToInt32(amountToDivide * 0.25), Convert.ToInt32(amountToDivide * 0.44));
+                output[i] = random.Next(Convert.ToInt32(amountToDivide * 0.40), Convert.ToInt32(amountToDivide * 0.58));
                 amountToDivide -= output[i];
             }
             else
@@ -396,7 +396,7 @@ public class SeedBedStatusTests
         Randomizer.Seed = new Random(2467);
         Random random = new Random(95);
 
-        int[] balanceOfOrders = GenerateRandomArray(count);
+        int[] balanceOfOrders = GenerateBalanceOfOrderTypes(count);
 
         const int numberOfCompletedOrder = 0;
         const int numberOfPartialOrder = 1;
@@ -433,6 +433,8 @@ public class SeedBedStatusTests
         foreach (Order order in partialOrders)
         {
             int amount = random.Next(2, 5);
+            //int completedOrderLocations = amount == 2 ? amount - 1 : amount - 2;
+            //int completedOrderLocations = amount - 1;
             int completedOrderLocations = amount / 2;
 
             int[] seedlingDivision = amount > 1 ?
@@ -530,11 +532,10 @@ public class SeedBedStatusTests
             }
         }
 
-        List<Order> monthSelection = completeOrders.Where(x => x.RealDeliveryDate != null && x.RealDeliveryDate > (new DateOnly(2023, 6, 10)).AddDays(-30)).ToList();
-        List<Order> weekSelection = completeOrders.Where(x => x.RealSowDate != null && x.RealSowDate > (new DateOnly(2023, 6, 10)).AddDays(-7)).ToList();
-        List<Order> fourdDaysSelection = completeOrders.Where(x => x.RealSowDate != null && x.RealSowDate > (new DateOnly(2023, 6, 10)).AddDays(-4)).ToList();
+        List<Order> monthSelection = completeOrders.Where(x => x.RealDeliveryDate != null && x.RealDeliveryDate > (new DateOnly(2023, 6, 10)).AddDays(-30)).ToList();        
 
-        int seedTrayAmount = partialOrders.Sum(x => x.OrderLocations.Where(y => y.SowDate != null).Sum(y => y.SeedTrayAmount));
+        int seedTrayAmountSown = partialOrders.Sum(x => x.OrderLocations.Where(y => y.SowDate != null).Sum(y => y.SeedTrayAmount));
+        int seedTrayAmountDelayed = partialOrders.Sum(x => x.OrderLocations.Where(y => y.SowDate == null).Sum(y => y.SeedTrayAmount));
     }
 
     private Faker<Order> GetCompleteOrderFaker()
@@ -552,7 +553,7 @@ public class SeedBedStatusTests
                     Specie = new Species()
                     { ProductionDays = f.PickRandom(productionDays) }
                 })
-            .RuleFor(x => x.AmountOfWishedSeedlings, f => f.Random.Int(20000, 80000))
+            .RuleFor(x => x.AmountOfWishedSeedlings, f => f.Random.Int(10000, 50000))
             .RuleFor(x => x.AmountOfAlgorithmSeedlings, (f, u) => Convert.ToInt32(u.AmountOfWishedSeedlings * 1.2))
             .RuleFor(x => x.EstimateSowDate, f =>
                 DateOnly.FromDateTime(
@@ -569,6 +570,7 @@ public class SeedBedStatusTests
             .RuleFor(x => x.Complete, () => true);
     }
 
+    //NEXT - lower the amount of seedtrays(or seedlings) in the partil orders
     private Faker<Order> GetPartialOrderFaker()
     {
         byte[] productionDays = new byte[] { 30, 45 };
@@ -584,7 +586,7 @@ public class SeedBedStatusTests
                     Specie = new Species()
                     { ProductionDays = f.PickRandom(productionDays) }
                 })
-            .RuleFor(x => x.AmountOfWishedSeedlings, f => f.Random.Int(20000, 80000))
+            .RuleFor(x => x.AmountOfWishedSeedlings, f => f.Random.Int(10000, 50000))
             .RuleFor(x => x.AmountOfAlgorithmSeedlings, (f, u) => Convert.ToInt32(u.AmountOfWishedSeedlings * 1.2))
             .RuleFor(x => x.EstimateSowDate, f =>
                 DateOnly.FromDateTime(
@@ -615,7 +617,7 @@ public class SeedBedStatusTests
                     Specie = new Species()
                     { ProductionDays = f.PickRandom(productionDays) }
                 })
-            .RuleFor(x => x.AmountOfWishedSeedlings, f => f.Random.Int(20000, 80000))
+            .RuleFor(x => x.AmountOfWishedSeedlings, f => f.Random.Int(10000, 50000))
             .RuleFor(x => x.AmountOfAlgorithmSeedlings, (f, u) => Convert.ToInt32(u.AmountOfWishedSeedlings * 1.2))
             .RuleFor(x => x.EstimateSowDate, f =>
                 DateOnly.FromDateTime(
@@ -653,7 +655,7 @@ public class SeedBedStatusTests
 
             .RuleFor(x => x.SowDate, (f, u) =>
             {
-                if (order.RealSowDate != null && completedAmount > 0 && actualSowDate < new DateTime(2023,6,10))
+                if (order.RealSowDate != null && completedAmount > 0 && actualSowDate < new DateTime(2023, 6, 10))
                 {
                     DateOnly sowDate = DateOnly.FromDateTime((DateTime)actualSowDate);
                     actualSowDate = actualSowDate?.AddDays(f.Random.Int(0, 1));
