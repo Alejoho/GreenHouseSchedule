@@ -11,6 +11,22 @@ namespace DomainTests;
 // that none value was changed.
 public class SeedBedStatusTests
 {
+
+    private List<Order> _orders;
+    private List<OrderLocation> _orderLocations;
+    private List<Block> _blocks;
+    private List<DeliveryDetail> _deliveryDetails;
+    private List<SeedTray> _seedTrays;
+    private List<GreenHouse> _greenHouses;
+    private int _orderLocationIndex = 1;
+    private int _blockIndex = 1;
+    private int _deliveryDetailIndex = 1;
+
+    public SeedBedStatusTests()
+    {
+        PopulateLists(150);
+    }
+
     [Fact]
     public void GetGreenHouses_ShouldReturnAllGreenHouses()
     {
@@ -347,16 +363,6 @@ public class SeedBedStatusTests
         //recordar que entre los orderlocations y los delivery details van los blocks
     }
 
-    private List<Order> _orders;
-    private List<OrderLocation> _orderLocations;
-    private List<Block> _blocks;
-    private List<DeliveryDetail> _deliveryDetails;
-    private List<SeedTray> _seedTrays;
-    private List<GreenHouse> _greenHouses;
-    private int _orderLocationIndex = 1;
-    private int _blockIndex = 1;
-    private int _deliveryDetailIndex = 1;
-
     private int[] GenerateRandomArray(int targetSum)
     {
         int[] output = new int[3];
@@ -411,8 +417,9 @@ public class SeedBedStatusTests
         const int numberOfCompletedOrder = 0;
         const int numberOfPartialOrder = 1;
         const int numberOfEmptyOrder = 2;
-
-
+        //NEXT - ver en que lugar implemento lo de la igual de la cantidad de bandejas * el total de aveolos a la cantidad 
+        //de posturas en el order location
+        //ver si implementarla aqui o en el bucle foreach de los order locations
         List<Order> completeOrders = GetCompleteOrderFaker().Generate(balanceOfOrders[numberOfCompletedOrder]);
 
         foreach (var order in completeOrders)
@@ -420,12 +427,17 @@ public class SeedBedStatusTests
             int amount = random.Next(2, 5);
 
             int[] seedlingDivision = amount > 1 ?
-                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
+                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, amount) :
                 new int[1] { order.AmountOfAlgorithmSeedlings };
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, 0);
 
             List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
+
+            int totalSeedling = newOrderLocations.Sum(x => x.SeedTrayAmount * x.SeedTray.TotalAlveolus);
+
+            order.AmountOfAlgorithmSeedlings = totalSeedling;
+            order.AmountOfWishedSeedlings = Convert.ToInt32(totalSeedling / 1.2);
 
             order.OrderLocations = newOrderLocations;
 
@@ -442,7 +454,7 @@ public class SeedBedStatusTests
             int completedOrderLocations = amount / 2;
 
             int[] seedlingDivision = amount > 1 ?
-                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
+                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, amount) :
                 new int[1] { order.AmountOfAlgorithmSeedlings };
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, completedOrderLocations);
@@ -464,7 +476,7 @@ public class SeedBedStatusTests
             int amount = random.Next(1, 3); ;
 
             int[] seedlingDivision = amount > 1 ?
-                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, 4) :
+                GetSeedlingDivision(order.AmountOfAlgorithmSeedlings, amount) :
                 new int[1] { order.AmountOfAlgorithmSeedlings };
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, 0);
@@ -482,6 +494,8 @@ public class SeedBedStatusTests
 
         foreach (var orderLocation in _orderLocations)
         {
+            orderLocation.SeedlingAmount = orderLocation.SeedTrayAmount * orderLocation.SeedTray.TotalAlveolus;
+
             if (orderLocation.SowDate != null && orderLocation.SowDate < new DateOnly(2023, 6, 8))
             {
                 int amount = random.Next(1, 4);
@@ -496,21 +510,6 @@ public class SeedBedStatusTests
 
                 _blocks.AddRange(newBlocks);
             }
-            //else if (orderLocation.SowDate != null && orderLocation.SowDate >= new DateOnly(2023, 6, 7))
-            //{
-            //    //TODO - Randomize this amount
-            //    int amount = random.Next(2, 4);
-
-            //    int[] seedlingDivision = GetSeedlingDivision(orderLocation.SeedlingAmount, amount);
-
-            //    var fakeBlockRecord = GetBlockFaker(orderLocation, seedlingDivision);
-
-            //    List<Block> newBlocks = fakeBlockRecord.Generate(amount);
-
-            //    orderLocation.Blocks = newBlocks;
-
-            //    _blocks.AddRange(newBlocks);
-            //}
         }
 
         foreach (var block in _blocks)
