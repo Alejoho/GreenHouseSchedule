@@ -520,9 +520,9 @@ public class SeedBedStatusTests
                 {
                     int amount = random.Next(1, 3);
 
-                    int[] seedlingDivision = GetAmountDivision(block.SeedTrayAmount, amount);
+                    int[] seedTrayDivision = GetAmountDivision(block.SeedTrayAmount, amount);
 
-                    var fakeDeliveryDetail = GetDeliveryDetailFaker(block, seedlingDivision);
+                    var fakeDeliveryDetail = GetDeliveryDetailFaker(block, seedTrayDivision);
 
                     List<DeliveryDetail> newDeliveryDetails = fakeDeliveryDetail.Generate(amount);
 
@@ -707,7 +707,7 @@ public class SeedBedStatusTests
             .RuleFor(x => x.SeedTrayAmount, Convert.ToInt16(seedTrayDivision[indexOfSeedlingDivision++]));
     }
 
-    private Faker<DeliveryDetail> GetDeliveryDetailFaker(Block block, int[] seedlingDivision)
+    private Faker<DeliveryDetail> GetDeliveryDetailFaker(Block block, int[] seedTrayDivision)
     {
         int indexOfSeedlingDivision = 0;
 
@@ -728,6 +728,6 @@ public class SeedBedStatusTests
             .RuleFor(x => x.BlockId, block.Id)
             .RuleFor(x => x.Block, block)
             .RuleFor(x => x.DeliveryDate, AddOneDay(actualDeliveryDate))
-            .RuleFor(x => x.SeedTrayAmountDelivered, seedlingDivision[indexOfSeedlingDivision++]);
+            .RuleFor(x => x.SeedTrayAmountDelivered, Convert.ToInt16(seedTrayDivision[indexOfSeedlingDivision++]));
     }
 }
