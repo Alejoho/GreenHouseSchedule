@@ -348,21 +348,21 @@ public class SeedBedStatusTests
         //recordar que entre los orderlocations y los delivery details van los blocks
     }
 
-    private int[] GenerateRandomArray(int targetSum)
+    private int[] GenerateRandomArray(int totalOfOrders)
     {
         int[] output = new int[3];
         Random random = new Random(59);
 
-        output[0] = random.Next(Convert.ToInt32(targetSum * 0.2), Convert.ToInt32(targetSum * 0.5));
+        output[0] = random.Next(Convert.ToInt32(totalOfOrders * 0.2), Convert.ToInt32(totalOfOrders * 0.5));
 
         output[1] = 20;
 
-        output[2] = targetSum - output[0] - output[1];
+        output[2] = totalOfOrders - output[0] - output[1];
 
         return output;
     }
 
-    private int[] GetAmountDivision(int amountOfSeedlings, int amountOfDivisions)
+    private int[] GetAmountDivision(int amountToDivide, int amountOfDivisions)
     {
         int[] output = new int[amountOfDivisions];
         Random random = new Random(59);
@@ -372,12 +372,12 @@ public class SeedBedStatusTests
         {
             if (i != output.Length - 1)
             {
-                output[i] = random.Next(Convert.ToInt32(amountOfSeedlings * 0.1), Convert.ToInt32(amountOfSeedlings * 0.3));
-                amountOfSeedlings -= output[i];
+                output[i] = random.Next(Convert.ToInt32(amountToDivide * 0.1), Convert.ToInt32(amountToDivide * 0.3));
+                amountToDivide -= output[i];
             }
             else
             {
-                output[i] = amountOfSeedlings;
+                output[i] = amountToDivide;
             }
         }
 
