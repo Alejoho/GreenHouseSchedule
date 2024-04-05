@@ -704,7 +704,7 @@ public class SeedBedStatusTests
             .RuleFor(x => x.OrderLocationId, orderLocation.Id)
             .RuleFor(x => x.OrderLocation, orderLocation)
             .RuleFor(x => x.BlockNumber, f => f.Random.Byte(1, orderLocation.GreenHouse.AmountOfBlocks))
-            .RuleFor(x => x.SeedTrayAmount, seedTrayDivision[indexOfSeedlingDivision++]);
+            .RuleFor(x => x.SeedTrayAmount, Convert.ToInt16(seedTrayDivision[indexOfSeedlingDivision++]));
     }
 
     private Faker<DeliveryDetail> GetDeliveryDetailFaker(Block block, int[] seedlingDivision)
