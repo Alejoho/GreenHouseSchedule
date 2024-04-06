@@ -338,14 +338,56 @@ public class SeedBedStatusTests
             )
             .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(50, 500));
     }
-
+    //NEXT - I have an error in the generator. There are order location sown within a month form the presente date and
+    //beside that they have delivery details objects and they shouldn't
     [Fact]
     public void FillDeliveryDetails_ShouldPopulateTheDeliveryDetailsOfTheOrderLocations()
     {
-        //generar 50 orders sin sus orderlocations
-        //luego iterar sobre cada orden, generar sus orderlocations y agregarlas a una lista
-        //luego iterar sobre los orderlocations, generar los delivery details y agregarlos a una lista
-        //recordar que entre los orderlocations y los delivery details van los blocks
+        DateOnly date = (new DateOnly(2023, 6, 10)).AddDays(-90);
+
+        var orderLocationCollection = _orderLocations.Where(x => x.SowDate > date || x.SowDate == null)
+            .OrderBy(x => x.SowDate)
+            .ThenBy(x => x.Id);
+
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = new Mock<IOrderLocationProcessor>();
+
+        mockOrderLocationProcessor
+            .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(orderLocationCollection);
+
+        var deliveryDetailCollection = _deliveryDetails.Where(x => x.DeliveryDate > date)
+            .OrderBy(x => x.DeliveryDate);
+
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = new Mock<IDeliveryDetailProcessor>();
+
+        mockDeliveryDetailProcessor
+            .Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(deliveryDetailCollection);
+
+
+        SeedBedStatus status = new SeedBedStatus(date
+            , orderLocationProcessor: mockOrderLocationProcessor.Object
+            , deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
+
+
+        MethodInfo methodInfo_GetOrderLocations = typeof(SeedBedStatus)
+            .GetMethod("GetOrderLocations",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        LinkedList<OrderLocationModel> orderLocationModel =
+                (LinkedList<OrderLocationModel>)methodInfo_GetOrderLocations.Invoke(status, null);
+
+
+        MethodInfo methodInfo_FillDeliveryDetails = typeof(SeedBedStatus)
+            .GetMethod("FillDeliveryDetails",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo_FillDeliveryDetails.Invoke(status, new object[] { orderLocationModel });
+
+        orderLocationModel.Count.Should().Be(orderLocationCollection.Count());
+
+        int deliveryDetailCount = orderLocationModel.Sum(x => x.DeliveryDetails.Count);
+        deliveryDetailCollection.Count().Should().Be(deliveryDetailCount);
     }
 
     private int[] GenerateBalanceOfOrderTypes(int totalOfOrders)
@@ -385,7 +427,8 @@ public class SeedBedStatusTests
 
         return output;
     }
-
+    //TODO - Make some variable to change the present date and don't have to make changes in a lots of place to change 
+    //that date
     private void PopulateLists(int count)
     {
         _orders = new List<Order>();
@@ -689,7 +732,8 @@ public class SeedBedStatusTests
 
             .RuleFor(x => x.EstimateDeliveryDate,
                 (f, u) => u.SowDate?.AddDays(order.Product.Specie.ProductionDays))
-            .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);
+            .RuleFor(x => x.RealDeliveryDate, (f, u) =>
+                u.EstimateDeliveryDate < new DateOnly(2023, 6, 10) ? u.EstimateDeliveryDate : null);
     }
 
     private Faker<Block> GetBlockFaker(OrderLocation orderLocation, int[] seedTrayDivision)
