@@ -46,12 +46,18 @@ namespace Domain
         {
 
         }
-        public SeedBedStatus(IGreenHouseRepository greenHouseRepo = null,
+        public SeedBedStatus(DateOnly? presentDate = null,
+            IGreenHouseRepository greenHouseRepo = null,
             ISeedTrayRepository seedTrayRepo = null,
             IOrderProcessor orderProcessor = null,
             IOrderLocationProcessor orderLocationProcessor = null,
             IDeliveryDetailProcessor deliveryDetailProcessor = null)
         {
+            if (presentDate != null)
+            {
+                _presentDate = (DateOnly)presentDate;
+                _iteratorDate = ((DateOnly)presentDate).AddDays(-90);
+            }
             _greenHouseRepository = greenHouseRepo;
             _seedTrayRepository = seedTrayRepo;
             _orderProcessor = orderProcessor;
@@ -306,6 +312,7 @@ namespace Domain
         {
             //NEXT - this is the next method to create its test
             List<DeliveryDetailModel> deliveryDetailList = GetDeliveryDetails();
+
             foreach (var orderLocation in pOrderLocationModelLinkedList)
             {
                 orderLocation.DeliveryDetails =

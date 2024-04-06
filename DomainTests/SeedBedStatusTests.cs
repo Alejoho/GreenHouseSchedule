@@ -343,9 +343,10 @@ public class SeedBedStatusTests
     [Fact]
     public void FillDeliveryDetails_ShouldPopulateTheDeliveryDetailsOfTheOrderLocations()
     {
-        DateOnly date = (new DateOnly(2023, 6, 10)).AddDays(-90);
+        DateOnly presentDate = new DateOnly(2023, 6, 10);
+        DateOnly pastDate = presentDate.AddDays(-90);
 
-        var orderLocationCollection = _orderLocations.Where(x => x.SowDate > date || x.SowDate == null)
+        var orderLocationCollection = _orderLocations.Where(x => x.SowDate > pastDate || x.SowDate == null)
             .OrderBy(x => x.SowDate)
             .ThenBy(x => x.Id);
 
@@ -355,7 +356,7 @@ public class SeedBedStatusTests
             .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
             .Returns(orderLocationCollection);
 
-        var deliveryDetailCollection = _deliveryDetails.Where(x => x.DeliveryDate > date)
+        var deliveryDetailCollection = _deliveryDetails.Where(x => x.DeliveryDate > pastDate)
             .OrderBy(x => x.DeliveryDate);
 
         Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = new Mock<IDeliveryDetailProcessor>();
@@ -365,7 +366,7 @@ public class SeedBedStatusTests
             .Returns(deliveryDetailCollection);
 
 
-        SeedBedStatus status = new SeedBedStatus(date
+        SeedBedStatus status = new SeedBedStatus(presentDate
             , orderLocationProcessor: mockOrderLocationProcessor.Object
             , deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
 
