@@ -310,7 +310,6 @@ namespace Domain
         /// <param name="pOrderLocationModelLinkedList">LinkedList<OrderLocationModel> to fill with their delivery details.</param>
         private void FillDeliveryDetails(LinkedList<OrderLocationModel> pOrderLocationModelLinkedList)
         {
-            //NEXT - this is the next method to create its test
             List<DeliveryDetailModel> deliveryDetailList = GetDeliveryDetails();
 
             foreach (var orderLocation in pOrderLocationModelLinkedList)

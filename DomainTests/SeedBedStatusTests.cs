@@ -394,11 +394,24 @@ public class SeedBedStatusTests
 
         //var selection = _orderLocations.Where(x => x.RealDeliveryDate != null && (x.Blocks.Where(x => x.DeliveryDetails.Count > 0).Count() == 0)).ToList();
 
+        //LATER - Try to improve the assert of this test.
         orderLocationModels.Count.Should().Be(orderLocationCollection.Count());
 
         int deliveryDetailModelsCount = orderLocationModels.Sum(x => x.DeliveryDetails.Count);
         //deliveryDetailCollection.Count().Should().Be(deliveryDetailModelsCount);
         deliveryDetailModelsCount.Should().BeLessThan(deliveryDetailCollection.Count());
+
+        foreach (var orderLocationModel in orderLocationModels)
+        {
+            if (orderLocationModel.RealDeliveryDate != null)
+            {
+                orderLocationModel.RealDeliveryDate.Should().Be(orderLocationModel.DeliveryDetails.First().DeliveryDate);
+            }
+            else
+            {
+                orderLocationModel.DeliveryDetails.Count.Should().Be(0);
+            }
+        }
     }
 
     private int[] GenerateBalanceOfOrderTypes(int totalOfOrders)
