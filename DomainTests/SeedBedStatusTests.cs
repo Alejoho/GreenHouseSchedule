@@ -338,12 +338,8 @@ public class SeedBedStatusTests
             )
             .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(50, 500));
     }
-    //NEXT - (creo que esta arreglado) I have an error in the generator. There are order location sown within a month from the presente date and
+    //CHECK - (creo que esta arreglado) I have an error in the generator. There are order location sown within a month from the presente date and
     //beside that they have delivery details objects and they shouldn't
-
-    //NEXT - hay orderlocations que tiene realdeliverydate y sin embargo no tiene deliverydetail objects.
-    //tener en cuenta que si se cambia el realdelivery date of the 1st order location in an order I should change
-    //the delivery date in the order too.
 
     //LATER - Talvez en u futuro tenga algun problema con algo del generador porque talvez a la fecha presente,
     //le reste 30 dias y debia haberle restado los dias en que la postura se demore en estar que puede ser 30 o 45 dias
@@ -396,7 +392,7 @@ public class SeedBedStatusTests
 
         methodInfo_FillDeliveryDetails.Invoke(status,null);
 
-        //NEXT - Try to improve the assert of this test. puedo verificar que ciertos metodos fueron llamados.
+        //NEXT - Try to improve the assert of this test. Puedo verificar que ciertos metodos fueron llamados.
         status.OrderLocations.Count.Should().Be(orderLocationCollection.Count());
 
         int deliveryDetailModelsCount = status.OrderLocations.Sum(x => x.DeliveryDetails.Count);
@@ -432,7 +428,6 @@ public class SeedBedStatusTests
             .Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
             .Returns(orderCollection);
 
-
         var orderLocationCollection = _orderLocations.Where(x => x.SowDate > pastDate || x.SowDate == null)
             .OrderBy(x => x.SowDate)
             .ThenBy(x => x.Id);
@@ -443,21 +438,9 @@ public class SeedBedStatusTests
             .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
             .Returns(orderLocationCollection);
 
-
-        var deliveryDetailCollection = _deliveryDetails.Where(x => x.DeliveryDate > pastDate)
-            .OrderBy(x => x.DeliveryDate);
-
-        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = new Mock<IDeliveryDetailProcessor>();
-
-        mockDeliveryDetailProcessor
-            .Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>()))
-            .Returns(deliveryDetailCollection);
-
-
         SeedBedStatus status = new SeedBedStatus(presentDate
             , orderProcessor: mockOrderProcessor.Object
-            , orderLocationProcessor: mockOrderLocationProcessor.Object
-            , deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
+            , orderLocationProcessor: mockOrderLocationProcessor.Object);
 
         MethodInfo methodInfo_GetMajorityDataOfOrders = typeof(SeedBedStatus)
             .GetMethod("GetMajorityDataOfOrders",
@@ -465,12 +448,20 @@ public class SeedBedStatusTests
 
         status.Orders = (LinkedList<OrderModel>)methodInfo_GetMajorityDataOfOrders.Invoke(status, null);
 
+        MethodInfo methodInfo_GetOrderLocations = typeof(SeedBedStatus)
+            .GetMethod("GetOrderLocations",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.OrderLocations =
+                (LinkedList<OrderLocationModel>)methodInfo_GetOrderLocations.Invoke(status, null);
+
         MethodInfo methodInfo_FillOrderLocations = typeof(SeedBedStatus)
             .GetMethod("FillOrderLocations",
             BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo_FillOrderLocations.Invoke(status, null);
 
+        //NEXT - Try to improve the assert of this test. Puedo verificar que ciertos metodos fueron llamados.
         status.Orders.Count.Should().Be(orderCollection.Count());
 
         int orderLocationModelsCount = status.Orders.Sum(x => x.OrderLocations.Count);
@@ -519,6 +510,7 @@ public class SeedBedStatusTests
     }
     //TODO - Make some variable to change the present date and don't have to make changes in a lots of place to change 
     //that date
+    //LATER - Move the generator to an independent class.
     private void PopulateLists(int count)
     {
         _orders = new List<Order>();
