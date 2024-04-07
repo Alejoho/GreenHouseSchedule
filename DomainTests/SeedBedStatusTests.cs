@@ -385,7 +385,6 @@ public class SeedBedStatusTests
         LinkedList<OrderLocationModel> orderLocationModels =
                 (LinkedList<OrderLocationModel>)methodInfo_GetOrderLocations.Invoke(status, null);
 
-
         MethodInfo methodInfo_FillDeliveryDetails = typeof(SeedBedStatus)
             .GetMethod("FillDeliveryDetails",
             BindingFlags.NonPublic | BindingFlags.Instance);
@@ -394,7 +393,7 @@ public class SeedBedStatusTests
 
         //var selection = _orderLocations.Where(x => x.RealDeliveryDate != null && (x.Blocks.Where(x => x.DeliveryDetails.Count > 0).Count() == 0)).ToList();
 
-        //LATER - Try to improve the assert of this test.
+        //NEXT - Try to improve the assert of this test. puedo verificar que ciertos metodos fueron llamados.
         orderLocationModels.Count.Should().Be(orderLocationCollection.Count());
 
         int deliveryDetailModelsCount = orderLocationModels.Sum(x => x.DeliveryDetails.Count);
@@ -412,6 +411,64 @@ public class SeedBedStatusTests
                 orderLocationModel.DeliveryDetails.Count.Should().Be(0);
             }
         }
+    }
+
+    [Fact]
+    public void FillOrderLocations_ShouldPopulateTheOrderLocationsOfTheOrders()
+    {
+        DateOnly presentDate = new DateOnly(2023, 6, 10);
+        DateOnly pastDate = presentDate.AddDays(-90);
+
+        var orderCollection = _orders.Where(x => x.RealSowDate > pastDate || x.RealSowDate == null)
+            .OrderBy(x => x.EstimateSowDate)
+            .ThenBy(x => x.DateOfRequest);
+
+        Mock<IOrderProcessor> mockOrderProcessor = new Mock<IOrderProcessor>();
+
+        mockOrderProcessor
+            .Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(orderCollection);
+
+
+        var orderLocationCollection = _orderLocations.Where(x => x.SowDate > pastDate || x.SowDate == null)
+            .OrderBy(x => x.SowDate)
+            .ThenBy(x => x.Id);
+
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = new Mock<IOrderLocationProcessor>();
+
+        mockOrderLocationProcessor
+            .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(orderLocationCollection);
+
+
+        var deliveryDetailCollection = _deliveryDetails.Where(x => x.DeliveryDate > pastDate)
+            .OrderBy(x => x.DeliveryDate);
+
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = new Mock<IDeliveryDetailProcessor>();
+
+        mockDeliveryDetailProcessor
+            .Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(deliveryDetailCollection);
+
+
+        SeedBedStatus status = new SeedBedStatus(presentDate
+            , orderProcessor: mockOrderProcessor.Object
+            , orderLocationProcessor: mockOrderLocationProcessor.Object
+            , deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
+
+        MethodInfo methodInfo_GetMajorityDataOfOrders = typeof(SeedBedStatus)
+            .GetMethod("GetMajorityDataOfOrders",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.Orders = (LinkedList<OrderModel>)methodInfo_GetMajorityDataOfOrders.Invoke(status, null);
+
+        MethodInfo methodInfo_FillOrderLocations = typeof(SeedBedStatus)
+            .GetMethod("FillOrderLocations",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo_FillOrderLocations.Invoke(status, null);
+
+
     }
 
     private int[] GenerateBalanceOfOrderTypes(int totalOfOrders)

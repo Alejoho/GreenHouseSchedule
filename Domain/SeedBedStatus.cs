@@ -257,7 +257,9 @@ namespace Domain
         /// </summary>
         private void FillOrderLocations()
         {
-            //NEXT - this is the other method to create its test
+            //NEXT - this is the next method to create its test
+            //CHECK - I think i don't have to create this linked list because I already have a linkedlist
+            //with the need data. And I'll have to do the same in the FillDeliveryDetail method
             LinkedList<OrderLocationModel> orderLocationModelLinkedList = GetOrderLocations();
             FillDeliveryDetails(orderLocationModelLinkedList);
             foreach (var order in _orders)
