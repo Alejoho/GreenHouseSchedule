@@ -468,7 +468,13 @@ public class SeedBedStatusTests
 
         methodInfo_FillOrderLocations.Invoke(status, null);
 
+        status.Orders.Count.Should().Be(orderCollection.Count());
 
+        int orderLocationModelsCount = status.Orders.Sum(x => x.OrderLocations.Count);
+
+        orderLocationModelsCount.Should().Be(orderLocationCollection.Count());
+
+        orderLocationModelsCount.Should().BeLessThan(_orderLocations.Count);        
     }
 
     private int[] GenerateBalanceOfOrderTypes(int totalOfOrders)
