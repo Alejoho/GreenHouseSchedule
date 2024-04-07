@@ -372,35 +372,38 @@ public class SeedBedStatusTests
             .Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>()))
             .Returns(deliveryDetailCollection);
 
-
         SeedBedStatus status = new SeedBedStatus(presentDate
             , orderLocationProcessor: mockOrderLocationProcessor.Object
             , deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
-
 
         MethodInfo methodInfo_GetOrderLocations = typeof(SeedBedStatus)
             .GetMethod("GetOrderLocations",
             BindingFlags.NonPublic | BindingFlags.Instance);
 
-        LinkedList<OrderLocationModel> orderLocationModels =
+        status.OrderLocations =
                 (LinkedList<OrderLocationModel>)methodInfo_GetOrderLocations.Invoke(status, null);
+
+        MethodInfo methodInfo_GetDeliveryDetails = typeof(SeedBedStatus)
+            .GetMethod("GetDeliveryDetails",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.DeliveryDetails =
+                (List<DeliveryDetailModel>)methodInfo_GetDeliveryDetails.Invoke(status, null);
 
         MethodInfo methodInfo_FillDeliveryDetails = typeof(SeedBedStatus)
             .GetMethod("FillDeliveryDetails",
             BindingFlags.NonPublic | BindingFlags.Instance);
 
-        methodInfo_FillDeliveryDetails.Invoke(status, new object[] { orderLocationModels });
-
-        //var selection = _orderLocations.Where(x => x.RealDeliveryDate != null && (x.Blocks.Where(x => x.DeliveryDetails.Count > 0).Count() == 0)).ToList();
+        methodInfo_FillDeliveryDetails.Invoke(status,null);
 
         //NEXT - Try to improve the assert of this test. puedo verificar que ciertos metodos fueron llamados.
-        orderLocationModels.Count.Should().Be(orderLocationCollection.Count());
+        status.OrderLocations.Count.Should().Be(orderLocationCollection.Count());
 
-        int deliveryDetailModelsCount = orderLocationModels.Sum(x => x.DeliveryDetails.Count);
-        //deliveryDetailCollection.Count().Should().Be(deliveryDetailModelsCount);
+        int deliveryDetailModelsCount = status.OrderLocations.Sum(x => x.DeliveryDetails.Count);
+
         deliveryDetailModelsCount.Should().BeLessThan(deliveryDetailCollection.Count());
 
-        foreach (var orderLocationModel in orderLocationModels)
+        foreach (var orderLocationModel in status.OrderLocations)
         {
             if (orderLocationModel.RealDeliveryDate != null)
             {
