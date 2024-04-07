@@ -8,6 +8,11 @@ using System.Configuration;
 
 namespace Domain
 {
+
+    //TODO - I think it'd be good to change the evaluation of availability of sow seedtray per day from seedtray to 
+    //seedlings, because diferent types of seedtrays change the amount of seedtray that can be sown in one day
+    // -----(mientras que) amount of seedling remaings the same.
+
     /// <summary>
     /// Represents the amount of resources in the seed bed 
     /// at any given time.
@@ -110,6 +115,8 @@ namespace Domain
             _orderLocations = GetOrderLocations();
             //LATER - this is the same situation than above.
             _deliveryDetails = GetDeliveryDetails();
+
+            FillDeliveryDetails();
 
             FillOrderLocations();
 
@@ -248,33 +255,6 @@ namespace Domain
             return orderModelLinkedList;
         }
 
-        //TODO - I think it'd be good to change the evaluation of availability of sow seedtray per day from seedtray to 
-        //seedlings, because diferent types of seedtrays change the amount of seedtray that can be sown in one day
-        // -----(mientras que) amount of seedling remaings the same.
-
-        /// <summary>
-        /// Gets the order locations with their delivery details.
-        /// </summary>
-        private void FillOrderLocations()
-        {
-            //NEXT - this is the next method to create its test
-            //CHECK - I think i don't have to create this linked list because I already have a linkedlist
-            //with the need data. And I'll have to do the same in the FillDeliveryDetail method
-            LinkedList<OrderLocationModel> orderLocationModelLinkedList = GetOrderLocations();
-            FillDeliveryDetails(orderLocationModelLinkedList);
-            foreach (var order in _orders)
-            {
-                order.OrderLocations = new LinkedList<OrderLocationModel>(
-                    (from orderLocationElement in orderLocationModelLinkedList
-                     where orderLocationElement.OrderID == order.ID
-                     orderby orderLocationElement.ID
-                     select orderLocationElement));
-                //order.OrderLocations = (LinkedList<OrderLocationModel>)
-                //                        orderLocationModelLinkedList.
-                //                        Where(orderLocationElement => orderLocationElement.OrderID == order.ID);
-            }
-        }
-
         /// <summary>
         /// Gets all the order locations with all their information but their delivery details.
         /// </summary>
@@ -307,27 +287,6 @@ namespace Domain
         }
 
         /// <summary>
-        /// Fills the DeliveryDetails property of each of the order locations passed in the LinkedList.
-        /// </summary>
-        /// <param name="pOrderLocationModelLinkedList">LinkedList<OrderLocationModel> to fill with their delivery details.</param>
-        private void FillDeliveryDetails(LinkedList<OrderLocationModel> pOrderLocationModelLinkedList)
-        {
-            List<DeliveryDetailModel> deliveryDetailList = GetDeliveryDetails();
-
-            foreach (var orderLocation in pOrderLocationModelLinkedList)
-            {
-                orderLocation.DeliveryDetails =
-                    (from deliveryDetailElement in deliveryDetailList
-                     where deliveryDetailElement.OrderLocationID == orderLocation.ID
-                     orderby deliveryDetailElement.DeliveryDate
-                     select deliveryDetailElement).ToList();
-                //orderLocation.DeliveryDetails = (List<DeliveryDetailModel>)
-                //                                deliveryDetailList.
-                //                                Where(n => n.OrderLocationID == orderLocation.ID);
-            }
-        }
-
-        /// <summary>
         /// Gets all the delivery details.
         /// </summary>
         /// <returns>Returns a List<DeliveryDetailModel></returns>
@@ -349,6 +308,50 @@ namespace Domain
             }
 
             return deliveryDetailModelList;
+        }
+
+        /// <summary>
+        /// Fills the DeliveryDetails property of each of the order locations passed in the LinkedList.
+        /// </summary>
+        /// <param name="pOrderLocationModelLinkedList">LinkedList<OrderLocationModel> to fill with their delivery details.</param>
+        private void FillDeliveryDetails()
+        {
+            //List<DeliveryDetailModel> deliveryDetailList = GetDeliveryDetails();
+
+            foreach (var orderLocation in _orderLocations)
+            {
+                orderLocation.DeliveryDetails =
+                    (from deliveryDetailElement in _deliveryDetails
+                     where deliveryDetailElement.OrderLocationID == orderLocation.ID
+                     orderby deliveryDetailElement.DeliveryDate
+                     select deliveryDetailElement).ToList();
+                //orderLocation.DeliveryDetails = (List<DeliveryDetailModel>)
+                //                                deliveryDetailList.
+                //                                Where(n => n.OrderLocationID == orderLocation.ID);
+            }
+        }
+
+        /// <summary>
+        /// Gets the order locations with their delivery details.
+        /// </summary>
+        private void FillOrderLocations()
+        {
+            //NEXT - this is the next method to create its test
+            //CHECK - I think i don't have to create this linked list because I already have a linkedlist
+            //with the need data. And I'll have to do the same in the FillDeliveryDetail method
+            //LinkedList<OrderLocationModel> orderLocationModelLinkedList = GetOrderLocations();
+            //FillDeliveryDetails(_orderLocations);
+            foreach (var order in _orders)
+            {
+                order.OrderLocations = new LinkedList<OrderLocationModel>(
+                    (from orderLocationElement in _orderLocations
+                     where orderLocationElement.OrderID == order.ID
+                     orderby orderLocationElement.ID
+                     select orderLocationElement));
+                //order.OrderLocations = (LinkedList<OrderLocationModel>)
+                //                        orderLocationModelLinkedList.
+                //                        Where(orderLocationElement => orderLocationElement.OrderID == order.ID);
+            }
         }
 
         #endregion
