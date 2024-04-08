@@ -9,6 +9,24 @@ using System.Reflection;
 namespace DomainTests;
 //TODO - Maybe implement a foreach to iterate through the actual variable and make sure
 // that none value was changed.
+
+//LATER - Make some implementation to run the record generator once for all the tests.
+public static class RecordGenerator
+{
+    public static bool generated = false;
+
+    public static void Populate()
+    {
+        Sum();
+    }
+
+    private static void Sum()
+    {
+        int a = 1;
+        int b = 3;
+        int c = a + b;
+    }
+}
 public class SeedBedStatusTests
 {
 
@@ -21,10 +39,18 @@ public class SeedBedStatusTests
     private int _orderLocationIndex = 1;
     private int _blockIndex = 1;
     private int _deliveryDetailIndex = 1;
+    private bool runned = false;
 
     public SeedBedStatusTests()
     {
         PopulateLists(150);
+        /*
+        if (!RecordGenerator.generated)
+        {
+            
+            RecordGenerator.generated = true;
+        }
+        */
     }
 
     [Fact]
@@ -341,7 +367,7 @@ public class SeedBedStatusTests
     //CHECK - (creo que esta arreglado) I have an error in the generator. There are order location sown within a month from the presente date and
     //beside that they have delivery details objects and they shouldn't
 
-    //LATER - Talvez en u futuro tenga algun problema con algo del generador porque talvez a la fecha presente,
+    //LATER - Talvez en un futuro tenga algun problema con algo del generador porque talvez a la fecha presente,
     //le reste 30 dias y debia haberle restado los dias en que la postura se demore en estar que puede ser 30 o 45 dias
     [Fact]
     public void FillDeliveryDetails_ShouldPopulateTheDeliveryDetailsOfTheOrderLocations()
@@ -390,9 +416,9 @@ public class SeedBedStatusTests
             .GetMethod("FillDeliveryDetails",
             BindingFlags.NonPublic | BindingFlags.Instance);
 
-        methodInfo_FillDeliveryDetails.Invoke(status,null);
+        methodInfo_FillDeliveryDetails.Invoke(status, null);
 
-        //NEXT - Try to improve the assert of this test. Puedo verificar que ciertos metodos fueron llamados.
+        //LATER - Try to improve the assert of this test. Puedo verificar que ciertos metodos fueron llamados.
         status.OrderLocations.Count.Should().Be(orderLocationCollection.Count());
 
         int deliveryDetailModelsCount = status.OrderLocations.Sum(x => x.DeliveryDetails.Count);
@@ -461,15 +487,19 @@ public class SeedBedStatusTests
 
         methodInfo_FillOrderLocations.Invoke(status, null);
 
-        //NEXT - Try to improve the assert of this test. Puedo verificar que ciertos metodos fueron llamados.
+        //LATER - Try to improve the assert of this test. Puedo verificar que ciertos metodos fueron llamados.
         status.Orders.Count.Should().Be(orderCollection.Count());
 
         int orderLocationModelsCount = status.Orders.Sum(x => x.OrderLocations.Count);
 
         orderLocationModelsCount.Should().Be(orderLocationCollection.Count());
 
-        orderLocationModelsCount.Should().BeLessThan(_orderLocations.Count);        
+        orderLocationModelsCount.Should().BeLessThan(_orderLocations.Count);
     }
+
+
+
+
 
     private int[] GenerateBalanceOfOrderTypes(int totalOfOrders)
     {
@@ -508,7 +538,7 @@ public class SeedBedStatusTests
 
         return output;
     }
-    //TODO - Make some variable to change the present date and don't have to make changes in a lots of place to change 
+    //LATER - Make some variable to change the present date and don't have to make changes in a lots of places to change 
     //that date
     //LATER - Move the generator to an independent class.
     private void PopulateLists(int count)
