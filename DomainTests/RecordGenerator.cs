@@ -452,8 +452,6 @@ internal static class RecordGenerator
     }
 
 
-
-
     internal static IEnumerable<Order> GenerateOrders(int count)
     {
         Randomizer.Seed = new Random(123);

@@ -1,27 +1,25 @@
-﻿using Bogus;
-using DataAccess.Contracts;
+﻿using DataAccess.Contracts;
 using Domain;
 using Domain.Models;
 using FluentAssertions;
 using Moq;
-using SupportLayer.Models;
 using System.Reflection;
 
 namespace DomainTests;
 public class SeedBedStatusTests
 {
     public SeedBedStatusTests()
-    {                
+    {
         if (!RecordGenerator.generated == true)
         {
             RecordGenerator.PopulateLists(150);
             RecordGenerator.generated = true;
-        }        
+        }
     }
 
     [Fact]
     public void GetGreenHouses_ShouldReturnAllGreenHouses()
-    {        
+    {
         var collection = RecordGenerator.GenerateGreenHouses(5);
         Mock<IGreenHouseRepository> mockGreenHouseRepository =
             new Mock<IGreenHouseRepository>();
@@ -91,9 +89,9 @@ public class SeedBedStatusTests
         int count = filteredCollection.Count();
         actual.Count.Should().Be(count);
         actual.First.Should().BeOfType(typeof(LinkedListNode<OrderModel>));
-        //TODO - Add this verification to all the test that have something like this
-        mockOrderProcessor.Verify(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()),
-            Times.Once());
+        
+        mockOrderProcessor.Verify(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>())
+            , Times.Once());
     }
 
     [Fact]
@@ -125,9 +123,10 @@ public class SeedBedStatusTests
         int count = filteredCollection.Count();
         actual.Count.Should().Be(count);
         actual.First.Should().BeOfType(typeof(LinkedListNode<OrderLocationModel>));
+
         mockOrderLocationProcessor.
-            Verify(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()),
-            Times.Once());
+            Verify(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>())
+            , Times.Once());
     }
 
     [Fact]
@@ -159,9 +158,10 @@ public class SeedBedStatusTests
         int count = filteredCollection.Count();
         actual.Count.Should().Be(count);
         actual.First().Should().BeOfType(typeof(DeliveryDetailModel));
+
         mockDeliveryDetailProcessor.
-            Verify(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>()),
-            Times.Once());
+            Verify(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>())
+            , Times.Once());
     }
 
     //CHECK - (creo que esta arreglado) I have an error in the generator. There are order location sown within a month
@@ -214,8 +214,7 @@ public class SeedBedStatusTests
             BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo_FillDeliveryDetails.Invoke(status, null);
-
-        //LATER - Try to improve the assert of this test. Puedo verificar que ciertos metodos fueron llamados.
+        
         status.OrderLocations.Count.Should().Be(orderLocationCollection.Count());
 
         int deliveryDetailModelsCount = status.OrderLocations.Sum(x => x.DeliveryDetails.Count);
@@ -233,6 +232,12 @@ public class SeedBedStatusTests
                 orderLocationModel.DeliveryDetails.Count.Should().Be(0);
             }
         }
+
+        mockOrderLocationProcessor.Verify(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>())
+            , Times.Once);
+
+        mockDeliveryDetailProcessor.Verify(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>())
+            , Times.Once);
     }
 
     [Fact]
@@ -284,7 +289,6 @@ public class SeedBedStatusTests
 
         methodInfo_FillOrderLocations.Invoke(status, null);
 
-        //LATER - Try to improve the assert of this test. Puedo verificar que ciertos metodos fueron llamados.
         status.Orders.Count.Should().Be(orderCollection.Count());
 
         int orderLocationModelsCount = status.Orders.Sum(x => x.OrderLocations.Count);
@@ -292,6 +296,12 @@ public class SeedBedStatusTests
         orderLocationModelsCount.Should().Be(orderLocationCollection.Count());
 
         orderLocationModelsCount.Should().BeLessThan(RecordGenerator._orderLocations.Count);
+
+        mockOrderProcessor.Verify(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>())
+            , Times.Once);
+
+        mockOrderLocationProcessor.Verify(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>())
+            , Times.Once);
     }
 
     [Theory]
@@ -318,6 +328,8 @@ public class SeedBedStatusTests
         SeedTrayModel seedTray = status.SeedTrays.Where(x => x.ID == seedTrayType).First();
         seedTray.FreeAmount.Should().Be(seedTray.TotalAmount + amount);
         seedTray.UsedAmount.Should().Be(0 - amount);
+
+        mockSeedTrayRepository.Verify(x => x.GetAll(), Times.Once);
     }
 
     [Theory]
@@ -344,6 +356,8 @@ public class SeedBedStatusTests
         SeedTrayModel seedTray = status.SeedTrays.Where(x => x.ID == seedTrayType).First();
         seedTray.FreeAmount.Should().Be(seedTray.TotalAmount - amount);
         seedTray.UsedAmount.Should().Be(0 + amount);
+
+        mockSeedTrayRepository.Verify(x => x.GetAll(), Times.Once);
     }
 
     [Theory]
@@ -376,7 +390,7 @@ public class SeedBedStatusTests
 
         status.GreenHouses = (List<GreenHouseModel>)methodInfo_GetGreenHouses.Invoke(status, null);
 
-        status.ReleaseArea(amount,seedTrayType,greenHouse);
+        status.ReleaseArea(amount, seedTrayType, greenHouse);
 
         GreenHouseModel selectedGreenHouse = status.GreenHouses.Where(x => x.ID == greenHouse).First();
         SeedTrayModel selectedSeedTray = status.SeedTrays.Where(x => x.ID == seedTrayType).First();
@@ -386,6 +400,9 @@ public class SeedBedStatusTests
 
         selectedGreenHouse.SeedTrayUsedArea.Should()
             .Be(0 - (selectedSeedTray.Area * amount));
+
+        mockSeedTrayRepository.Verify(x => x.GetAll(), Times.Once);
+        mockGreenHouseRepository.Verify(x => x.GetAll(), Times.Once);
     }
 
     [Theory]
@@ -428,5 +445,8 @@ public class SeedBedStatusTests
 
         selectedGreenHouse.SeedTrayUsedArea.Should()
             .Be(0 + (selectedSeedTray.Area * amount));
-    }   
+
+        mockSeedTrayRepository.Verify(x => x.GetAll(), Times.Once);
+        mockGreenHouseRepository.Verify(x => x.GetAll(), Times.Once);
+    }
 }
