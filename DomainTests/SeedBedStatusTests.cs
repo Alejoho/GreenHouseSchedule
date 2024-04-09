@@ -53,6 +53,7 @@ public class SeedBedStatusTests
         */
     }
 
+    //TODO - Edit these tests to use the generallk record generator
     [Fact]
     public void GetGreenHouses_ShouldReturnAllGreenHouses()
     {
@@ -146,7 +147,8 @@ public class SeedBedStatusTests
             .RuleFor(x => x.TotalAmount, f => f.Random.Short(300, 1500))
             .RuleFor(x => x.Material, f => f.Vehicle.Type())
             .RuleFor(x => x.Preference, f => preference++)
-            .RuleFor(x => x.Active, f => f.Random.Bool());
+            .RuleFor(x => x.Active, f => f.Random.Bool())
+            .RuleFor(x => x.IsSelected, true);
     }
 
     [Fact]
@@ -497,6 +499,32 @@ public class SeedBedStatusTests
         orderLocationModelsCount.Should().BeLessThan(_orderLocations.Count);
     }
 
+
+    [Theory]
+    [InlineData(250, 3)]
+    [InlineData(50, 1)]
+    [InlineData(86, 5)]
+    [InlineData(310, 7)]
+    public void ReleaseSeedTray_ShouldWork(int amount, int seedTrayType)
+    {
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
+        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(_seedTrays);
+
+        SeedBedStatus status = new SeedBedStatus(
+            seedTrayRepo: mockSeedTrayRepository.Object);
+
+        MethodInfo methodInfo = typeof(SeedBedStatus)
+            .GetMethod("GetSeedTrays",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.SeedTrays = (List<SeedTrayModel>)methodInfo.Invoke(status, null);
+
+        status.ReleaseSeedTray(amount, seedTrayType);
+
+        SeedTrayModel seedTray = status.SeedTrays.Where(x => x.ID == seedTrayType).First();
+        seedTray.FreeAmount.Should().Be(seedTray.TotalAmount + amount);
+        seedTray.UsedAmount.Should().Be(0 - amount);
+    }
 
 
 

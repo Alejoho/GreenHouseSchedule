@@ -47,10 +47,13 @@ namespace Domain
 
 
         #endregion
+
+        #region Constructors
         public SeedBedStatus(string a)
         {
 
         }
+
         public SeedBedStatus(DateOnly? presentDate = null,
             IGreenHouseRepository greenHouseRepo = null,
             ISeedTrayRepository seedTrayRepo = null,
@@ -70,7 +73,7 @@ namespace Domain
             _deliveryDetailProcessor = deliveryDetailProcessor;
         }
 
-        #region Constructors
+
         /// <summary>
         /// Initialize a new instance of <c>SeedBedStatus</c>
         /// </summary>
@@ -119,7 +122,7 @@ namespace Domain
             FillDeliveryDetails();
 
             FillOrderLocations();
-
+            //NEXT - Continue from this creating the next tests.
             DayByDayToCurrentDate();
 
         }
@@ -336,7 +339,6 @@ namespace Domain
         /// </summary>
         private void FillOrderLocations()
         {
-            //NEXT - this is the next method to create its test
             //CHECK - I think i don't have to create this linked list because I already have a linkedlist
             //with the need data. And I'll have to do the same in the FillDeliveryDetail method
             //LinkedList<OrderLocationModel> orderLocationModelLinkedList = GetOrderLocations();
@@ -495,7 +497,7 @@ namespace Domain
                 //Adds the current orderlocation to the linked list of the order
                 order.OrderLocations.AddLast(orderLocation);
 
-                //NEXT - Look up how to find an specific node in a linked list
+                //TODO - Look up how to find an specific node in a linked list
                 //LinkedListNode<OrderLocationModel> node = _orderLocations
                 //    .Find(orderLocation => orderLocation.ID == node.Value.ID);
 
@@ -523,6 +525,8 @@ namespace Domain
 
 
         #region Internal Methods
+        //LATER - Maybe implement in these 4 methods an error handling for when the available resource is less
+        //than 0 or the used resource is greater than the total amount.
 
         /// <summary>
         /// Calculate the area used by a determined amount of seedtrays of one type 
