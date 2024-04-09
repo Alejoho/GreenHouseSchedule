@@ -592,6 +592,50 @@ public class SeedBedStatusTests
             .Be(0 - (selectedSeedTray.Area * amount));
     }
 
+    [Theory]
+    [InlineData(76, 1, 7)]
+    [InlineData(263, 3, 6)]
+    [InlineData(111, 6, 5)]
+    [InlineData(47, 5, 3)]
+    public void ReserveArea_ShouldWork(int amount, int seedTrayType, int greenHouse)
+    {
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
+        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(_seedTrays);
+
+        Mock<IGreenHouseRepository> mockGreenHouseRepository =
+            new Mock<IGreenHouseRepository>();
+        mockGreenHouseRepository.Setup(x => x.GetAll()).Returns(_greenHouses);
+
+        SeedBedStatus status = new SeedBedStatus(
+            seedTrayRepo: mockSeedTrayRepository.Object,
+            greenHouseRepo: mockGreenHouseRepository.Object);
+
+        MethodInfo methodInfo_GetSeedTrays = typeof(SeedBedStatus)
+            .GetMethod("GetSeedTrays",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.SeedTrays = (List<SeedTrayModel>)methodInfo_GetSeedTrays.Invoke(status, null);
+
+        MethodInfo methodInfo_GetGreenHouses = typeof(SeedBedStatus)
+            .GetMethod("GetGreenHouses",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.GreenHouses = (List<GreenHouseModel>)methodInfo_GetGreenHouses.Invoke(status, null);
+
+        status.ReserveArea(amount, seedTrayType, greenHouse);
+
+        GreenHouseModel selectedGreenHouse = status.GreenHouses.Where(x => x.ID == greenHouse).First();
+        SeedTrayModel selectedSeedTray = status.SeedTrays.Where(x => x.ID == seedTrayType).First();
+
+        selectedGreenHouse.SeedTrayAvailableArea.Should()
+            .Be(selectedGreenHouse.SeedTrayTotalArea - (selectedSeedTray.Area * amount));
+
+        selectedGreenHouse.SeedTrayUsedArea.Should()
+            .Be(0 + (selectedSeedTray.Area * amount));
+    }
+
+
+
 
     private int[] GenerateBalanceOfOrderTypes(int totalOfOrders)
     {
