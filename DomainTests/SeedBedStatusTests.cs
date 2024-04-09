@@ -39,7 +39,6 @@ public class SeedBedStatusTests
     private int _orderLocationIndex = 1;
     private int _blockIndex = 1;
     private int _deliveryDetailIndex = 1;
-    private bool runned = false;
 
     public SeedBedStatusTests()
     {
@@ -499,7 +498,6 @@ public class SeedBedStatusTests
         orderLocationModelsCount.Should().BeLessThan(_orderLocations.Count);
     }
 
-
     [Theory]
     [InlineData(250, 3)]
     [InlineData(50, 1)]
@@ -526,7 +524,73 @@ public class SeedBedStatusTests
         seedTray.UsedAmount.Should().Be(0 - amount);
     }
 
+    [Theory]
+    [InlineData(125, 2)]
+    [InlineData(64, 4)]
+    [InlineData(245, 1)]
+    [InlineData(166, 6)]
+    public void ReserveSeedTray_ShouldWork(int amount, int seedTrayType)
+    {
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
+        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(_seedTrays);
 
+        SeedBedStatus status = new SeedBedStatus(
+            seedTrayRepo: mockSeedTrayRepository.Object);
+
+        MethodInfo methodInfo = typeof(SeedBedStatus)
+            .GetMethod("GetSeedTrays",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.SeedTrays = (List<SeedTrayModel>)methodInfo.Invoke(status, null);
+
+        status.ReserveSeedTray(amount, seedTrayType);
+
+        SeedTrayModel seedTray = status.SeedTrays.Where(x => x.ID == seedTrayType).First();
+        seedTray.FreeAmount.Should().Be(seedTray.TotalAmount - amount);
+        seedTray.UsedAmount.Should().Be(0 + amount);
+    }
+
+    [Theory]
+    [InlineData(123, 3, 4)]
+    [InlineData(321, 5, 8)]
+    [InlineData(222, 1, 2)]
+    [InlineData(307, 6, 6)]
+    public void ReleaseArea_ShouldWork(int amount, int seedTrayType, int greenHouse)
+    {
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
+        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(_seedTrays);
+
+        Mock<IGreenHouseRepository> mockGreenHouseRepository =
+            new Mock<IGreenHouseRepository>();
+        mockGreenHouseRepository.Setup(x => x.GetAll()).Returns(_greenHouses);
+
+        SeedBedStatus status = new SeedBedStatus(
+            seedTrayRepo: mockSeedTrayRepository.Object,
+            greenHouseRepo: mockGreenHouseRepository.Object);
+
+        MethodInfo methodInfo_GetSeedTrays = typeof(SeedBedStatus)
+            .GetMethod("GetSeedTrays",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.SeedTrays = (List<SeedTrayModel>)methodInfo_GetSeedTrays.Invoke(status, null);
+
+        MethodInfo methodInfo_GetGreenHouses = typeof(SeedBedStatus)
+            .GetMethod("GetGreenHouses",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.GreenHouses = (List<GreenHouseModel>)methodInfo_GetGreenHouses.Invoke(status, null);
+
+        status.ReleaseArea(amount,seedTrayType,greenHouse);
+
+        GreenHouseModel selectedGreenHouse = status.GreenHouses.Where(x => x.ID == greenHouse).First();
+        SeedTrayModel selectedSeedTray = status.SeedTrays.Where(x => x.ID == seedTrayType).First();
+
+        selectedGreenHouse.SeedTrayAvailableArea.Should()
+            .Be(selectedGreenHouse.SeedTrayTotalArea + (selectedSeedTray.Area * amount));
+
+        selectedGreenHouse.SeedTrayUsedArea.Should()
+            .Be(0 - (selectedSeedTray.Area * amount));
+    }
 
 
     private int[] GenerateBalanceOfOrderTypes(int totalOfOrders)
@@ -571,6 +635,7 @@ public class SeedBedStatusTests
     //LATER - Move the generator to an independent class.
     private void PopulateLists(int count)
     {
+        //LATER - Split this method into a few smaller ones.
         _orders = new List<Order>();
         _orderLocations = new List<OrderLocation>();
         _blocks = new List<Block>();
