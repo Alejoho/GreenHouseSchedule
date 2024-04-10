@@ -520,4 +520,42 @@ public class SeedBedStatusTests
         status.OrderLocations.Count.Should()
             .Be(collection.Where(x => x.SowDate != pastDate || x.SowDate ==null).Count());
     }
+
+    [Fact]
+    public void RemoveOrder_ShouldRemoveAllOrdersOfTheDay()
+    {
+        DateOnly presentDate = new DateOnly(2023, 6, 10);
+        DateOnly pastDate = presentDate.AddDays(-90);
+
+        var collection = RecordGenerator._orders
+            .Where(x => x.RealSowDate >= pastDate || x.RealSowDate == null);
+
+        Mock<IOrderProcessor> mockOrderProcessor = new Mock<IOrderProcessor>();
+
+        mockOrderProcessor
+            .Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(collection);
+
+        SeedBedStatus status = new SeedBedStatus(presentDate: presentDate
+            , orderProcessor: mockOrderProcessor.Object);
+
+        MethodInfo methodInfo_GetMajorityDataOfOrders = typeof(SeedBedStatus)
+            .GetMethod("GetMajorityDataOfOrders",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.Orders = (LinkedList<OrderModel>)methodInfo_GetMajorityDataOfOrders.Invoke(status, null);
+
+        var ordersToDelete = status.Orders.Where(x => x.RealSowDate == pastDate).ToList();
+
+        status.OrdersToDelete = new System.Collections.ArrayList(ordersToDelete);
+
+        MethodInfo methodInfo_RemoveOrders = typeof(SeedBedStatus)
+            .GetMethod("RemoveOrders",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo_RemoveOrders.Invoke(status, null);
+
+        status.Orders.Count.Should()
+            .Be(collection.Where(x => x.RealSowDate != pastDate || x.RealSowDate == null).Count());
+    }
 }

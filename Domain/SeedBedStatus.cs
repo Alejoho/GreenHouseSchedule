@@ -470,7 +470,8 @@ namespace Domain
                 _orderLocations.Remove((OrderLocationModel)_orderLocationsToDelete[i]);
             }
         }
-
+        //TODO - add a method to clean up the delivery dates and the order locations that doesn't have a 
+        //relative object.
         /// <summary>
         /// Eliminates the orders that don't have left order locations.
         /// </summary>
