@@ -509,7 +509,7 @@ public class SeedBedStatusTests
 
         var orderLocationsToDelete = status.OrderLocations.Where(x => x.SowDate == pastDate).ToList();
 
-        status.OrderLocationsToDelete  = new System.Collections.ArrayList(orderLocationsToDelete);      
+        status.OrderLocationsToDelete = new System.Collections.ArrayList(orderLocationsToDelete);
 
         MethodInfo methodInfo_RemoveOrderLocations = typeof(SeedBedStatus)
             .GetMethod("RemoveOrderLocations",
@@ -518,7 +518,7 @@ public class SeedBedStatusTests
         methodInfo_RemoveOrderLocations.Invoke(status, null);
 
         status.OrderLocations.Count.Should()
-            .Be(collection.Where(x => x.SowDate != pastDate || x.SowDate ==null).Count());
+            .Be(collection.Where(x => x.SowDate != pastDate || x.SowDate == null).Count());
     }
 
     [Fact]
@@ -557,5 +557,72 @@ public class SeedBedStatusTests
 
         status.Orders.Count.Should()
             .Be(collection.Where(x => x.RealSowDate != pastDate || x.RealSowDate == null).Count());
+    }
+
+    [Fact]
+    public void AddOrderLocations_ShouldAddNewOrderLocationsToTheirOrders()
+    {
+        DateOnly presentDate = new DateOnly(2023, 6, 10);
+        DateOnly pastDate = presentDate.AddDays(-90);
+
+        var orderCollection = RecordGenerator._orders;
+
+        Mock<IOrderProcessor> mockOrderProcessor = new Mock<IOrderProcessor>();
+
+        mockOrderProcessor
+            .Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(orderCollection);
+
+        var orderLocationCollection = RecordGenerator._orderLocations;
+
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = new Mock<IOrderLocationProcessor>();
+
+        mockOrderLocationProcessor
+            .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(orderLocationCollection);
+
+        SeedBedStatus status = new SeedBedStatus(presentDate
+            , orderProcessor: mockOrderProcessor.Object
+            , orderLocationProcessor: mockOrderLocationProcessor.Object);
+
+        MethodInfo methodInfo_GetMajorityDataOfOrders = typeof(SeedBedStatus)
+            .GetMethod("GetMajorityDataOfOrders",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.Orders = (LinkedList<OrderModel>)methodInfo_GetMajorityDataOfOrders.Invoke(status, null);
+
+        MethodInfo methodInfo_GetOrderLocations = typeof(SeedBedStatus)
+            .GetMethod("GetOrderLocations",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.OrderLocations =
+                (LinkedList<OrderLocationModel>)methodInfo_GetOrderLocations.Invoke(status, null);
+
+        MethodInfo methodInfo_FillOrderLocations = typeof(SeedBedStatus)
+            .GetMethod("FillOrderLocations",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo_FillOrderLocations.Invoke(status, null);
+
+        int newOrderLocationAmount = 24;
+
+        var newOrderLocations = RecordGenerator.GenerateOrderLocations(newOrderLocationAmount);
+
+        mockOrderLocationProcessor
+            .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(newOrderLocations);
+
+        status.OrderLocationsToAdd = new System.Collections.ArrayList(
+        (LinkedList<OrderLocationModel>)methodInfo_GetOrderLocations.Invoke(status, null));
+
+        MethodInfo methodInfo_AddOrderLocations = typeof(SeedBedStatus)
+            .GetMethod("AddOrderLocations",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo_AddOrderLocations.Invoke(status, null);
+
+        int sumOrderLocations = status.Orders.Sum(x => x.OrderLocations.Count);
+
+        sumOrderLocations.Should().Be(orderCollection.Count + newOrderLocationAmount);
     }
 }
