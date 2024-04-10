@@ -459,9 +459,6 @@ public class SeedBedStatusTests
         var collection = RecordGenerator._deliveryDetails
             .Where(x => x.DeliveryDate >= pastDate);
 
-        var filteredCollection = RecordGenerator._deliveryDetails
-            .Where(x => x.DeliveryDate == new DateOnly(2023, 3, 12));
-
         Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = new Mock<IDeliveryDetailProcessor>();
 
         mockDeliveryDetailProcessor
@@ -477,8 +474,6 @@ public class SeedBedStatusTests
 
         status.DeliveryDetails = (List<DeliveryDetailModel>)methodInfo_GetDeliveryDetails.Invoke(status, null);
 
-        //var selectedDDMs = status.DeliveryDetails.Where(x=>x.DeliveryDate== pastDate.AddDays(1));
-
         MethodInfo methodInfo_RemoveDeliveryDetails = typeof(SeedBedStatus)
             .GetMethod("RemoveDeliveryDetails",
             BindingFlags.NonPublic | BindingFlags.Instance);
@@ -486,5 +481,43 @@ public class SeedBedStatusTests
         methodInfo_RemoveDeliveryDetails.Invoke(status, null);
 
         status.DeliveryDetails.Count.Should().Be(collection.Where(x => x.DeliveryDate != pastDate).Count());
+    }
+
+    [Fact]
+    public void RemoveOrderLocations_ShouldRemoveAllOrderLocationsOfTheDay()
+    {
+        DateOnly presentDate = new DateOnly(2023, 6, 10);
+        DateOnly pastDate = presentDate.AddDays(-90);
+
+        var collection = RecordGenerator._orderLocations
+            .Where(x => x.SowDate >= pastDate || x.SowDate == null);
+
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = new Mock<IOrderLocationProcessor>();
+
+        mockOrderLocationProcessor
+            .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(collection);
+
+        SeedBedStatus status = new SeedBedStatus(presentDate: presentDate
+            , orderLocationProcessor: mockOrderLocationProcessor.Object);
+
+        MethodInfo methodInfo = typeof(SeedBedStatus)
+            .GetMethod("GetOrderLocations",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.OrderLocations = (LinkedList<OrderLocationModel>)methodInfo.Invoke(status, null);
+
+        var orderLocationsToDelete = status.OrderLocations.Where(x => x.SowDate == pastDate).ToList();
+
+        status.OrderLocationsToDelete  = new System.Collections.ArrayList(orderLocationsToDelete);      
+
+        MethodInfo methodInfo_RemoveOrderLocations = typeof(SeedBedStatus)
+            .GetMethod("RemoveOrderLocations",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo_RemoveOrderLocations.Invoke(status, null);
+
+        status.OrderLocations.Count.Should()
+            .Be(collection.Where(x => x.SowDate != pastDate || x.SowDate ==null).Count());
     }
 }
