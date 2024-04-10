@@ -457,7 +457,7 @@ namespace Domain
         /// </summary>
         private void RemoveDeliveryDetails()
         {
-            DeliveryDetails.RemoveAll(deliveryDetail => deliveryDetail.DeliveryDate == _iteratorDate);
+            _deliveryDetails.RemoveAll(deliveryDetail => deliveryDetail.DeliveryDate == _iteratorDate);
         }
 
         /// <summary>

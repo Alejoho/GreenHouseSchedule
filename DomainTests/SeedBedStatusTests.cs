@@ -89,7 +89,7 @@ public class SeedBedStatusTests
         int count = filteredCollection.Count();
         actual.Count.Should().Be(count);
         actual.First.Should().BeOfType(typeof(LinkedListNode<OrderModel>));
-        
+
         mockOrderProcessor.Verify(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>())
             , Times.Once());
     }
@@ -214,7 +214,7 @@ public class SeedBedStatusTests
             BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo_FillDeliveryDetails.Invoke(status, null);
-        
+
         status.OrderLocations.Count.Should().Be(orderLocationCollection.Count());
 
         int deliveryDetailModelsCount = status.OrderLocations.Sum(x => x.DeliveryDetails.Count);
@@ -448,5 +448,43 @@ public class SeedBedStatusTests
 
         mockSeedTrayRepository.Verify(x => x.GetAll(), Times.Once);
         mockGreenHouseRepository.Verify(x => x.GetAll(), Times.Once);
+    }
+
+    [Fact]
+    public void RemoveDeliveryDetails_ShouldRemoveAllDeliveriesOfTheDay()
+    {
+        DateOnly presentDate = new DateOnly(2023, 6, 10);
+        DateOnly pastDate = presentDate.AddDays(-90);
+
+        var collection = RecordGenerator._deliveryDetails
+            .Where(x => x.DeliveryDate >= pastDate);
+
+        var filteredCollection = RecordGenerator._deliveryDetails
+            .Where(x => x.DeliveryDate == new DateOnly(2023, 3, 12));
+
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = new Mock<IDeliveryDetailProcessor>();
+
+        mockDeliveryDetailProcessor
+            .Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(collection);
+
+        SeedBedStatus status = new SeedBedStatus(presentDate: presentDate
+            , deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
+
+        MethodInfo methodInfo_GetDeliveryDetails = typeof(SeedBedStatus)
+            .GetMethod("GetDeliveryDetails",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        status.DeliveryDetails = (List<DeliveryDetailModel>)methodInfo_GetDeliveryDetails.Invoke(status, null);
+
+        //var selectedDDMs = status.DeliveryDetails.Where(x=>x.DeliveryDate== pastDate.AddDays(1));
+
+        MethodInfo methodInfo_RemoveDeliveryDetails = typeof(SeedBedStatus)
+            .GetMethod("RemoveDeliveryDetails",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo_RemoveDeliveryDetails.Invoke(status, null);
+
+        status.DeliveryDetails.Count.Should().Be(collection.Where(x => x.DeliveryDate != pastDate).Count());
     }
 }
