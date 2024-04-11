@@ -69,7 +69,7 @@ public class SeedBedStatusTests
         DateOnly date = new DateOnly(2023, 7, 1);
 
         var filteredCollection = collection
-            .Where(x => x.RealSowDate > date || x.RealSowDate == null);
+            .Where(x => x.RealSowDate >= date || x.RealSowDate == null);
 
         Mock<IOrderProcessor> mockOrderProcessor = new Mock<IOrderProcessor>();
 
@@ -102,7 +102,7 @@ public class SeedBedStatusTests
         DateOnly date = new DateOnly(2023, 7, 1);
 
         var filteredCollection = collection
-            .Where(x => x.SowDate > date || x.SowDate == null);
+            .Where(x => x.SowDate >= date || x.SowDate == null);
 
         Mock<IOrderLocationProcessor> mockOrderLocationProcessor = new Mock<IOrderLocationProcessor>();
 
@@ -137,7 +137,7 @@ public class SeedBedStatusTests
         DateOnly date = new DateOnly(2023, 7, 1);
 
         var filteredCollection = collection
-            .Where(x => x.DeliveryDate > date);
+            .Where(x => x.DeliveryDate >= date);
 
         Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = new Mock<IDeliveryDetailProcessor>();
 
@@ -172,7 +172,7 @@ public class SeedBedStatusTests
         DateOnly presentDate = new DateOnly(2023, 6, 10);
         DateOnly pastDate = presentDate.AddDays(-90);
 
-        var orderLocationCollection = RecordGenerator._orderLocations.Where(x => x.SowDate > pastDate || x.SowDate == null)
+        var orderLocationCollection = RecordGenerator._orderLocations.Where(x => x.SowDate >= pastDate || x.SowDate == null)
             .OrderBy(x => x.SowDate)
             .ThenBy(x => x.Id);
 
@@ -246,7 +246,7 @@ public class SeedBedStatusTests
         DateOnly presentDate = new DateOnly(2023, 6, 10);
         DateOnly pastDate = presentDate.AddDays(-90);
 
-        var orderCollection = RecordGenerator._orders.Where(x => x.RealSowDate > pastDate || x.RealSowDate == null)
+        var orderCollection = RecordGenerator._orders.Where(x => x.RealSowDate >= pastDate || x.RealSowDate == null)
             .OrderBy(x => x.EstimateSowDate)
             .ThenBy(x => x.DateOfRequest);
 

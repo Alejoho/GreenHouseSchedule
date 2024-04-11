@@ -2,7 +2,8 @@
 using FluentAssertions;
 
 namespace DomainTests;
-
+//CHECK - (creo que esta arreglado) I have an error in the generator. There are order location sown within a month
+//from the presente date and beside that they have delivery details objects and they shouldn't
 internal static class RecordGenerator
 {
     internal static List<Order> _orders;
