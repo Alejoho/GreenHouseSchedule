@@ -341,15 +341,20 @@ namespace Domain
         {
             //CHECK - I think i don't have to create this linked list because I already have a linkedlist
             //with the need data. And I'll have to do the same in the FillDeliveryDetail method
+
             //LinkedList<OrderLocationModel> orderLocationModelLinkedList = GetOrderLocations();
             //FillDeliveryDetails(_orderLocations);
             foreach (var order in _orders)
             {
-                order.OrderLocations = new LinkedList<OrderLocationModel>(
-                    (from orderLocationElement in _orderLocations
+                var orderLocationsToAdd = from orderLocationElement in _orderLocations
                      where orderLocationElement.OrderID == order.ID
                      orderby orderLocationElement.ID
-                     select orderLocationElement));
+                                          select orderLocationElement;
+
+                foreach (var orderLocation in orderLocationsToAdd)
+                {
+                    order.OrderLocations.AddLast(orderLocation);
+                }
                 //order.OrderLocations = (LinkedList<OrderLocationModel>)
                 //                        orderLocationModelLinkedList.
                 //                        Where(orderLocationElement => orderLocationElement.OrderID == order.ID);
