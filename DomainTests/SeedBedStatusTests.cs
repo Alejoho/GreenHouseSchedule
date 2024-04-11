@@ -164,8 +164,6 @@ public class SeedBedStatusTests
             , Times.Once());
     }
 
-    //CHECK - (creo que esta arreglado) I have an error in the generator. There are order location sown within a month
-    //from the presente date and beside that they have delivery details objects and they shouldn't
     [Fact]
     public void FillDeliveryDetails_ShouldPopulateTheDeliveryDetailsOfTheOrderLocations()
     {
@@ -624,5 +622,71 @@ public class SeedBedStatusTests
         int sumOrderLocations = status.Orders.Sum(x => x.OrderLocations.Count);
 
         sumOrderLocations.Should().Be(orderLocationCollection.Count + newOrderLocationAmount);
+    }
+
+    [Fact]
+    public void ImplementReservation_Should()
+    {
+        DateOnly presentDate = new DateOnly(2023, 6, 10);
+        DateOnly pastDate = presentDate.AddDays(-90);
+
+        var greenHouseCollection = RecordGenerator._greenHouses;
+
+        Mock<IGreenHouseRepository> mockGreenHouseRepository =
+            new Mock<IGreenHouseRepository>();
+
+        mockGreenHouseRepository.Setup(x => x.GetAll()).Returns(greenHouseCollection);
+
+        var seedTrayCollection = RecordGenerator._seedTrays;
+
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
+
+        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(seedTrayCollection);
+
+        var orderCollection = RecordGenerator._orders
+            .Where(x => x.RealSowDate >= pastDate || x.RealSowDate == null)
+            .OrderBy(x => x.EstimateSowDate)
+            .ThenBy(x => x.DateOfRequest);
+
+        Mock<IOrderProcessor> mockOrderProcessor = new Mock<IOrderProcessor>();
+
+        mockOrderProcessor
+            .Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(orderCollection);
+
+        var orderLocationCollection = RecordGenerator._orderLocations
+            .Where(x => x.SowDate >= pastDate || x.SowDate == null)
+            .OrderBy(x => x.SowDate)
+            .ThenBy(x => x.Id);
+
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = new Mock<IOrderLocationProcessor>();
+
+        mockOrderLocationProcessor
+            .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
+            .Returns(orderLocationCollection);
+
+        SeedBedStatus status = new SeedBedStatus(presentDate: presentDate
+            , greenHouseRepo: mockGreenHouseRepository.Object
+            , seedTrayRepo: mockSeedTrayRepository.Object
+            , orderProcessor: mockOrderProcessor.Object
+            , orderLocationProcessor: mockOrderLocationProcessor.Object);
+
+        MethodInfo methodInfo = typeof(SeedBedStatus)
+            .GetMethod("ImplementReservation",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo.Invoke(status, null);        
+
+        var orderLocationsSelected = RecordGenerator._orderLocations.Where(x => x.SowDate == status.IteratorDate);
+
+        foreach(var orderLocation in orderLocationsSelected)
+        {
+            status.SeedTrays
+                .Where(x => x.ID == orderLocation.SeedTrayId)
+                .First()
+                .UsedAmount
+                .Should()
+                .BeGreaterThanOrEqualTo(orderLocation.SeedTrayAmount);
+        }
     }
 }
