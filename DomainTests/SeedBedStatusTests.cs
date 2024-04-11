@@ -623,6 +623,6 @@ public class SeedBedStatusTests
 
         int sumOrderLocations = status.Orders.Sum(x => x.OrderLocations.Count);
 
-        sumOrderLocations.Should().Be(orderCollection.Count + newOrderLocationAmount);
+        sumOrderLocations.Should().Be(orderLocationCollection.Count + newOrderLocationAmount);
     }
 }
