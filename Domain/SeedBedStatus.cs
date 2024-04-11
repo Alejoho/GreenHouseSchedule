@@ -347,8 +347,8 @@ namespace Domain
             foreach (var order in _orders)
             {
                 var orderLocationsToAdd = from orderLocationElement in _orderLocations
-                     where orderLocationElement.OrderID == order.ID
-                     orderby orderLocationElement.ID
+                                          where orderLocationElement.OrderID == order.ID
+                                          orderby orderLocationElement.ID
                                           select orderLocationElement;
 
                 foreach (var orderLocation in orderLocationsToAdd)
@@ -499,7 +499,9 @@ namespace Domain
                 //Extracts the order of the current orderlocation
                 OrderModel order = _orders.First(order => order.ID == orderLocation.OrderID);
                 //extracts the last OrderLocationModel of the linkedlist of the order
-                LinkedListNode<OrderLocationModel> node = order.OrderLocations.Last;
+                LinkedListNode<OrderLocationModel> node = _orderLocations.Find(order.OrderLocations.Last()); ;
+                //_orderLocations.Where(x => x.ID == order.OrderLocations.Last.Value.ID);
+                
                 //Adds the current orderlocation to the linked list of the order
                 order.OrderLocations.AddLast(orderLocation);
 
