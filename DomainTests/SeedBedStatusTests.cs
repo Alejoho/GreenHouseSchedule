@@ -12,7 +12,7 @@ public class SeedBedStatusTests
     {
         if (!RecordGenerator.generated == true)
         {
-            RecordGenerator.PopulateLists(150);
+            RecordGenerator.PopulateLists(450);
             RecordGenerator.generated = true;
         }
     }
@@ -28,15 +28,8 @@ public class SeedBedStatusTests
         SeedBedStatus status = new SeedBedStatus(
             greenHouseRepo: mockGreenHouseRepository.Object);
 
-        MethodInfo methodInfo = typeof(SeedBedStatus)
-            .GetMethod("GetGreenHouses",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        List<GreenHouseModel> actual =
-            (List<GreenHouseModel>)methodInfo.Invoke(status, null);
-
-        actual.Should().HaveCount(5);
-        actual[0].Should().BeOfType(typeof(GreenHouseModel));
+        status.GreenHouses.Should().HaveCount(5);
+        status.GreenHouses[0].Should().BeOfType(typeof(GreenHouseModel));
         mockGreenHouseRepository.Verify(x => x.GetAll(), Times.Once());
     }
 
@@ -50,14 +43,8 @@ public class SeedBedStatusTests
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object);
 
-        MethodInfo methodInfo = typeof(SeedBedStatus)
-            .GetMethod("GetSeedTrays",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        List<SeedTrayModel> actual = (List<SeedTrayModel>)methodInfo.Invoke(status, null);
-
-        actual.Should().HaveCount(5);
-        actual[0].Should().BeOfType(typeof(SeedTrayModel));
+        status.SeedTrays.Should().HaveCount(5);
+        status.SeedTrays[0].Should().BeOfType(typeof(SeedTrayModel));
         mockSeedTrayRepository.Verify(x => x.GetAll(), Times.Once());
     }
 
@@ -79,16 +66,9 @@ public class SeedBedStatusTests
         SeedBedStatus status = new SeedBedStatus(
             orderProcessor: mockOrderProcessor.Object);
 
-        MethodInfo methodInfo = typeof(SeedBedStatus)
-            .GetMethod("GetMajorityDataOfOrders",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        LinkedList<OrderModel> actual =
-            (LinkedList<OrderModel>)methodInfo.Invoke(status, null);
-
         int count = filteredCollection.Count();
-        actual.Count.Should().Be(count);
-        actual.First.Should().BeOfType(typeof(LinkedListNode<OrderModel>));
+        status.Orders.Count.Should().Be(count);
+        status.Orders.First.Should().BeOfType(typeof(LinkedListNode<OrderModel>));
 
         mockOrderProcessor.Verify(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>())
             , Times.Once());
@@ -113,16 +93,9 @@ public class SeedBedStatusTests
         SeedBedStatus status = new SeedBedStatus(
             orderLocationProcessor: mockOrderLocationProcessor.Object);
 
-        MethodInfo methodInfo = typeof(SeedBedStatus)
-            .GetMethod("GetOrderLocations",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        LinkedList<OrderLocationModel> actual =
-                (LinkedList<OrderLocationModel>)methodInfo.Invoke(status, null);
-
         int count = filteredCollection.Count();
-        actual.Count.Should().Be(count);
-        actual.First.Should().BeOfType(typeof(LinkedListNode<OrderLocationModel>));
+        status.OrderLocations.Count.Should().Be(count);
+        status.OrderLocations.First.Should().BeOfType(typeof(LinkedListNode<OrderLocationModel>));
 
         mockOrderLocationProcessor.
             Verify(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>())
@@ -148,16 +121,9 @@ public class SeedBedStatusTests
         SeedBedStatus status = new SeedBedStatus(
             deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
 
-        MethodInfo methodInfo = typeof(SeedBedStatus)
-            .GetMethod("GetDeliveryDetails",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        List<DeliveryDetailModel> actual =
-                (List<DeliveryDetailModel>)methodInfo.Invoke(status, null);
-
         int count = filteredCollection.Count();
-        actual.Count.Should().Be(count);
-        actual.First().Should().BeOfType(typeof(DeliveryDetailModel));
+        status.DeliveryDetails.Count.Should().Be(count);
+        status.DeliveryDetails.First().Should().BeOfType(typeof(DeliveryDetailModel));
 
         mockDeliveryDetailProcessor.
             Verify(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>())
@@ -192,20 +158,6 @@ public class SeedBedStatusTests
         SeedBedStatus status = new SeedBedStatus(presentDate
             , orderLocationProcessor: mockOrderLocationProcessor.Object
             , deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
-
-        MethodInfo methodInfo_GetOrderLocations = typeof(SeedBedStatus)
-            .GetMethod("GetOrderLocations",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.OrderLocations =
-                (LinkedList<OrderLocationModel>)methodInfo_GetOrderLocations.Invoke(status, null);
-
-        MethodInfo methodInfo_GetDeliveryDetails = typeof(SeedBedStatus)
-            .GetMethod("GetDeliveryDetails",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.DeliveryDetails =
-                (List<DeliveryDetailModel>)methodInfo_GetDeliveryDetails.Invoke(status, null);
 
         MethodInfo methodInfo_FillDeliveryDetails = typeof(SeedBedStatus)
             .GetMethod("FillDeliveryDetails",
@@ -268,19 +220,6 @@ public class SeedBedStatusTests
             , orderProcessor: mockOrderProcessor.Object
             , orderLocationProcessor: mockOrderLocationProcessor.Object);
 
-        MethodInfo methodInfo_GetMajorityDataOfOrders = typeof(SeedBedStatus)
-            .GetMethod("GetMajorityDataOfOrders",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.Orders = (LinkedList<OrderModel>)methodInfo_GetMajorityDataOfOrders.Invoke(status, null);
-
-        MethodInfo methodInfo_GetOrderLocations = typeof(SeedBedStatus)
-            .GetMethod("GetOrderLocations",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.OrderLocations =
-                (LinkedList<OrderLocationModel>)methodInfo_GetOrderLocations.Invoke(status, null);
-
         MethodInfo methodInfo_FillOrderLocations = typeof(SeedBedStatus)
             .GetMethod("FillOrderLocations",
             BindingFlags.NonPublic | BindingFlags.Instance);
@@ -289,11 +228,9 @@ public class SeedBedStatusTests
 
         status.Orders.Count.Should().Be(orderCollection.Count());
 
-        int orderLocationModelsCount = status.Orders.Sum(x => x.OrderLocations.Count);
+        status.OrderLocations.Count.Should().Be(orderLocationCollection.Count());
 
-        orderLocationModelsCount.Should().Be(orderLocationCollection.Count());
-
-        orderLocationModelsCount.Should().BeLessThan(RecordGenerator._orderLocations.Count);
+        status.OrderLocations.Count.Should().BeLessThan(RecordGenerator._orderLocations.Count);
 
         mockOrderProcessor.Verify(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>())
             , Times.Once);
@@ -314,12 +251,6 @@ public class SeedBedStatusTests
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object);
-
-        MethodInfo methodInfo = typeof(SeedBedStatus)
-            .GetMethod("GetSeedTrays",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.SeedTrays = (List<SeedTrayModel>)methodInfo.Invoke(status, null);
 
         status.ReleaseSeedTray(amount, seedTrayType);
 
@@ -342,12 +273,6 @@ public class SeedBedStatusTests
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object);
-
-        MethodInfo methodInfo = typeof(SeedBedStatus)
-            .GetMethod("GetSeedTrays",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.SeedTrays = (List<SeedTrayModel>)methodInfo.Invoke(status, null);
 
         status.ReserveSeedTray(amount, seedTrayType);
 
@@ -374,19 +299,7 @@ public class SeedBedStatusTests
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object,
-            greenHouseRepo: mockGreenHouseRepository.Object);
-
-        MethodInfo methodInfo_GetSeedTrays = typeof(SeedBedStatus)
-            .GetMethod("GetSeedTrays",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.SeedTrays = (List<SeedTrayModel>)methodInfo_GetSeedTrays.Invoke(status, null);
-
-        MethodInfo methodInfo_GetGreenHouses = typeof(SeedBedStatus)
-            .GetMethod("GetGreenHouses",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.GreenHouses = (List<GreenHouseModel>)methodInfo_GetGreenHouses.Invoke(status, null);
+            greenHouseRepo: mockGreenHouseRepository.Object);        
 
         status.ReleaseArea(amount, seedTrayType, greenHouse);
 
@@ -420,18 +333,6 @@ public class SeedBedStatusTests
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object,
             greenHouseRepo: mockGreenHouseRepository.Object);
-
-        MethodInfo methodInfo_GetSeedTrays = typeof(SeedBedStatus)
-            .GetMethod("GetSeedTrays",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.SeedTrays = (List<SeedTrayModel>)methodInfo_GetSeedTrays.Invoke(status, null);
-
-        MethodInfo methodInfo_GetGreenHouses = typeof(SeedBedStatus)
-            .GetMethod("GetGreenHouses",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.GreenHouses = (List<GreenHouseModel>)methodInfo_GetGreenHouses.Invoke(status, null);
 
         status.ReserveArea(amount, seedTrayType, greenHouse);
 
