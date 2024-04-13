@@ -1,7 +1,6 @@
 ﻿using DataAccess.Contracts;
 using Domain;
 using Moq;
-using SupportLayer.Models;
 
 namespace DomainTests
 {
@@ -12,7 +11,7 @@ namespace DomainTests
         private static Mock<IOrderProcessor> _orderProcessor;
         private static Mock<IOrderLocationProcessor> _orderLocationProcessor;
         private static Mock<IDeliveryDetailProcessor> _deliveryDetailProcessor;
-        
+
         internal static void GenerateMocks(DateOnly pastDate)
         {
             GenerateGreenHouseMock();
@@ -24,7 +23,7 @@ namespace DomainTests
 
         private static void GenerateGreenHouseMock()
         {
-            _greenHouseRepository= new Mock<IGreenHouseRepository>();
+            _greenHouseRepository = new Mock<IGreenHouseRepository>();
             _greenHouseRepository.Setup(x => x.GetAll()).Returns(RecordGenerator._greenHouses);
         }
 
@@ -41,9 +40,9 @@ namespace DomainTests
             .OrderBy(x => x.EstimateSowDate)
             .ThenBy(x => x.DateOfRequest);
 
-            Mock<IOrderProcessor> mockOrderProcessor = new Mock<IOrderProcessor>();
+            _orderProcessor = new Mock<IOrderProcessor>();
 
-            mockOrderProcessor
+            _orderProcessor
                 .Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
                 .Returns(orderCollection);
         }
@@ -66,7 +65,7 @@ namespace DomainTests
         private static void GenerateDeliveryDetailMock(DateOnly pastDate)
         {
             var deliveryDetailCollection = RecordGenerator._deliveryDetails
-                .Where(x => x.Block.OrderLocation.Order.RealSowDate >= pastDate 
+                .Where(x => x.Block.OrderLocation.Order.RealSowDate >= pastDate
                     && x.DeliveryDate >= pastDate)
                 .OrderBy(x => x.DeliveryDate);
 
@@ -138,10 +137,54 @@ namespace DomainTests
             return output;
         }
 
-        internal static Mock<IGreenHouseRepository> GreenHouseRepository { get => _greenHouseRepository; set => _greenHouseRepository = value; }
-        internal static Mock<ISeedTrayRepository> SeedTrayRepository { get => _seedTrayRepository; set => _seedTrayRepository = value; }
-        internal static Mock<IOrderProcessor> OrderProcessor { get => _orderProcessor; set => _orderProcessor = value; }
-        internal static Mock<IOrderLocationProcessor> OrderLocationProcessor { get => _orderLocationProcessor; set => _orderLocationProcessor = value; }
-        internal static Mock<IDeliveryDetailProcessor> DeliveryDetailProcessor { get => _deliveryDetailProcessor; set => _deliveryDetailProcessor = value; }
+        internal static Mock<IGreenHouseRepository> GreenHouseRepository
+        {
+            get
+            {
+                _greenHouseRepository.Invocations.Clear();
+                return _greenHouseRepository;
+            }
+            set => _greenHouseRepository = value;
+        }
+
+        internal static Mock<ISeedTrayRepository> SeedTrayRepository
+        {
+            get
+            {
+                _seedTrayRepository.Invocations.Clear();
+                return _seedTrayRepository;
+            }
+            set => _seedTrayRepository = value;
+        }
+
+        internal static Mock<IOrderProcessor> OrderProcessor
+        {
+            get
+            {
+                _orderProcessor.Invocations.Clear();
+                return _orderProcessor;
+            }
+            set => _orderProcessor = value;
+        }
+
+        internal static Mock<IOrderLocationProcessor> OrderLocationProcessor
+        {
+            get
+            {
+                _orderLocationProcessor.Invocations.Clear();
+                return _orderLocationProcessor;
+            }
+            set => _orderLocationProcessor = value;
+        }
+
+        internal static Mock<IDeliveryDetailProcessor> DeliveryDetailProcessor
+        {
+            get
+            {
+                _deliveryDetailProcessor.Invocations.Clear();
+                return _deliveryDetailProcessor;
+            }
+            set => _deliveryDetailProcessor = value;
+        }
     }
 }
