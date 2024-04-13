@@ -83,9 +83,7 @@ namespace DomainTests
 
             var collection = RecordGenerator.GenerateGreenHouses(numberOfRecords);
 
-            Mock<IGreenHouseRepository> mockGreenHouseRepository =
-                new Mock<IGreenHouseRepository>();
-            mockGreenHouseRepository.Setup(x => x.GetAll()).Returns(collection);
+            output.Setup(x => x.GetAll()).Returns(collection);
 
             return output;
         }
@@ -96,48 +94,46 @@ namespace DomainTests
 
             var collection = RecordGenerator.GenerateSeedTrays(numberOfRecords);
 
-            Mock<ISeedTrayRepository> mockGreenHouseRepository =
-                new Mock<ISeedTrayRepository>();
-            mockGreenHouseRepository.Setup(x => x.GetAll()).Returns(collection);
+            output.Setup(x => x.GetAll()).Returns(collection);
 
             return output;
         }
 
-        internal static Mock<IOrderProcessor> GetCustomOrderMock(int numberOfRecords,DateOnly date)
+        internal static Mock<IOrderProcessor> GetCustomOrderMock(int numberOfRecords)
         {
             Mock<IOrderProcessor> output = new Mock<IOrderProcessor>();
 
             var collection = RecordGenerator.GenerateOrders(numberOfRecords);
 
-            var filteredCollection = collection.Where(x => x.RealSowDate >= date || x.RealSowDate == null);
+            //var filteredCollection = collection.Where(x => x.RealSowDate >= date || x.RealSowDate == null);
 
-            output.Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>())).Returns(filteredCollection);
+            output.Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>())).Returns(collection);
 
             return output;
         }
 
-        internal static Mock<IOrderLocationProcessor> GetCustomOrderLocationMock(int numberOfRecords, DateOnly date)
+        internal static Mock<IOrderLocationProcessor> GetCustomOrderLocationMock(int numberOfRecords)
         {
             Mock<IOrderLocationProcessor> output = new Mock<IOrderLocationProcessor>();
 
             var collection = RecordGenerator.GenerateOrderLocations(numberOfRecords);
 
-            var filteredCollection = collection.Where(x => x.SowDate >= date || x.SowDate == null);            
+            //var filteredCollection = collection.Where(x => x.SowDate >= date || x.SowDate == null);            
 
-            output.Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>())).Returns(filteredCollection);
+            output.Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>())).Returns(collection);
 
             return output;
         }
 
-        internal static Mock<IDeliveryDetailProcessor> GetCustomDeliveryDetailMock(int numberOfRecords, DateOnly date)
+        internal static Mock<IDeliveryDetailProcessor> GetCustomDeliveryDetailMock(int numberOfRecords)
         {
             Mock<IDeliveryDetailProcessor> output = new Mock<IDeliveryDetailProcessor>();
 
             var collection = RecordGenerator.GenerateDeliveryDetails(numberOfRecords);
 
-            var filteredCollection = collection.Where(x => x.DeliveryDate >= date);
+            //var filteredCollection = collection.Where(x => x.DeliveryDate >= date);
 
-            output.Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>())).Returns(filteredCollection);
+            output.Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>())).Returns(collection);
 
             return output;
         }
