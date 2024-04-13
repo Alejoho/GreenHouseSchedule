@@ -1,8 +1,6 @@
-﻿using DataAccess.Contracts;
-using System;
-using System.Collections.Generic;
+﻿using DataAccess.Context;
+using DataAccess.Contracts;
 using SupportLayer.Models;
-using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -14,7 +12,7 @@ namespace DataAccess.Repositories
 
         public OrderLocationRepository()
         {
-            
+
         }
 
         public IEnumerable<OrderLocation> GetAll()
@@ -24,14 +22,16 @@ namespace DataAccess.Repositories
 
         public IEnumerable<OrderLocation> GetByASowDateOn(DateOnly date)
         {
-            return _sowScheduleDB.OrderLocations.Where(x => x.SowDate >= date || x.SowDate == null);
+            return _sowScheduleDB.OrderLocations
+                .Where(x => x.Order.RealSowDate >= date 
+                && (x.SowDate >= date || x.SowDate == null));
         }
 
         public bool Insert(OrderLocation entity)
         {
-                _sowScheduleDB.OrderLocations.Add(entity);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            _sowScheduleDB.OrderLocations.Add(entity);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Remove(int pId)

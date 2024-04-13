@@ -1,11 +1,6 @@
-﻿using DataAccess.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAccess.Context;
+using DataAccess.Contracts;
 using SupportLayer.Models;
-using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -26,30 +21,31 @@ namespace DataAccess.Repositories
 
         public IEnumerable<DeliveryDetail> GetByADeliveryDateOn(DateOnly date)
         {
-            return _sowScheduleDB.DeliveryDetails.Where(x => x.DeliveryDate >= date);
+            return _sowScheduleDB.DeliveryDetails
+                .Where(x => x.Block.OrderLocation.Order.RealSowDate >= date && x.DeliveryDate >= date);
         }
 
         public bool Insert(DeliveryDetail entity)
         {
-                _sowScheduleDB.DeliveryDetails.Add(entity);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            _sowScheduleDB.DeliveryDetails.Add(entity);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Remove(int pId)
         {
-                DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(pId);
-                _sowScheduleDB.DeliveryDetails.Remove(deliveryDetail);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(pId);
+            _sowScheduleDB.DeliveryDetails.Remove(deliveryDetail);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Update(DeliveryDetail entity)
         {
-            DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(entity.Id);                
+            DeliveryDetail deliveryDetail = _sowScheduleDB.DeliveryDetails.Find(entity.Id);
             if (deliveryDetail != null)
             {
-                deliveryDetail.BlockId=entity.BlockId;
+                deliveryDetail.BlockId = entity.BlockId;
                 deliveryDetail.DeliveryDate = entity.DeliveryDate;
                 deliveryDetail.SeedTrayAmountDelivered = entity.SeedTrayAmountDelivered;
                 _sowScheduleDB.SaveChanges();
