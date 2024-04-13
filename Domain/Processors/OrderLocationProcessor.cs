@@ -14,10 +14,9 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
     public IEnumerable<OrderLocation> GetOrderLocationsFromADateOn(DateOnly date)
     {
-        //LATER - maybe exchange the order of ordenation.
         IEnumerable<OrderLocation> output = _repository.GetByASowDateOn(date)
-            .OrderBy(x => x.Id)
-            .ThenBy(x => x.SowDate);
+            .OrderBy(x => x.SowDate)
+            .ThenBy(x => x.Id);
 
         return output;
     }
