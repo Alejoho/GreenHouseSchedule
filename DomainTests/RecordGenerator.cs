@@ -12,10 +12,29 @@ internal static class RecordGenerator
     internal static List<DeliveryDetail> _deliveryDetails;
     internal static List<SeedTray> _seedTrays;
     internal static List<GreenHouse> _greenHouses;
+    internal static int _numberOfSelectedOrders;
+    internal static int _numberOfSelectedOrderLocations;
+    internal static int _numberOfSelectedDeliveryDetails;
     private static int _orderLocationIndex = 1;
     private static int _blockIndex = 1;
     private static int _deliveryDetailIndex = 1;
     internal static bool generated = false;
+
+    internal static void FillNumberOfRecords(DateOnly date)
+    {
+        _numberOfSelectedOrders = _orders
+            .Where(x => x.RealSowDate >= date || x.RealSowDate == null)
+            .Count();
+
+        _numberOfSelectedOrderLocations = _orderLocations
+            .Where(x => x.Order.RealSowDate >= date
+                && (x.SowDate >= date || x.SowDate == null))
+            .Count();
+
+        _numberOfSelectedDeliveryDetails = _deliveryDetails
+            .Where(x => x.Block.OrderLocation.Order.RealSowDate >= date && x.DeliveryDate >= date)
+            .Count();
+    }
 
     private static int[] GenerateBalanceOfOrderTypes(int totalOfOrders)
     {
