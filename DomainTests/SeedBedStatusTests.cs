@@ -17,6 +17,7 @@ public class SeedBedStatusTests
         {
             RecordGenerator.PopulateLists(600);
             RecordGenerator.FillNumberOfRecords(_pastDate);
+            MockOf.GenerateMocks(_pastDate);
             //RecordGenerator.PopulateLists(150);
             RecordGenerator.generated = true;
         }
