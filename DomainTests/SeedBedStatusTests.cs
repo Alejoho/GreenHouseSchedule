@@ -1,6 +1,7 @@
 ﻿using DataAccess.Contracts;
 using Domain;
 using Domain.Models;
+using Domain.Processors;
 using FluentAssertions;
 using Moq;
 using System.Reflection;
@@ -183,8 +184,7 @@ public class SeedBedStatusTests
     [InlineData(310, 7)]
     public void ReleaseSeedTray_ShouldWork(int amount, int seedTrayType)
     {
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
-        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(RecordGenerator._seedTrays);
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object);
@@ -205,8 +205,7 @@ public class SeedBedStatusTests
     [InlineData(166, 6)]
     public void ReserveSeedTray_ShouldWork(int amount, int seedTrayType)
     {
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
-        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(RecordGenerator._seedTrays);
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object);
@@ -227,12 +226,9 @@ public class SeedBedStatusTests
     [InlineData(307, 6, 6)]
     public void ReleaseArea_ShouldWork(int amount, int seedTrayType, int greenHouse)
     {
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
-        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(RecordGenerator._seedTrays);
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
 
-        Mock<IGreenHouseRepository> mockGreenHouseRepository =
-            new Mock<IGreenHouseRepository>();
-        mockGreenHouseRepository.Setup(x => x.GetAll()).Returns(RecordGenerator._greenHouses);
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object,
@@ -260,12 +256,9 @@ public class SeedBedStatusTests
     [InlineData(47, 5, 3)]
     public void ReserveArea_ShouldWork(int amount, int seedTrayType, int greenHouse)
     {
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
-        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(RecordGenerator._seedTrays);
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
 
-        Mock<IGreenHouseRepository> mockGreenHouseRepository =
-            new Mock<IGreenHouseRepository>();
-        mockGreenHouseRepository.Setup(x => x.GetAll()).Returns(RecordGenerator._greenHouses);
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object,
