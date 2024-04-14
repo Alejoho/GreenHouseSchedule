@@ -501,4 +501,47 @@ public class SeedBedStatusTests
         mockOrderProcessor.VerifyAll();
         mockOrderLocationProcessor.VerifyAll();
     }
+
+    [Fact]
+    public void DayByDayToCurrentDate_ShouldWork()
+    {
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+
+        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
+
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
+
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = MockOf.DeliveryDetailProcessor;
+
+        SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
+            , greenHouseRepo: mockGreenHouseRepository.Object
+            , seedTrayRepo: mockSeedTrayRepository.Object
+            , orderProcessor: mockOrderProcessor.Object
+            , orderLocationProcessor: mockOrderLocationProcessor.Object
+            , deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
+
+        MethodInfo methodInfo = typeof(SeedBedStatus)
+            .GetMethod("DayByDayToCurrentDate",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo.Invoke(status, null);
+
+        //status.Orders.Where(x => x.)
+        status.OrderLocations.Where(x => x.RealDeliveryDate < _presentDate).Count().Should().Be(0);
+        status.DeliveryDetails.Where(x => x.DeliveryDate < _presentDate).Count().Should().Be(0);
+        status.OrdersToDelete.Count.Should().Be(0);
+        status.OrderLocationsToDelete.Count.Should().Be(0);
+        status.OrderLocationsToAdd.Count.Should().Be(0);
+        status.IteratorDate.Should().Be(status.PresentDate);
+        
+
+        mockGreenHouseRepository.VerifyAll();
+        mockSeedTrayRepository.VerifyAll();
+        mockOrderProcessor.VerifyAll();
+        mockOrderLocationProcessor.VerifyAll();
+        mockDeliveryDetailProcessor.VerifyAll();
+    }
+
 }
