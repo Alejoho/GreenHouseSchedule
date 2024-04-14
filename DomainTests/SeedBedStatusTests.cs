@@ -467,4 +467,38 @@ public class SeedBedStatusTests
         mockOrderLocationProcessor.VerifyAll();
         mockDeliveryDetailProcessor.VerifyAll();
     }
+
+    [Fact]
+    public void ImplementDelayRelease_ShouldWork()
+    {
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+
+        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
+
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;        
+
+        SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
+            , greenHouseRepo: mockGreenHouseRepository.Object
+            , seedTrayRepo: mockSeedTrayRepository.Object
+            , orderProcessor: mockOrderProcessor.Object
+            , orderLocationProcessor: mockOrderLocationProcessor.Object);
+
+        status.IteratorDate = new DateOnly(2023, 4, 13);
+
+        MethodInfo methodInfo = typeof(SeedBedStatus)
+            .GetMethod("ImplementDelayRelease",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+            methodInfo.Invoke(status, null);
+
+        status.OrderLocationsToDelete.Count.Should().Be(2);
+        status.OrdersToDelete.Count.Should().Be(1);
+
+        mockGreenHouseRepository.VerifyAll();
+        mockSeedTrayRepository.VerifyAll();
+        mockOrderProcessor.VerifyAll();
+        mockOrderLocationProcessor.VerifyAll();
+    }
 }
