@@ -432,9 +432,7 @@ public class SeedBedStatusTests
 
         Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
 
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
-
-        //int count = orderLocationCollection.Where(x => x.SowDate != null).Sum(x => x.SeedTrayAmount);
+        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;        
 
         Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
 
@@ -452,13 +450,21 @@ public class SeedBedStatusTests
         MethodInfo methodInfo = typeof(SeedBedStatus)
             .GetMethod("ImplementRelease",
             BindingFlags.NonPublic | BindingFlags.Instance);
-        //NEXT - I've run this method 5 times and the arraylists to delete are empty. This shouldn't be this way
-        for (int i = 0; i < 5; i++)
+        
+        const int amountOfDays = 2;
+
+        for (int i = 0; i < amountOfDays; i++)
         {
             methodInfo.Invoke(status, null);
-            status.IteratorDate.AddDays(1);
+            status.IteratorDate = status.IteratorDate.AddDays(1);
         }
-        status.OrderLocationsToDelete.Count.Should().Be(-2);
-        status.OrdersToDelete.Count.Should().Be(-1);
+        status.OrderLocationsToDelete.Count.Should().Be(2);
+        status.OrdersToDelete.Count.Should().Be(1);
+
+        mockGreenHouseRepository.VerifyAll();
+        mockSeedTrayRepository.VerifyAll();
+        mockOrderProcessor.VerifyAll();
+        mockOrderLocationProcessor.VerifyAll();
+        mockDeliveryDetailProcessor.VerifyAll();
     }
 }

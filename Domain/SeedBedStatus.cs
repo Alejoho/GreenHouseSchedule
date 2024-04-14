@@ -455,12 +455,14 @@ namespace Domain
                 }
                 if (orderLocation.SeedTrayAmount == 0)
                 {
+                    //CHECK - chequear si al borra un objeto derivado este es borrado en el pader y en la lista general
                     order.SeedlingAmount -= orderLocation.SeedlingAmount;
                     _orderLocationsToDelete.Add(orderLocation);
                 }
             }
             if (order.SeedlingAmount == 0)
             {
+                    //CHECK - chequear si al quitar un order todos sus objetos derivados son borrados,
                 _ordersToDelete.Add(order);
             }
         }
@@ -618,6 +620,7 @@ namespace Domain
     /// <param name="pSeedTrayType">The ID of the seedtray type.</param>
     internal void ReleaseSeedTray(int pAmount, int pSeedTrayType)
     {
+            //LATER - Change part of the parameters of this method to the whole object.
         SeedTrayModel currentSeedTray = _seedTrays.First(n => n.ID == pSeedTrayType);
         currentSeedTray.FreeAmount += pAmount;
         currentSeedTray.UsedAmount -= pAmount;
