@@ -67,6 +67,10 @@ namespace Domain
                 _iteratorDate = ((DateOnly)presentDate).AddDays(-90);
             }
 
+            _ordersToDelete = new ArrayList();
+            _orderLocationsToDelete = new ArrayList();
+            _orderLocationsToAdd = new ArrayList();
+
             if (greenHouseRepo != null)
             {
                 _greenHouseRepository = greenHouseRepo;

@@ -1,7 +1,6 @@
 ﻿using DataAccess.Contracts;
 using Domain;
 using Domain.Models;
-using Domain.Processors;
 using FluentAssertions;
 using Moq;
 using System.Reflection;
@@ -274,7 +273,6 @@ public class SeedBedStatusTests
     public void RemoveDeliveryDetails_ShouldRemoveAllDeliveriesOfTheDay()
     {
         Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = MockOf.DeliveryDetailProcessor;
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;        
 
         SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
             , deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
@@ -288,9 +286,9 @@ public class SeedBedStatusTests
         methodInfo_RemoveDeliveryDetails.Invoke(status, null);
 
         status.DeliveryDetails.Count.Should().Be(collection.Where(x => x.DeliveryDate != _pastDate).Count());
-        mockDeliveryDetailProcessor.VerifyAll();
+        mockDeliveryDetailProcessor.VerifyAll();        
     }
-    
+
     [Fact]
     public void RemoveOrderLocations_ShouldRemoveAllOrderLocationsOfTheDay()
     {
@@ -312,6 +310,7 @@ public class SeedBedStatusTests
         methodInfo_RemoveOrderLocations.Invoke(status, null);
 
         status.OrderLocations.Count.Should().Be(orderLocationCount - orderLocationsToDelete.Count);
+        mockOrderLocationProcessor.VerifyAll();
     }
 
     [Fact]
@@ -335,52 +334,21 @@ public class SeedBedStatusTests
         methodInfo_RemoveOrders.Invoke(status, null);
 
         status.Orders.Count.Should().Be(orderCount - ordersToDelete.Count);
+        mockOrderProcessor.VerifyAll();
     }
 
     [Fact]
     public void AddOrderLocations_ShouldAddNewOrderLocationsToTheirOrders()
     {
-        DateOnly presentDate = new DateOnly(2023, 6, 10);
-        DateOnly pastDate = presentDate.AddDays(-90);
+        int orderAmount = 11;
+        Mock<IOrderProcessor> mockOrderProcessor = MockOf.GetCustomOrderMock(orderAmount);
 
-        var orderCollection = RecordGenerator._orders;
+        int orderLocationAmount = 36;
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.GetCustomOrderLocationMock(orderLocationAmount);
 
-        Mock<IOrderProcessor> mockOrderProcessor = new Mock<IOrderProcessor>();
-
-        mockOrderProcessor
-            .Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
-            .Returns(orderCollection);
-
-        var orderLocationCollection = RecordGenerator._orderLocations;
-
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = new Mock<IOrderLocationProcessor>();
-
-        mockOrderLocationProcessor
-            .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
-            .Returns(orderLocationCollection);
-
-        SeedBedStatus status = new SeedBedStatus(presentDate
+        SeedBedStatus status = new SeedBedStatus(_presentDate
             , orderProcessor: mockOrderProcessor.Object
             , orderLocationProcessor: mockOrderLocationProcessor.Object);
-
-        MethodInfo methodInfo_GetMajorityDataOfOrders = typeof(SeedBedStatus)
-            .GetMethod("GetMajorityDataOfOrders",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.Orders = (LinkedList<OrderModel>)methodInfo_GetMajorityDataOfOrders.Invoke(status, null);
-
-        MethodInfo methodInfo_GetOrderLocations = typeof(SeedBedStatus)
-            .GetMethod("GetOrderLocations",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        status.OrderLocations =
-                (LinkedList<OrderLocationModel>)methodInfo_GetOrderLocations.Invoke(status, null);
-
-        MethodInfo methodInfo_FillOrderLocations = typeof(SeedBedStatus)
-            .GetMethod("FillOrderLocations",
-            BindingFlags.NonPublic | BindingFlags.Instance);
-
-        methodInfo_FillOrderLocations.Invoke(status, null);
 
         int newOrderLocationAmount = 24;
 
@@ -389,6 +357,10 @@ public class SeedBedStatusTests
         mockOrderLocationProcessor
             .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
             .Returns(newOrderLocations);
+
+        MethodInfo methodInfo_GetOrderLocations = typeof(SeedBedStatus)
+            .GetMethod("GetOrderLocations",
+            BindingFlags.NonPublic | BindingFlags.Instance);
 
         status.OrderLocationsToAdd = new System.Collections.ArrayList(
         (LinkedList<OrderLocationModel>)methodInfo_GetOrderLocations.Invoke(status, null));
@@ -401,53 +373,27 @@ public class SeedBedStatusTests
 
         int sumOrderLocations = status.Orders.Sum(x => x.OrderLocations.Count);
 
-        sumOrderLocations.Should().Be(orderLocationCollection.Count + newOrderLocationAmount);
+        sumOrderLocations.Should().Be(orderLocationAmount + newOrderLocationAmount);
+
+        status.OrderLocations.Count.Should().Be(orderLocationAmount + newOrderLocationAmount);
+
+        mockOrderProcessor.VerifyAll();
+        mockOrderLocationProcessor.VerifyAll();
     }
 
     [Fact]
-    //TODO - When I raise the orders to 600 this test failed
+
     public void ImplementReservation_ShouldWork()
     {
-        DateOnly presentDate = new DateOnly(2023, 6, 10);
-        DateOnly pastDate = presentDate.AddDays(-90);
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
 
-        var greenHouseCollection = RecordGenerator._greenHouses;
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
 
-        Mock<IGreenHouseRepository> mockGreenHouseRepository =
-            new Mock<IGreenHouseRepository>();
+        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
 
-        mockGreenHouseRepository.Setup(x => x.GetAll()).Returns(greenHouseCollection);
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
 
-        var seedTrayCollection = RecordGenerator._seedTrays;
-
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
-
-        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(seedTrayCollection);
-
-        var orderCollection = RecordGenerator._orders
-            .Where(x => x.RealSowDate >= pastDate || x.RealSowDate == null)
-            .OrderBy(x => x.EstimateSowDate)
-            .ThenBy(x => x.DateOfRequest);
-
-        Mock<IOrderProcessor> mockOrderProcessor = new Mock<IOrderProcessor>();
-
-        mockOrderProcessor
-            .Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
-            .Returns(orderCollection);
-
-        var orderLocationCollection = RecordGenerator._orderLocations
-            .Where(x => x.Order.RealSowDate >= pastDate
-                && (x.SowDate >= pastDate || x.SowDate == null))
-            .OrderBy(x => x.SowDate)
-            .ThenBy(x => x.Id);
-
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = new Mock<IOrderLocationProcessor>();
-
-        mockOrderLocationProcessor
-            .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
-            .Returns(orderLocationCollection);
-
-        SeedBedStatus status = new SeedBedStatus(presentDate: presentDate
+        SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
             , greenHouseRepo: mockGreenHouseRepository.Object
             , seedTrayRepo: mockSeedTrayRepository.Object
             , orderProcessor: mockOrderProcessor.Object
@@ -466,60 +412,33 @@ public class SeedBedStatusTests
             var bandejas = status.SeedTrays
                 .Where(x => x.ID == orderLocation.SeedTrayType)
                 .First();
+
             int usado = bandejas.UsedAmount;
+
             usado.Should()
                 .BeGreaterThanOrEqualTo(orderLocation.SeedTrayAmount);
         }
+
+        mockGreenHouseRepository.VerifyAll();
+        mockSeedTrayRepository.VerifyAll();
+        mockOrderProcessor.VerifyAll();
+        mockOrderLocationProcessor.VerifyAll();
     }
 
     [Fact]
     public void ImplementRelease_ShouldWork()
     {
-        var greenHouseCollection = RecordGenerator._greenHouses;
+        Mock<IGreenHouseRepository> mockGreenHouseRepository =MockOf.GreenHouseRepository;
 
-        Mock<IGreenHouseRepository> mockGreenHouseRepository =
-            new Mock<IGreenHouseRepository>();
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
 
-        mockGreenHouseRepository.Setup(x => x.GetAll()).Returns(greenHouseCollection);
-
-        var seedTrayCollection = RecordGenerator._seedTrays;
-
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = new Mock<ISeedTrayRepository>();
-
-        mockSeedTrayRepository.Setup(x => x.GetAll()).Returns(seedTrayCollection);
-
-        var orderCollection = RecordGenerator._orders
-            .Where(x => x.RealSowDate >= _pastDate || x.RealSowDate == null)
-            .OrderBy(x => x.EstimateSowDate)
-            .ThenBy(x => x.DateOfRequest);
-
-        Mock<IOrderProcessor> mockOrderProcessor = new Mock<IOrderProcessor>();
-
-        mockOrderProcessor
-            .Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
-            .Returns(orderCollection);
-
-        var orderLocationCollection = RecordGenerator._orderLocations
-            .Where(x => x.SowDate >= _pastDate || x.SowDate == null)
-            .OrderBy(x => x.SowDate)
-            .ThenBy(x => x.Id);
+        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
 
         //int count = orderLocationCollection.Where(x => x.SowDate != null).Sum(x => x.SeedTrayAmount);
 
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = new Mock<IOrderLocationProcessor>();
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
 
-        mockOrderLocationProcessor
-            .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
-            .Returns(orderLocationCollection);
-
-        var deliveryDetailCollection = RecordGenerator._deliveryDetails
-            .Where(x => x.DeliveryDate >= _pastDate);
-
-        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = new Mock<IDeliveryDetailProcessor>();
-
-        mockDeliveryDetailProcessor
-            .Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>()))
-            .Returns(deliveryDetailCollection);
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = MockOf.DeliveryDetailProcessor;
 
         SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
             , greenHouseRepo: mockGreenHouseRepository.Object
@@ -539,7 +458,7 @@ public class SeedBedStatusTests
             methodInfo.Invoke(status, null);
             status.IteratorDate.AddDays(1);
         }
-        status.OrderLocationsToDelete.Count.Should().Be(2);
-        status.OrdersToDelete.Count.Should().Be(1);
+        status.OrderLocationsToDelete.Count.Should().Be(-2);
+        status.OrdersToDelete.Count.Should().Be(-1);
     }
 }
