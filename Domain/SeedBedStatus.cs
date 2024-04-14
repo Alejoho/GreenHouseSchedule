@@ -411,11 +411,12 @@ namespace Domain
             UpdateObjects();
             ClearArrayLists();
             _iteratorDate = _iteratorDate.AddDays(1);
-        } while (_iteratorDate <= _presentDate);
+        } while (_iteratorDate < _presentDate);
         ImplementDelayRelease();
         UpdateObjects();
         ClearArrayLists();
-    }
+        //_iteratorDate = _iteratorDate.AddDays(-1);
+        }
 
     /// <summary>
     /// Marks as used, the area and the seedtrays used by the order locations that were sown on the iterator date.
@@ -479,6 +480,8 @@ namespace Domain
             {
                 if (orderLocation.EstimateDeliveryDate < _iteratorDate)
                 {
+                        //CHECK - Aqui tal vez tenga un problema. Es que estoy borrando los order locations pero
+                        //no sus deliveries details
                     ReleaseSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
                     ReleaseArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                     order.SeedlingAmount -= orderLocation.SeedlingAmount;
