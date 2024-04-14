@@ -120,6 +120,7 @@ namespace Domain
 
         //_presentDate = DateOnly.FromDateTime(DateTime.Now);
 
+        //TODO - Equal the _presentDate to the actual date of the computer in which is running the program
         _presentDate = new DateOnly(2023, 6, 10);
         _iteratorDate = _presentDate.AddDays(-daysToMoveBack);
 
@@ -559,12 +560,6 @@ namespace Domain
         _orderLocationsToAdd.Clear();
     }
 
-    private int Test()
-    {
-        return 1;
-    }
-
-
     #endregion
 
 
@@ -641,7 +636,7 @@ namespace Domain
         RemoveOrders();
         AddOrderLocations();
     }
-
+    //NEXT - Make the tests for these 3 methods
     /// <summary>
     /// Calculates the total available area in the seedbed.
     /// </summary>
@@ -665,6 +660,7 @@ namespace Domain
     internal bool ThereAreNonNegattiveValuesOfSeedTray()
     {
         bool output = true;
+
         foreach (SeedTrayModel seedTray in _seedTrays)
         {
             if (seedTray.FreeAmount < 0)
@@ -672,6 +668,7 @@ namespace Domain
                 output = false;
             }
         }
+
         return output;
     }
 
