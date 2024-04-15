@@ -70,6 +70,7 @@ namespace Domain
 
             _ordersToDelete = new ArrayList();
             _orderLocationsToDelete = new ArrayList();
+            DeliveryDetailsToDelete = new ArrayList();
             _orderLocationsToAdd = new ArrayList();
 
             if (greenHouseRepo != null)
@@ -141,6 +142,7 @@ namespace Domain
 
             _ordersToDelete = new ArrayList();
             _orderLocationsToDelete = new ArrayList();
+            DeliveryDetailsToDelete = new ArrayList();
             _orderLocationsToAdd = new ArrayList();
 
 
@@ -454,7 +456,7 @@ namespace Domain
                             ReleaseSeedTray(deliveryDetail.SeedTrayAmountDelivered, orderLocation.SeedTrayType);
                             ReleaseArea(deliveryDetail.SeedTrayAmountDelivered, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                             orderLocation.SeedTrayAmount -= deliveryDetail.SeedTrayAmountDelivered;
-                            _deliveryDetailsToDelete.Add(deliveryDetail);
+                            DeliveryDetailsToDelete.Add(deliveryDetail);
                         }
                     }
                     if (orderLocation.SeedTrayAmount == 0)
@@ -488,6 +490,7 @@ namespace Domain
                         ReleaseSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
                         ReleaseArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                         order.SeedlingAmount -= orderLocation.SeedlingAmount;
+                        _deliveryDetailsToDelete.AddRange(orderLocation.DeliveryDetails);
                         _orderLocationsToDelete.Add(orderLocation);
                     }
                 }
@@ -504,14 +507,16 @@ namespace Domain
         /// </summary>
         private void RemoveDeliveryDetails()
         {
-            for (int i = 0; i < _deliveryDetailsToDelete.Count; i++)
+            for (int i = 0; i < DeliveryDetailsToDelete.Count; i++)
             {
-                DeliveryDetailModel deliveryDetailToDelete = (DeliveryDetailModel) _deliveryDetailsToDelete[i];
+                DeliveryDetailModel deliveryDetailToDelete = (DeliveryDetailModel) DeliveryDetailsToDelete[i];
                 
-                _deliveryDetailsToDelete.Remove(deliveryDetailToDelete);
+                _deliveryDetails.Remove(deliveryDetailToDelete);
 
                 OrderLocationModel orderLocation = _orderLocations
                     .First(x => x.ID == deliveryDetailToDelete.OrderLocationID);
+
+                orderLocation.DeliveryDetails.Remove(deliveryDetailToDelete);
             }
         }
 
@@ -575,6 +580,7 @@ namespace Domain
         {
             _ordersToDelete.Clear();
             _orderLocationsToDelete.Clear();
+            _deliveryDetailsToDelete.Clear();
             _orderLocationsToAdd.Clear();
         }
 
@@ -771,10 +777,16 @@ namespace Domain
         /// </value>
         internal ArrayList OrderLocationsToDelete { get => _orderLocationsToDelete; set => _orderLocationsToDelete = value; }
 
+        /// <summary>
+        /// Gets or sets an array list of delivery details marked to delete at the end of the day.
+        /// </summary>
+        internal ArrayList DeliveryDetailsToDelete { get => _deliveryDetailsToDelete; set => _deliveryDetailsToDelete = value; }
+
         /// <value>
         /// Gets or sets an array list of orders marked to delete at the end of the day.
         /// </value>
         internal ArrayList OrderLocationsToAdd { get => _orderLocationsToAdd; set => _orderLocationsToAdd = value; }
+        
 
         #endregion
     }
