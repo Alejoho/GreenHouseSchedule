@@ -406,7 +406,7 @@ namespace Domain
                 } while (
                 _seedBedStatusAuxiliar.IteratorDate <= limitDate &&
                 _seedBedStatusAuxiliar.ThereAreNonNegattiveValuesOfSeedTray() &&
-                _seedBedStatusAuxiliar.ThereIsNonNegattiveValuesOfArea()
+                _seedBedStatusAuxiliar.ThereAreNonNegattiveValuesOfArea()
                 );
 
                 if (_seedBedStatusAuxiliar.IteratorDate < limitDate)

@@ -558,8 +558,100 @@ public class SeedBedStatusTests
         mockDeliveryDetailProcessor.VerifyAll();
     }
 
-    //[Fact]
-    public void DoubtsTest()
-    { 
+    [Fact]
+    public void CalculateTotalAvailableArea_ShouldGiveTheTotalArea()
+    {
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+
+        SeedBedStatus status = new SeedBedStatus(greenHouseRepo: mockGreenHouseRepository.Object);
+
+        decimal availableArea = status.CalculateTotalAvailableArea();
+
+        availableArea.Should().Be(
+            status.GreenHouses
+            .Where(x => x.Active == true)
+            .Sum(x => x.SeedTrayAvailableArea)
+            );
+        mockGreenHouseRepository.VerifyAll();
+    }
+
+    [Fact]
+    public void CalculateTotalAvailableArea_ShouldGiveTheFreeArea()
+    {
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+
+        SeedBedStatus status = new SeedBedStatus(greenHouseRepo: mockGreenHouseRepository.Object);
+
+        decimal usedArea = 100;
+
+        foreach (GreenHouseModel greenHouse in status.GreenHouses)
+        {
+            greenHouse.SeedTrayAvailableArea -= usedArea;
+        }
+
+        decimal availableArea = status.CalculateTotalAvailableArea();
+
+        int amountOfActiveGreenHouses = status.GreenHouses.Count(x => x.Active == true);
+
+        decimal totalArea = status.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayTotalArea);
+
+        availableArea.Should().Be(totalArea - (usedArea * amountOfActiveGreenHouses));
+        mockGreenHouseRepository.VerifyAll();
+    }
+
+    [Fact]
+    public void ThereAreNonNegattiveValuesOfSeedTray_ShouldReturnTrue()
+    {
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+
+        SeedBedStatus status = new SeedBedStatus(seedTrayRepo: mockSeedTrayRepository.Object);
+
+        bool result = status.ThereAreNonNegattiveValuesOfSeedTray();
+
+        result.Should().Be(true);
+        mockSeedTrayRepository.VerifyAll();
+    }
+
+    [Fact]
+    public void ThereAreNonNegattiveValuesOfSeedTray_ShouldReturnFalse()
+    {
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+
+        SeedBedStatus status = new SeedBedStatus(seedTrayRepo: mockSeedTrayRepository.Object);
+
+        status.SeedTrays.First().FreeAmount = -1;
+
+        bool result = status.ThereAreNonNegattiveValuesOfSeedTray();
+
+        result.Should().Be(false);
+        mockSeedTrayRepository.VerifyAll();
+    }
+
+    [Fact]
+    public void ThereAreNonNegattiveValuesOfArea_ShouldReturnTrue()
+    {
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+
+        SeedBedStatus status = new SeedBedStatus(greenHouseRepo: mockGreenHouseRepository.Object);
+
+        bool result = status.ThereAreNonNegattiveValuesOfArea();
+
+        result.Should().Be(true);
+        mockGreenHouseRepository.VerifyAll();
+    }
+
+    [Fact]
+    public void ThereAreNonNegattiveValuesOfArea_ShouldReturnFalse()
+    {
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+
+        SeedBedStatus status = new SeedBedStatus(greenHouseRepo: mockGreenHouseRepository.Object);
+
+        status.GreenHouses.First(x => x.Active == true).SeedTrayAvailableArea = -100000;
+
+        bool result = status.ThereAreNonNegattiveValuesOfArea();
+
+        result.Should().Be(false);
+        mockGreenHouseRepository.VerifyAll();
     }
 }

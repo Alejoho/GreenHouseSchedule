@@ -700,7 +700,7 @@ namespace Domain
         /// Checks if the total available area isn't negative.
         /// </summary>
         /// <returns>Returns true if the total available area isn't negative otherwise false.</returns>
-        internal bool ThereIsNonNegattiveValuesOfArea()
+        internal bool ThereAreNonNegattiveValuesOfArea()
         {
             bool output = CalculateTotalAvailableArea() > 0 ? true : false;
             return output;
