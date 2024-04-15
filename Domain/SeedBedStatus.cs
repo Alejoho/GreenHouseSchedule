@@ -540,7 +540,8 @@ namespace Domain
         {
             for (int i = 0; i < _ordersToDelete.Count; i++)
             {
-                _orders.Remove((OrderModel)_ordersToDelete[i]);
+                OrderModel orderToDelete = (OrderModel)_ordersToDelete[i];
+                _orders.Remove(orderToDelete);
             }
         }
 
