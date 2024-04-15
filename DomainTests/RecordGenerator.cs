@@ -6,6 +6,8 @@ namespace DomainTests;
 //from the presente date and beside that they have delivery details objects and they shouldn't
 internal static class RecordGenerator
 {
+
+    //TODO - Make the documentation of this class
     internal static List<Order> _orders;
     internal static List<OrderLocation> _orderLocations;
     internal static List<Block> _blocks;
