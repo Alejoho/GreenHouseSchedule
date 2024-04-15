@@ -43,6 +43,7 @@ namespace Domain
 
         private ArrayList _ordersToDelete;
         private ArrayList _orderLocationsToDelete;
+        private ArrayList _deliveryDetailsToDelete;
         private ArrayList _orderLocationsToAdd;
 
 
@@ -453,6 +454,7 @@ namespace Domain
                             ReleaseSeedTray(deliveryDetail.SeedTrayAmountDelivered, orderLocation.SeedTrayType);
                             ReleaseArea(deliveryDetail.SeedTrayAmountDelivered, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                             orderLocation.SeedTrayAmount -= deliveryDetail.SeedTrayAmountDelivered;
+                            _deliveryDetailsToDelete.Add(deliveryDetail);
                         }
                     }
                     if (orderLocation.SeedTrayAmount == 0)
@@ -497,11 +499,20 @@ namespace Domain
         }
 
         /// <summary>
-        /// Eliminates the delivery details delivered on the day.
+        /// Eliminates the delivery details delivered of the day, 
+        /// from the general list and the order location list.
         /// </summary>
         private void RemoveDeliveryDetails()
         {
-            _deliveryDetails.RemoveAll(deliveryDetail => deliveryDetail.DeliveryDate == _iteratorDate);
+            for (int i = 0; i < _deliveryDetailsToDelete.Count; i++)
+            {
+                DeliveryDetailModel deliveryDetailToDelete = (DeliveryDetailModel) _deliveryDetailsToDelete[i];
+                
+                _deliveryDetailsToDelete.Remove(deliveryDetailToDelete);
+
+                OrderLocationModel orderLocation = _orderLocations
+                    .First(x => x.ID == deliveryDetailToDelete.OrderLocationID);
+            }
         }
 
         /// <summary>
@@ -513,7 +524,7 @@ namespace Domain
             for (int i = 0; i < _orderLocationsToDelete.Count; i++)
             {
                 OrderLocationModel orderLocationToDelete = (OrderLocationModel)_orderLocationsToDelete[i];
-                
+
                 _orderLocations.Remove(orderLocationToDelete);
 
                 OrderModel order = _orders.First(x => x.ID == orderLocationToDelete.OrderID);
