@@ -8,6 +8,7 @@ using System.Configuration;
 
 namespace Domain
 {
+    //NEXT - Make some clean up of this class
 
     //TODO - I think it'd be good to change the evaluation of availability of sow seedtray per day from seedtray to 
     //seedlings, because diferent types of seedtrays change the amount of seedtray that can be sown in one day
@@ -50,11 +51,16 @@ namespace Domain
         #endregion
 
         #region Constructors
-        public SeedBedStatus(string a)
-        {
 
-        }
-
+        /// <summary>
+        /// This is a constructor for a unit test scenario.
+        /// </summary>
+        /// <param name="presentDate">The date to use as the present date</param>
+        /// <param name="greenHouseRepo">The <c>GreenHouseRepository</c> or a Mock of it</param>
+        /// <param name="seedTrayRepo">The <c>SeedTrayRepository</c> or a Mock of it</param>
+        /// <param name="orderProcessor">The <c>OrderProcessor</c> or a Mock of it</param>
+        /// <param name="orderLocationProcessor">The <c>OrderLocationProcessor</c> or a Mock of it</param>
+        /// <param name="deliveryDetailProcessor">The <c>DeliveryDetailProcessor</c> or a Mock of it</param>
         internal SeedBedStatus(DateOnly? presentDate = null,
             IGreenHouseRepository greenHouseRepo = null,
             ISeedTrayRepository seedTrayRepo = null,
@@ -114,16 +120,11 @@ namespace Domain
         /// </summary>
         public SeedBedStatus()
         {
-            //OrderModel minee= new OrderModel();
-
             int daysToMoveBack;
             int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.RegressionDays], out daysToMoveBack);
-            //_iteratorDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-daysToMoveBack));
 
-            //_presentDate = DateOnly.FromDateTime(DateTime.Now);
+            _presentDate = DateOnly.FromDateTime(DateTime.Now);
 
-            //TODO - Equal the _presentDate to the actual date of the computer in which is running the program
-            _presentDate = new DateOnly(2023, 6, 10);
             _iteratorDate = _presentDate.AddDays(-daysToMoveBack);
 
             int seedTraysPerDay;
@@ -145,23 +146,17 @@ namespace Domain
             DeliveryDetailsToDelete = new ArrayList();
             _orderLocationsToAdd = new ArrayList();
 
-
             _greenHouses = GetGreenHouses();
             _seedTrays = GetSeedTrays();
             _orders = GetMajorityDataOfOrders();
-            //LATER - this method give me the to orderlocations of 3 months back from the 
-            //present day. This include some order location that aren't in the orders
-            //retrieve by the previous method. See if can I do somethig about it
             _orderLocations = GetOrderLocations();
-            //LATER - this is the same situation than above.
             _deliveryDetails = GetDeliveryDetails();
 
             FillDeliveryDetails();
 
             FillOrderLocations();
-            //NEXT - Continue from this creating the next tests.
-            DayByDayToCurrentDate();
 
+            DayByDayToCurrentDate();
         }
 
         /// <summary>
@@ -178,6 +173,7 @@ namespace Domain
             this._orders = new LinkedList<OrderModel>();
             this._orderLocations = new LinkedList<OrderLocationModel>();
             this._deliveryDetails = new List<DeliveryDetailModel>();
+            //CHECK - I don't remeber what this variable is for.
             //this._daysOfProduction = pOriginalSeedBedStatus.DaysOfProduction;
             this._amountOfSowSeedTrayPerDay = pOriginalSeedBedStatus.AmountOfSowSeedTrayPerDay;
             this._remainingAmountOfSowSeedTrayPerDay = pOriginalSeedBedStatus.RemainingAmountOfSowSeedTrayPerDay;
@@ -356,8 +352,6 @@ namespace Domain
         /// <param name="pOrderLocationModelLinkedList">LinkedList<OrderLocationModel> to fill with their delivery details.</param>
         private void FillDeliveryDetails()
         {
-            //List<DeliveryDetailModel> deliveryDetailList = GetDeliveryDetails();
-
             foreach (var orderLocation in _orderLocations)
             {
                 orderLocation.DeliveryDetails =
@@ -365,9 +359,6 @@ namespace Domain
                      where deliveryDetailElement.OrderLocationID == orderLocation.ID
                      orderby deliveryDetailElement.DeliveryDate
                      select deliveryDetailElement).ToList();
-                //orderLocation.DeliveryDetails = (List<DeliveryDetailModel>)
-                //                                deliveryDetailList.
-                //                                Where(n => n.OrderLocationID == orderLocation.ID);
             }
         }
 
@@ -376,11 +367,6 @@ namespace Domain
         /// </summary>
         private void FillOrderLocations()
         {
-            //CHECK - I think i don't have to create this linked list because I already have a linkedlist
-            //with the need data. And I'll have to do the same in the FillDeliveryDetail method
-
-            //LinkedList<OrderLocationModel> orderLocationModelLinkedList = GetOrderLocations();
-            //FillDeliveryDetails(_orderLocations);
             foreach (var order in _orders)
             {
                 var orderLocationsToAdd = from orderLocationElement in _orderLocations
@@ -392,9 +378,6 @@ namespace Domain
                 {
                     order.OrderLocations.AddLast(orderLocation);
                 }
-                //order.OrderLocations = (LinkedList<OrderLocationModel>)
-                //                        orderLocationModelLinkedList.
-                //                        Where(orderLocationElement => orderLocationElement.OrderID == order.ID);
             }
         }
 
@@ -418,8 +401,7 @@ namespace Domain
             } while (_iteratorDate < _presentDate);
             ImplementDelayRelease();
             UpdateObjects();
-            ClearArrayLists();
-            //_iteratorDate = _iteratorDate.AddDays(-1);
+            ClearArrayLists();            
         }
 
         /// <summary>
@@ -461,14 +443,12 @@ namespace Domain
                     }
                     if (orderLocation.SeedTrayAmount == 0)
                     {
-                        //CHECK - chequear si al borra un objeto derivado este es borrado en el pader y en la lista general
                         order.SeedlingAmount -= orderLocation.SeedlingAmount;
                         _orderLocationsToDelete.Add(orderLocation);
                     }
                 }
                 if (order.SeedlingAmount == 0)
                 {
-                    //CHECK - chequear si al quitar un order todos sus objetos derivados son borrados,
                     _ordersToDelete.Add(order);
                 }
             }
@@ -485,8 +465,6 @@ namespace Domain
                 {
                     if (orderLocation.EstimateDeliveryDate < _iteratorDate)
                     {
-                        //CHECK - Aqui tal vez tenga un problema. Es que estoy borrando los order locations pero
-                        //no sus deliveries details
                         ReleaseSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
                         ReleaseArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                         order.SeedlingAmount -= orderLocation.SeedlingAmount;
@@ -509,8 +487,8 @@ namespace Domain
         {
             for (int i = 0; i < DeliveryDetailsToDelete.Count; i++)
             {
-                DeliveryDetailModel deliveryDetailToDelete = (DeliveryDetailModel) DeliveryDetailsToDelete[i];
-                
+                DeliveryDetailModel deliveryDetailToDelete = (DeliveryDetailModel)DeliveryDetailsToDelete[i];
+
                 _deliveryDetails.Remove(deliveryDetailToDelete);
 
                 OrderLocationModel orderLocation = _orderLocations
@@ -557,17 +535,11 @@ namespace Domain
         {
             foreach (OrderLocationModel orderLocation in _orderLocationsToAdd)
             {
-                //Extracts the order of the current orderlocation
                 OrderModel order = _orders.First(order => order.ID == orderLocation.OrderID);
-                //extracts the last OrderLocationModel of the linkedlist of the order
+
                 LinkedListNode<OrderLocationModel> node = _orderLocations.Find(order.OrderLocations.Last()); ;
-                //_orderLocations.Where(x => x.ID == order.OrderLocations.Last.Value.ID);
 
-                //Adds the current orderlocation to the linked list of the order
                 order.OrderLocations.AddLast(orderLocation);
-
-                //LinkedListNode<OrderLocationModel> node = _orderLocations
-                //    .Find(orderLocation => orderLocation.ID == node.Value.ID);
 
                 _orderLocations.AddAfter(node, orderLocation);
             }
@@ -588,8 +560,6 @@ namespace Domain
 
 
         #region Internal Methods
-        //LATER - Maybe implement in these 4 methods an error handling for when the available resource is less
-        //than 0 or the used resource is greater than the total amount.
 
         /// <summary>
         /// Calculate the area used by a determined amount of seedtrays of one type 
@@ -642,7 +612,6 @@ namespace Domain
         /// <param name="pSeedTrayType">The ID of the seedtray type.</param>
         internal void ReleaseSeedTray(int pAmount, int pSeedTrayType)
         {
-            //LATER - Change part of the parameters of this method to the whole object.
             SeedTrayModel currentSeedTray = _seedTrays.First(n => n.ID == pSeedTrayType);
             currentSeedTray.FreeAmount += pAmount;
             currentSeedTray.UsedAmount -= pAmount;
@@ -660,20 +629,18 @@ namespace Domain
             RemoveOrders();
             AddOrderLocations();
         }
-        //NEXT - Make the tests for these 3 methods
+
         /// <summary>
         /// Calculates the total available area in the seedbed.
         /// </summary>
         /// <returns>Returns a decimal value that represents the total available area in the seedbed.</returns>
         public decimal CalculateTotalAvailableArea()
         {
-            //decimal freeAvailableArea=_greenHouses.Sum(greenHouse=>greenHouse.SeedTrayAvailableArea);
             decimal freeAvailableArea = _greenHouses
                 .Where(greenHouse => greenHouse.Active == true)
                 .Select(greenHouse => greenHouse.SeedTrayAvailableArea)
                 .Sum();
-            //decimal freeAvailableArea = (from greenHouse in _greenHouses
-            //                          select greenHouse.SeedTrayAvailableArea).Sum();
+
             return freeAvailableArea;
         }
 
@@ -705,12 +672,6 @@ namespace Domain
             bool output = CalculateTotalAvailableArea() > 0 ? true : false;
             return output;
         }
-
-        //internal void InsertNewOrder(OrderModel pNewOrderModel)
-        //{
-
-        //}
-
 
         #endregion
 
@@ -753,7 +714,7 @@ namespace Domain
         public List<DeliveryDetailModel> DeliveryDetails { get => _deliveryDetails; set => _deliveryDetails = value; }
 
         /// <value>
-        /// I dont know what i need this for.
+        /// I dont know what I need this for.
         /// </value>
         //public DateTime DaysOfProduction { get => _daysOfProduction; set => _daysOfProduction = value; }
 
@@ -786,7 +747,7 @@ namespace Domain
         /// Gets or sets an array list of orders marked to delete at the end of the day.
         /// </value>
         internal ArrayList OrderLocationsToAdd { get => _orderLocationsToAdd; set => _orderLocationsToAdd = value; }
-        
+
 
         #endregion
     }
