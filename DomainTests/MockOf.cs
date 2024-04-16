@@ -5,14 +5,17 @@ using Moq;
 namespace DomainTests
 {
     internal static class MockOf
-    {
-        //TODO - Make the documentaion of this class
+    {        
         private static Mock<IGreenHouseRepository> _greenHouseRepository;
         private static Mock<ISeedTrayRepository> _seedTrayRepository;
         private static Mock<IOrderProcessor> _orderProcessor;
         private static Mock<IOrderLocationProcessor> _orderLocationProcessor;
         private static Mock<IDeliveryDetailProcessor> _deliveryDetailProcessor;
 
+        /// <summary>
+        /// Initializes and sets up the mocks for the needed repositories and processors based on a date onwards. 
+        /// </summary>
+        /// <param name="pastDate">The need date to filter the records to include in the collection.</param>
         internal static void GenerateMocks(DateOnly pastDate)
         {
             GenerateGreenHouseMock();
@@ -25,18 +28,18 @@ namespace DomainTests
         private static void GenerateGreenHouseMock()
         {
             _greenHouseRepository = new Mock<IGreenHouseRepository>();
-            _greenHouseRepository.Setup(x => x.GetAll()).Returns(RecordGenerator._greenHouses);
+            _greenHouseRepository.Setup(x => x.GetAll()).Returns(RecordGenerator.GreenHouses);
         }
 
         private static void GenerateSeedTrayMock()
         {
             _seedTrayRepository = new Mock<ISeedTrayRepository>();
-            _seedTrayRepository.Setup(x => x.GetAll()).Returns(RecordGenerator._seedTrays);
+            _seedTrayRepository.Setup(x => x.GetAll()).Returns(RecordGenerator.SeedTrays);
         }
 
         private static void GenerateOrderMock(DateOnly pastDate)
         {
-            var orderCollection = RecordGenerator._orders
+            var orderCollection = RecordGenerator.Orders
             .Where(x => x.RealSowDate >= pastDate || x.RealSowDate == null)
             .OrderBy(x => x.EstimateSowDate)
             .ThenBy(x => x.DateOfRequest);
@@ -50,7 +53,7 @@ namespace DomainTests
 
         private static void GenerateOrderLocationMock(DateOnly pastDate)
         {
-            var orderLocationCollection = RecordGenerator._orderLocations
+            var orderLocationCollection = RecordGenerator.OrderLocations
                 .Where(x => x.Order.RealSowDate >= pastDate
                     && (x.SowDate >= pastDate || x.SowDate == null))
                 .OrderBy(x => x.SowDate)
@@ -65,7 +68,7 @@ namespace DomainTests
 
         private static void GenerateDeliveryDetailMock(DateOnly pastDate)
         {
-            var deliveryDetailCollection = RecordGenerator._deliveryDetails
+            var deliveryDetailCollection = RecordGenerator.DeliveryDetails
                 .Where(x => x.Block.OrderLocation.Order.RealSowDate >= pastDate
                     && x.DeliveryDate >= pastDate)
                 .OrderBy(x => x.DeliveryDate);
@@ -77,6 +80,11 @@ namespace DomainTests
             .Returns(deliveryDetailCollection);
         }
 
+        /// <summary>
+        /// Initializes and sets up a custom mock for the <c>GreenHouseRepository</c>.
+        /// </summary>
+        /// <param name="numberOfRecords">The number of records to include in the collection.</param>
+        /// <returns>A <c>Mock<IGreenHouseRepository></c>.</returns>
         internal static Mock<IGreenHouseRepository> GetCustomGreenHouseMock(int numberOfRecords)
         {
             Mock<IGreenHouseRepository> output = new Mock<IGreenHouseRepository>();
@@ -88,6 +96,11 @@ namespace DomainTests
             return output;
         }
 
+        /// <summary>
+        /// Initializes and sets up a custom mock for the <c>SeedTrayRepository</c>.
+        /// </summary>
+        /// <param name="numberOfRecords">The number of records to include in the collection.</param>
+        /// <returns>A <c>Mock<ISeedTrayRepository></c>.</returns>
         internal static Mock<ISeedTrayRepository> GetCustomSeedTrayMock(int numberOfRecords)
         {
             Mock<ISeedTrayRepository> output = new Mock<ISeedTrayRepository>();
@@ -99,46 +112,57 @@ namespace DomainTests
             return output;
         }
 
+        /// <summary>
+        /// /// Initializes and sets up a custom mock for the <c>OrderProcessor</c>.
+        /// </summary>
+        /// <param name="numberOfRecords">The number of records to include in the collection.</param>
+        /// <returns>A <c>Mock<IOrderProcessor></c>.</returns>
         internal static Mock<IOrderProcessor> GetCustomOrderMock(int numberOfRecords)
         {
             Mock<IOrderProcessor> output = new Mock<IOrderProcessor>();
 
             var collection = RecordGenerator.GenerateOrders(numberOfRecords);
 
-            //var filteredCollection = collection.Where(x => x.RealSowDate >= date || x.RealSowDate == null);
-
             output.Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>())).Returns(collection);
 
             return output;
         }
 
+        /// <summary>
+        /// /// Initializes and sets up a custom mock for the <c>OrderLocationProcessor</c>.
+        /// </summary>
+        /// <param name="numberOfRecords">The number of records to include in the collection.</param>
+        /// <returns>A <c>Mock<IOrderLocationProcessor></c>.</returns>
         internal static Mock<IOrderLocationProcessor> GetCustomOrderLocationMock(int numberOfRecords)
         {
             Mock<IOrderLocationProcessor> output = new Mock<IOrderLocationProcessor>();
 
-            var collection = RecordGenerator.GenerateOrderLocations(numberOfRecords);
-
-            //var filteredCollection = collection.Where(x => x.SowDate >= date || x.SowDate == null);            
+            var collection = RecordGenerator.GenerateOrderLocations(numberOfRecords);         
 
             output.Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>())).Returns(collection);
 
             return output;
         }
 
+        /// <summary>
+        /// /// Initializes and sets up a custom mock for the <c>DeliveryDetailProcessor</c>.
+        /// </summary>
+        /// <param name="numberOfRecords">The number of records to include in the collection.</param>
+        /// <returns>A <c>Mock<IDeliveryDetailProcessor></c>.</returns>
         internal static Mock<IDeliveryDetailProcessor> GetCustomDeliveryDetailMock(int numberOfRecords)
         {
             Mock<IDeliveryDetailProcessor> output = new Mock<IDeliveryDetailProcessor>();
 
             var collection = RecordGenerator.GenerateDeliveryDetails(numberOfRecords);
 
-            //var filteredCollection = collection.Where(x => x.DeliveryDate >= date);
-
             output.Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>())).Returns(collection);
 
             return output;
         }
 
-
+        /// <summary>
+        /// The Mock of <c>GreenHouseRepository</c> with the invocations cleared.
+        /// </summary>
         internal static Mock<IGreenHouseRepository> GreenHouseRepository
         {
             get
@@ -149,6 +173,9 @@ namespace DomainTests
             set => _greenHouseRepository = value;
         }
 
+        /// <summary>
+        /// The Mock of <c>SeedTrayRepository</c> with the invocations cleared.
+        /// </summary>
         internal static Mock<ISeedTrayRepository> SeedTrayRepository
         {
             get
@@ -159,6 +186,9 @@ namespace DomainTests
             set => _seedTrayRepository = value;
         }
 
+        /// <summary>
+        /// The Mock of <c>OrderProcessor</c> with the invocations cleared.
+        /// </summary>
         internal static Mock<IOrderProcessor> OrderProcessor
         {
             get
@@ -169,6 +199,9 @@ namespace DomainTests
             set => _orderProcessor = value;
         }
 
+        /// <summary>
+        /// The Mock of <c>OrderLocationProcessor</c> with the invocations cleared.
+        /// </summary>
         internal static Mock<IOrderLocationProcessor> OrderLocationProcessor
         {
             get
@@ -179,6 +212,9 @@ namespace DomainTests
             set => _orderLocationProcessor = value;
         }
 
+        /// <summary>
+        /// The Mock of <c>DeliveryDetailProcessor</c> with the invocations cleared.
+        /// </summary>
         internal static Mock<IDeliveryDetailProcessor> DeliveryDetailProcessor
         {
             get
