@@ -654,4 +654,38 @@ public class SeedBedStatusTests
         result.Should().Be(false);
         mockGreenHouseRepository.VerifyAll();
     }
+
+    [Fact]
+    public void UpdateObjects_ShouldWork()
+    {
+        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
+
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
+
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = MockOf.DeliveryDetailProcessor;
+
+        SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
+            , orderProcessor: mockOrderProcessor.Object
+            , orderLocationProcessor: mockOrderLocationProcessor.Object
+            , deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
+
+        status.DeliveryDetailsToDelete.Add(status.DeliveryDetails.Last());
+        status.OrderLocationsToDelete.Add(status.OrderLocations.Last());
+        status.OrdersToDelete.Add(status.Orders.Last());
+        status.OrderLocationsToAdd.Add(new OrderLocationModel(9999, 1, 108, 1, 1));
+
+        int oldGeneralOrderLocationCount = status.OrderLocations.Count;
+        int oldOrderLocationOfOrdersCount = status.Orders.Sum(x => x.OrderLocations.Count);
+
+        status.UpdateObjects();
+
+        status.DeliveryDetailsToDelete.Count.Should().Be(1);
+        status.OrderLocationsToDelete.Count.Should().Be(1);
+        status.OrdersToDelete.Count.Should().Be(1);
+        oldGeneralOrderLocationCount.Should().Be(oldGeneralOrderLocationCount);
+        oldOrderLocationOfOrdersCount.Should().Be(oldOrderLocationOfOrdersCount);
+        mockOrderProcessor.VerifyAll();
+        mockOrderLocationProcessor.VerifyAll();
+        mockDeliveryDetailProcessor.VerifyAll();
+    }
 }
