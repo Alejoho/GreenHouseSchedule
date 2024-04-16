@@ -13,13 +13,12 @@ public class SeedBedStatusTests
 
     public SeedBedStatusTests()
     {
-        if (!RecordGenerator.generated == true)
+        if (!RecordGenerator.Generated == true)
         {
             RecordGenerator.PopulateLists(600);
             RecordGenerator.FillNumberOfRecords(_pastDate);
             MockOf.GenerateMocks(_pastDate);
-            //RecordGenerator.PopulateLists(150);
-            RecordGenerator.generated = true;
+            RecordGenerator.Generated = true;
         }
     }
 
@@ -116,11 +115,11 @@ public class SeedBedStatusTests
 
         methodInfo_FillDeliveryDetails.Invoke(status, null);
 
-        status.OrderLocations.Count.Should().Be(RecordGenerator._numberOfSelectedOrderLocations);
+        status.OrderLocations.Count.Should().Be(RecordGenerator.NumberOfSelectedOrderLocations);
 
         int deliveryDetailModelsCount = status.OrderLocations.Sum(x => x.DeliveryDetails.Count);
 
-        deliveryDetailModelsCount.Should().BeLessThan(RecordGenerator._deliveryDetails.Count);
+        deliveryDetailModelsCount.Should().BeLessThan(RecordGenerator.DeliveryDetails.Count);
 
         foreach (var orderLocationModel in status.OrderLocations)
         {
@@ -156,11 +155,11 @@ public class SeedBedStatusTests
 
         methodInfo_FillOrderLocations.Invoke(status, null);
 
-        status.Orders.Count.Should().Be(RecordGenerator._numberOfSelectedOrders);
+        status.Orders.Count.Should().Be(RecordGenerator.NumberOfSelectedOrders);
 
-        status.OrderLocations.Count.Should().Be(RecordGenerator._numberOfSelectedOrderLocations);
+        status.OrderLocations.Count.Should().Be(RecordGenerator.NumberOfSelectedOrderLocations);
 
-        status.OrderLocations.Count.Should().BeLessThan(RecordGenerator._orderLocations.Count);
+        status.OrderLocations.Count.Should().BeLessThan(RecordGenerator.OrderLocations.Count);
 
         mockOrderProcessor.VerifyAll();
 
@@ -542,7 +541,6 @@ public class SeedBedStatusTests
 
         methodInfo.Invoke(status, null);
 
-        //status.Orders.Where(x => x.)
         status.OrderLocations.Where(x => x.RealDeliveryDate < _presentDate).Count().Should().Be(0);
         status.DeliveryDetails.Where(x => x.DeliveryDate < _presentDate).Count().Should().Be(0);
         status.OrdersToDelete.Count.Should().Be(0);
