@@ -73,6 +73,8 @@ namespace Domain
                 _iteratorDate = ((DateOnly)presentDate).AddDays(-90);
             }
 
+            _amountOfSowSeedTrayPerDay = 500;
+
             _ordersToDelete = new ArrayList();
             _orderLocationsToDelete = new ArrayList();
             DeliveryDetailsToDelete = new ArrayList();
@@ -139,6 +141,7 @@ namespace Domain
             int seedTraysPerDay;
             int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.DailySowingPotential], out seedTraysPerDay);
             _amountOfSowSeedTrayPerDay = seedTraysPerDay;
+            _remainingAmountOfSowSeedTrayPerDay = _amountOfSowSeedTrayPerDay;
 
             _greenHouseRepository = new GreenHouseRepository();
             _seedTrayRepository = new SeedTrayRepository();
@@ -183,10 +186,12 @@ namespace Domain
             //this._daysOfProduction = pOriginalSeedBedStatus.DaysOfProduction;
             this._amountOfSowSeedTrayPerDay = pOriginalSeedBedStatus.AmountOfSowSeedTrayPerDay;
             this._remainingAmountOfSowSeedTrayPerDay = pOriginalSeedBedStatus.RemainingAmountOfSowSeedTrayPerDay;
+            this._remainingAmountOfSowSeedTrayPerDay = this._amountOfSowSeedTrayPerDay;
             this._greenHouseRepository = new GreenHouseRepository();
             this._seedTrayRepository = new SeedTrayRepository();
             this._ordersToDelete = new ArrayList();
             this._orderLocationsToDelete = new ArrayList();
+            this._deliveryDetailsToDelete = new ArrayList();
             this._orderLocationsToAdd = new ArrayList();
 
             foreach (GreenHouseModel greenHouseModel in pOriginalSeedBedStatus.GreenHouses)
