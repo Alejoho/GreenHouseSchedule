@@ -42,7 +42,27 @@ namespace Domain
         #endregion
 
 
-        #region Constructor
+        #region Constructors
+
+        /// <summary>
+        /// This is a constructor for unit test case scenario.
+        /// </summary>
+        /// <param name="seedBedStatus">The seedbed loaded until the present day.</param>
+        /// <param name="pOrderInProcess">The order that to place in the seedbed.</param>
+        /// <param name="testing">Some variable to diferentiate this ctor.</param>
+        public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel orderInProcess = null, bool testing = true)
+        {
+            _seedBedStatus = new SeedBedStatus(seedBedStatus); ;
+            _seedBedStatusAuxiliar = new SeedBedStatus(_seedBedStatus);
+
+            if (orderInProcess != null)
+            {
+                _orderInProcess = orderInProcess;
+            }
+
+            _seedTrayPermutations = new LinkedList<SeedTrayPermutation>();
+            _seedTrayPermutationsToDelete = new ArrayList();
+        }
 
         /// <summary>
         /// Initializes a new instance of <c>DateIteratorAndResourceChecker</c>
@@ -489,7 +509,7 @@ namespace Domain
         /// </summary>
         private void RemoveSeedTrayPermutations()
         {
-            for(int i = 0; i < _seedTrayPermutationsToDelete.Count; i++)
+            for (int i = 0; i < _seedTrayPermutationsToDelete.Count; i++)
             {
                 _seedTrayPermutations.Remove((SeedTrayPermutation)_seedTrayPermutationsToDelete[i]);
             }
