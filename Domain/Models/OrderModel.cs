@@ -61,8 +61,8 @@ namespace Domain.Models
         public OrderModel(OrderModel pOrderModelOriginal)
         {
             this._ID =pOrderModelOriginal.ID;
-            this._client =pOrderModelOriginal.Client;
-            this._product =pOrderModelOriginal.Product;
+            this._client = new ClientModel(pOrderModelOriginal.Client);
+            this._product =new ProductModel(pOrderModelOriginal.Product);
             this._seedlingAmount =pOrderModelOriginal.SeedlingAmount;
             this._requestDate =pOrderModelOriginal.RequestDate;
             this._estimateSowDate =pOrderModelOriginal.EstimateSowDate;

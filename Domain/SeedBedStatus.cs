@@ -206,17 +206,21 @@ namespace Domain
 
             foreach (OrderModel orderModel in pOriginalSeedBedStatus.Orders)
             {
-                this._orders.AddLast(new OrderModel(orderModel));
-            }
+                OrderModel newOrder = new OrderModel(orderModel);
 
-            foreach (OrderLocationModel orderLocationModel in pOriginalSeedBedStatus.OrderLocations)
-            {
-                this._orderLocations.AddLast(new OrderLocationModel(orderLocationModel));
-            }
+                this._orders.AddLast(newOrder);
 
-            foreach (DeliveryDetailModel deliveryDetailModel in pOriginalSeedBedStatus.DeliveryDetails)
-            {
-                this._deliveryDetails.Add(new DeliveryDetailModel(deliveryDetailModel));
+                foreach (OrderLocationModel orderLocationModel in newOrder.OrderLocations)
+                {
+                    OrderLocationModel newOrderLocation = new OrderLocationModel(orderLocationModel);
+
+                    this._orderLocations.AddLast(newOrderLocation);
+
+                    foreach (DeliveryDetailModel deliveryDetailModel in newOrderLocation.DeliveryDetails)
+                    {
+                        this._deliveryDetails.Add(new DeliveryDetailModel(deliveryDetailModel));
+                    }
+                }
             }
         }
 
