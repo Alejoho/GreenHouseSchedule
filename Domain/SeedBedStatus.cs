@@ -61,12 +61,14 @@ namespace Domain
         /// <param name="orderProcessor">The <c>OrderProcessor</c> or a Mock of it</param>
         /// <param name="orderLocationProcessor">The <c>OrderLocationProcessor</c> or a Mock of it</param>
         /// <param name="deliveryDetailProcessor">The <c>DeliveryDetailProcessor</c> or a Mock of it</param>
+        /// <param name="working">A boolean to specify if the object needs to be fully working</param>
         internal SeedBedStatus(DateOnly? presentDate = null,
             IGreenHouseRepository greenHouseRepo = null,
             ISeedTrayRepository seedTrayRepo = null,
             IOrderProcessor orderProcessor = null,
             IOrderLocationProcessor orderLocationProcessor = null,
-            IDeliveryDetailProcessor deliveryDetailProcessor = null)
+            IDeliveryDetailProcessor deliveryDetailProcessor = null,
+            bool working = false)
         {
             if (presentDate != null)
             {
@@ -113,6 +115,16 @@ namespace Domain
             {
                 FillOrderLocations();
             }
+
+            if (orderProcessor != null
+                && orderLocationProcessor != null
+                && deliveryDetailProcessor != null
+                && greenHouseRepo != null
+                && seedTrayRepo != null
+                && working == true)
+            {
+                DayByDayToCurrentDate();
+            }
         }
 
         /// <summary>
@@ -143,7 +155,7 @@ namespace Domain
 
             _ordersToDelete = new ArrayList();
             _orderLocationsToDelete = new ArrayList();
-            DeliveryDetailsToDelete = new ArrayList();
+            _deliveryDetailsToDelete = new ArrayList();
             _orderLocationsToAdd = new ArrayList();
 
             _greenHouses = GetGreenHouses();
@@ -401,7 +413,7 @@ namespace Domain
             } while (_iteratorDate < _presentDate);
             ImplementDelayRelease();
             UpdateObjects();
-            ClearArrayLists();            
+            ClearArrayLists();
         }
 
         /// <summary>

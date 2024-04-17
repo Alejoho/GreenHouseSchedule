@@ -6,7 +6,7 @@ using System.Configuration;
 namespace Domain
 {
     /// <summary>
-    /// This class executes the iteration thorugh the calendar from the present date to the future
+    /// This class executes the iteration through the calendar from the present date to the future
     /// and checks the disponibility of resources, with the purpose of placing an order.
     /// </summary>
     public class DateIteratorAndResourceChecker
@@ -52,7 +52,7 @@ namespace Domain
         public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel pOrderInProcess)
         {
             _seedBedStatus = seedBedStatus;
-            _seedBedStatusAuxiliar = new SeedBedStatus();
+            _seedBedStatusAuxiliar = new SeedBedStatus(_seedBedStatus);
             _orderInProcess = pOrderInProcess;
             _seedTrayPermutations = new LinkedList<SeedTrayPermutation>();
             _seedTrayPermutationsToDelete = new ArrayList();
@@ -510,7 +510,6 @@ namespace Domain
         #region Properties
 
         //LATER - Evaluar si quitar estas propiedades ya que no se usan fuera de la clase
-
 
         public SeedBedStatus SeedBedStatus { get => _seedBedStatus; set => _seedBedStatus = value; }
 
