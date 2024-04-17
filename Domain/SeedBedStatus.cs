@@ -34,9 +34,6 @@ namespace Domain
 
         private IGreenHouseRepository _greenHouseRepository;
         private ISeedTrayRepository _seedTrayRepository;
-        private OrderRepository _orderRepository;
-        private OrderLocationRepository _orderLocationRepository;
-        private DeliveryDetailRepository _deliveryDetailRepository;
 
         private IOrderProcessor _orderProcessor;
         private IOrderLocationProcessor _orderLocationProcessor;
@@ -145,9 +142,6 @@ namespace Domain
 
             _greenHouseRepository = new GreenHouseRepository();
             _seedTrayRepository = new SeedTrayRepository();
-            _orderRepository = new OrderRepository();
-            _orderLocationRepository = new OrderLocationRepository();
-            _deliveryDetailRepository = new DeliveryDetailRepository();
 
             _orderProcessor = new OrderProcessor();
             _orderLocationProcessor = new OrderLocationProcessor();
@@ -191,9 +185,6 @@ namespace Domain
             this._remainingAmountOfSowSeedTrayPerDay = pOriginalSeedBedStatus.RemainingAmountOfSowSeedTrayPerDay;
             this._greenHouseRepository = new GreenHouseRepository();
             this._seedTrayRepository = new SeedTrayRepository();
-            this._orderRepository = new OrderRepository();
-            this._orderLocationRepository = new OrderLocationRepository();
-            this._deliveryDetailRepository = new DeliveryDetailRepository();
             this._ordersToDelete = new ArrayList();
             this._orderLocationsToDelete = new ArrayList();
             this._orderLocationsToAdd = new ArrayList();
