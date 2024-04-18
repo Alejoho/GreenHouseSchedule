@@ -149,7 +149,9 @@ namespace Domain
                 {
                     foreach (OrderLocationModel orderLocation in order.OrderLocations)
                     {
-                        if ((SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > minimumLimitOfSow || orderLocation.SeedTrayAmount < SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay) && orderLocation.Sown == null)
+                        if ((SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > SeedBedStatus.MinimumLimitOfSeedTrayToSow
+                            || orderLocation.SeedTrayAmount < SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay) 
+                                && orderLocation.Sown == false)
                         {
                             if (orderLocation.SeedTrayAmount - SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay <= 0)
                             {
