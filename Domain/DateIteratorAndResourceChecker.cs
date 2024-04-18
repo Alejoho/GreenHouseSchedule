@@ -52,6 +52,7 @@ namespace Domain
         /// <param name="testing">Some variable to diferentiate this ctor.</param>
         public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel orderInProcess = null, bool testing = true)
         {
+            //TODO - Measure the time of this two lines
             _seedBedStatus = new SeedBedStatus(seedBedStatus);
             _seedBedStatusAuxiliar = new SeedBedStatus(_seedBedStatus);
 
@@ -137,26 +138,26 @@ namespace Domain
         /// </summary>
         private void ImplementEstimateReservation()
         {
-            LinkedList<OrderModel> ordersToSow = (LinkedList<OrderModel>)SeedBedStatus.Orders
+            var ordersToSow = SeedBedStatus.Orders
                 .Where(order => order.EstimateSowDate <= SeedBedStatus.IteratorDate && order.Complete == false);
 
-            int minimumLimitOfSow = SeedBedStatus.MinimumLimitOfSow;            
+            int minimumLimitOfSow = SeedBedStatus.MinimumLimitOfSeedTrayToSow;            
 
             foreach (OrderModel order in ordersToSow)
             {
-                if (SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay > 0)
+                if (SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > 0)
                 {
                     foreach (OrderLocationModel orderLocation in order.OrderLocations)
                     {
-                        if ((SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay > minimumLimitOfSow || orderLocation.SeedTrayAmount < SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay) && orderLocation.Sown == null)
+                        if ((SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > minimumLimitOfSow || orderLocation.SeedTrayAmount < SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay) && orderLocation.Sown == null)
                         {
-                            if (orderLocation.SeedTrayAmount - SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay <= 0)
+                            if (orderLocation.SeedTrayAmount - SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay <= 0)
                             {
                                 orderLocation.SowDate = SeedBedStatus.IteratorDate;
                                 orderLocation.EstimateDeliveryDate = SeedBedStatus.IteratorDate.AddDays(order.Product.ProductionInterval);
                                 SeedBedStatus.ReserveSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
                                 SeedBedStatus.ReserveArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
-                                SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay -= orderLocation.SeedTrayAmount;
+                                SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay -= orderLocation.SeedTrayAmount;
                                 order.Complete = true;
                             }
                             else
@@ -164,7 +165,7 @@ namespace Domain
                                 OrderLocationModel newOrderLocation = new OrderLocationModel(orderLocation);
                                 newOrderLocation.SowDate = SeedBedStatus.IteratorDate;
                                 newOrderLocation.EstimateDeliveryDate = SeedBedStatus.IteratorDate.AddDays(order.Product.ProductionInterval);
-                                newOrderLocation.SeedTrayAmount = SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay;
+                                newOrderLocation.SeedTrayAmount = SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay;
                                 SeedBedStatus.ReserveSeedTray(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType);
                                 SeedBedStatus.ReserveArea(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType, newOrderLocation.GreenHouse);
                                 orderLocation.SeedTrayAmount -= newOrderLocation.SeedTrayAmount;
@@ -181,7 +182,7 @@ namespace Domain
         /// </summary>
         private void RestartPotentialOfSowSeedTrayPerDay()
         {
-            SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay = SeedBedStatus.AmountOfSowSeedTrayPerDay;
+            SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay = SeedBedStatus.AmountOfSowSeedTrayPerDay;
         }
 
         //public void AssignOrderInProcess(OrderModel pOrder)
@@ -226,7 +227,7 @@ namespace Domain
         /// <returns>Returns true if there is work force otherwise false.</returns>
         private bool WorkForceResource()
         {
-            bool IsThereWorkForceOnThisDay = SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay > 0 ? true : false;
+            bool IsThereWorkForceOnThisDay = SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > 0 ? true : false;
             return IsThereWorkForceOnThisDay;
         }
 
