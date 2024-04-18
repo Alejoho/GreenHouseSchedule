@@ -52,7 +52,7 @@ namespace Domain
         /// <param name="testing">Some variable to diferentiate this ctor.</param>
         public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel orderInProcess = null, bool testing = true)
         {
-            _seedBedStatus = new SeedBedStatus(seedBedStatus); ;
+            _seedBedStatus = new SeedBedStatus(seedBedStatus);
             _seedBedStatusAuxiliar = new SeedBedStatus(_seedBedStatus);
 
             if (orderInProcess != null)
@@ -140,8 +140,7 @@ namespace Domain
             LinkedList<OrderModel> ordersToSow = (LinkedList<OrderModel>)SeedBedStatus.Orders
                 .Where(order => order.EstimateSowDate <= SeedBedStatus.IteratorDate && order.Complete == false);
 
-            int minimumLimitOfSow;
-            int.TryParse(ConfigurationManager.AppSettings["MinimumLimitOfSow"], out minimumLimitOfSow);
+            int minimumLimitOfSow = SeedBedStatus.MinimumLimitOfSow;            
 
             foreach (OrderModel order in ordersToSow)
             {

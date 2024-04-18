@@ -31,6 +31,7 @@ namespace Domain
         //private DateTime _daysOfProduction;
         private readonly int _amountOfSowSeedTrayPerDay;
         private int _remainingAmountOfSowSeedTrayPerDay;
+        private readonly int _minimumLimitOfSow;
 
         private IGreenHouseRepository _greenHouseRepository;
         private ISeedTrayRepository _seedTrayRepository;
@@ -74,6 +75,7 @@ namespace Domain
             }
 
             _amountOfSowSeedTrayPerDay = 500;
+            _minimumLimitOfSow = 50;
 
             _ordersToDelete = new ArrayList();
             _orderLocationsToDelete = new ArrayList();
@@ -142,6 +144,10 @@ namespace Domain
             int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.DailySowingPotential], out seedTraysPerDay);
             _amountOfSowSeedTrayPerDay = seedTraysPerDay;
             _remainingAmountOfSowSeedTrayPerDay = _amountOfSowSeedTrayPerDay;
+
+            int minimumLimitOfSow;
+            int.TryParse(ConfigurationManager.AppSettings["MinimumLimitOfSow"], out minimumLimitOfSow);
+            _minimumLimitOfSow = minimumLimitOfSow;
 
             _greenHouseRepository = new GreenHouseRepository();
             _seedTrayRepository = new SeedTrayRepository();
@@ -739,6 +745,12 @@ namespace Domain
         /// Gets or sets the remaining amount of seedtrays that can be sown in one day.
         /// </value>
         internal int RemainingAmountOfSowSeedTrayPerDay { get => _remainingAmountOfSowSeedTrayPerDay; set => _remainingAmountOfSowSeedTrayPerDay = value; }
+
+        /// <value>
+        /// Gets the minimum limit of sow of seedtray of an order.
+        /// </value>
+        internal int MinimumLimitOfSow { get => _minimumLimitOfSow; }
+
 
         /// <value>
         /// Gets or sets an array list of orders marked to delete at the end of the day.
