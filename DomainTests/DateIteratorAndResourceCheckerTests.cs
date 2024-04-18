@@ -61,7 +61,7 @@ namespace DomainTests
         }
 
         [Fact]
-        public void RestartPotentialOfSowSeedTrayPerDay_ShouldWork()
+        public void RestartPotentialOfSowSeedTrayPerDay_ShouldResetTheVariable()
         {
             DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
             iterator.SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay = 100;
@@ -76,10 +76,17 @@ namespace DomainTests
         }
 
         [Fact]
-        public void ImplementEstimateRelease_ShouldWork()
+        public void ImplementEstimateRelease_ShouldAddOrdersAndOrderLocationsToTheArrayListsToDelete()
         {
             DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
-            iterator.SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay = 100;
+
+            int countOfOrderLocationsToDelete=iterator.SeedBedStatus.OrderLocations
+                .Where(x => x.EstimateDeliveryDate == iterator.SeedBedStatus.IteratorDate).Count();
+
+            int countOfOrdersToDelete = iterator.SeedBedStatus.Orders
+                .Where(x => x.OrderLocations.Count() > 0
+                && x.OrderLocations.All(y => y.EstimateDeliveryDate == iterator.SeedBedStatus.IteratorDate))
+                .Count();
 
             MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
                 .GetMethod("ImplementEstimateRelease"
@@ -87,7 +94,8 @@ namespace DomainTests
 
             methodInfo.Invoke(iterator, null);
 
-            
+            iterator.SeedBedStatus.OrderLocationsToDelete.Count.Should().Be(countOfOrderLocationsToDelete);
+            iterator.SeedBedStatus.OrdersToDelete.Count.Should().Be(countOfOrdersToDelete);
         }
 
     }
