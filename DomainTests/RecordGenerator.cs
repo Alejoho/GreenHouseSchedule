@@ -271,7 +271,7 @@ internal static class RecordGenerator
             .RuleFor(x => x.Width, f => f.Random.Short(6, 20))
             .RuleFor(x => x.Length, f => f.Random.Short(50, 100))
             .RuleFor(x => x.GreenHouseArea, (f, u) => u.Width * u.Length)
-            .RuleFor(x => x.SeedTrayArea, f => f.Random.Short(200, 1500))
+            .RuleFor(x => x.SeedTrayArea, f => f.Random.Short(600, 1100)) /*300 - 1500*/
             .RuleFor(x => x.AmountOfBlocks, f => f.Random.Byte(2, 4))
             .RuleFor(x => x.Active, f => f.Random.Bool());
     }
