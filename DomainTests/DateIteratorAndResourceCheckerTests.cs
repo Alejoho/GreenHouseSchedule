@@ -70,7 +70,7 @@ namespace DomainTests
         public void RestartPotentialOfSowSeedTrayPerDay_ShouldResetTheVariable()
         {
             DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
-            iterator.SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay = 100;
+            iterator.SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay = 100;
 
             MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
                 .GetMethod("RestartPotentialOfSowSeedTrayPerDay"
@@ -78,7 +78,7 @@ namespace DomainTests
 
             methodInfo.Invoke(iterator, null);
 
-            iterator.SeedBedStatus.RemainingAmountOfSowSeedTrayPerDay.Should().Be(500);
+            iterator.SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay.Should().Be(500);
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace DomainTests
         {
             DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
 
-            int countOfOrderLocationsToDelete=iterator.SeedBedStatus.OrderLocations
+            int countOfOrderLocationsToDelete = iterator.SeedBedStatus.OrderLocations
                 .Where(x => x.EstimateDeliveryDate == iterator.SeedBedStatus.IteratorDate).Count();
 
             int countOfOrdersToDelete = iterator.SeedBedStatus.Orders
@@ -104,5 +104,23 @@ namespace DomainTests
             iterator.SeedBedStatus.OrdersToDelete.Count.Should().Be(countOfOrdersToDelete);
         }
 
+        [Fact]
+        public void ImplementEstimateReservation_ShouldWork()
+        {
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
+
+            MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+                .GetMethod("ImplementEstimateReservation"
+                    , BindingFlags.NonPublic | BindingFlags.Instance);
+
+            methodInfo.Invoke(iterator, null);
+
+            int amountOfOrdersToSow = iterator.SeedBedStatus.Orders
+                .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
+                    && order.Complete == false).Count();
+
+            amountOfOrdersToSow.Should().Be(0);
+            iterator.SeedBedStatus.OrderLocationsToAdd.Count.Should().Be(0);
+        }
     }
 }
