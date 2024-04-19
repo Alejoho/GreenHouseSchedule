@@ -149,18 +149,18 @@ namespace Domain
                 {
                     foreach (OrderLocationModel orderLocation in order.OrderLocations)
                     {
-                        if ((SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > SeedBedStatus.MinimumLimitOfSeedTrayToSow
-                            || orderLocation.SeedTrayAmount < SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay) 
+                        if ((SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay >= SeedBedStatus.MinimumLimitOfSeedTrayToSow
+                            || orderLocation.SeedTrayAmount <= SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay) 
                                 && orderLocation.Sown == false)
                         {
-                            if (orderLocation.SeedTrayAmount - SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay <= 0)
+                            if ((SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay - orderLocation.SeedTrayAmount) >= 0)
                             {
                                 orderLocation.SowDate = SeedBedStatus.IteratorDate;
                                 orderLocation.EstimateDeliveryDate = SeedBedStatus.IteratorDate.AddDays(order.Product.ProductionInterval);
                                 SeedBedStatus.ReserveSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
                                 SeedBedStatus.ReserveArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                                 SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay -= orderLocation.SeedTrayAmount;
-                                order.Complete = true;
+                                orderLocation.Sown = true;
                             }
                             else
                             {
@@ -174,6 +174,11 @@ namespace Domain
                                 SeedBedStatus.OrderLocationsToAdd.Add(newOrderLocation);
                             }
                         }
+                    }
+
+                    if(order.OrderLocations.Where(x => x.Sown== false).Count() == 0)
+                    {
+                        order.Complete = true;
                     }
                 }
             }
