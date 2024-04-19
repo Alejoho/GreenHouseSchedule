@@ -29,7 +29,7 @@ namespace Domain
         private LinkedList<OrderLocationModel> _orderLocations;
         private List<DeliveryDetailModel> _deliveryDetails;
         //private DateTime _daysOfProduction;
-        private readonly int _amountOfSowSeedTrayPerDay;
+        private readonly int _maxAmountOfSeedTrayToSowPerDay;
         private int _remainingAmountOfSeedTrayToSowPerDay;
         private readonly int _minimumLimitOfSeedTrayToSow;
 
@@ -74,8 +74,9 @@ namespace Domain
                 _iteratorDate = ((DateOnly)presentDate).AddDays(-90);
             }
 
-            _amountOfSowSeedTrayPerDay = 500;
+            _maxAmountOfSeedTrayToSowPerDay = 500;
             _minimumLimitOfSeedTrayToSow = 50;
+            _remainingAmountOfSeedTrayToSowPerDay = _maxAmountOfSeedTrayToSowPerDay;
 
             _ordersToDelete = new ArrayList();
             _orderLocationsToDelete = new ArrayList();
@@ -142,8 +143,8 @@ namespace Domain
 
             int seedTraysPerDay;
             int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.DailySowingPotential], out seedTraysPerDay);
-            _amountOfSowSeedTrayPerDay = seedTraysPerDay;
-            _remainingAmountOfSeedTrayToSowPerDay = _amountOfSowSeedTrayPerDay;
+            _maxAmountOfSeedTrayToSowPerDay = seedTraysPerDay;
+            _remainingAmountOfSeedTrayToSowPerDay = _maxAmountOfSeedTrayToSowPerDay;
 
             int minimumLimitOfSow;
             int.TryParse(ConfigurationManager.AppSettings["MinimumLimitOfSow"], out minimumLimitOfSow);
@@ -190,9 +191,9 @@ namespace Domain
             this._deliveryDetails = new List<DeliveryDetailModel>();
             //CHECK - I don't remeber what this variable is for.
             //this._daysOfProduction = pOriginalSeedBedStatus.DaysOfProduction;
-            this._amountOfSowSeedTrayPerDay = pOriginalSeedBedStatus.AmountOfSowSeedTrayPerDay;
+            this._maxAmountOfSeedTrayToSowPerDay = pOriginalSeedBedStatus.MaxAmountOfSeedTrayToSowPerDay;
             this._remainingAmountOfSeedTrayToSowPerDay = pOriginalSeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay;
-            this._remainingAmountOfSeedTrayToSowPerDay = this._amountOfSowSeedTrayPerDay;
+            this._minimumLimitOfSeedTrayToSow = pOriginalSeedBedStatus._minimumLimitOfSeedTrayToSow;
             this._greenHouseRepository = new GreenHouseRepository();
             this._seedTrayRepository = new SeedTrayRepository();
             this._ordersToDelete = new ArrayList();
@@ -739,7 +740,7 @@ namespace Domain
         /// <value>
         /// Gets or sets the amount of seedtrays that can be sown in one day.
         /// </value>
-        internal int AmountOfSowSeedTrayPerDay => _amountOfSowSeedTrayPerDay;
+        internal int MaxAmountOfSeedTrayToSowPerDay => _maxAmountOfSeedTrayToSowPerDay;
 
         /// <value>
         /// Gets or sets the remaining amount of seedtrays that can be sown in one day.
