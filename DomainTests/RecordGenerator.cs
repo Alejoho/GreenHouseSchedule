@@ -91,7 +91,7 @@ internal static class RecordGenerator
         _seedTrays = GenerateSeedTrays(7).ToList();
         _greenHouses = GenerateGreenHouses(8).ToList();
 
-        //Randomizer.Seed = new Random(2467);
+        Randomizer.Seed = new Random(2467);
         Random random = new Random(95);
 
         int[] balanceOfOrders = GenerateBalanceOfOrderTypes(count);
@@ -112,7 +112,7 @@ internal static class RecordGenerator
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, amount);
 
-            fakeOrderLocationRecord.UseSeed(2467);
+            //fakeOrderLocationRecord.UseSeed(2467);
 
             List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
 
@@ -141,7 +141,7 @@ internal static class RecordGenerator
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, completedOrderLocations);
 
-            fakeOrderLocationRecord.UseSeed(2467);
+            //fakeOrderLocationRecord.UseSeed(2467);
 
             List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
 
@@ -170,7 +170,7 @@ internal static class RecordGenerator
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, 0);
 
-            fakeOrderLocationRecord.UseSeed(2467);
+            //fakeOrderLocationRecord.UseSeed(2467);
 
             List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
 
@@ -197,8 +197,8 @@ internal static class RecordGenerator
                 int[] seedTrayDivision = GetAmountDivision(orderLocation.SeedTrayAmount, amount);
 
                 var fakeBlockRecord = GetBlockFaker(orderLocation, seedTrayDivision);
-
-                fakeBlockRecord.UseSeed(2467);
+                
+                //fakeBlockRecord.UseSeed(2467);
 
                 List<Block> newBlocks = fakeBlockRecord.Generate(amount);
 
@@ -220,7 +220,7 @@ internal static class RecordGenerator
 
                     var fakeDeliveryDetail = GetDeliveryDetailFaker(block, seedTrayDivision);
 
-                    fakeDeliveryDetail.UseSeed(2467);
+                    //fakeDeliveryDetail.UseSeed(2467);
 
                     List<DeliveryDetail> newDeliveryDetails = fakeDeliveryDetail.Generate(amount);
 
@@ -238,7 +238,7 @@ internal static class RecordGenerator
 
                         var fakeDeliveryDetail = GetDeliveryDetailFaker(block, seedlingDivision);
 
-                        fakeDeliveryDetail.UseSeed(2467);
+                        //fakeDeliveryDetail.UseSeed(2467);
 
                         List<DeliveryDetail> newDeliveryDetails = fakeDeliveryDetail.Generate(amount - 1);
 
@@ -305,11 +305,9 @@ internal static class RecordGenerator
 
     private static Faker<SeedTray> GetSeedTrayFaker()
     {
-        //NEXT - Lograr que las bandejas no tengan numeros negativos en el dia presente. Aumente el total de
-        //bandejas pero junto con el aumento el numero de bandejas de las order locations.
         byte index = 1;
         byte preference = 1;
-        short[] amounts = { 800, 2700, 2450, 1800, 2500, 900, 1850 };
+        short[] amounts = { 900, 2500, 2450, 1800, 2600, 900, 1850 };
         return new Faker<SeedTray>()
             .RuleFor(x => x.Id, () => index++)
             .RuleFor(x => x.AlveolusLength, f => f.Random.Byte(10, 20))
@@ -320,20 +318,20 @@ internal static class RecordGenerator
             .RuleFor(x => x.TrayWidth, f => Convert.ToDecimal(f.Random.Double(0.3, 0.5)))
             .RuleFor(x => x.TrayArea, (f, u) => u.TrayLength * u.TrayWidth)
             .RuleFor(x => x.LogicalTrayArea, (f, u) => u.TrayArea * f.Random.Decimal(1, 1.2M))
-            /*300 - 1500*/
-            .RuleFor(x => x.TotalAmount, f => f.Random.Short(300, 1500))
-            //.RuleFor(x => x.TotalAmount, f =>
-            //{
-            //    if (index < 8)
-            //    {
-            //        return amounts[index - 1];
-            //    }
-            //    else
-            //    {
-            //        return f.Random.Short(900, 2500);
-            //    }
-            //}
-            //)
+            .RuleFor(x => x.TotalAmount, f =>
+            {
+                short something = f.Random.Short(1000, 3500);
+
+                if (index < 8)
+                {
+                    return amounts[index - 2];
+                }
+                else
+                {
+                    return f.Random.Short(900, 2500);
+                }
+            }
+            )
             .RuleFor(x => x.Material, f => f.Vehicle.Type())
             .RuleFor(x => x.Preference, f => preference++)
             .RuleFor(x => x.Active, f => f.Random.Bool())
