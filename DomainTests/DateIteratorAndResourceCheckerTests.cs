@@ -7,8 +7,8 @@ namespace DomainTests
     public class DateIteratorAndResourceCheckerTests
     {
         private static DateOnly _presentDate = new DateOnly(2023, 6, 10);
-        private DateOnly _pastDate = _presentDate.AddDays(-90);
-        private SeedBedStatus status;
+        private static DateOnly _pastDate = _presentDate.AddDays(-90);
+        private static SeedBedStatus status;
 
         public DateIteratorAndResourceCheckerTests()
         {

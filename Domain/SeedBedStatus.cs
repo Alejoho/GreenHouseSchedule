@@ -8,7 +8,7 @@ using System.Configuration;
 
 namespace Domain
 {
-    //NEXT - Make some clean up of this class
+    //TODO - Make some clean up of this class
 
     //TODO - I think it'd be good to change the evaluation of availability of sow seedtray per day from seedtray to 
     //seedlings, because diferent types of seedtrays change the amount of seedtray that can be sown in one day
