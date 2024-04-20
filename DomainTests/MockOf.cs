@@ -55,7 +55,7 @@ namespace DomainTests
         {
             var orderLocationCollection = RecordGenerator.OrderLocations
                 .Where(x => x.Order.RealSowDate >= pastDate
-                    && (x.SowDate >= pastDate || x.SowDate == null))
+                    || x.SowDate == null)
                 .OrderBy(x => x.SowDate)
                 .ThenBy(x => x.Id);
 
