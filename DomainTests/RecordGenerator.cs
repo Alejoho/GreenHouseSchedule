@@ -284,7 +284,7 @@ internal static class RecordGenerator
             .RuleFor(x => x.Width, f => f.Random.Short(6, 20))
             .RuleFor(x => x.Length, f => f.Random.Short(50, 100))
             .RuleFor(x => x.GreenHouseArea, (f, u) => u.Width * u.Length)
-            .RuleFor(x => x.SeedTrayArea, f => f.Random.Short(600, 1100)) /*300 - 1500*/
+            .RuleFor(x => x.SeedTrayArea, f => f.Random.Short(600, 1200)) /* 300 - 1500 600 - 1100 */
             .RuleFor(x => x.AmountOfBlocks, f => f.Random.Byte(2, 4))
             .RuleFor(x => x.Active, f => f.Random.Bool());
     }
@@ -305,8 +305,11 @@ internal static class RecordGenerator
 
     private static Faker<SeedTray> GetSeedTrayFaker()
     {
+        //NEXT - Lograr que las bandejas no tengan numeros negativos en el dia presente. Aumente el total de
+        //bandejas pero junto con el aumento el numero de bandejas de las order locations.
         byte index = 1;
         byte preference = 1;
+        short[] amounts = { 800, 2700, 2450, 1800, 2500, 900, 1850 };
         return new Faker<SeedTray>()
             .RuleFor(x => x.Id, () => index++)
             .RuleFor(x => x.AlveolusLength, f => f.Random.Byte(10, 20))
@@ -317,7 +320,20 @@ internal static class RecordGenerator
             .RuleFor(x => x.TrayWidth, f => Convert.ToDecimal(f.Random.Double(0.3, 0.5)))
             .RuleFor(x => x.TrayArea, (f, u) => u.TrayLength * u.TrayWidth)
             .RuleFor(x => x.LogicalTrayArea, (f, u) => u.TrayArea * f.Random.Decimal(1, 1.2M))
+            /*300 - 1500*/
             .RuleFor(x => x.TotalAmount, f => f.Random.Short(300, 1500))
+            //.RuleFor(x => x.TotalAmount, f =>
+            //{
+            //    if (index < 8)
+            //    {
+            //        return amounts[index - 1];
+            //    }
+            //    else
+            //    {
+            //        return f.Random.Short(900, 2500);
+            //    }
+            //}
+            //)
             .RuleFor(x => x.Material, f => f.Vehicle.Type())
             .RuleFor(x => x.Preference, f => preference++)
             .RuleFor(x => x.Active, f => f.Random.Bool())
