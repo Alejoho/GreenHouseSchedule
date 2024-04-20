@@ -58,7 +58,7 @@ internal static class RecordGenerator
     private static int[] GetAmountDivision(int amountToDivide, int amountOfDivisions)
     {
         int[] output = new int[amountOfDivisions];
-        Random random = new Random(59);
+        Random random = new Random(5986279);
         int sum = 0;
 
         for (int i = 0; i < output.Length; i++)
@@ -91,7 +91,7 @@ internal static class RecordGenerator
         _seedTrays = GenerateSeedTrays(7).ToList();
         _greenHouses = GenerateGreenHouses(8).ToList();
 
-        Randomizer.Seed = new Random(2467);
+        //Randomizer.Seed = new Random(2467);
         Random random = new Random(95);
 
         int[] balanceOfOrders = GenerateBalanceOfOrderTypes(count);
@@ -111,6 +111,8 @@ internal static class RecordGenerator
                 new int[1] { order.AmountOfAlgorithmSeedlings };
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, amount);
+
+            fakeOrderLocationRecord.UseSeed(2467);
 
             List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
 
@@ -139,6 +141,8 @@ internal static class RecordGenerator
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, completedOrderLocations);
 
+            fakeOrderLocationRecord.UseSeed(2467);
+
             List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
 
             int totalSeedling = newOrderLocations.Sum(x => x.SeedTrayAmount * x.SeedTray.TotalAlveolus);
@@ -166,6 +170,8 @@ internal static class RecordGenerator
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, 0);
 
+            fakeOrderLocationRecord.UseSeed(2467);
+
             List<OrderLocation> newOrderLocations = fakeOrderLocationRecord.Generate(amount);
 
             int totalSeedling = newOrderLocations.Sum(x => x.SeedTrayAmount * x.SeedTray.TotalAlveolus);
@@ -192,6 +198,8 @@ internal static class RecordGenerator
 
                 var fakeBlockRecord = GetBlockFaker(orderLocation, seedTrayDivision);
 
+                fakeBlockRecord.UseSeed(2467);
+
                 List<Block> newBlocks = fakeBlockRecord.Generate(amount);
 
                 orderLocation.Blocks = newBlocks;
@@ -212,6 +220,8 @@ internal static class RecordGenerator
 
                     var fakeDeliveryDetail = GetDeliveryDetailFaker(block, seedTrayDivision);
 
+                    fakeDeliveryDetail.UseSeed(2467);
+
                     List<DeliveryDetail> newDeliveryDetails = fakeDeliveryDetail.Generate(amount);
 
                     block.DeliveryDetails = newDeliveryDetails;
@@ -227,6 +237,8 @@ internal static class RecordGenerator
                         int[] seedlingDivision = GetAmountDivision(block.SeedTrayAmount, amount);
 
                         var fakeDeliveryDetail = GetDeliveryDetailFaker(block, seedlingDivision);
+
+                        fakeDeliveryDetail.UseSeed(2467);
 
                         List<DeliveryDetail> newDeliveryDetails = fakeDeliveryDetail.Generate(amount - 1);
 
@@ -254,8 +266,9 @@ internal static class RecordGenerator
     /// <returns></returns>
     internal static IEnumerable<GreenHouse> GenerateGreenHouses(int count)
     {
-        Randomizer.Seed = new Random(123);
+        //Randomizer.Seed = new Random(123);
         var fakeRecord = GetGreenHouseModelFaker();
+        fakeRecord.UseSeed(321);
 
         return fakeRecord.Generate(count);
     }
@@ -283,8 +296,9 @@ internal static class RecordGenerator
     /// <returns></returns>
     internal static IEnumerable<SeedTray> GenerateSeedTrays(int count)
     {
-        Randomizer.Seed = new Random(123);
+        //Randomizer.Seed = new Random(123);
         var fakeRecord = GetSeedTrayFaker();
+        fakeRecord.UseSeed(123);        
 
         return fakeRecord.Generate(count);
     }
@@ -491,8 +505,9 @@ internal static class RecordGenerator
     /// <returns></returns>
     internal static IEnumerable<Order> GenerateOrders(int count)
     {
-        Randomizer.Seed = new Random(123);
+        //Randomizer.Seed = new Random(123);
         var fakeRecord = GetOrderFaker();
+        fakeRecord.UseSeed(32128);
 
         return fakeRecord.Generate(count);
     }
@@ -551,8 +566,9 @@ internal static class RecordGenerator
     /// <returns></returns>
     internal static IEnumerable<OrderLocation> GenerateOrderLocations(int count)
     {
-        Randomizer.Seed = new Random(765);
+        //Randomizer.Seed = new Random(765);
         var fakeRecord = GetOrderLocationFaker();
+        fakeRecord.UseSeed(765);
 
         return fakeRecord.Generate(count);
     }
@@ -590,8 +606,9 @@ internal static class RecordGenerator
     /// <returns></returns>
     internal static IEnumerable<DeliveryDetail> GenerateDeliveryDetails(int count)
     {
-        Randomizer.Seed = new Random(834);
+        //Randomizer.Seed = new Random(834);
         var fakeRecord = GetDeliveryDetailFaker();
+        fakeRecord.UseSeed(834);
 
         return fakeRecord.Generate(count);
     }
