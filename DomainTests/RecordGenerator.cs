@@ -33,7 +33,7 @@ internal static class RecordGenerator
 
         _numberOfSelectedOrderLocations = _orderLocations
             .Where(x => x.Order.RealSowDate >= date
-                && (x.SowDate >= date || x.SowDate == null))
+                || x.SowDate == null)
             .Count();
 
         _numberOfSelectedDeliveryDetails = _deliveryDetails
