@@ -35,18 +35,18 @@ namespace DomainTests
         private void GenerateGreenHouseMock()
         {
             _greenHouseRepository = new Mock<IGreenHouseRepository>();
-            _greenHouseRepository.Setup(x => x.GetAll()).Returns(RecordGenerator.GreenHouses);
+            _greenHouseRepository.Setup(x => x.GetAll()).Returns(_generator.GreenHouses);
         }
 
         private void GenerateSeedTrayMock()
         {
             _seedTrayRepository = new Mock<ISeedTrayRepository>();
-            _seedTrayRepository.Setup(x => x.GetAll()).Returns(RecordGenerator.SeedTrays);
+            _seedTrayRepository.Setup(x => x.GetAll()).Returns(_generator.SeedTrays);
         }
 
         private void GenerateOrderMock(DateOnly pastDate)
         {
-            var orderCollection = RecordGenerator.Orders
+            var orderCollection = _generator.Orders
             .Where(x => x.RealSowDate >= pastDate || x.RealSowDate == null)
             .OrderBy(x => x.EstimateSowDate)
             .ThenBy(x => x.DateOfRequest);
@@ -60,7 +60,7 @@ namespace DomainTests
 
         private void GenerateOrderLocationMock(DateOnly pastDate)
         {
-            var orderLocationCollection = RecordGenerator.OrderLocations
+            var orderLocationCollection = _generator.OrderLocations
                 .Where(x => x.Order.RealSowDate >= pastDate
                     || x.SowDate == null)
                 .OrderBy(x => x.SowDate)
@@ -75,7 +75,7 @@ namespace DomainTests
 
         private void GenerateDeliveryDetailMock(DateOnly pastDate)
         {
-            var deliveryDetailCollection = RecordGenerator.DeliveryDetails
+            var deliveryDetailCollection = _generator.DeliveryDetails
                 .Where(x => x.Block.OrderLocation.Order.RealSowDate >= pastDate
                     && x.DeliveryDate >= pastDate)
                 .OrderBy(x => x.DeliveryDate);
@@ -96,7 +96,7 @@ namespace DomainTests
         {
             Mock<IGreenHouseRepository> output = new Mock<IGreenHouseRepository>();
 
-            var collection = RecordGenerator.GenerateGreenHouses(numberOfRecords);
+            var collection = _generator.GenerateGreenHouses(numberOfRecords);
 
             output.Setup(x => x.GetAll()).Returns(collection);
 
@@ -112,7 +112,7 @@ namespace DomainTests
         {
             Mock<ISeedTrayRepository> output = new Mock<ISeedTrayRepository>();
 
-            var collection = RecordGenerator.GenerateSeedTrays(numberOfRecords);
+            var collection = _generator.GenerateSeedTrays(numberOfRecords);
 
             output.Setup(x => x.GetAll()).Returns(collection);
 
@@ -128,7 +128,7 @@ namespace DomainTests
         {
             Mock<IOrderProcessor> output = new Mock<IOrderProcessor>();
 
-            var collection = RecordGenerator.GenerateOrders(numberOfRecords);
+            var collection = _generator.GenerateOrders(numberOfRecords);
 
             output.Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>())).Returns(collection);
 
@@ -144,7 +144,7 @@ namespace DomainTests
         {
             Mock<IOrderLocationProcessor> output = new Mock<IOrderLocationProcessor>();
 
-            var collection = RecordGenerator.GenerateOrderLocations(numberOfRecords);         
+            var collection = _generator.GenerateOrderLocations(numberOfRecords);         
 
             output.Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>())).Returns(collection);
 
@@ -160,7 +160,7 @@ namespace DomainTests
         {
             Mock<IDeliveryDetailProcessor> output = new Mock<IDeliveryDetailProcessor>();
 
-            var collection = RecordGenerator.GenerateDeliveryDetails(numberOfRecords);
+            var collection = _generator.GenerateDeliveryDetails(numberOfRecords);
 
             output.Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>())).Returns(collection);
 

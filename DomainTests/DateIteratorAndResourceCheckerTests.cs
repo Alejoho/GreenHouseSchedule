@@ -21,19 +21,13 @@ namespace DomainTests
                 _mockOf = new MockOf(_generator, _pastDate);
 
                 status = new SeedBedStatus(_presentDate
-                    , MockOf.GreenHouseRepository.Object
-                    , MockOf.SeedTrayRepository.Object
-                    , MockOf.OrderProcessor.Object
-                    , MockOf.OrderLocationProcessor.Object
-                    , MockOf.DeliveryDetailProcessor.Object
+                    , _mockOf.GreenHouseRepository.Object
+                    , _mockOf.SeedTrayRepository.Object
+                    , _mockOf.OrderProcessor.Object
+                    , _mockOf.OrderLocationProcessor.Object
+                    , _mockOf.DeliveryDetailProcessor.Object
                     , true);
-
             }
-
-            //if (RecordGenerator.Times == 4)
-            //{
-            //    RecordGenerator.Reset();
-            //}
         }
 
         [Fact]

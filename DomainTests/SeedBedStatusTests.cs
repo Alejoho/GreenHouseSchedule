@@ -27,7 +27,7 @@ public class SeedBedStatusTests
     public void GetGreenHouses_ShouldReturnAllGreenHouses()
     {
         int amountOfRecords = 5;
-        var mockGreenHouseRepository = MockOf.GetCustomGreenHouseMock(amountOfRecords);
+        var mockGreenHouseRepository = _mockOf.GetCustomGreenHouseMock(amountOfRecords);
 
         SeedBedStatus status = new SeedBedStatus(
             greenHouseRepo: mockGreenHouseRepository.Object);
@@ -42,7 +42,7 @@ public class SeedBedStatusTests
     {
         int amountOfRecords = 5;
 
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.GetCustomSeedTrayMock(amountOfRecords);
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.GetCustomSeedTrayMock(amountOfRecords);
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object);
@@ -56,7 +56,7 @@ public class SeedBedStatusTests
     public void GetMajorityDataOfOrders_ShouldRetrieveTheOrders()
     {
         int amountOfRecords = 50;
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.GetCustomOrderMock(amountOfRecords);
+        Mock<IOrderProcessor> mockOrderProcessor = _mockOf.GetCustomOrderMock(amountOfRecords);
 
         SeedBedStatus status = new SeedBedStatus(
             orderProcessor: mockOrderProcessor.Object);
@@ -72,7 +72,7 @@ public class SeedBedStatusTests
     {
         int amountOfRecords = 20;
 
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.GetCustomOrderLocationMock(amountOfRecords);
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = _mockOf.GetCustomOrderLocationMock(amountOfRecords);
 
         SeedBedStatus status = new SeedBedStatus(
             orderLocationProcessor: mockOrderLocationProcessor.Object);
@@ -88,7 +88,7 @@ public class SeedBedStatusTests
     {
         int amountOfRecords = 20;
 
-        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = MockOf.GetCustomDeliveryDetailMock(amountOfRecords);
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = _mockOf.GetCustomDeliveryDetailMock(amountOfRecords);
 
         SeedBedStatus status = new SeedBedStatus(
             deliveryDetailProcessor: mockDeliveryDetailProcessor.Object);
@@ -102,9 +102,9 @@ public class SeedBedStatusTests
     [Fact]
     public void FillDeliveryDetails_ShouldPopulateTheDeliveryDetailsOfTheOrderLocations()
     {
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = _mockOf.OrderLocationProcessor;
 
-        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = MockOf.DeliveryDetailProcessor;
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = _mockOf.DeliveryDetailProcessor;
 
         SeedBedStatus status = new SeedBedStatus(_presentDate
             , orderLocationProcessor: mockOrderLocationProcessor.Object
@@ -116,11 +116,11 @@ public class SeedBedStatusTests
 
         methodInfo_FillDeliveryDetails.Invoke(status, null);
 
-        status.OrderLocations.Count.Should().Be(RecordGenerator.NumberOfSelectedOrderLocations);
+        status.OrderLocations.Count.Should().Be(_generator.NumberOfSelectedOrderLocations);
 
         int deliveryDetailModelsCount = status.OrderLocations.Sum(x => x.DeliveryDetails.Count);
 
-        deliveryDetailModelsCount.Should().BeLessThan(RecordGenerator.DeliveryDetails.Count);
+        deliveryDetailModelsCount.Should().BeLessThan(_generator.DeliveryDetails.Count);
 
         foreach (var orderLocationModel in status.OrderLocations)
         {
@@ -142,9 +142,9 @@ public class SeedBedStatusTests
     [Fact]
     public void FillOrderLocations_ShouldPopulateTheOrderLocationsOfTheOrders()
     {
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
+        Mock<IOrderProcessor> mockOrderProcessor = _mockOf.OrderProcessor;
 
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = _mockOf.OrderLocationProcessor;
 
         SeedBedStatus status = new SeedBedStatus(_presentDate
             , orderProcessor: mockOrderProcessor.Object
@@ -156,11 +156,11 @@ public class SeedBedStatusTests
 
         methodInfo_FillOrderLocations.Invoke(status, null);
 
-        status.Orders.Count.Should().Be(RecordGenerator.NumberOfSelectedOrders);
+        status.Orders.Count.Should().Be(_generator.NumberOfSelectedOrders);
 
-        status.OrderLocations.Count.Should().Be(RecordGenerator.NumberOfSelectedOrderLocations);
+        status.OrderLocations.Count.Should().Be(_generator.NumberOfSelectedOrderLocations);
 
-        status.OrderLocations.Count.Should().BeLessThan(RecordGenerator.OrderLocations.Count);
+        status.OrderLocations.Count.Should().BeLessThan(_generator.OrderLocations.Count);
 
         mockOrderProcessor.VerifyAll();
 
@@ -174,7 +174,7 @@ public class SeedBedStatusTests
     [InlineData(310, 7)]
     public void ReleaseSeedTray_ShouldWork(int amount, int seedTrayType)
     {
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object);
@@ -195,7 +195,7 @@ public class SeedBedStatusTests
     [InlineData(166, 6)]
     public void ReserveSeedTray_ShouldWork(int amount, int seedTrayType)
     {
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object);
@@ -216,9 +216,9 @@ public class SeedBedStatusTests
     [InlineData(307, 6, 6)]
     public void ReleaseArea_ShouldWork(int amount, int seedTrayType, int greenHouse)
     {
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
-        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object,
@@ -246,9 +246,9 @@ public class SeedBedStatusTests
     [InlineData(47, 5, 3)]
     public void ReserveArea_ShouldWork(int amount, int seedTrayType, int greenHouse)
     {
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
-        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
 
         SeedBedStatus status = new SeedBedStatus(
             seedTrayRepo: mockSeedTrayRepository.Object,
@@ -272,8 +272,8 @@ public class SeedBedStatusTests
     [Fact]
     public void RemoveDeliveryDetails_ShouldRemoveAllDeliveriesOfTheDay()
     {
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
-        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = MockOf.DeliveryDetailProcessor;
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = _mockOf.OrderLocationProcessor;
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = _mockOf.DeliveryDetailProcessor;
 
         SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
             , orderLocationProcessor: mockOrderLocationProcessor.Object
@@ -302,8 +302,8 @@ public class SeedBedStatusTests
     [Fact]
     public void RemoveOrderLocations_ShouldRemoveAllOrderLocationsWithoutDeliveryDetails()
     {
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
+        Mock<IOrderProcessor> mockOrderProcessor = _mockOf.OrderProcessor;
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = _mockOf.OrderLocationProcessor;
 
         SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
             , orderProcessor: mockOrderProcessor.Object
@@ -330,7 +330,7 @@ public class SeedBedStatusTests
     [Fact]
     public void RemoveOrder_ShouldRemoveAllOrdersWithoutOrderLocations()
     {
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
+        Mock<IOrderProcessor> mockOrderProcessor = _mockOf.OrderProcessor;
 
         SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
             , orderProcessor: mockOrderProcessor.Object);
@@ -355,10 +355,10 @@ public class SeedBedStatusTests
     public void AddOrderLocations_ShouldAddNewOrderLocationsToTheirOrders()
     {
         int orderAmount = 11;
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.GetCustomOrderMock(orderAmount);
+        Mock<IOrderProcessor> mockOrderProcessor = _mockOf.GetCustomOrderMock(orderAmount);
 
         int orderLocationAmount = 36;
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.GetCustomOrderLocationMock(orderLocationAmount);
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = _mockOf.GetCustomOrderLocationMock(orderLocationAmount);
 
         SeedBedStatus status = new SeedBedStatus(_presentDate
             , orderProcessor: mockOrderProcessor.Object
@@ -366,7 +366,7 @@ public class SeedBedStatusTests
 
         int newOrderLocationAmount = 24;
 
-        var newOrderLocations = RecordGenerator.GenerateOrderLocations(newOrderLocationAmount);
+        var newOrderLocations = _generator.GenerateOrderLocations(newOrderLocationAmount);
 
         mockOrderLocationProcessor
             .Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
@@ -399,13 +399,13 @@ public class SeedBedStatusTests
 
     public void ImplementReservation_ShouldWork()
     {
-        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
 
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
+        Mock<IOrderProcessor> mockOrderProcessor = _mockOf.OrderProcessor;
 
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = _mockOf.OrderLocationProcessor;
 
         SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
             , greenHouseRepo: mockGreenHouseRepository.Object
@@ -442,15 +442,15 @@ public class SeedBedStatusTests
     [Fact]
     public void ImplementRelease_ShouldWork()
     {
-        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
 
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
+        Mock<IOrderProcessor> mockOrderProcessor = _mockOf.OrderProcessor;
 
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = _mockOf.OrderLocationProcessor;
 
-        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = MockOf.DeliveryDetailProcessor;
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = _mockOf.DeliveryDetailProcessor;
 
         SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
             , greenHouseRepo: mockGreenHouseRepository.Object
@@ -485,13 +485,13 @@ public class SeedBedStatusTests
     [Fact]
     public void ImplementDelayRelease_ShouldWork()
     {
-        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
 
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
+        Mock<IOrderProcessor> mockOrderProcessor = _mockOf.OrderProcessor;
 
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = _mockOf.OrderLocationProcessor;
 
         SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
             , greenHouseRepo: mockGreenHouseRepository.Object
@@ -519,15 +519,15 @@ public class SeedBedStatusTests
     [Fact]
     public void DayByDayToCurrentDate_ShouldWork()
     {
-        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
 
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
+        Mock<IOrderProcessor> mockOrderProcessor = _mockOf.OrderProcessor;
 
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = _mockOf.OrderLocationProcessor;
 
-        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = MockOf.DeliveryDetailProcessor;
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = _mockOf.DeliveryDetailProcessor;
 
         SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
             , greenHouseRepo: mockGreenHouseRepository.Object
@@ -560,7 +560,7 @@ public class SeedBedStatusTests
     [Fact]
     public void CalculateTotalAvailableArea_ShouldGiveTheTotalArea()
     {
-        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
 
         SeedBedStatus status = new SeedBedStatus(greenHouseRepo: mockGreenHouseRepository.Object);
 
@@ -577,7 +577,7 @@ public class SeedBedStatusTests
     [Fact]
     public void CalculateTotalAvailableArea_ShouldGiveTheFreeArea()
     {
-        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
 
         SeedBedStatus status = new SeedBedStatus(greenHouseRepo: mockGreenHouseRepository.Object);
 
@@ -601,7 +601,7 @@ public class SeedBedStatusTests
     [Fact]
     public void ThereAreNonNegattiveValuesOfSeedTray_ShouldReturnTrue()
     {
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
         SeedBedStatus status = new SeedBedStatus(seedTrayRepo: mockSeedTrayRepository.Object);
 
@@ -614,7 +614,7 @@ public class SeedBedStatusTests
     [Fact]
     public void ThereAreNonNegattiveValuesOfSeedTray_ShouldReturnFalse()
     {
-        Mock<ISeedTrayRepository> mockSeedTrayRepository = MockOf.SeedTrayRepository;
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
         SeedBedStatus status = new SeedBedStatus(seedTrayRepo: mockSeedTrayRepository.Object);
 
@@ -629,7 +629,7 @@ public class SeedBedStatusTests
     [Fact]
     public void ThereAreNonNegattiveValuesOfArea_ShouldReturnTrue()
     {
-        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
 
         SeedBedStatus status = new SeedBedStatus(greenHouseRepo: mockGreenHouseRepository.Object);
 
@@ -642,7 +642,7 @@ public class SeedBedStatusTests
     [Fact]
     public void ThereAreNonNegattiveValuesOfArea_ShouldReturnFalse()
     {
-        Mock<IGreenHouseRepository> mockGreenHouseRepository = MockOf.GreenHouseRepository;
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
 
         SeedBedStatus status = new SeedBedStatus(greenHouseRepo: mockGreenHouseRepository.Object);
 
@@ -657,11 +657,11 @@ public class SeedBedStatusTests
     [Fact]
     public void UpdateObjects_ShouldWork()
     {
-        Mock<IOrderProcessor> mockOrderProcessor = MockOf.OrderProcessor;
+        Mock<IOrderProcessor> mockOrderProcessor = _mockOf.OrderProcessor;
 
-        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = MockOf.OrderLocationProcessor;
+        Mock<IOrderLocationProcessor> mockOrderLocationProcessor = _mockOf.OrderLocationProcessor;
 
-        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = MockOf.DeliveryDetailProcessor;
+        Mock<IDeliveryDetailProcessor> mockDeliveryDetailProcessor = _mockOf.DeliveryDetailProcessor;
 
         SeedBedStatus status = new SeedBedStatus(presentDate: _presentDate
             , orderProcessor: mockOrderProcessor.Object
