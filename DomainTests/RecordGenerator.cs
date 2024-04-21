@@ -5,27 +5,49 @@ namespace DomainTests;
 
 //LATER - Make some variable to change the present date and don't have to make changes in a lots of places to change 
 //that date
-internal static class RecordGenerator
+//NEXT - change this whole class to be an instance class.
+internal class RecordGenerator
 {
-    private static List<Order> _orders;
-    private static List<OrderLocation> _orderLocations;
-    private static List<Block> _blocks;
-    private static List<DeliveryDetail> _deliveryDetails;
-    private static List<SeedTray> _seedTrays;
-    private static List<GreenHouse> _greenHouses;
-    private static int _numberOfSelectedOrders;
-    private static int _numberOfSelectedOrderLocations;
-    private static int _numberOfSelectedDeliveryDetails;
-    private static int _orderLocationIndex = 1;
-    private static int _blockIndex = 1;
-    private static int _deliveryDetailIndex = 1;
-    private static bool _generated = false;
+    private List<Order> _orders;
+    private List<OrderLocation> _orderLocations;
+    private List<Block> _blocks;
+    private List<DeliveryDetail> _deliveryDetails;
+    private List<SeedTray> _seedTrays;
+    private List<GreenHouse> _greenHouses;
+    private int _numberOfSelectedOrders;
+    private int _numberOfSelectedOrderLocations;
+    private int _numberOfSelectedDeliveryDetails;
+    private int _orderLocationIndex = 1;
+    private int _blockIndex = 1;
+    private int _deliveryDetailIndex = 1;
+
+    public RecordGenerator(int amountOfRecords, DateOnly date)
+    {
+        PopulateLists(amountOfRecords);
+        FillNumberOfRecords(date);
+    }
+
+    internal void Reset()
+    {
+        _orders = null;
+        _orderLocations = null;
+        _blocks = null;
+        _deliveryDetails = null;
+        _seedTrays = null;
+        _greenHouses = null;
+        _numberOfSelectedOrders = 0;
+        _numberOfSelectedOrderLocations = 0;
+        _numberOfSelectedDeliveryDetails = 0;
+        _orderLocationIndex = 1;
+        _blockIndex = 1;
+        _deliveryDetailIndex = 1;
+    }
 
     /// <summary>
     /// Fills three variables with the amount of order, order locations and delivery details from a given date onwards.
     /// </summary>
     /// <param name="date">The date from which start the selection.</param>
-    internal static void FillNumberOfRecords(DateOnly date)
+    internal void FillNumberOfRecords(DateOnly date)
     {
         _numberOfSelectedOrders = _orders
             .Where(x => x.RealSowDate >= date || x.RealSowDate == null)
@@ -41,7 +63,7 @@ internal static class RecordGenerator
             .Count();
     }
 
-    private static int[] GenerateBalanceOfOrderTypes(int totalOfOrders)
+    private int[] GenerateBalanceOfOrderTypes(int totalOfOrders)
     {
         int[] output = new int[3];
         Random random = new Random(59);
@@ -55,7 +77,7 @@ internal static class RecordGenerator
         return output;
     }
 
-    private static int[] GetAmountDivision(int amountToDivide, int amountOfDivisions)
+    private int[] GetAmountDivision(int amountToDivide, int amountOfDivisions)
     {
         int[] output = new int[amountOfDivisions];
         Random random = new Random(5986279);
@@ -82,7 +104,7 @@ internal static class RecordGenerator
     /// Generates the desired amount the orders and its derive types
     /// </summary>
     /// <param name="count">The desired amount of orders</param>
-    internal static void PopulateLists(int count)
+    internal void PopulateLists(int count)
     {
         _orders = new List<Order>();
         _orderLocations = new List<OrderLocation>();
@@ -264,7 +286,7 @@ internal static class RecordGenerator
     /// </summary>
     /// <param name="count">The amount of greenhouse to include in the list.</param>
     /// <returns></returns>
-    internal static IEnumerable<GreenHouse> GenerateGreenHouses(int count)
+    internal IEnumerable<GreenHouse> GenerateGreenHouses(int count)
     {
         //Randomizer.Seed = new Random(123);
         var fakeRecord = GetGreenHouseModelFaker();
@@ -273,7 +295,7 @@ internal static class RecordGenerator
         return fakeRecord.Generate(count);
     }
 
-    private static Faker<GreenHouse> GetGreenHouseModelFaker()
+    private Faker<GreenHouse> GetGreenHouseModelFaker()
     {
         byte index = 1;
 
@@ -294,7 +316,7 @@ internal static class RecordGenerator
     /// </summary>
     /// <param name="count">The amount of seedtrays to include in the list.</param>
     /// <returns></returns>
-    internal static IEnumerable<SeedTray> GenerateSeedTrays(int count)
+    internal IEnumerable<SeedTray> GenerateSeedTrays(int count)
     {
         //Randomizer.Seed = new Random(123);
         var fakeRecord = GetSeedTrayFaker();
@@ -303,7 +325,7 @@ internal static class RecordGenerator
         return fakeRecord.Generate(count);
     }
 
-    private static Faker<SeedTray> GetSeedTrayFaker()
+    private Faker<SeedTray> GetSeedTrayFaker()
     {
         byte index = 1;
         byte preference = 1;
@@ -338,7 +360,7 @@ internal static class RecordGenerator
             .RuleFor(x => x.IsSelected, true);
     }
 
-    private static Faker<Order> GetCompleteOrderFaker()
+    private Faker<Order> GetCompleteOrderFaker()
     {
         short index = 1;
         byte[] productionDays = new byte[] { 30, 45 };
@@ -370,7 +392,7 @@ internal static class RecordGenerator
             .RuleFor(x => x.Complete, () => true);
     }
 
-    private static Faker<Order> GetPartialOrderFaker()
+    private Faker<Order> GetPartialOrderFaker()
     {
         byte[] productionDays = new byte[] { 30, 45 };
         short index = (short)(_orders.OrderByDescending(x => x.Id).First().Id + 1); ;
@@ -401,7 +423,7 @@ internal static class RecordGenerator
             .RuleFor(x => x.Complete, () => false);
     }
 
-    private static Faker<Order> GetEmptyOrderFaker()
+    private Faker<Order> GetEmptyOrderFaker()
     {
         byte[] productionDays = new byte[] { 30, 45 };
         short index = (short)(_orders.OrderByDescending(x => x.Id).First().Id + 1);
@@ -432,7 +454,7 @@ internal static class RecordGenerator
             .RuleFor(x => x.Complete, () => false);
     }
 
-    private static Faker<OrderLocation> GetOrderLocationFaker(Order order, int[] seedlingDivision, int completedAmount)
+    private Faker<OrderLocation> GetOrderLocationFaker(Order order, int[] seedlingDivision, int completedAmount)
     {
         int indexOfSeedlingDivision = 0;
         DateTime? actualSowDate = order.RealSowDate != null ? order.RealSowDate?.ToDateTime(TimeOnly.MinValue) : null;
@@ -477,7 +499,7 @@ internal static class RecordGenerator
                 u.EstimateDeliveryDate < new DateOnly(2023, 6, 10) ? u.EstimateDeliveryDate : null);
     }
 
-    private static Faker<Block> GetBlockFaker(OrderLocation orderLocation, int[] seedTrayDivision)
+    private Faker<Block> GetBlockFaker(OrderLocation orderLocation, int[] seedTrayDivision)
     {
         int indexOfSeedlingDivision = 0;
         return new Faker<Block>()
@@ -488,7 +510,7 @@ internal static class RecordGenerator
             .RuleFor(x => x.SeedTrayAmount, () => Convert.ToInt16(seedTrayDivision[indexOfSeedlingDivision++]));
     }
 
-    private static Faker<DeliveryDetail> GetDeliveryDetailFaker(Block block, int[] seedTrayDivision)
+    private Faker<DeliveryDetail> GetDeliveryDetailFaker(Block block, int[] seedTrayDivision)
     {
         int indexOfSeedlingDivision = 0;
 
@@ -517,7 +539,7 @@ internal static class RecordGenerator
     /// </summary>
     /// <param name="count">The amount of orders to include in the list.</param>
     /// <returns></returns>
-    internal static IEnumerable<Order> GenerateOrders(int count)
+    internal IEnumerable<Order> GenerateOrders(int count)
     {
         //Randomizer.Seed = new Random(123);
         var fakeRecord = GetOrderFaker();
@@ -526,7 +548,7 @@ internal static class RecordGenerator
         return fakeRecord.Generate(count);
     }
 
-    private static Faker<Order> GetOrderFaker()
+    private Faker<Order> GetOrderFaker()
     {
         byte[] productionDays = new byte[] { 30, 45 };
         short index = 1;
@@ -578,7 +600,7 @@ internal static class RecordGenerator
     /// </summary>
     /// <param name="count">The amount of order locations to include in the list.</param>
     /// <returns></returns>
-    internal static IEnumerable<OrderLocation> GenerateOrderLocations(int count)
+    internal IEnumerable<OrderLocation> GenerateOrderLocations(int count)
     {
         //Randomizer.Seed = new Random(765);
         var fakeRecord = GetOrderLocationFaker();
@@ -587,7 +609,7 @@ internal static class RecordGenerator
         return fakeRecord.Generate(count);
     }
 
-    private static Faker<OrderLocation> GetOrderLocationFaker()
+    private Faker<OrderLocation> GetOrderLocationFaker()
     {
         int[] productionDays = new[] { 30, 45 };
         short index = 1;
@@ -618,7 +640,7 @@ internal static class RecordGenerator
     /// </summary>
     /// <param name="count">The amount of delivery details to include in the list.</param>
     /// <returns></returns>
-    internal static IEnumerable<DeliveryDetail> GenerateDeliveryDetails(int count)
+    internal IEnumerable<DeliveryDetail> GenerateDeliveryDetails(int count)
     {
         //Randomizer.Seed = new Random(834);
         var fakeRecord = GetDeliveryDetailFaker();
@@ -627,7 +649,7 @@ internal static class RecordGenerator
         return fakeRecord.Generate(count);
     }
 
-    private static Faker<DeliveryDetail> GetDeliveryDetailFaker()
+    private Faker<DeliveryDetail> GetDeliveryDetailFaker()
     {
         short index = 1;
         return new Faker<DeliveryDetail>()
@@ -649,41 +671,37 @@ internal static class RecordGenerator
     /// <summary>
     /// A list of <c>Order</c> completely populated.
     /// </summary>
-    internal static List<Order> Orders { get => _orders; set => _orders = value; }
+    internal List<Order> Orders { get => _orders; set => _orders = value; }
     /// <summary>
     /// A list of <c>OrderLocation</c> completely populated.
     /// </summary>
-    internal static List<OrderLocation> OrderLocations { get => _orderLocations; set => _orderLocations = value; }
+    internal List<OrderLocation> OrderLocations { get => _orderLocations; set => _orderLocations = value; }
     /// <summary>
     /// A list of <c>Block</c> completely populated.
     /// </summary>
-    internal static List<Block> Blocks { get => _blocks; set => _blocks = value; }
+    internal List<Block> Blocks { get => _blocks; set => _blocks = value; }
     /// <summary>
     /// A list of <c>DeliveryDetail</c> completely populated.
     /// </summary>
-    internal static List<DeliveryDetail> DeliveryDetails { get => _deliveryDetails; set => _deliveryDetails = value; }
+    internal List<DeliveryDetail> DeliveryDetails { get => _deliveryDetails; set => _deliveryDetails = value; }
     /// <summary>
     /// A list of <c>SeedTray</c>.
     /// </summary>
-    internal static List<SeedTray> SeedTrays { get => _seedTrays; set => _seedTrays = value; }
+    internal List<SeedTray> SeedTrays { get => _seedTrays; set => _seedTrays = value; }
     /// <summary>
     /// A list of <c>GreenHouse</c>.
     /// </summary>
-    internal static List<GreenHouse> GreenHouses { get => _greenHouses; set => _greenHouses = value; }
+    internal List<GreenHouse> GreenHouses { get => _greenHouses; set => _greenHouses = value; }
     /// <summary>
     /// The amount of items in the list of orders from a date onwards.
     /// </summary>
-    internal static int NumberOfSelectedOrders { get => _numberOfSelectedOrders; set => _numberOfSelectedOrders = value; }
+    internal int NumberOfSelectedOrders { get => _numberOfSelectedOrders; set => _numberOfSelectedOrders = value; }
     /// <summary>
     /// The amount of items in the list of order locations from a date onwards.
     /// </summary>
-    internal static int NumberOfSelectedOrderLocations { get => _numberOfSelectedOrderLocations; set => _numberOfSelectedOrderLocations = value; }
+    internal int NumberOfSelectedOrderLocations { get => _numberOfSelectedOrderLocations; set => _numberOfSelectedOrderLocations = value; }
     /// <summary>
     /// The amount of items in the list of delivery details from a date onwards.
     /// </summary>
-    internal static int NumberOfSelectedDeliveryDetails { get => _numberOfSelectedDeliveryDetails; set => _numberOfSelectedDeliveryDetails = value; }
-    /// <summary>
-    /// A flag variable, used to make sure of generating the records once.
-    /// </summary>
-    internal static bool Generated { get => _generated; set => _generated = value; }
+    internal int NumberOfSelectedDeliveryDetails { get => _numberOfSelectedDeliveryDetails; set => _numberOfSelectedDeliveryDetails = value; }
 }

@@ -9,15 +9,16 @@ namespace DomainTests
         private static DateOnly _presentDate = new DateOnly(2023, 6, 10);
         private static DateOnly _pastDate = _presentDate.AddDays(-90);
         private static SeedBedStatus status;
+        private static RecordGenerator _generator;
+        private static MockOf _mockOf;
 
         public DateIteratorAndResourceCheckerTests()
         {
-            if (!RecordGenerator.Generated == true)
+            if (_generator == null)
             {
-                RecordGenerator.PopulateLists(600);
-                RecordGenerator.FillNumberOfRecords(_pastDate);
-                MockOf.GenerateMocks(_pastDate);
-                RecordGenerator.Generated = true;
+                _generator = new RecordGenerator(600, _pastDate);
+
+                _mockOf = new MockOf(_generator, _pastDate);
 
                 status = new SeedBedStatus(_presentDate
                     , MockOf.GreenHouseRepository.Object
@@ -26,7 +27,13 @@ namespace DomainTests
                     , MockOf.OrderLocationProcessor.Object
                     , MockOf.DeliveryDetailProcessor.Object
                     , true);
+
             }
+
+            //if (RecordGenerator.Times == 4)
+            //{
+            //    RecordGenerator.Reset();
+            //}
         }
 
         [Fact]
