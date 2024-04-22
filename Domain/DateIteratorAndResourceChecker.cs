@@ -174,6 +174,7 @@ namespace Domain
                                 SeedBedStatus.ReserveArea(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType, newOrderLocation.GreenHouse);
                                 orderLocation.SeedTrayAmount -= newOrderLocation.SeedTrayAmount;
                                 SeedBedStatus.OrderLocationsToAdd.Add(newOrderLocation);
+                                SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay = 0;
                             }
                         }
                     }
@@ -182,6 +183,10 @@ namespace Domain
                     {
                         order.Complete = true;
                     }
+                }
+                else
+                {
+                    break;
                 }
             }
         }
