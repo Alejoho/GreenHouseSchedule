@@ -91,9 +91,9 @@ namespace Domain
             do
             {
                 DoTheWorkOfThisDay();
-                SeedBedStatus.IteratorDate.AddDays(1);
-            } while (SeedBedStatus.IteratorDate <= _orderInProcess.RequestDate);
-            SeedBedStatus.IteratorDate.AddDays(-1);
+                SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(1);
+            } while (SeedBedStatus.IteratorDate <= _orderInProcess.EstimateSowDate);
+            SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(-1);
         }
 
         /// <summary>
