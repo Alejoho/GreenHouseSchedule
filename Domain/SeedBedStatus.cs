@@ -184,18 +184,26 @@ namespace Domain
         {
             this._iteratorDate = pOriginalSeedBedStatus.IteratorDate;
             this._presentDate = pOriginalSeedBedStatus._presentDate;
+
             this._greenHouses = new List<GreenHouseModel>();
             this._seedTrays = new List<SeedTrayModel>();
             this._orders = new LinkedList<OrderModel>();
             this._orderLocations = new LinkedList<OrderLocationModel>();
             this._deliveryDetails = new List<DeliveryDetailModel>();
+
             //CHECK - I don't remeber what this variable is for.
             //this._daysOfProduction = pOriginalSeedBedStatus.DaysOfProduction;
             this._maxAmountOfSeedTrayToSowPerDay = pOriginalSeedBedStatus.MaxAmountOfSeedTrayToSowPerDay;
             this._remainingAmountOfSeedTrayToSowPerDay = pOriginalSeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay;
             this._minimumLimitOfSeedTrayToSow = pOriginalSeedBedStatus._minimumLimitOfSeedTrayToSow;
+
             this._greenHouseRepository = new GreenHouseRepository();
             this._seedTrayRepository = new SeedTrayRepository();
+
+            _orderProcessor = new OrderProcessor();
+            _orderLocationProcessor = new OrderLocationProcessor();
+            _deliveryDetailProcessor = new DeliveryDetailProcessor();
+
             this._ordersToDelete = new ArrayList();
             this._orderLocationsToDelete = new ArrayList();
             this._deliveryDetailsToDelete = new ArrayList();
