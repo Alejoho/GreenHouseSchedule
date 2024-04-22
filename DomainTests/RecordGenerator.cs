@@ -5,7 +5,6 @@ namespace DomainTests;
 
 //LATER - Make some variable to change the present date and don't have to make changes in a lots of places to change 
 //that date
-//NEXT - change this whole class to be an instance class.
 internal class RecordGenerator
 {
     private List<Order> _orders;

@@ -108,6 +108,8 @@ namespace DomainTests
         [Fact]
         public void ImplementEstimateReservation_ShouldWork()
         {
+
+            //NEXT - Complete this test
             DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
 
             MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
