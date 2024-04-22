@@ -106,7 +106,7 @@ namespace DomainTests
         }
 
         [Fact]
-        public void ImplementEstimateReservation_ShouldWork()
+        public void ImplementEstimateReservation_ShouldWorkWhenTheLimitOfSowPerDayIsNotReached()
         {
 
             //NEXT - Complete this test
