@@ -44,7 +44,7 @@ namespace Domain.Models
             this._area = pSeedTrayModelOriginal.Area;
             this._alveolusQuantity = pSeedTrayModelOriginal.AlveolusQuantity;
             this._totalAmount = pSeedTrayModelOriginal.TotalAmount;
-            this._freeAmount = pSeedTrayModelOriginal.TotalAmount;
+            this._freeAmount = pSeedTrayModelOriginal.FreeAmount;
             this._usedAmount = pSeedTrayModelOriginal.UsedAmount;
             this._active = pSeedTrayModelOriginal.Active;
         }

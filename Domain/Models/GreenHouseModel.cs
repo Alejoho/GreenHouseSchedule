@@ -41,7 +41,7 @@ namespace Domain.Models
             this._ID = pGreenHouseModelOriginal.ID;
             this._name = pGreenHouseModelOriginal.Name;
             this._seedTrayTotalArea = pGreenHouseModelOriginal.SeedTrayTotalArea;
-            this._seedTrayAvailableArea = pGreenHouseModelOriginal.SeedTrayTotalArea;
+            this._seedTrayAvailableArea = pGreenHouseModelOriginal.SeedTrayAvailableArea;
             this._seedTrayUsedArea = pGreenHouseModelOriginal.SeedTrayUsedArea;
             this._amountOfBlocks = pGreenHouseModelOriginal.AmountOfBlocks;
             this._active = pGreenHouseModelOriginal.Active;
