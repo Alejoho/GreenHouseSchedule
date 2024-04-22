@@ -30,6 +30,7 @@ namespace DomainTests
             }
         }
 
+        //TODO - Maybe make a test to verify that the clone of the SeeBedStatus was made correctly.
         [Fact]
         public void CloneSeedBedStatusObjects_ShouldBeDisconnectFromEachOther()
         {
@@ -108,8 +109,6 @@ namespace DomainTests
         [Fact]
         public void ImplementEstimateReservation_ShouldWorkWhenTheLimitOfSowPerDayIsNotReached()
         {
-
-            //NEXT - Complete this test
             DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
 
             MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
@@ -124,6 +123,33 @@ namespace DomainTests
 
             amountOfOrdersToSow.Should().Be(0);
             iterator.SeedBedStatus.OrderLocationsToAdd.Count.Should().Be(0);
+        }
+
+        [Fact]
+        public void ImplementEstimateReservation_ShouldWorkWhenTheLimitOfSowPerDayIsReached()
+        {
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
+
+            var ordersToSow = iterator.SeedBedStatus.Orders
+                .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
+                    && order.Complete == false).ToList();
+
+            ordersToSow[1].OrderLocations.Last().SeedTrayAmount = 650;
+
+            int oldOrdersToSowCount = ordersToSow.Count;
+
+            MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+                .GetMethod("ImplementEstimateReservation"
+                    , BindingFlags.NonPublic | BindingFlags.Instance);
+
+            methodInfo.Invoke(iterator, null);
+
+            int amountOfOrdersToSow = iterator.SeedBedStatus.Orders
+                .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
+                    && order.Complete == false).Count();
+
+            amountOfOrdersToSow.Should().Be(7/*oldOrdersToSowCount - 1*/);
+            iterator.SeedBedStatus.OrderLocationsToAdd.Count.Should().Be(1);
         }
     }
 }
