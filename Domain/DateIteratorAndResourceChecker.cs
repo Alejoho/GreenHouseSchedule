@@ -1,7 +1,6 @@
 ﻿using Domain.Models;
 using Domain.ValuableObjects;
 using System.Collections;
-using System.Configuration;
 
 namespace Domain
 {
@@ -141,18 +140,14 @@ namespace Domain
             var ordersToSow = SeedBedStatus.Orders
                 .Where(order => order.EstimateSowDate <= SeedBedStatus.IteratorDate && order.Complete == false);
 
-            int minimumLimitOfSow = SeedBedStatus.MinimumLimitOfSeedTrayToSow;            
-
             foreach (OrderModel order in ordersToSow)
             {
-                //int seedtrayamount = ordersToSow.Sum(x => x.OrderLocations.Where(y => y.SowDate == null).Sum(z => z.SeedTrayAmount));
-
                 if (SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > 0)
                 {
                     foreach (OrderLocationModel orderLocation in order.OrderLocations)
                     {
                         if ((SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay >= SeedBedStatus.MinimumLimitOfSeedTrayToSow
-                            || orderLocation.SeedTrayAmount <= SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay) 
+                            || orderLocation.SeedTrayAmount <= SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay)
                                 && orderLocation.Sown == false)
                         {
                             if ((SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay - orderLocation.SeedTrayAmount) >= 0)
@@ -161,7 +156,7 @@ namespace Domain
                                 orderLocation.EstimateDeliveryDate = SeedBedStatus.IteratorDate.AddDays(order.Product.ProductionInterval);
                                 SeedBedStatus.ReserveSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
                                 SeedBedStatus.ReserveArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
-                                SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay -= orderLocation.SeedTrayAmount;                                
+                                SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay -= orderLocation.SeedTrayAmount;
                                 orderLocation.Sown = true;
                             }
                             else
@@ -179,7 +174,7 @@ namespace Domain
                         }
                     }
 
-                    if(order.OrderLocations.Where(x => x.Sown== false).Count() == 0)
+                    if (order.OrderLocations.Where(x => x.Sown == false).Count() == 0)
                     {
                         order.Complete = true;
                     }
