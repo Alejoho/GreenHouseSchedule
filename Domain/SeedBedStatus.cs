@@ -227,13 +227,11 @@ namespace Domain
 
                 foreach (OrderLocationModel orderLocationModel in newOrder.OrderLocations)
                 {
-                    OrderLocationModel newOrderLocation = new OrderLocationModel(orderLocationModel);
+                    this._orderLocations.AddLast(orderLocationModel);
 
-                    this._orderLocations.AddLast(newOrderLocation);
-
-                    foreach (DeliveryDetailModel deliveryDetailModel in newOrderLocation.DeliveryDetails)
+                    foreach (DeliveryDetailModel deliveryDetailModel in orderLocationModel.DeliveryDetails)
                     {
-                        this._deliveryDetails.Add(new DeliveryDetailModel(deliveryDetailModel));
+                        this._deliveryDetails.Add(deliveryDetailModel);
                     }
                 }
             }
@@ -564,7 +562,7 @@ namespace Domain
             {
                 OrderModel order = _orders.First(order => order.ID == orderLocation.OrderID);
 
-                LinkedListNode<OrderLocationModel> node = _orderLocations.Find(order.OrderLocations.Last()); ;
+                LinkedListNode<OrderLocationModel> node = _orderLocations.Find(order.OrderLocations.Last());
 
                 order.OrderLocations.AddLast(orderLocation);
 
