@@ -39,7 +39,7 @@ namespace Domain.Models
         /// <param name="pRealSowDate">The real date on which the order is started to sow.</param>
         /// <param name="pRealDeliveryDate">The real date on which the order is started to deliver.</param>
         /// <param name="pSown">This indicates whether this order is completely sown.</param>
-        public OrderModel(int pID, ClientModel pClient, ProductModel pProduct, int pSeedlingAmount, DateOnly pRequestDate, DateOnly pEstimateSowDate, DateOnly pEstimateDeliveryDate, DateOnly? pRealSowDate, DateOnly? pRealDeliveryDate,bool pComplete)
+        public OrderModel(int pID, ClientModel pClient, ProductModel pProduct, int pSeedlingAmount, DateOnly pRequestDate, DateOnly pEstimateSowDate, DateOnly? pEstimateDeliveryDate, DateOnly? pRealSowDate, DateOnly? pRealDeliveryDate,bool pComplete)
         {
             _ID = pID;
             _client = pClient;
