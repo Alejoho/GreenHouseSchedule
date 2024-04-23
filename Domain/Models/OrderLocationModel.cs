@@ -13,7 +13,7 @@ namespace Domain.Models
         private readonly int _seedTrayType;
         private readonly int _orderID;
         private int _seedTrayAmount;
-        private readonly int _seedlingAmount;
+        private int _seedlingAmount;
         private DateOnly? _sowDate;
         private DateOnly? _estimateDeliveryDate;
         private DateOnly? _realDeliveryDate;
@@ -128,7 +128,7 @@ namespace Domain.Models
         /// <value>
         /// Gets or sets the total amount of seedling in the order location.
         /// </value>
-        public int SeedlingAmount => _seedlingAmount;
+        public int SeedlingAmount { get => _seedlingAmount; set => _seedlingAmount = value; }
 
         /// <value>
         /// Gets or sets the date on which this order location is sown.
