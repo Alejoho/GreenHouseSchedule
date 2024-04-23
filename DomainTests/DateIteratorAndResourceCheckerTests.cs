@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Models;
 using FluentAssertions;
 using System.Reflection;
 
@@ -150,6 +151,33 @@ namespace DomainTests
 
             amountOfOrdersToSow.Should().Be(7/*oldOrdersToSowCount - 1*/);
             iterator.SeedBedStatus.OrderLocationsToAdd.Count.Should().Be(1);
+        }
+
+        [Fact]
+        public void DayByDayToRequestDate_ShouldWork()
+        {
+            DateOnly wishedDate = new DateOnly(2024, 6, 20);
+
+            OrderModel newOrder = new OrderModel(1
+                , new ClientModel(1,"","")
+                , new ProductModel(1,"","",30)
+                , 1234
+                , new DateOnly()
+                , wishedDate
+                , null
+                , null
+                , null
+                , false);
+
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status, newOrder, true);
+
+            MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+                .GetMethod("DayByDayToRequestDate"
+                    , BindingFlags.NonPublic | BindingFlags.Instance);
+
+            methodInfo.Invoke(iterator, null);
+
+            iterator.SeedBedStatus.IteratorDate.Should().Be(wishedDate);
         }
     }
 }
