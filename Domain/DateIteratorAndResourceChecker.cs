@@ -161,13 +161,26 @@ namespace Domain
                             }
                             else
                             {
+                                //NEXT - Arreglar la cantidad the posturas en ambas order locations porque al dividirlas 
+                                //divido las bandejas pero no la cantidad de posturas.
                                 OrderLocationModel newOrderLocation = new OrderLocationModel(orderLocation);
+
                                 newOrderLocation.SowDate = SeedBedStatus.IteratorDate;
                                 newOrderLocation.EstimateDeliveryDate = SeedBedStatus.IteratorDate.AddDays(order.Product.ProductionInterval);
                                 newOrderLocation.SeedTrayAmount = SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay;
+
                                 SeedBedStatus.ReserveSeedTray(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType);
                                 SeedBedStatus.ReserveArea(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType, newOrderLocation.GreenHouse);
+
                                 orderLocation.SeedTrayAmount -= newOrderLocation.SeedTrayAmount;
+
+                                int alveolus = _seedBedStatus.SeedTrays
+                                    .First(x => x.ID == orderLocation.SeedTrayType)
+                                    .AlveolusQuantity;
+
+                                newOrderLocation.SeedlingAmount = newOrderLocation.SeedTrayAmount * alveolus;
+                                orderLocation.SeedlingAmount = orderLocation.SeedTrayAmount * alveolus;
+
                                 SeedBedStatus.OrderLocationsToAdd.Add(newOrderLocation);
                                 SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay = 0;
                             }
