@@ -161,8 +161,6 @@ namespace Domain
                             }
                             else
                             {
-                                //NEXT - Arreglar la cantidad the posturas en ambas order locations porque al dividirlas 
-                                //divido las bandejas pero no la cantidad de posturas.
                                 OrderLocationModel newOrderLocation = new OrderLocationModel(orderLocation);
 
                                 newOrderLocation.SowDate = SeedBedStatus.IteratorDate;

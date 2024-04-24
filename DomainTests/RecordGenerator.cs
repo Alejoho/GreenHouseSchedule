@@ -127,9 +127,11 @@ internal class RecordGenerator
         {
             int amount = random.Next(2, 5);
 
-            int[] seedlingDivision = amount > 1 ?
-                GetAmountDivision(order.AmountOfAlgorithmSeedlings, amount) :
-                new int[1] { order.AmountOfAlgorithmSeedlings };
+            //int[] seedlingDivision = amount > 1 ?
+            //    GetAmountDivision(order.AmountOfAlgorithmSeedlings, amount) :
+            //    new int[1] { order.AmountOfAlgorithmSeedlings };
+
+            int[] seedlingDivision = GetAmountDivision(order.AmountOfAlgorithmSeedlings, amount);
 
             var fakeOrderLocationRecord = GetOrderLocationFaker(order, seedlingDivision, amount);
 
