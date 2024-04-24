@@ -159,9 +159,9 @@ namespace DomainTests
             SeedBedStatus localStatus = new SeedBedStatus(_presentDate
                     , _mockOf.GreenHouseRepository.Object
                     , _mockOf.SeedTrayRepository.Object
-                    , _mockOf.GetOrderMockWithOnlyCompleteRecords(_pastDate).Object
-                    , _mockOf.GetOrderLocationMockWithOnlyCompleteRecords(_pastDate).Object
-                    , _mockOf.GetDeliveryDetailMockWithOnlyCompleteRecords(_pastDate).Object
+                    , _mockOf.GetOrderMockByRecordType(TypeOfRecord.complete, _pastDate).Object
+                    , _mockOf.GetOrderLocationMockByRecordType(TypeOfRecord.complete, _pastDate).Object
+                    , _mockOf.GetDeliveryDetailMockByRecordType(TypeOfRecord.complete, _pastDate).Object
                     , true);
 
             DateOnly wishedDate = new DateOnly(2023, 7, 18);

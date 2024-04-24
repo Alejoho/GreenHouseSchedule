@@ -233,17 +233,38 @@ namespace DomainTests
         }
 
         /// <summary>
-        /// Gets a mock of <c>IOrderProcessor</c> that will return only complete records after a specify date.
+        /// Gets a mock of <c>IOrderProcessor</c> that will return only a type records after a specify date.
         /// </summary>
-        /// <param name="pastDate">The  date to filter the <c>Order</c> objects to include in the 
+        /// <param name="type">The type of requested records.</param>
+        /// <param name="date">The  date to filter the <c>Order</c> objects to include in the 
         /// collection that will be returned by the mock.</param>
-        /// <returns>A mock of <c>IOrderProcessor</c>.</returns>
-        internal Mock<IOrderProcessor> GetOrderMockWithOnlyCompleteRecords(DateOnly pastDate)
+        /// <returns>A mock of <c>IOrderProcessor</c>.</returns>       
+        internal Mock<IOrderProcessor> GetOrderMockByRecordType(TypeOfRecord type, DateOnly date)
         {
-            var orderCollection = _generator.Orders
-            .Where(x => x.RealSowDate >= pastDate && x.Complete == true)
-            .OrderBy(x => x.EstimateSowDate)
-            .ThenBy(x => x.DateOfRequest);
+            IOrderedEnumerable<Order> orderCollection;
+
+            if (type == TypeOfRecord.complete)
+            {
+                orderCollection = _generator.Orders
+                    .Where(x => x.RealSowDate >= date && x.Complete == true)
+                    .OrderBy(x => x.EstimateSowDate)
+                    .ThenBy(x => x.DateOfRequest);
+            }
+            else if (type == TypeOfRecord.partial)
+            {
+                orderCollection = _generator.Orders
+                    .Where(x => x.RealSowDate <= date && x.Complete == false)
+                    .OrderBy(x => x.EstimateSowDate)
+                    .ThenBy(x => x.DateOfRequest);
+            }
+            else
+            {
+                //TODO - FALTA HACER ESTE MOCK
+                orderCollection = _generator.Orders
+                    .Where(x => x.RealSowDate >= date && x.Complete == true)
+                    .OrderBy(x => x.EstimateSowDate)
+                    .ThenBy(x => x.DateOfRequest);
+            }
 
             Mock<IOrderProcessor> output = new Mock<IOrderProcessor>();
 
@@ -256,16 +277,39 @@ namespace DomainTests
         /// <summary>
         /// Gets a mock of <c>IOrderLocationProcessor</c> that will return only complete records after a specify date.
         /// </summary>
-        /// <param name="pastDate">The  date to filter the <c>OrderLocation</c> objects to include in the 
+        /// <param name="type">The type of requested records.</param>
+        /// <param name="date">The  date to filter the <c>OrderLocation</c> objects to include in the 
         /// collection that will be returned by the mock.</param>
         /// <returns>A mock of <c>IOrderLocationProcessor</c>.</returns>
-        internal Mock<IOrderLocationProcessor> GetOrderLocationMockWithOnlyCompleteRecords(DateOnly pastDate)
+        internal Mock<IOrderLocationProcessor> GetOrderLocationMockByRecordType(TypeOfRecord type, DateOnly date)
         {
-            var orderLocationCollection = _generator.OrderLocations
-                .Where(x => x.Order.RealSowDate >= pastDate
+            IOrderedEnumerable<OrderLocation> orderLocationCollection;
+
+            if (type == TypeOfRecord.complete)
+            {
+                orderLocationCollection = _generator.OrderLocations
+                .Where(x => x.Order.RealSowDate >= date
                     && x.Order.Complete == true)
                 .OrderBy(x => x.SowDate)
                 .ThenBy(x => x.Id);
+            }
+            else if (type == TypeOfRecord.partial)
+            {
+                orderLocationCollection = _generator.OrderLocations
+                .Where(x => x.Order.RealSowDate <= date
+                    && x.Order.Complete == false)
+                .OrderBy(x => x.SowDate)
+                .ThenBy(x => x.Id);
+            }
+            else
+            {
+                //TODO - FALTA HACER ESTE MOCK
+                orderLocationCollection = _generator.OrderLocations
+                .Where(x => x.Order.RealSowDate >= date
+                    && x.Order.Complete == true)
+                .OrderBy(x => x.SowDate)
+                .ThenBy(x => x.Id);
+            }
 
             Mock<IOrderLocationProcessor> output = new Mock<IOrderLocationProcessor>();
 
@@ -278,15 +322,29 @@ namespace DomainTests
         /// <summary>
         /// Gets a mock of <c>IDeliveryDetailProcessor</c> that will return only complete records after a specify date.
         /// </summary>
+        /// <param name="type">The type of requested records.</param>
         /// <param name="pastDate">The  date to filter the <c>DeliveryDetail</c> objects to include in the 
         /// collection that will be returned by the mock.</param>
         /// <returns>A mock of <c>IDeliveryDetailProcessor</c>.</returns>
-        internal Mock<IDeliveryDetailProcessor> GetDeliveryDetailMockWithOnlyCompleteRecords(DateOnly pastDate)
+        internal Mock<IDeliveryDetailProcessor> GetDeliveryDetailMockByRecordType(TypeOfRecord type, DateOnly pastDate)
         {
-            var deliveryDetailCollection = _generator.DeliveryDetails
+            IOrderedEnumerable<DeliveryDetail> deliveryDetailCollection;
+
+            if (type == TypeOfRecord.complete)
+            {
+                deliveryDetailCollection = _generator.DeliveryDetails
                 .Where(x => x.Block.OrderLocation.Order.RealSowDate >= pastDate
                     && x.Block.OrderLocation.Order.Complete == true)
                 .OrderBy(x => x.DeliveryDate);
+            }
+            else if (type == TypeOfRecord.partial)
+            {
+                deliveryDetailCollection = _generator.DeliveryDetails.Where(x=>x.Id==-1).OrderBy(x =>x.Id);
+            }
+            else
+            {
+                deliveryDetailCollection = _generator.DeliveryDetails.Where(x => x.Id == -1).OrderBy(x => x.Id);
+            }
 
             Mock<IDeliveryDetailProcessor> output = new Mock<IDeliveryDetailProcessor>();
 
