@@ -154,13 +154,21 @@ namespace DomainTests
         }
 
         [Fact]
-        public void DayByDayToRequestDate_ShouldWork()
+        public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_7_19_ThatHadOnlyCompleteRecords()
         {
-            DateOnly wishedDate = new DateOnly(2024, 6, 20);
+            SeedBedStatus localStatus = new SeedBedStatus(_presentDate
+                    , _mockOf.GreenHouseRepository.Object
+                    , _mockOf.SeedTrayRepository.Object
+                    , _mockOf.GetOrderMockWithOnlyCompleteRecords(_pastDate).Object
+                    , _mockOf.GetOrderLocationMockWithOnlyCompleteRecords(_pastDate).Object
+                    , _mockOf.GetDeliveryDetailMockWithOnlyCompleteRecords(_pastDate).Object
+                    , true);
+
+            DateOnly wishedDate = new DateOnly(2023, 7, 18);
 
             OrderModel newOrder = new OrderModel(1
-                , new ClientModel(1,"","")
-                , new ProductModel(1,"","",30)
+                , new ClientModel(1, "", "")
+                , new ProductModel(1, "", "", 30)
                 , 1234
                 , new DateOnly()
                 , wishedDate
@@ -169,7 +177,7 @@ namespace DomainTests
                 , null
                 , false);
 
-            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status, newOrder, true);
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(localStatus, newOrder, true);
 
             MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
                 .GetMethod("DayByDayToRequestDate"
@@ -178,6 +186,18 @@ namespace DomainTests
             methodInfo.Invoke(iterator, null);
 
             iterator.SeedBedStatus.IteratorDate.Should().Be(wishedDate);
+            iterator.SeedBedStatus.SeedTrays
+                .ForEach(x => x.UsedAmount.Should().Be(0));
+            iterator.SeedBedStatus.SeedTrays
+                .ForEach(x => x.FreeAmount.Should().Be(x.TotalAmount));
+            iterator.SeedBedStatus.GreenHouses
+                .ForEach(x => x.SeedTrayUsedArea.Should()
+                    .BeApproximately(0m, 0.001m));
+            iterator.SeedBedStatus.GreenHouses
+                .ForEach(x => x.SeedTrayAvailableArea.Should()
+                    .BeApproximately(x.SeedTrayTotalArea, 0.001m));
         }
+
+        //NEXT - The complete orders is ok. Lets comtimue with the partials
     }
 }
