@@ -236,24 +236,24 @@ namespace DomainTests
         /// Gets a mock of <c>IOrderProcessor</c> that will return only a type records after a specify date.
         /// </summary>
         /// <param name="type">The type of requested records.</param>
-        /// <param name="date">The  date to filter the <c>Order</c> objects to include in the 
+        /// <param name="presentDate">The  date to take as a refenrece to filter the <c>Order</c> objects to include in the 
         /// collection that will be returned by the mock.</param>
         /// <returns>A mock of <c>IOrderProcessor</c>.</returns>       
-        internal Mock<IOrderProcessor> GetOrderMockByRecordType(TypeOfRecord type, DateOnly date)
+        internal Mock<IOrderProcessor> GetOrderMockByRecordType(TypeOfRecord type, DateOnly presentDate)
         {
             IOrderedEnumerable<Order> orderCollection;
 
             if (type == TypeOfRecord.complete)
             {
                 orderCollection = _generator.Orders
-                    .Where(x => x.RealSowDate >= date && x.Complete == true)
+                    .Where(x => x.RealSowDate >= presentDate.AddDays(-90) && x.Complete == true)
                     .OrderBy(x => x.EstimateSowDate)
                     .ThenBy(x => x.DateOfRequest);
             }
             else if (type == TypeOfRecord.partial)
             {
                 orderCollection = _generator.Orders
-                    .Where(x => x.RealSowDate <= date && x.Complete == false)
+                    .Where(x => x.RealSowDate <= presentDate && x.Complete == false)
                     .OrderBy(x => x.EstimateSowDate)
                     .ThenBy(x => x.DateOfRequest);
             }
@@ -261,7 +261,7 @@ namespace DomainTests
             {
                 //TODO - FALTA HACER ESTE MOCK
                 orderCollection = _generator.Orders
-                    .Where(x => x.RealSowDate >= date && x.Complete == true)
+                    .Where(x => x.RealSowDate >= presentDate && x.Complete == true)
                     .OrderBy(x => x.EstimateSowDate)
                     .ThenBy(x => x.DateOfRequest);
             }
@@ -278,17 +278,17 @@ namespace DomainTests
         /// Gets a mock of <c>IOrderLocationProcessor</c> that will return only complete records after a specify date.
         /// </summary>
         /// <param name="type">The type of requested records.</param>
-        /// <param name="date">The  date to filter the <c>OrderLocation</c> objects to include in the 
+        /// <param name="presentDate">The  date to filter the <c>OrderLocation</c> objects to include in the 
         /// collection that will be returned by the mock.</param>
         /// <returns>A mock of <c>IOrderLocationProcessor</c>.</returns>
-        internal Mock<IOrderLocationProcessor> GetOrderLocationMockByRecordType(TypeOfRecord type, DateOnly date)
+        internal Mock<IOrderLocationProcessor> GetOrderLocationMockByRecordType(TypeOfRecord type, DateOnly presentDate)
         {
             IOrderedEnumerable<OrderLocation> orderLocationCollection;
 
             if (type == TypeOfRecord.complete)
             {
                 orderLocationCollection = _generator.OrderLocations
-                .Where(x => x.Order.RealSowDate >= date
+                .Where(x => x.Order.RealSowDate >= presentDate.AddDays(-90)
                     && x.Order.Complete == true)
                 .OrderBy(x => x.SowDate)
                 .ThenBy(x => x.Id);
@@ -296,7 +296,7 @@ namespace DomainTests
             else if (type == TypeOfRecord.partial)
             {
                 orderLocationCollection = _generator.OrderLocations
-                .Where(x => x.Order.RealSowDate <= date
+                .Where(x => x.Order.RealSowDate <= presentDate
                     && x.Order.Complete == false)
                 .OrderBy(x => x.SowDate)
                 .ThenBy(x => x.Id);
@@ -305,7 +305,7 @@ namespace DomainTests
             {
                 //TODO - FALTA HACER ESTE MOCK
                 orderLocationCollection = _generator.OrderLocations
-                .Where(x => x.Order.RealSowDate >= date
+                .Where(x => x.Order.RealSowDate >= presentDate
                     && x.Order.Complete == true)
                 .OrderBy(x => x.SowDate)
                 .ThenBy(x => x.Id);
@@ -323,17 +323,17 @@ namespace DomainTests
         /// Gets a mock of <c>IDeliveryDetailProcessor</c> that will return only complete records after a specify date.
         /// </summary>
         /// <param name="type">The type of requested records.</param>
-        /// <param name="pastDate">The  date to filter the <c>DeliveryDetail</c> objects to include in the 
+        /// <param name="presentDate">The  date to filter the <c>DeliveryDetail</c> objects to include in the 
         /// collection that will be returned by the mock.</param>
         /// <returns>A mock of <c>IDeliveryDetailProcessor</c>.</returns>
-        internal Mock<IDeliveryDetailProcessor> GetDeliveryDetailMockByRecordType(TypeOfRecord type, DateOnly pastDate)
+        internal Mock<IDeliveryDetailProcessor> GetDeliveryDetailMockByRecordType(TypeOfRecord type, DateOnly presentDate)
         {
             IOrderedEnumerable<DeliveryDetail> deliveryDetailCollection;
 
             if (type == TypeOfRecord.complete)
             {
                 deliveryDetailCollection = _generator.DeliveryDetails
-                .Where(x => x.Block.OrderLocation.Order.RealSowDate >= pastDate
+                .Where(x => x.Block.OrderLocation.Order.RealSowDate >= presentDate.AddDays(-90)
                     && x.Block.OrderLocation.Order.Complete == true)
                 .OrderBy(x => x.DeliveryDate);
             }

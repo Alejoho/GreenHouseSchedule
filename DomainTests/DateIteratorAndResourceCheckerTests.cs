@@ -154,14 +154,14 @@ namespace DomainTests
         }
 
         [Fact]
-        public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_7_19_ThatHadOnlyCompleteRecords()
+        public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_7_19_ThatHadOnlyCompleteOrders()
         {
             SeedBedStatus localStatus = new SeedBedStatus(_presentDate
                     , _mockOf.GreenHouseRepository.Object
                     , _mockOf.SeedTrayRepository.Object
-                    , _mockOf.GetOrderMockByRecordType(TypeOfRecord.complete, _pastDate).Object
-                    , _mockOf.GetOrderLocationMockByRecordType(TypeOfRecord.complete, _pastDate).Object
-                    , _mockOf.GetDeliveryDetailMockByRecordType(TypeOfRecord.complete, _pastDate).Object
+                    , _mockOf.GetOrderMockByRecordType(TypeOfRecord.complete, _presentDate).Object
+                    , _mockOf.GetOrderLocationMockByRecordType(TypeOfRecord.complete, _presentDate).Object
+                    , _mockOf.GetDeliveryDetailMockByRecordType(TypeOfRecord.complete, _presentDate).Object
                     , true);
 
             DateOnly wishedDate = new DateOnly(2023, 7, 18);
@@ -186,18 +186,126 @@ namespace DomainTests
             methodInfo.Invoke(iterator, null);
 
             iterator.SeedBedStatus.IteratorDate.Should().Be(wishedDate);
+
             iterator.SeedBedStatus.SeedTrays
                 .ForEach(x => x.UsedAmount.Should().Be(0));
             iterator.SeedBedStatus.SeedTrays
                 .ForEach(x => x.FreeAmount.Should().Be(x.TotalAmount));
+
             iterator.SeedBedStatus.GreenHouses
                 .ForEach(x => x.SeedTrayUsedArea.Should()
                     .BeApproximately(0m, 0.001m));
             iterator.SeedBedStatus.GreenHouses
                 .ForEach(x => x.SeedTrayAvailableArea.Should()
                     .BeApproximately(x.SeedTrayTotalArea, 0.001m));
+
+            iterator.SeedBedStatus.Orders.Count.Should().Be(0);
+            iterator.SeedBedStatus.OrderLocations.Count.Should().Be(0);
+            iterator.SeedBedStatus.DeliveryDetails.Count.Should().Be(0);
         }
 
         //NEXT - The complete orders is ok. Lets comtimue with the partials
+
+        [Fact]
+        public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_7_25_ThatHadOnlyPartialOrders()
+        {
+            SeedBedStatus localStatus = new SeedBedStatus(_presentDate
+                    , _mockOf.GreenHouseRepository.Object
+                    , _mockOf.SeedTrayRepository.Object
+                    , _mockOf.GetOrderMockByRecordType(TypeOfRecord.partial, _presentDate).Object
+                    , _mockOf.GetOrderLocationMockByRecordType(TypeOfRecord.partial, _presentDate).Object
+                    , _mockOf.GetDeliveryDetailMockByRecordType(TypeOfRecord.partial, _presentDate).Object
+                    , true);
+
+            DateOnly wishedDate = new DateOnly(2023, 8, 18);
+
+            OrderModel newOrder = new OrderModel(1
+                , new ClientModel(1, "", "")
+                , new ProductModel(1, "", "", 30)
+                , 1234
+                , new DateOnly()
+                , wishedDate
+                , null
+                , null
+                , null
+                , false);
+
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(localStatus, newOrder, true);
+
+            MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+                .GetMethod("DayByDayToRequestDate"
+                    , BindingFlags.NonPublic | BindingFlags.Instance);
+
+            methodInfo.Invoke(iterator, null);
+
+            iterator.SeedBedStatus.IteratorDate.Should().Be(wishedDate);
+
+            iterator.SeedBedStatus.SeedTrays
+                .ForEach(x => x.UsedAmount.Should().Be(0));
+            iterator.SeedBedStatus.SeedTrays
+                .ForEach(x => x.FreeAmount.Should().Be(x.TotalAmount));
+
+            iterator.SeedBedStatus.GreenHouses
+                .ForEach(x => x.SeedTrayUsedArea.Should()
+                    .BeApproximately(0m, 0.001m));
+            iterator.SeedBedStatus.GreenHouses
+                .ForEach(x => x.SeedTrayAvailableArea.Should()
+                    .BeApproximately(x.SeedTrayTotalArea, 0.001m));
+
+            iterator.SeedBedStatus.Orders.Count.Should().Be(0);
+            iterator.SeedBedStatus.OrderLocations.Count.Should().Be(0);
+            iterator.SeedBedStatus.DeliveryDetails.Count.Should().Be(0);
+        }
+
+        //[Fact]
+        public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_7_25_ThatHadOnlyEmptyOrders()
+        {
+            SeedBedStatus localStatus = new SeedBedStatus(_presentDate
+                    , _mockOf.GreenHouseRepository.Object
+                    , _mockOf.SeedTrayRepository.Object
+                    , _mockOf.GetOrderMockByRecordType(TypeOfRecord.empty, _presentDate).Object
+                    , _mockOf.GetOrderLocationMockByRecordType(TypeOfRecord.empty, _presentDate).Object
+                    , _mockOf.GetDeliveryDetailMockByRecordType(TypeOfRecord.empty, _presentDate).Object
+                    , true);
+
+            DateOnly wishedDate = new DateOnly(2023, 8, 18);
+
+            OrderModel newOrder = new OrderModel(1
+                , new ClientModel(1, "", "")
+                , new ProductModel(1, "", "", 30)
+                , 1234
+                , new DateOnly()
+                , wishedDate
+                , null
+                , null
+                , null
+                , false);
+
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(localStatus, newOrder, true);
+
+            MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+                .GetMethod("DayByDayToRequestDate"
+                    , BindingFlags.NonPublic | BindingFlags.Instance);
+
+            methodInfo.Invoke(iterator, null);
+
+            iterator.SeedBedStatus.IteratorDate.Should().Be(wishedDate);
+
+            iterator.SeedBedStatus.SeedTrays
+                .ForEach(x => x.UsedAmount.Should().Be(0));
+            iterator.SeedBedStatus.SeedTrays
+                .ForEach(x => x.FreeAmount.Should().Be(x.TotalAmount));
+
+            iterator.SeedBedStatus.GreenHouses
+                .ForEach(x => x.SeedTrayUsedArea.Should()
+                    .BeApproximately(0m, 0.001m));
+            iterator.SeedBedStatus.GreenHouses
+                .ForEach(x => x.SeedTrayAvailableArea.Should()
+                    .BeApproximately(x.SeedTrayTotalArea, 0.001m));
+
+            iterator.SeedBedStatus.Orders.Count.Should().Be(0);
+            iterator.SeedBedStatus.OrderLocations.Count.Should().Be(0);
+            iterator.SeedBedStatus.DeliveryDetails.Count.Should().Be(0);
+        }
     }
 }
