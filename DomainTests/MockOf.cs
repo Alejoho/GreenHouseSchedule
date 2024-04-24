@@ -5,7 +5,7 @@ using Moq;
 namespace DomainTests
 {
     internal class MockOf
-    {        
+    {
         private Mock<IGreenHouseRepository> _greenHouseRepository;
         private Mock<ISeedTrayRepository> _seedTrayRepository;
         private Mock<IOrderProcessor> _orderProcessor;
@@ -22,7 +22,7 @@ namespace DomainTests
         /// <summary>
         /// Initializes and sets up the mocks for the needed repositories and processors based on a date onwards. 
         /// </summary>
-        /// <param name="pastDate">The need date to filter the records to include in the collection.</param>
+        /// <param name="pastDate">The needed date to filter the records to include in the collection.</param>
         internal void GenerateMocks(DateOnly pastDate)
         {
             GenerateGreenHouseMock();
@@ -144,7 +144,7 @@ namespace DomainTests
         {
             Mock<IOrderLocationProcessor> output = new Mock<IOrderLocationProcessor>();
 
-            var collection = _generator.GenerateOrderLocations(numberOfRecords);         
+            var collection = _generator.GenerateOrderLocations(numberOfRecords);
 
             output.Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>())).Returns(collection);
 
@@ -230,6 +230,70 @@ namespace DomainTests
                 return _deliveryDetailProcessor;
             }
             set => _deliveryDetailProcessor = value;
+        }
+
+        /// <summary>
+        /// Gets a mock of <c>IOrderProcessor</c> that will return only complete records after a specify date.
+        /// </summary>
+        /// <param name="pastDate">The  date to filter the <c>Order</c> objects to include in the 
+        /// collection that will be returned by the mock.</param>
+        /// <returns>A mock of <c>IOrderProcessor</c>.</returns>
+        internal Mock<IOrderProcessor> GetOrderMockWithOnlyCompleteRecords(DateOnly pastDate)
+        {
+            var orderCollection = _generator.Orders
+            .Where(x => x.RealSowDate >= pastDate && x.Complete == true)
+            .OrderBy(x => x.EstimateSowDate)
+            .ThenBy(x => x.DateOfRequest);
+
+            Mock<IOrderProcessor> output = new Mock<IOrderProcessor>();
+
+            output.Setup(x => x.GetOrdersFromADateOn(It.IsAny<DateOnly>()))
+                .Returns(orderCollection);
+
+            return output;
+        }
+
+        /// <summary>
+        /// Gets a mock of <c>IOrderLocationProcessor</c> that will return only complete records after a specify date.
+        /// </summary>
+        /// <param name="pastDate">The  date to filter the <c>OrderLocation</c> objects to include in the 
+        /// collection that will be returned by the mock.</param>
+        /// <returns>A mock of <c>IOrderLocationProcessor</c>.</returns>
+        internal Mock<IOrderLocationProcessor> GetOrderLocationMockWithOnlyCompleteRecords(DateOnly pastDate)
+        {
+            var orderLocationCollection = _generator.OrderLocations
+                .Where(x => x.Order.RealSowDate >= pastDate
+                    && x.Order.Complete == true)
+                .OrderBy(x => x.SowDate)
+                .ThenBy(x => x.Id);
+
+            Mock<IOrderLocationProcessor> output = new Mock<IOrderLocationProcessor>();
+
+            output.Setup(x => x.GetOrderLocationsFromADateOn(It.IsAny<DateOnly>()))
+                .Returns(orderLocationCollection);
+
+            return output;
+        }
+
+        /// <summary>
+        /// Gets a mock of <c>IDeliveryDetailProcessor</c> that will return only complete records after a specify date.
+        /// </summary>
+        /// <param name="pastDate">The  date to filter the <c>DeliveryDetail</c> objects to include in the 
+        /// collection that will be returned by the mock.</param>
+        /// <returns>A mock of <c>IDeliveryDetailProcessor</c>.</returns>
+        internal Mock<IDeliveryDetailProcessor> GetDeliveryDetailMockWithOnlyCompleteRecords(DateOnly pastDate)
+        {
+            var deliveryDetailCollection = _generator.DeliveryDetails
+                .Where(x => x.Block.OrderLocation.Order.RealSowDate >= pastDate
+                    && x.Block.OrderLocation.Order.Complete == true)
+                .OrderBy(x => x.DeliveryDate);
+
+            Mock<IDeliveryDetailProcessor> output = new Mock<IDeliveryDetailProcessor>();
+
+            output.Setup(x => x.GetDeliveryDetailFromADateOn(It.IsAny<DateOnly>()))
+                .Returns(deliveryDetailCollection);
+
+            return output;
         }
     }
 }
