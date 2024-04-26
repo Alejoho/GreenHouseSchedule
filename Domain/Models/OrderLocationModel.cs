@@ -81,9 +81,16 @@ namespace Domain.Models
         /// Initializes a new duplicate instance of <c>OrderLocationModel</c> from another instance.
         /// </summary>
         /// <param name="pOrderLocationOriginal">The instance of the original <c>OrderLocationModel</c>.</param>
-        public OrderLocationModel(OrderLocationModel pOrderLocationOriginal)
+        public OrderLocationModel(OrderLocationModel pOrderLocationOriginal, int newId = 0)
         {
-            this._ID = pOrderLocationOriginal.ID;
+            if (newId == 0)
+            {
+                this._ID = pOrderLocationOriginal.ID;
+            }
+            else
+            {
+                this._ID = newId;
+            }
             this._greenHouse = pOrderLocationOriginal.GreenHouse;
             this._seedTrayType = pOrderLocationOriginal.SeedTrayType;
             this._orderID = pOrderLocationOriginal.OrderID;
