@@ -259,9 +259,8 @@ namespace DomainTests
             }
             else
             {
-                //TODO - FALTA HACER ESTE MOCK
                 orderCollection = _generator.Orders
-                    .Where(x => x.RealSowDate >= presentDate && x.Complete == true)
+                    .Where(x => x.EstimateSowDate >= presentDate)
                     .OrderBy(x => x.EstimateSowDate)
                     .ThenBy(x => x.DateOfRequest);
             }
@@ -303,10 +302,8 @@ namespace DomainTests
             }
             else
             {
-                //TODO - FALTA HACER ESTE MOCK
                 orderLocationCollection = _generator.OrderLocations
-                .Where(x => x.Order.RealSowDate >= presentDate
-                    && x.Order.Complete == true)
+                .Where(x => x.Order.EstimateSowDate >= presentDate)
                 .OrderBy(x => x.SowDate)
                 .ThenBy(x => x.Id);
             }
