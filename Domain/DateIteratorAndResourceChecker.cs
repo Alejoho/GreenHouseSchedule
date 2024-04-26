@@ -12,7 +12,7 @@ namespace Domain
     {
 
         #region Fields
-
+        private int sowInThePreviousDay;
         /// <summary>
         /// Represents the main seedbed
         /// </summary>
@@ -88,19 +88,37 @@ namespace Domain
         /// </summary>
         private void DayByDayToRequestDate()
         {
+            int number = 0;
+
             do
             {
                 DoTheWorkOfThisDay();
+
                 SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(1);
+
+                if (SeedBedStatus.IteratorDate == new DateOnly(2024, 1, 11))
+                    number = SeedBedStatus.OrderLocations.Sum(x => x.SeedTrayAmount);
+
             } while (SeedBedStatus.IteratorDate <= _orderInProcess.EstimateSowDate);
             SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(-1);
         }
-
+        //NEXT el problema empieza el dia 6-13-2023 y es que la cantidad de bandejas usadas no coincide con
+        //la suma de las bandejas de todas las ordenes sembradas
         /// <summary>
         /// Do all tasks that should be done on one day.
         /// </summary>
         private void DoTheWorkOfThisDay()
         {
+            int totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
+            int totalSeedTraysOfOrderLocations = SeedBedStatus.OrderLocations
+                .Where(x => x.Sown == true)
+                .Sum(x => x.SeedTrayAmount);
+
+            if (totalUsedSeedTrays != totalSeedTraysOfOrderLocations)
+            {
+                int a = 0;
+            }
+
             RestartPotentialOfSowSeedTrayPerDay();
             ImplementEstimateRelease();
             ImplementEstimateReservation();
@@ -113,12 +131,14 @@ namespace Domain
         /// </summary>
         private void ImplementEstimateRelease()
         {
+            int outer = 0;
             foreach (OrderModel order in SeedBedStatus.Orders)
             {
                 foreach (OrderLocationModel orderLocation in order.OrderLocations)
                 {
                     if (orderLocation.EstimateDeliveryDate == SeedBedStatus.IteratorDate)
                     {
+                        outer += orderLocation.SeedTrayAmount;
                         SeedBedStatus.ReleaseSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
                         SeedBedStatus.ReleaseArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                         order.SeedlingAmount -= orderLocation.SeedlingAmount;
@@ -138,7 +158,16 @@ namespace Domain
         private void ImplementEstimateReservation()
         {
             var ordersToSow = SeedBedStatus.Orders
-                .Where(order => order.EstimateSowDate <= SeedBedStatus.IteratorDate && order.Complete == false);
+                .Where(order => order.EstimateSowDate <= SeedBedStatus.IteratorDate && order.Complete == false)
+                .OrderBy(x => x.EstimateSowDate)
+                .ThenBy(x => x.RequestDate);
+
+            int totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
+            int totalSeedTraysOfOrderLocations = SeedBedStatus.OrderLocations
+                .Where(x => x.Sown == true)
+                .Sum(x => x.SeedTrayAmount);
+
+            int sowInTheDay = 0;
 
             foreach (OrderModel order in ordersToSow)
             {
@@ -158,6 +187,8 @@ namespace Domain
                                 SeedBedStatus.ReserveArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                                 SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay -= orderLocation.SeedTrayAmount;
                                 orderLocation.Sown = true;
+
+                                sowInTheDay += orderLocation.SeedTrayAmount;
                             }
                             else
                             {
@@ -167,11 +198,28 @@ namespace Domain
                                 newOrderLocation.EstimateDeliveryDate = SeedBedStatus.IteratorDate.AddDays(order.Product.ProductionInterval);
                                 newOrderLocation.SeedTrayAmount = SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay;
 
+                                totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
+                                totalSeedTraysOfOrderLocations = SeedBedStatus.OrderLocations
+                                    .Where(x => x.Sown == true)
+                                    .Sum(x => x.SeedTrayAmount);
+
+
                                 SeedBedStatus.ReserveSeedTray(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType);
+
+                                totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
+                                totalSeedTraysOfOrderLocations = SeedBedStatus.OrderLocations
+                                    .Where(x => x.Sown == true)
+                                    .Sum(x => x.SeedTrayAmount);
+
                                 SeedBedStatus.ReserveArea(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType, newOrderLocation.GreenHouse);
 
                                 orderLocation.SeedTrayAmount -= newOrderLocation.SeedTrayAmount;
 
+                                totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
+                                totalSeedTraysOfOrderLocations = SeedBedStatus.OrderLocations
+                                    .Where(x => x.Sown == true)
+                                    .Sum(x => x.SeedTrayAmount);
+                                newOrderLocation.Sown = true;
                                 int alveolus = _seedBedStatus.SeedTrays
                                     .First(x => x.ID == orderLocation.SeedTrayType)
                                     .AlveolusQuantity;
@@ -181,8 +229,12 @@ namespace Domain
 
                                 SeedBedStatus.OrderLocationsToAdd.Add(newOrderLocation);
                                 SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay = 0;
+
+                                sowInTheDay += newOrderLocation.SeedTrayAmount;
+                                totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
                             }
                         }
+                        totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
                     }
 
                     if (order.OrderLocations.Where(x => x.Sown == false).Count() == 0)
@@ -195,6 +247,10 @@ namespace Domain
                     break;
                 }
             }
+
+            totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
+            sowInThePreviousDay = sowInTheDay;
+
         }
 
         /// <summary>
