@@ -443,7 +443,7 @@ internal class RecordGenerator
             .RuleFor(x => x.AmountOfAlgorithmSeedlings, (f, u) => Convert.ToInt32(u.AmountOfWishedSeedlings * 1.2))
             .RuleFor(x => x.EstimateSowDate, f =>
                 DateOnly.FromDateTime(
-                    f.Date.Between(new DateTime(2023, 6, 11),
+                    f.Date.Between(new DateTime(2023, 6, 10),
                         new DateTime(2023, 9, 1))
                     )
                 )
