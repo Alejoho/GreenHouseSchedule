@@ -122,7 +122,7 @@ namespace DomainTests
                 .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
                     && order.Complete == false).Count();
 
-            amountOfOrdersToSow.Should().Be(0);
+            amountOfOrdersToSow.Should().Be(8);
             iterator.SeedBedStatus.OrderLocationsToAdd.Count.Should().Be(0);
         }
 
@@ -149,12 +149,12 @@ namespace DomainTests
                 .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
                     && order.Complete == false).Count();
 
-            amountOfOrdersToSow.Should().Be(7/*oldOrdersToSowCount - 1*/);
+            amountOfOrdersToSow.Should().Be(15/*oldOrdersToSowCount - 1*/);
             iterator.SeedBedStatus.OrderLocationsToAdd.Count.Should().Be(1);
         }
 
         [Fact]
-        public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_7_19_ThatHadOnlyCompleteOrders()
+        public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_7_18_ThatHadOnlyCompleteOrders()
         {
             SeedBedStatus localStatus = new SeedBedStatus(_presentDate
                     , _mockOf.GreenHouseRepository.Object
@@ -202,12 +202,10 @@ namespace DomainTests
             iterator.SeedBedStatus.Orders.Count.Should().Be(0);
             iterator.SeedBedStatus.OrderLocations.Count.Should().Be(0);
             iterator.SeedBedStatus.DeliveryDetails.Count.Should().Be(0);
-        }
-
-        //NEXT - The complete orders is ok. Lets comtimue with the partials
+        }        
 
         [Fact]
-        public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_7_25_ThatHadOnlyPartialOrders()
+        public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_8_18_ThatHadOnlyPartialOrders()
         {
             SeedBedStatus localStatus = new SeedBedStatus(_presentDate
                     , _mockOf.GreenHouseRepository.Object
@@ -257,8 +255,8 @@ namespace DomainTests
             iterator.SeedBedStatus.DeliveryDetails.Count.Should().Be(0);
         }
 
-        //[Fact]
-        public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_7_25_ThatHadOnlyEmptyOrders()
+        [Fact]
+        public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_6_10_2024_ThatHadOnlyEmptyOrders()
         {
             SeedBedStatus localStatus = new SeedBedStatus(_presentDate
                     , _mockOf.GreenHouseRepository.Object
@@ -268,7 +266,7 @@ namespace DomainTests
                     , _mockOf.GetDeliveryDetailMockByRecordType(TypeOfRecord.empty, _presentDate).Object
                     , true);
 
-            DateOnly wishedDate = new DateOnly(2023, 8, 18);
+            DateOnly wishedDate = new DateOnly(2024, 6, 10);
 
             OrderModel newOrder = new OrderModel(1
                 , new ClientModel(1, "", "")
