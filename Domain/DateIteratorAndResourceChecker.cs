@@ -173,7 +173,9 @@ namespace Domain
                             }
                             else
                             {
-                                OrderLocationModel newOrderLocation = new OrderLocationModel(orderLocation);
+                                int newID = SeedBedStatus.OrderLocations.Max(x => x.ID) + 1;
+
+                                OrderLocationModel newOrderLocation = new OrderLocationModel(orderLocation, newID);
 
                                 newOrderLocation.SowDate = SeedBedStatus.IteratorDate;
                                 newOrderLocation.EstimateDeliveryDate = SeedBedStatus.IteratorDate.AddDays(order.Product.ProductionInterval);
