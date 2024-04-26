@@ -109,16 +109,6 @@ namespace Domain
         /// </summary>
         private void DoTheWorkOfThisDay()
         {
-            int totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
-            int totalSeedTraysOfOrderLocations = SeedBedStatus.OrderLocations
-                .Where(x => x.Sown == true)
-                .Sum(x => x.SeedTrayAmount);
-
-            if (totalUsedSeedTrays != totalSeedTraysOfOrderLocations)
-            {
-                int a = 0;
-            }
-
             RestartPotentialOfSowSeedTrayPerDay();
             ImplementEstimateRelease();
             ImplementEstimateReservation();
@@ -162,13 +152,6 @@ namespace Domain
                 .OrderBy(x => x.EstimateSowDate)
                 .ThenBy(x => x.RequestDate);
 
-            int totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
-            int totalSeedTraysOfOrderLocations = SeedBedStatus.OrderLocations
-                .Where(x => x.Sown == true)
-                .Sum(x => x.SeedTrayAmount);
-
-            int sowInTheDay = 0;
-
             foreach (OrderModel order in ordersToSow)
             {
                 if (SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > 0)
@@ -187,8 +170,6 @@ namespace Domain
                                 SeedBedStatus.ReserveArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                                 SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay -= orderLocation.SeedTrayAmount;
                                 orderLocation.Sown = true;
-
-                                sowInTheDay += orderLocation.SeedTrayAmount;
                             }
                             else
                             {
@@ -198,43 +179,25 @@ namespace Domain
                                 newOrderLocation.EstimateDeliveryDate = SeedBedStatus.IteratorDate.AddDays(order.Product.ProductionInterval);
                                 newOrderLocation.SeedTrayAmount = SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay;
 
-                                totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
-                                totalSeedTraysOfOrderLocations = SeedBedStatus.OrderLocations
-                                    .Where(x => x.Sown == true)
-                                    .Sum(x => x.SeedTrayAmount);
-
-
-                                SeedBedStatus.ReserveSeedTray(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType);
-
-                                totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
-                                totalSeedTraysOfOrderLocations = SeedBedStatus.OrderLocations
-                                    .Where(x => x.Sown == true)
-                                    .Sum(x => x.SeedTrayAmount);
-
-                                SeedBedStatus.ReserveArea(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType, newOrderLocation.GreenHouse);
-
-                                orderLocation.SeedTrayAmount -= newOrderLocation.SeedTrayAmount;
-
-                                totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
-                                totalSeedTraysOfOrderLocations = SeedBedStatus.OrderLocations
-                                    .Where(x => x.Sown == true)
-                                    .Sum(x => x.SeedTrayAmount);
-                                newOrderLocation.Sown = true;
                                 int alveolus = _seedBedStatus.SeedTrays
                                     .First(x => x.ID == orderLocation.SeedTrayType)
                                     .AlveolusQuantity;
 
                                 newOrderLocation.SeedlingAmount = newOrderLocation.SeedTrayAmount * alveolus;
-                                orderLocation.SeedlingAmount = orderLocation.SeedTrayAmount * alveolus;
+
+                                SeedBedStatus.ReserveSeedTray(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType);
+                                SeedBedStatus.ReserveArea(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType, newOrderLocation.GreenHouse);
+
+                                newOrderLocation.Sown = true;
 
                                 SeedBedStatus.OrderLocationsToAdd.Add(newOrderLocation);
-                                SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay = 0;
 
-                                sowInTheDay += newOrderLocation.SeedTrayAmount;
-                                totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
+                                orderLocation.SeedTrayAmount -= newOrderLocation.SeedTrayAmount;
+                                orderLocation.SeedlingAmount = orderLocation.SeedTrayAmount * alveolus;
+
+                                SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay = 0;                               
                             }
                         }
-                        totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
                     }
 
                     if (order.OrderLocations.Where(x => x.Sown == false).Count() == 0)
@@ -247,10 +210,6 @@ namespace Domain
                     break;
                 }
             }
-
-            totalUsedSeedTrays = SeedBedStatus.SeedTrays.Sum(x => x.UsedAmount);
-            sowInThePreviousDay = sowInTheDay;
-
         }
 
         /// <summary>
