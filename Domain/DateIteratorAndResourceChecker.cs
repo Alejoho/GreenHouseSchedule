@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Domain.ValuableObjects;
 using System.Collections;
+using System.Diagnostics;
 
 namespace Domain
 {
@@ -12,7 +13,7 @@ namespace Domain
     {
 
         #region Fields
-        private int sowInThePreviousDay;
+
         /// <summary>
         /// Represents the main seedbed
         /// </summary>
@@ -21,7 +22,7 @@ namespace Domain
         /// <summary>
         /// This is an auxiliar seedbed to realize some confirmation without edit the main seedbed.
         /// </summary>
-        private SeedBedStatus _seedBedStatusAuxiliar;
+        private SeedBedStatus _auxiliarSeedBedStatus;
 
         /// <summary>
         /// The order that its required to place in the seedbed.
@@ -51,9 +52,9 @@ namespace Domain
         /// <param name="testing">Some variable to diferentiate this ctor.</param>
         public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel orderInProcess = null, bool testing = true)
         {
-            //TODO - Measure the time of this two lines
             _seedBedStatus = new SeedBedStatus(seedBedStatus);
-            _seedBedStatusAuxiliar = new SeedBedStatus(_seedBedStatus);
+
+            _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
 
             if (orderInProcess != null)
             {
@@ -72,7 +73,7 @@ namespace Domain
         public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel pOrderInProcess)
         {
             _seedBedStatus = seedBedStatus;
-            _seedBedStatusAuxiliar = new SeedBedStatus(_seedBedStatus);
+            _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
             _orderInProcess = pOrderInProcess;
             _seedTrayPermutations = new LinkedList<SeedTrayPermutation>();
             _seedTrayPermutationsToDelete = new ArrayList();
@@ -88,22 +89,17 @@ namespace Domain
         /// </summary>
         private void DayByDayToRequestDate()
         {
-            int number = 0;
-
             do
             {
                 DoTheWorkOfThisDay();
 
                 SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(1);
 
-                if (SeedBedStatus.IteratorDate == new DateOnly(2024, 1, 11))
-                    number = SeedBedStatus.OrderLocations.Sum(x => x.SeedTrayAmount);
-
             } while (SeedBedStatus.IteratorDate <= _orderInProcess.EstimateSowDate);
+
             SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(-1);
         }
-        //NEXT el problema empieza el dia 6-13-2023 y es que la cantidad de bandejas usadas no coincide con
-        //la suma de las bandejas de todas las ordenes sembradas
+
         /// <summary>
         /// Do all tasks that should be done on one day.
         /// </summary>
@@ -197,7 +193,7 @@ namespace Domain
                                 orderLocation.SeedTrayAmount -= newOrderLocation.SeedTrayAmount;
                                 orderLocation.SeedlingAmount = orderLocation.SeedTrayAmount * alveolus;
 
-                                SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay = 0;                               
+                                SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay = 0;
                             }
                         }
                     }
@@ -453,20 +449,20 @@ namespace Domain
 
             foreach (SeedTrayPermutation seedTrayPermutation in _seedTrayPermutations)
             {
-                _seedBedStatusAuxiliar = new SeedBedStatus(_seedBedStatus);
+                _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
                 InsertOrderInProcessIntoSeedBedStatusAuxiliar(seedTrayPermutation);
-                _seedBedStatusAuxiliar.IteratorDate.AddDays(-1);
+                _auxiliarSeedBedStatus.IteratorDate.AddDays(-1);
                 do
                 {
-                    _seedBedStatusAuxiliar.IteratorDate.AddDays(1);
+                    _auxiliarSeedBedStatus.IteratorDate.AddDays(1);
                     DoTheWorkOfThisDay();
                 } while (
-                _seedBedStatusAuxiliar.IteratorDate <= limitDate &&
-                _seedBedStatusAuxiliar.ThereAreNonNegattiveValuesOfSeedTray() &&
-                _seedBedStatusAuxiliar.ThereAreNonNegattiveValuesOfArea()
+                _auxiliarSeedBedStatus.IteratorDate <= limitDate &&
+                _auxiliarSeedBedStatus.ThereAreNonNegattiveValuesOfSeedTray() &&
+                _auxiliarSeedBedStatus.ThereAreNonNegattiveValuesOfArea()
                 );
 
-                if (_seedBedStatusAuxiliar.IteratorDate < limitDate)
+                if (_auxiliarSeedBedStatus.IteratorDate < limitDate)
                 {
                     _seedTrayPermutationsToDelete.Add(seedTrayPermutation);
                 }
@@ -492,7 +488,7 @@ namespace Domain
             OrderModel orderToAdd = new OrderModel(_orderInProcess);
             OrderLocationModel orderLocationToAdd;
 
-            int seedlingAmount = (from seedTray in _seedBedStatusAuxiliar.SeedTrays
+            int seedlingAmount = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
                                   where seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID
                                   select pSeedTrayPermutation.FirstSeedTrayID).FirstOrDefault(0);
 
@@ -500,44 +496,44 @@ namespace Domain
             //    FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID).AlveolusQuantity;
 
             orderLocationToAdd = new OrderLocationModel(
-                _seedBedStatusAuxiliar.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
+                _auxiliarSeedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                 pSeedTrayPermutation.FirstSeedTrayID,
                 _orderInProcess.ID,
                 pSeedTrayPermutation.FirstAmount,
                 seedlingAmount);
             orderToAdd.OrderLocations.AddLast(orderLocationToAdd);
-            _seedBedStatusAuxiliar.OrderLocations.AddLast(orderLocationToAdd);
+            _auxiliarSeedBedStatus.OrderLocations.AddLast(orderLocationToAdd);
 
             if (pSeedTrayPermutation.SecondSeedTrayID != 0)
             {
-                seedlingAmount = (from seedTray in _seedBedStatusAuxiliar.SeedTrays
+                seedlingAmount = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
                                   where seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID
                                   select pSeedTrayPermutation.SecondSeedTrayID).FirstOrDefault(0);
                 orderLocationToAdd = new OrderLocationModel(
-                    _seedBedStatusAuxiliar.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
+                    _auxiliarSeedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                     pSeedTrayPermutation.SecondSeedTrayID,
                     _orderInProcess.ID,
                     pSeedTrayPermutation.SecondAmount,
                     seedlingAmount);
                 orderToAdd.OrderLocations.AddLast(orderLocationToAdd);
-                _seedBedStatusAuxiliar.OrderLocations.AddLast(orderLocationToAdd);
+                _auxiliarSeedBedStatus.OrderLocations.AddLast(orderLocationToAdd);
             }
 
             if (pSeedTrayPermutation.ThirdSeedTrayID != 0)
             {
-                seedlingAmount = (from seedTray in _seedBedStatusAuxiliar.SeedTrays
+                seedlingAmount = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
                                   where seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID
                                   select pSeedTrayPermutation.ThirdSeedTrayID).FirstOrDefault(0);
                 orderLocationToAdd = new OrderLocationModel(
-                    _seedBedStatusAuxiliar.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
+                    _auxiliarSeedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                     pSeedTrayPermutation.ThirdSeedTrayID,
                     _orderInProcess.ID,
                     pSeedTrayPermutation.ThirdAmount,
                     seedlingAmount);
                 orderToAdd.OrderLocations.AddLast(orderLocationToAdd);
-                _seedBedStatusAuxiliar.OrderLocations.AddLast(orderLocationToAdd);
+                _auxiliarSeedBedStatus.OrderLocations.AddLast(orderLocationToAdd);
             }
-            _seedBedStatusAuxiliar.Orders.AddLast(orderToAdd);
+            _auxiliarSeedBedStatus.Orders.AddLast(orderToAdd);
         }
 
         /// <summary>
