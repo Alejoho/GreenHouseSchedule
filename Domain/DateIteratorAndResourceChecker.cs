@@ -138,6 +138,7 @@ namespace Domain
             }
         }
 
+        //TODO - Maybe implement a restriction to avoid sow seedtrays on sundays.
         /// <summary>
         /// Marks as used, the area and the seedtrays used by the order locations that will be sown on the iterator date.
         /// </summary>
@@ -154,9 +155,7 @@ namespace Domain
                 {
                     foreach (OrderLocationModel orderLocation in order.OrderLocations)
                     {
-                        if ((SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay >= SeedBedStatus.MinimumLimitOfSeedTrayToSow
-                            || orderLocation.SeedTrayAmount <= SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay)
-                                && orderLocation.Sown == false)
+                        if (orderLocation.Sown == false)
                         {
                             if ((SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay - orderLocation.SeedTrayAmount) >= 0)
                             {
