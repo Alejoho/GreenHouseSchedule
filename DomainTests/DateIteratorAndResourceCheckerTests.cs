@@ -135,9 +135,10 @@ namespace DomainTests
                 .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
                     && order.Complete == false).ToList();
 
-            ordersToSow[1].OrderLocations.Last().SeedTrayAmount = 650;
+            ordersToSow[0].OrderLocations.First(x => x.Sown == false).SeedTrayAmount = 650;
 
-            int oldOrdersToSowCount = ordersToSow.Count;
+            int oldOrderLocationsToSowCount = ordersToSow
+                .Sum(x => x.OrderLocations.Count);
 
             MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
                 .GetMethod("ImplementEstimateReservation"
@@ -149,7 +150,10 @@ namespace DomainTests
                 .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
                     && order.Complete == false).Count();
 
-            amountOfOrdersToSow.Should().Be(15/*oldOrdersToSowCount - 1*/);
+            int newOrderLocationsToSowCount = ordersToSow
+                .Sum(x => x.OrderLocations.Count);
+
+            newOrderLocationsToSowCount.Should().Be(oldOrderLocationsToSowCount);
             iterator.SeedBedStatus.OrderLocationsToAdd.Count.Should().Be(1);
         }
 
