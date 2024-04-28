@@ -93,11 +93,54 @@ namespace Domain
             {
                 DoTheWorkOfThisDay();
 
+                CheckForNegattive();
+
+                
                 SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(1);
 
             } while (SeedBedStatus.IteratorDate <= _orderInProcess.EstimateSowDate);
 
             SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(-1);
+        }
+
+        private struct NegDate
+        {
+            internal decimal value;
+            internal DateOnly date;
+
+            public NegDate()
+            {
+                value = 10000;
+            }
+        }
+
+        private NegDate[] negattiveGreenHouse = { new NegDate()
+                , new NegDate(), new NegDate(), new NegDate()
+                , new NegDate(), new NegDate(), new NegDate()
+                , new NegDate() };
+        private NegDate[] negattiveSeedTrays = { new NegDate()
+                , new NegDate(), new NegDate(), new NegDate()
+                , new NegDate(), new NegDate(), new NegDate() };
+
+        private void CheckForNegattive()
+        {
+            SeedBedStatus.GreenHouses.ForEach(greenHouse => 
+            {
+                if (greenHouse.SeedTrayAvailableArea < negattiveGreenHouse[greenHouse.ID-1].value)
+                {
+                    negattiveGreenHouse[greenHouse.ID - 1].value = greenHouse.SeedTrayAvailableArea;
+                    negattiveGreenHouse[greenHouse.ID - 1].date = SeedBedStatus.IteratorDate;
+                }
+            });
+
+            SeedBedStatus.SeedTrays.ForEach(seedTray =>
+            {
+                if (seedTray.FreeAmount < negattiveSeedTrays[seedTray.ID - 1].value)
+                {
+                    negattiveSeedTrays[seedTray.ID - 1].value = seedTray.FreeAmount;
+                    negattiveSeedTrays[seedTray.ID - 1].date = SeedBedStatus.IteratorDate;
+                }
+            });
         }
 
         /// <summary>
