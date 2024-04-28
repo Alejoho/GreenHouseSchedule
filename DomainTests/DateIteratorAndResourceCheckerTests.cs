@@ -37,26 +37,26 @@ namespace DomainTests
         {
             DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status);
 
-            FieldInfo fieldInfo = typeof(DateIteratorAndResourceChecker).GetField("_seedBedStatusAuxiliar"
+            FieldInfo fieldInfo = typeof(DateIteratorAndResourceChecker).GetField("_auxiliarSeedBedStatus"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
 
-            SeedBedStatus statusOfTheIterator = (SeedBedStatus)fieldInfo.GetValue(iterator);
+            SeedBedStatus auxiliarStatusOfTheIterator = (SeedBedStatus)fieldInfo.GetValue(iterator);
 
-            statusOfTheIterator.IteratorDate = new DateOnly();
-            statusOfTheIterator.PresentDate = new DateOnly();
-            statusOfTheIterator.GreenHouses = null;
-            statusOfTheIterator.SeedTrays = null;
-            statusOfTheIterator.RemainingAmountOfSeedTrayToSowPerDay = -1;
-            statusOfTheIterator.Orders = null;
-            statusOfTheIterator.OrderLocations = null;
-            statusOfTheIterator.DeliveryDetails = null;
-            statusOfTheIterator.OrdersToDelete = null;
-            statusOfTheIterator.OrderLocationsToDelete = null;
-            statusOfTheIterator.DeliveryDetailsToDelete = null;
-            statusOfTheIterator.OrderLocationsToAdd = null;
+            auxiliarStatusOfTheIterator.IteratorDate = new DateOnly();
+            auxiliarStatusOfTheIterator.PresentDate = new DateOnly();
+            auxiliarStatusOfTheIterator.GreenHouses = null;
+            auxiliarStatusOfTheIterator.SeedTrays = null;
+            auxiliarStatusOfTheIterator.RemainingAmountOfSeedTrayToSowPerDay = -1;
+            auxiliarStatusOfTheIterator.Orders = null;
+            auxiliarStatusOfTheIterator.OrderLocations = null;
+            auxiliarStatusOfTheIterator.DeliveryDetails = null;
+            auxiliarStatusOfTheIterator.OrdersToDelete = null;
+            auxiliarStatusOfTheIterator.OrderLocationsToDelete = null;
+            auxiliarStatusOfTheIterator.DeliveryDetailsToDelete = null;
+            auxiliarStatusOfTheIterator.OrderLocationsToAdd = null;
 
-            iterator.SeedBedStatus.IteratorDate.Should().BeAfter(statusOfTheIterator.IteratorDate);
-            iterator.SeedBedStatus.PresentDate.Should().BeAfter(statusOfTheIterator.PresentDate);
+            iterator.SeedBedStatus.IteratorDate.Should().BeAfter(auxiliarStatusOfTheIterator.IteratorDate);
+            iterator.SeedBedStatus.PresentDate.Should().BeAfter(auxiliarStatusOfTheIterator.PresentDate);
             iterator.SeedBedStatus.GreenHouses.Should().NotBeNull();
             iterator.SeedBedStatus.SeedTrays.Should().NotBeNull();
             iterator.SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay.Should().NotBe(-1);
