@@ -330,7 +330,7 @@ internal class RecordGenerator
     {
         byte index = 1;
         byte preference = 1;
-        short[] amounts = { 900, 2500, 2450, 1800, 2600, 900, 1850 };
+        short[] amounts = { 1100, 2100, 2450, 1800, 2600, 1050, 2550 };
         return new Faker<SeedTray>()
             .RuleFor(x => x.Id, () => index++)
             .RuleFor(x => x.AlveolusLength, f => f.Random.Byte(10, 20))
@@ -345,7 +345,7 @@ internal class RecordGenerator
             {
                 short something = f.Random.Short(1000, 3500);
 
-                if (index < 8)
+                if (index <= 8)
                 {
                     return amounts[index - 2];
                 }
