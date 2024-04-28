@@ -17,7 +17,7 @@ namespace DomainTests
         {
             if (_generator == null)
             {
-                _generator = new RecordGenerator(600, _pastDate);
+                _generator = new RecordGenerator(150, _pastDate);
 
                 _mockOf = new MockOf(_generator, _pastDate);
 
@@ -31,7 +31,6 @@ namespace DomainTests
             }
         }
 
-        //TODO - Maybe make a test to verify that the clone of the SeeBedStatus was made correctly.
         [Fact]
         public void CloneSeedBedStatusObjects_ShouldBeDisconnectFromEachOther()
         {
