@@ -9,7 +9,7 @@ namespace DomainTests
     {
         private static DateOnly _presentDate = new DateOnly(2023, 6, 10);
         private static DateOnly _pastDate = _presentDate.AddDays(-90);
-        private static SeedBedStatus status;
+        private static SeedBedStatus _status;
         private static RecordGenerator _generator;
         private static MockOf _mockOf;
 
@@ -21,7 +21,7 @@ namespace DomainTests
 
                 _mockOf = new MockOf(_generator, _pastDate);
 
-                status = new SeedBedStatus(_presentDate
+                _status = new SeedBedStatus(_presentDate
                     , _mockOf.GreenHouseRepository.Object
                     , _mockOf.SeedTrayRepository.Object
                     , _mockOf.OrderProcessor.Object
@@ -35,7 +35,7 @@ namespace DomainTests
         [Fact]
         public void CloneSeedBedStatusObjects_ShouldBeDisconnectFromEachOther()
         {
-            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status);
 
             FieldInfo fieldInfo = typeof(DateIteratorAndResourceChecker).GetField("_seedBedStatusAuxiliar"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
@@ -72,7 +72,7 @@ namespace DomainTests
         [Fact]
         public void RestartPotentialOfSowSeedTrayPerDay_ShouldResetTheVariable()
         {
-            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status);
             iterator.SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay = 100;
 
             MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
@@ -87,7 +87,7 @@ namespace DomainTests
         [Fact]
         public void ImplementEstimateRelease_ShouldAddOrdersAndOrderLocationsToTheArrayListsToDelete()
         {
-            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status);
 
             int countOfOrderLocationsToDelete = iterator.SeedBedStatus.OrderLocations
                 .Where(x => x.EstimateDeliveryDate == iterator.SeedBedStatus.IteratorDate).Count();
@@ -110,7 +110,7 @@ namespace DomainTests
         [Fact]
         public void ImplementEstimateReservation_ShouldWorkWhenTheLimitOfSowPerDayIsNotReached()
         {
-            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status);
 
             MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
                 .GetMethod("ImplementEstimateReservation"
@@ -129,7 +129,7 @@ namespace DomainTests
         [Fact]
         public void ImplementEstimateReservation_ShouldWorkWhenTheLimitOfSowPerDayIsReached()
         {
-            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(status);
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status);
 
             var ordersToSow = iterator.SeedBedStatus.Orders
                 .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
