@@ -70,6 +70,44 @@ namespace DomainTests
         }
 
         [Fact]
+        public void CloneSeedBedStatusObjects_ShouldGiveAnIdenticalSeedBedStatus()
+        {
+            DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status);
+
+            FieldInfo fieldInfo = typeof(DateIteratorAndResourceChecker).GetField("_auxiliarSeedBedStatus"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+            SeedBedStatus auxStatusOfTheIterator = (SeedBedStatus)fieldInfo.GetValue(iterator);
+
+            iterator.SeedBedStatus.IteratorDate.Should().Be(auxStatusOfTheIterator.IteratorDate);
+            iterator.SeedBedStatus.PresentDate.Should().Be(auxStatusOfTheIterator.PresentDate);
+            iterator.SeedBedStatus.GreenHouses.Count.Should().Be(auxStatusOfTheIterator.GreenHouses.Count);
+            iterator.SeedBedStatus.SeedTrays.Count.Should().Be(auxStatusOfTheIterator.SeedTrays.Count);
+            iterator.SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay.Should()
+                .Be(auxStatusOfTheIterator.RemainingAmountOfSeedTrayToSowPerDay);
+            iterator.SeedBedStatus.Orders.Count.Should()
+                .Be(auxStatusOfTheIterator.Orders.Count);
+            iterator.SeedBedStatus.OrderLocations.Count.Should()
+                .Be(auxStatusOfTheIterator.OrderLocations.Count);
+            iterator.SeedBedStatus.DeliveryDetails.Count.Should()
+                .Be(auxStatusOfTheIterator.DeliveryDetails.Count);
+            iterator.SeedBedStatus.OrdersToDelete.Count.Should()
+                .Be(auxStatusOfTheIterator.OrdersToDelete.Count);
+            iterator.SeedBedStatus.OrderLocationsToDelete.Count.Should()
+                .Be(auxStatusOfTheIterator.OrderLocationsToDelete.Count);
+            iterator.SeedBedStatus.DeliveryDetailsToDelete.Count.Should()
+                .Be(auxStatusOfTheIterator.DeliveryDetailsToDelete.Count);
+            iterator.SeedBedStatus.OrderLocationsToAdd.Count.Should()
+                .Be(auxStatusOfTheIterator.OrderLocationsToAdd.Count);
+            iterator.SeedBedStatus.MaxAmountOfSeedTrayToSowPerDay.Should()
+                .Be(auxStatusOfTheIterator.MaxAmountOfSeedTrayToSowPerDay);
+            iterator.SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay.Should()
+                .Be(auxStatusOfTheIterator.RemainingAmountOfSeedTrayToSowPerDay);
+            iterator.SeedBedStatus.MinimumLimitOfSeedTrayToSow.Should()
+                .Be(auxStatusOfTheIterator.MinimumLimitOfSeedTrayToSow);
+        }
+
+        [Fact]
         public void RestartPotentialOfSowSeedTrayPerDay_ShouldResetTheVariable()
         {
             DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status);
