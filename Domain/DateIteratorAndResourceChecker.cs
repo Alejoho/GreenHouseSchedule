@@ -198,7 +198,7 @@ namespace Domain
                 {
                     foreach (OrderLocationModel orderLocation in order.OrderLocations)
                     {
-                        if (orderLocation.Sown == false)
+                        if (orderLocation.Sown == false && SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > 0)
                         {
                             if ((SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay - orderLocation.SeedTrayAmount) >= 0)
                             {
@@ -209,7 +209,8 @@ namespace Domain
                                 SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay -= orderLocation.SeedTrayAmount;
                                 orderLocation.Sown = true;
                             }
-                            else
+                            else if(SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay < orderLocation.SeedTrayAmount
+                                && SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > SeedBedStatus.MinimumLimitOfSeedTrayToSow)
                             {
                                 int newID = SeedBedStatus.OrderLocations.Max(x => x.ID) + 1;
 
