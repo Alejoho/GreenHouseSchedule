@@ -70,7 +70,7 @@ namespace Domain
         /// <param name="pOrderInProcess">The order that to place in the seedbed.</param>
         public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel pOrderInProcess)
         {
-            _seedBedStatus = seedBedStatus;
+            _seedBedStatus = seedBedStatus;            
             _orderInProcess = pOrderInProcess;
             _seedTrayPermutations = new LinkedList<SeedTrayPermutation>();
             _seedTrayPermutationsToDelete = new ArrayList();
@@ -91,8 +91,7 @@ namespace Domain
                 DoTheWorkOfThisDay();
 
                 CheckForNegattive();
-
-                
+    
                 SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(1);
 
             } while (SeedBedStatus.IteratorDate <= _orderInProcess.EstimateSowDate);
@@ -312,8 +311,8 @@ namespace Domain
             bool output;
             _seedTrayPermutations.Clear();
             GenerateAndAddSimplePermutations();
-            GenerateAndAddAddDoublePermutations();
-            GenerateAndAddAddTriplePermutations();
+            GenerateAndAddDoublePermutations();
+            GenerateAndAddTriplePermutations();
 
             output = _seedTrayPermutations.Count > 0 ? true : false;
 
@@ -348,7 +347,7 @@ namespace Domain
         /// Generates a double permutation of seedtrays and adds that permutation to the 
         /// <c>SeedTrayPermutations</c> LinkedList.
         /// </summary>
-        private void GenerateAndAddAddDoublePermutations()
+        private void GenerateAndAddDoublePermutations()
         {
             foreach (SeedTrayModel seedTrayModelLevel1 in SeedBedStatus.SeedTrays)
             {
@@ -379,7 +378,7 @@ namespace Domain
         /// Generates a triple permutation of seedtrays and adds that permutation to the 
         /// <c>SeedTrayPermutations</c> LinkedList.
         /// </summary>
-        private void GenerateAndAddAddTriplePermutations()
+        private void GenerateAndAddTriplePermutations()
         {
             foreach (SeedTrayModel seedTrayModelLevel1 in SeedBedStatus.SeedTrays)
             {
