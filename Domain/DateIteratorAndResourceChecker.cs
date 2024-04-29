@@ -54,8 +54,6 @@ namespace Domain
         {
             _seedBedStatus = new SeedBedStatus(seedBedStatus);
 
-            _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
-
             if (orderInProcess != null)
             {
                 _orderInProcess = orderInProcess;
@@ -73,7 +71,6 @@ namespace Domain
         public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel pOrderInProcess)
         {
             _seedBedStatus = seedBedStatus;
-            _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
             _orderInProcess = pOrderInProcess;
             _seedTrayPermutations = new LinkedList<SeedTrayPermutation>();
             _seedTrayPermutationsToDelete = new ArrayList();
@@ -277,8 +274,7 @@ namespace Domain
         /// </summary>
         public void LookForAvailability()
         {
-
-            //crear un clon del seedBedStatus actual
+            _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
 
             do
             {
