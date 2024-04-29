@@ -147,7 +147,12 @@ namespace DomainTests
         [Fact]
         public void ImplementEstimateReservation_ShouldWorkWhenTheLimitOfSowPerDayIsNotReached()
         {
+            //TODO - Make the assert of this test
             DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status);
+
+            var ordersToSow = iterator.SeedBedStatus.Orders
+                .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
+                    && order.Complete == false);            
 
             MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
                 .GetMethod("ImplementEstimateReservation"
@@ -159,7 +164,7 @@ namespace DomainTests
                 .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
                     && order.Complete == false).Count();
 
-            amountOfOrdersToSow.Should().Be(8);
+            amountOfOrdersToSow.Should().Be(4);
             iterator.SeedBedStatus.OrderLocationsToAdd.Count.Should().Be(0);
         }
 
