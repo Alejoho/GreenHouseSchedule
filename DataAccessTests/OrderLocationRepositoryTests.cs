@@ -27,18 +27,17 @@ public class OrderLocationRepositoryTests
 
         actual.Count().Should().Be(20);
     }
-    //TODO - These test method of filtered records sometimes pass and sometimes don't
-    //I think is because the bogus library isn't generating with the seed correctly
+
     [Fact]
     public void GetByASowDateOn_ShouldReturnFilteredRecords()
     {
-        _orderLocations = GenerateRecords(20);
-        DateOnly date = new DateOnly(2023,8,1);
+        DateOnly date = new DateOnly(2023, 8, 1);
 
         var actual = _orderLocationRepository.GetByASowDateOn(date).ToList();
 
         int count = _orderLocations
-            .Where(x => x.SowDate > date || x.SowDate == null)
+            .Where(x => x.Order.RealSowDate >= date || x.Order.RealSowDate == null
+                    && (x.SowDate >= date || x.SowDate == null))
             .Count();
         actual.Count().Should().Be(count);
     }
@@ -133,9 +132,13 @@ public class OrderLocationRepositoryTests
             f.Random.Bool() == true ?
                 DateOnly.FromDateTime(
                     f.Date.Between(new DateTime(2023, 1, 1),
-                        new DateTime(2023, 12, 31))) 
+                        new DateTime(2023, 12, 31)))
                 : null
                 )
+            .RuleFor(x => x.Order, (f, u) => new Order()
+            {
+                RealSowDate = u.SowDate
+            })
             .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.SowDate)
             .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);
     }

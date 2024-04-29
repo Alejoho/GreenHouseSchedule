@@ -30,12 +30,16 @@ public class DeliveryDetailsRepositoryTests
     [Fact]
     public void GetByADeliveryDateOn_ShouldReturnFilteredRecords()
     {
-        _deliveryDetails = GenerateRecords(20);
         DateOnly date = new DateOnly(2023, 8, 1);
 
         var actual = _deliveryDetailRepository.GetByADeliveryDateOn(date).ToList();
 
-        int count = _deliveryDetails.Where(x => x.DeliveryDate > date).Count();
+        int count = _deliveryDetails
+            .Where(x => (x.Block.OrderLocation.Order.RealSowDate >= date
+            || x.Block.OrderLocation.Order.RealSowDate == null)
+                && x.DeliveryDate >= date)
+            .Count();
+
         actual.Count().Should().Be(count);
     }
     
@@ -121,7 +125,17 @@ public class DeliveryDetailsRepositoryTests
             .RuleFor(x => x.BlockId, f => f.Random.Int(1, 200))
             .RuleFor(x => x.DeliveryDate, f =>
                 DateOnly.FromDateTime(f.Date.Between(startDate, endDate)))
-            .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(1, 1000));
+            .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(1, 1000))
+            .RuleFor(x => x.Block,(f, u) => new Block()
+            {
+                OrderLocation=new OrderLocation()
+                {
+                    Order=new Order()
+                    {
+                        RealSowDate = u.DeliveryDate.AddDays(-30)
+                    }
+                }
+            });
     }
 }
 

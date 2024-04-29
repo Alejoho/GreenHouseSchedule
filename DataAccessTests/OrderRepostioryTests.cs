@@ -31,13 +31,12 @@ public class OrderRepostioryTests
     [Fact]
     public void GetByARealSowDateOn_ShouldReturnFilteredRecords()
     {
-        _orders = GenerateRecords(20);
         DateOnly date = new DateOnly(2023,7,1);
 
         var actual = _orderRepository.GetByARealSowDateOn(date).ToList();
 
         int count = _orders
-            .Where(x => x.RealSowDate > date || x.RealSowDate == null)
+            .Where(x => x.RealSowDate >= date || x.RealSowDate == null)
             .Count();
         actual.Count().Should().Be(count);
     }
