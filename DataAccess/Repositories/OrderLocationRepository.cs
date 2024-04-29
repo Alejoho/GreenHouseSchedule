@@ -23,8 +23,8 @@ namespace DataAccess.Repositories
         public IEnumerable<OrderLocation> GetByASowDateOn(DateOnly date)
         {
             return _sowScheduleDB.OrderLocations
-                .Where(x => x.Order.RealSowDate >= date 
-                && (x.SowDate >= date || x.SowDate == null));
+                .Where(x => x.Order.RealSowDate >= date || x.Order.RealSowDate == null
+                    && (x.SowDate >= date || x.SowDate == null));
         }
 
         public bool Insert(OrderLocation entity)

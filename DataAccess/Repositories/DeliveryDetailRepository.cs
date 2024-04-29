@@ -22,7 +22,9 @@ namespace DataAccess.Repositories
         public IEnumerable<DeliveryDetail> GetByADeliveryDateOn(DateOnly date)
         {
             return _sowScheduleDB.DeliveryDetails
-                .Where(x => x.Block.OrderLocation.Order.RealSowDate >= date && x.DeliveryDate >= date);
+                .Where(x => (x.Block.OrderLocation.Order.RealSowDate >= date 
+                || x.Block.OrderLocation.Order.RealSowDate == null)
+                    && x.DeliveryDate >= date);
         }
 
         public bool Insert(DeliveryDetail entity)
