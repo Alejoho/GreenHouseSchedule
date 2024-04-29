@@ -31,6 +31,7 @@ public class DateIteratorAndResourceCheckerTests
         }
     }
 
+    #region Tests for the iteration to the request date
     [Fact]
     public void CloneSeedBedStatusObjects_ShouldBeDisconnectFromEachOther()
     {
@@ -40,6 +41,8 @@ public class DateIteratorAndResourceCheckerTests
             , BindingFlags.NonPublic | BindingFlags.Instance);
 
         SeedBedStatus auxiliarStatusOfTheIterator = (SeedBedStatus)fieldInfo.GetValue(iterator);
+
+        auxiliarStatusOfTheIterator = new SeedBedStatus(iterator.SeedBedStatus);
 
         auxiliarStatusOfTheIterator.IteratorDate = new DateOnly();
         auxiliarStatusOfTheIterator.PresentDate = new DateOnly();
@@ -77,6 +80,8 @@ public class DateIteratorAndResourceCheckerTests
             , BindingFlags.NonPublic | BindingFlags.Instance);
 
         SeedBedStatus auxStatusOfTheIterator = (SeedBedStatus)fieldInfo.GetValue(iterator);
+
+        auxStatusOfTheIterator = new SeedBedStatus(iterator.SeedBedStatus);
 
         iterator.SeedBedStatus.IteratorDate.Should().Be(auxStatusOfTheIterator.IteratorDate);
         iterator.SeedBedStatus.PresentDate.Should().Be(auxStatusOfTheIterator.PresentDate);
@@ -147,12 +152,20 @@ public class DateIteratorAndResourceCheckerTests
     [Fact]
     public void ImplementEstimateReservation_ShouldWorkWhenTheLimitOfSowPerDayIsNotReached()
     {
-        //TODO - Make the assert of this test
+        //NEXT - Make the assert of this test
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status);
 
         var ordersToSow = iterator.SeedBedStatus.Orders
             .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
-                && order.Complete == false);            
+                && order.Complete == false);
+
+        foreach (var order in ordersToSow)
+        {
+            foreach(var orderLocation in order.OrderLocations)
+            {
+                orderLocation.SeedTrayAmount = 120;
+            }
+        }
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
             .GetMethod("ImplementEstimateReservation"
@@ -164,7 +177,7 @@ public class DateIteratorAndResourceCheckerTests
             .Where(order => order.EstimateSowDate <= iterator.SeedBedStatus.IteratorDate
                 && order.Complete == false).Count();
 
-        amountOfOrdersToSow.Should().Be(4);
+        amountOfOrdersToSow.Should().Be(6);
         iterator.SeedBedStatus.OrderLocationsToAdd.Count.Should().Be(0);
     }
 
@@ -394,4 +407,12 @@ public class DateIteratorAndResourceCheckerTests
         iterator.SeedBedStatus.OrderLocations.Count.Should().Be(0);
         iterator.SeedBedStatus.DeliveryDetails.Count.Should().Be(0);
     }
+
+    #endregion
+
+    #region Tests for the resource checker
+
+
+
+    #endregion
 }
