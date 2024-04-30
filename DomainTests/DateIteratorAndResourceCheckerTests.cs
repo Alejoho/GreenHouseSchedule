@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Domain.Models;
+using Domain.ValuableObjects;
 using FluentAssertions;
 using System.Reflection;
 
@@ -412,7 +413,28 @@ public class DateIteratorAndResourceCheckerTests
 
     #region Tests for the resource checker
 
+    [Theory]
+    [InlineData(1, 300, true)]
+    [InlineData(2, 2000, false)]
+    [InlineData(3, 1500, true)]
+    [InlineData(4, 1480, false)]
+    [InlineData(5, 930, true)]
+    [InlineData(6, 500, true)]
+    [InlineData(7, 1909, false)]
+    public void AreThereFreeSeedTraysOfTheTypesInUse_ShouldReturnTrueWithASimplePermutation(int seedtrayId, int amount, bool result)
+    {
+        SeedTrayPermutation permutation = new SeedTrayPermutation(seedtrayId, amount);
 
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("AreThereFreeSeedTraysOfTheTypesInUse"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        bool output = (bool)methodInfo.Invoke(iterator, new object[] { permutation });
+
+        output.Should().Be(result);
+    }
 
     #endregion
 }
