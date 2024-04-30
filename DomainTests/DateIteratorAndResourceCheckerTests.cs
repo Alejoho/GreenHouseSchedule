@@ -262,7 +262,7 @@ public class DateIteratorAndResourceCheckerTests
         iterator.SeedBedStatus.Orders.Count.Should().Be(0);
         iterator.SeedBedStatus.OrderLocations.Count.Should().Be(0);
         iterator.SeedBedStatus.DeliveryDetails.Count.Should().Be(0);
-    }        
+    }
 
     [Fact]
     public void DayByDayToRequestDate_ShouldEmptyTheSeedBedByThe_8_18_ThatHadOnlyPartialOrders()
@@ -485,6 +485,30 @@ public class DateIteratorAndResourceCheckerTests
 
         output.Should().Be(result);
     }
+
+    [Theory]
+    [InlineData(1, 8000, false)]
+    [InlineData(1, 7000, true)]
+    [InlineData(3, 11000, true)]
+    [InlineData(6, 5000, true)]
+    [InlineData(2, 9400, false)]
+    [InlineData(7, 9500, true)]
+    public void IsThereAreaForTheSeedTraysInUse_ShouldShouldReturnTheCorrectResultWithASimplePermutation(
+        int firstSeedtrayId, int firstAmount, bool result)
+    {
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("IsThereAreaForTheSeedTraysInUse"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        bool output = (bool)methodInfo.Invoke(iterator, new object[] { permutation });
+
+        output.Should().Be(result);
+    }
+
 
     #endregion
 }
