@@ -431,13 +431,16 @@ namespace Domain
             firstSeedTrayComprobation = seedTrayModel.FreeAmount >= pSeedTrayPermutation.FirstAmount ? true : false;
 
             seedTrayModel = SeedBedStatus.SeedTrays.FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID, null);
+            seedTrayModel = SeedBedStatus.SeedTrays
+                .FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID, null);
             
             if (seedTrayModel != null)
             {
                 secondSeedTrayComprobation = seedTrayModel.FreeAmount >= pSeedTrayPermutation.SecondAmount ? true : false;
             }
 
-            seedTrayModel = SeedBedStatus.SeedTrays.Find(seedTray => seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID);
+            seedTrayModel = SeedBedStatus.SeedTrays
+                .FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID, null);
 
             if (seedTrayModel != null)
             {
@@ -459,16 +462,22 @@ namespace Domain
             decimal areaUsedByTheSeedTrayTypes;
             decimal totalAvailableArea = _seedBedStatus.CalculateTotalAvailableArea();
 
-            SeedTrayModel? seedTrayModel = SeedBedStatus.SeedTrays.Find(seedTray => seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID);
+            SeedTrayModel? seedTrayModel = SeedBedStatus.SeedTrays
+                .Find(seedTray => seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID);
+
             areaUsedByTheSeedTrayTypes = seedTrayModel.Area * pSeedTrayPermutation.FirstAmount;
 
-            seedTrayModel = SeedBedStatus.SeedTrays.FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID, null);
+            seedTrayModel = SeedBedStatus.SeedTrays
+                .FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID, null);
+
             if (seedTrayModel != null)
             {
                 areaUsedByTheSeedTrayTypes += seedTrayModel.Area * pSeedTrayPermutation.SecondAmount;
             }
 
-            seedTrayModel = SeedBedStatus.SeedTrays.Find(seedTray => seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID);
+            seedTrayModel = SeedBedStatus.SeedTrays
+                .FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID, null);
+
             if (seedTrayModel != null)
             {
                 areaUsedByTheSeedTrayTypes += seedTrayModel.Area * pSeedTrayPermutation.ThirdAmount;
