@@ -162,7 +162,7 @@ public class DateIteratorAndResourceCheckerTests
 
         foreach (var order in ordersToSow)
         {
-            foreach(var orderLocation in order.OrderLocations)
+            foreach (var orderLocation in order.OrderLocations)
             {
                 orderLocation.SeedTrayAmount = 120;
             }
@@ -422,6 +422,29 @@ public class DateIteratorAndResourceCheckerTests
     [InlineData(6, 500, true)]
     [InlineData(7, 1909, false)]
     public void AreThereFreeSeedTraysOfTheTypesInUse_ShouldReturnTrueWithASimplePermutation(int seedtrayId, int amount, bool result)
+    [Theory]
+    [InlineData(3, 800, 5, 1500, true)]
+    [InlineData(2, 2000, 1, 150, false)]
+    [InlineData(1, 82, 6, 900, false)]
+    [InlineData(3, 1900, 4, 1473, true)]
+    [InlineData(2, 1769, 5, 1719, false)]
+    [InlineData(6, 700, 4, 1400, true)]
+    [InlineData(3, 1, 7, 1, true)]
+    public void AreThereFreeSeedTraysOfTheTypesInUse_ShouldReturnTheCorrectResultWithADoublePermutation(
+        int firstSeedtrayId, int firstAmount, int secondSeedtrayId, int secondAmount, bool result)
+    {
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount, secondSeedtrayId, secondAmount);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("AreThereFreeSeedTraysOfTheTypesInUse"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        bool output = (bool)methodInfo.Invoke(iterator, new object[] { permutation });
+
+        output.Should().Be(result);
+    }
     {
         SeedTrayPermutation permutation = new SeedTrayPermutation(seedtrayId, amount);
 
