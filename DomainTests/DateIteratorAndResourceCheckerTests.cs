@@ -460,8 +460,20 @@ public class DateIteratorAndResourceCheckerTests
 
         output.Should().Be(result);
     }
+
+    [Theory]
+    [InlineData(1, 500, 2, 1500, 3, 1800, true)]
+    [InlineData(4, 1473, 5, 1718, 6, 709, true)]
+    [InlineData(3, 2000, 7, 500, 5, 800, false)]
+    [InlineData(2, 500, 5, 1800, 3, 1800, false)]
+    [InlineData(7, 100, 6, 700, 5, 2000, false)]
+    [InlineData(5, 2300, 3, 1950, 4, 2150, false)]
+    public void AreThereFreeSeedTraysOfTheTypesInUse_ShouldReturnTheCorrectResultWithATriplePermutation(
+        int firstSeedtrayId, int firstAmount, int secondSeedtrayId, int secondAmount
+        , int thirdSeedtrayId, int thirdAmount, bool result)
     {
-        SeedTrayPermutation permutation = new SeedTrayPermutation(seedtrayId, amount);
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount
+            , secondSeedtrayId, secondAmount, thirdSeedtrayId, thirdAmount);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
 
