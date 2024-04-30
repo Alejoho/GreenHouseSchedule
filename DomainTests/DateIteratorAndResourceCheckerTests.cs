@@ -509,6 +509,29 @@ public class DateIteratorAndResourceCheckerTests
         output.Should().Be(result);
     }
 
+    [Theory]
+    [InlineData(1,5000,2,7000, false)]
+    [InlineData(3,13000, 4,5525, false)]
+    [InlineData(5, 7000, 6, 6000, false)]
+    [InlineData(2, 2850, 7, 3000, true)]
+    [InlineData(4, 4000, 1, 3000, true)]
+    public void IsThereAreaForTheSeedTraysInUse_ShouldReturnTheCorrectResultWithADoublePermutation(
+        int firstSeedtrayId, int firstAmount, int secondSeedtrayId, int secondAmount, bool result)
+    {
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount
+    , secondSeedtrayId, secondAmount);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("IsThereAreaForTheSeedTraysInUse"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        bool output = (bool)methodInfo.Invoke(iterator, new object[] { permutation });
+
+        output.Should().Be(result);
+    }
+
 
     #endregion
 }
