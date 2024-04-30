@@ -421,7 +421,22 @@ public class DateIteratorAndResourceCheckerTests
     [InlineData(5, 930, true)]
     [InlineData(6, 500, true)]
     [InlineData(7, 1909, false)]
-    public void AreThereFreeSeedTraysOfTheTypesInUse_ShouldReturnTrueWithASimplePermutation(int seedtrayId, int amount, bool result)
+    public void AreThereFreeSeedTraysOfTheTypesInUse_ShouldReturnTheCorrectResultWithASimplePermutation(
+        int firstSeedtrayId, int firstAmount, bool result)
+    {
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("AreThereFreeSeedTraysOfTheTypesInUse"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        bool output = (bool)methodInfo.Invoke(iterator, new object[] { permutation });
+
+        output.Should().Be(result);
+    }
+
     [Theory]
     [InlineData(3, 800, 5, 1500, true)]
     [InlineData(2, 2000, 1, 150, false)]
