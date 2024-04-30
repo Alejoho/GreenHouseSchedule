@@ -426,21 +426,25 @@ namespace Domain
             bool secondSeedTrayComprobation = true;
             bool thirdSeedTrayComprobation = true;
 
-            SeedTrayModel? seedTrayModel = SeedBedStatus.SeedTrays.Find(seedTray => seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID);
-            firstSeedTrayComprobation = seedTrayModel.FreeAmount > 0 ? true : false;
+            SeedTrayModel? seedTrayModel = SeedBedStatus.SeedTrays
+                .Find(seedTray => seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID);
+            firstSeedTrayComprobation = seedTrayModel.FreeAmount >= pSeedTrayPermutation.FirstAmount ? true : false;
 
             seedTrayModel = SeedBedStatus.SeedTrays.FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID, null);
+            
             if (seedTrayModel != null)
             {
-                secondSeedTrayComprobation = seedTrayModel.FreeAmount > 0 ? true : false;
+                secondSeedTrayComprobation = seedTrayModel.FreeAmount >= pSeedTrayPermutation.SecondAmount ? true : false;
             }
 
             seedTrayModel = SeedBedStatus.SeedTrays.Find(seedTray => seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID);
+
             if (seedTrayModel != null)
             {
-                thirdSeedTrayComprobation = seedTrayModel.FreeAmount > 0 ? true : false;
+                thirdSeedTrayComprobation = seedTrayModel.FreeAmount >= pSeedTrayPermutation.ThirdAmount ? true : false;
             }
             output = firstSeedTrayComprobation && secondSeedTrayComprobation && thirdSeedTrayComprobation;
+
             return output;
         }
 
