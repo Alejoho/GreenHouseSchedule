@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.ValuableObjects
+﻿namespace Domain.ValuableObjects
 {
     public class SeedTrayPermutation
     {
@@ -57,7 +51,7 @@ namespace Domain.ValuableObjects
         public int FirstSeedTrayID { get => _firstSeedTrayID; set => _firstSeedTrayID = value; }
 
         public int FirstAmount { get => _firstAmount; set => _firstAmount = value; }
-        
+
         public int SecondSeedTrayID { get => _secondSeedTrayID; set => _secondSeedTrayID = value; }
 
         public int SecondAmount { get => _secondAmount; set => _secondAmount = value; }

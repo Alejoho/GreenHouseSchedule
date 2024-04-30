@@ -448,7 +448,8 @@ public class DateIteratorAndResourceCheckerTests
     public void AreThereFreeSeedTraysOfTheTypesInUse_ShouldReturnTheCorrectResultWithADoublePermutation(
         int firstSeedtrayId, int firstAmount, int secondSeedtrayId, int secondAmount, bool result)
     {
-        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount, secondSeedtrayId, secondAmount);
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount
+            , secondSeedtrayId, secondAmount);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
 
@@ -493,7 +494,7 @@ public class DateIteratorAndResourceCheckerTests
     [InlineData(6, 5000, true)]
     [InlineData(2, 9400, false)]
     [InlineData(7, 9500, true)]
-    public void IsThereAreaForTheSeedTraysInUse_ShouldShouldReturnTheCorrectResultWithASimplePermutation(
+    public void IsThereAreaForTheSeedTraysInUse_ShouldReturnTheCorrectResultWithASimplePermutation(
         int firstSeedtrayId, int firstAmount, bool result)
     {
         SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount);
@@ -510,8 +511,8 @@ public class DateIteratorAndResourceCheckerTests
     }
 
     [Theory]
-    [InlineData(1,5000,2,7000, false)]
-    [InlineData(3,13000, 4,5525, false)]
+    [InlineData(1, 5000, 2, 7000, false)]
+    [InlineData(3, 13000, 4, 5525, false)]
     [InlineData(5, 7000, 6, 6000, false)]
     [InlineData(2, 2850, 7, 3000, true)]
     [InlineData(4, 4000, 1, 3000, true)]
@@ -519,7 +520,7 @@ public class DateIteratorAndResourceCheckerTests
         int firstSeedtrayId, int firstAmount, int secondSeedtrayId, int secondAmount, bool result)
     {
         SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount
-    , secondSeedtrayId, secondAmount);
+            , secondSeedtrayId, secondAmount);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
 
