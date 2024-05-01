@@ -351,9 +351,15 @@ namespace Domain
         {
             foreach (SeedTrayModel seedTrayModelLevel1 in SeedBedStatus.SeedTrays)
             {
-                List<SeedTrayModel> listOfseedTraysLevel2 = (List<SeedTrayModel>)SeedBedStatus.SeedTrays
+                int estimateAmountOfSeedlingLevel1 =
+                    seedTrayModelLevel1.FreeAmount * seedTrayModelLevel1.AlveolusQuantity;
+
+                if (_orderInProcess.SeedlingAmount > estimateAmountOfSeedlingLevel1)
+                {
+                    var listOfSeedTraysLevel2 = SeedBedStatus.SeedTrays
                     .Where(seedTray => seedTray.ID != seedTrayModelLevel1.ID);
-                foreach (SeedTrayModel seedTrayModelLevel2 in listOfseedTraysLevel2)
+
+                    foreach (SeedTrayModel seedTrayModelLevel2 in listOfSeedTraysLevel2)
                 {
                     int estimateAmountOfSeedlingLevel1 = seedTrayModelLevel1.FreeAmount * seedTrayModelLevel1.AlveolusQuantity;
 
@@ -372,6 +378,7 @@ namespace Domain
                     }
                 }
             }
+        }
         }
 
         /// <summary>
