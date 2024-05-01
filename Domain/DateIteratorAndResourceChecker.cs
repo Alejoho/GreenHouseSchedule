@@ -1,7 +1,6 @@
 ﻿using Domain.Models;
 using Domain.ValuableObjects;
 using System.Collections;
-using System.Diagnostics;
 
 namespace Domain
 {
@@ -70,7 +69,7 @@ namespace Domain
         /// <param name="pOrderInProcess">The order that to place in the seedbed.</param>
         public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel pOrderInProcess)
         {
-            _seedBedStatus = seedBedStatus;            
+            _seedBedStatus = seedBedStatus;
             _orderInProcess = pOrderInProcess;
             _seedTrayPermutations = new LinkedList<SeedTrayPermutation>();
             _seedTrayPermutationsToDelete = new ArrayList();
@@ -86,12 +85,18 @@ namespace Domain
         /// </summary>
         private void DayByDayToRequestDate()
         {
+            //CHECK - al crear la instancia de esta clase el status se mueve directo al dia de la orden que se desea agregar
+            //y realiza el trabajo de ese dia sin agregar la orden. Pero al pasar al metodo LookForAvailability se va 
+            //a trabajar de nuevo el dia requerido por la orden, esto trae consigo que se rewstablezca el potencial de
+            //siembra del dia, lo que es un error.
+
+            //TODO - Maybe change this loop to a while.
             do
             {
                 DoTheWorkOfThisDay();
 
                 CheckForNegattive();
-    
+
                 SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(1);
 
             } while (SeedBedStatus.IteratorDate <= _orderInProcess.EstimateSowDate);
@@ -120,9 +125,9 @@ namespace Domain
 
         private void CheckForNegattive()
         {
-            SeedBedStatus.GreenHouses.ForEach(greenHouse => 
+            SeedBedStatus.GreenHouses.ForEach(greenHouse =>
             {
-                if (greenHouse.SeedTrayAvailableArea < negattiveGreenHouse[greenHouse.ID-1].value)
+                if (greenHouse.SeedTrayAvailableArea < negattiveGreenHouse[greenHouse.ID - 1].value)
                 {
                     negattiveGreenHouse[greenHouse.ID - 1].value = greenHouse.SeedTrayAvailableArea;
                     negattiveGreenHouse[greenHouse.ID - 1].date = SeedBedStatus.IteratorDate;
@@ -205,7 +210,7 @@ namespace Domain
                                 SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay -= orderLocation.SeedTrayAmount;
                                 orderLocation.Sown = true;
                             }
-                            else if(SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay < orderLocation.SeedTrayAmount
+                            else if (SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay < orderLocation.SeedTrayAmount
                                 && SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > SeedBedStatus.MinimumLimitOfSeedTrayToSow)
                             {
                                 int newID = SeedBedStatus.OrderLocations.Max(x => x.ID) + 1;
@@ -274,6 +279,13 @@ namespace Domain
         public void LookForAvailability()
         {
             _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
+
+            //CHECK - al crear la instancia de esta clase el status se mueve directo al dia de la orden que se desea agregar
+            //y realiza el trabajo de ese dia sin agregar la orden. Pero al pasar al metodo LookForAvailability se va 
+            //a trabajar de nuevo el dia requerido por la orden, esto trae consigo que se rewstablezca el potencial de
+            //siembra del dia, lo que es un error.
+
+            //TODO - Maybe change this loop to a while.
 
             do
             {
@@ -357,28 +369,26 @@ namespace Domain
                 if (_orderInProcess.SeedlingAmount > estimateAmountOfSeedlingLevel1)
                 {
                     var listOfSeedTraysLevel2 = SeedBedStatus.SeedTrays
-                    .Where(seedTray => seedTray.ID != seedTrayModelLevel1.ID);
+                        .Where(seedTray => seedTray.ID != seedTrayModelLevel1.ID);
 
                     foreach (SeedTrayModel seedTrayModelLevel2 in listOfSeedTraysLevel2)
-                {
-                    int estimateAmountOfSeedlingLevel1 = seedTrayModelLevel1.FreeAmount * seedTrayModelLevel1.AlveolusQuantity;
-
-                    int estimateAmountOfSeedTrayLevel2 = (int)Math.Ceiling(
-                        (double)(_orderInProcess.SeedlingAmount - estimateAmountOfSeedlingLevel1) /
-                        (double)seedTrayModelLevel2.AlveolusQuantity);
-
-                    SeedTrayPermutation newSeedTrayPermutation = new SeedTrayPermutation(
-                                                                seedTrayModelLevel1.ID, seedTrayModelLevel1.FreeAmount,
-                                                                seedTrayModelLevel2.ID, estimateAmountOfSeedTrayLevel2);
-
-                    if (AreThereFreeSeedTraysOfTheTypesInUse(newSeedTrayPermutation) == true &&
-                        IsThereAreaForTheSeedTraysInUse(newSeedTrayPermutation) == true)
                     {
-                        _seedTrayPermutations.AddLast(newSeedTrayPermutation);
+                        int estimateAmountOfSeedTrayLevel2 = (int)Math.Ceiling(
+                            (double)(_orderInProcess.SeedlingAmount - estimateAmountOfSeedlingLevel1) /
+                            (double)seedTrayModelLevel2.AlveolusQuantity);
+
+                        SeedTrayPermutation newSeedTrayPermutation = new SeedTrayPermutation(
+                            seedTrayModelLevel1.ID, seedTrayModelLevel1.FreeAmount,
+                            seedTrayModelLevel2.ID, estimateAmountOfSeedTrayLevel2);
+
+                        if (AreThereFreeSeedTraysOfTheTypesInUse(newSeedTrayPermutation) == true &&
+                            IsThereAreaForTheSeedTraysInUse(newSeedTrayPermutation) == true)
+                        {
+                            _seedTrayPermutations.AddLast(newSeedTrayPermutation);
+                        }
                     }
                 }
             }
-        }
         }
 
         /// <summary>
@@ -394,37 +404,37 @@ namespace Domain
                 if (_orderInProcess.SeedlingAmount > estimateAmountOfSeedlingLevel1)
                 {
                     var listOfSeedTraysLevel2 = SeedBedStatus.SeedTrays
-                    .Where(seedTray => seedTray.ID != seedTrayModelLevel1.ID);
+                        .Where(seedTray => seedTray.ID != seedTrayModelLevel1.ID);
 
                     foreach (SeedTrayModel seedTrayModelLevel2 in listOfSeedTraysLevel2)
                     {
                         int estimateAmountOfSeedlingLevel2 = seedTrayModelLevel2.FreeAmount * seedTrayModelLevel2.AlveolusQuantity;
 
                         if (_orderInProcess.SeedlingAmount > (estimateAmountOfSeedlingLevel1 + estimateAmountOfSeedlingLevel2))
-                {
+                        {
                             var listOfSeedTraysLevel3 = listOfSeedTraysLevel2
-                        .Where(seedTray => seedTray.ID != seedTrayModelLevel2.ID);
+                                .Where(seedTray => seedTray.ID != seedTrayModelLevel2.ID);
 
                             foreach (SeedTrayModel seedTrayModelLevel3 in listOfSeedTraysLevel3)
-                    {
-                        int estimateAmountOfSeedTrayLevel3 = (int)Math.Ceiling(
-                            (double)(_orderInProcess.SeedlingAmount - (estimateAmountOfSeedlingLevel1 + estimateAmountOfSeedlingLevel2)) /
-                            (double)seedTrayModelLevel2.AlveolusQuantity);
+                            {
+                                int estimateAmountOfSeedTrayLevel3 = (int)Math.Ceiling(
+                                    (double)(_orderInProcess.SeedlingAmount - (estimateAmountOfSeedlingLevel1 + estimateAmountOfSeedlingLevel2)) /
+                                    (double)seedTrayModelLevel2.AlveolusQuantity);
 
-                        SeedTrayPermutation newSeedTrayPermutation = new SeedTrayPermutation(
-                                                                    seedTrayModelLevel1.ID, seedTrayModelLevel1.FreeAmount,
-                                                                    seedTrayModelLevel2.ID, seedTrayModelLevel2.FreeAmount,
-                                                                    seedTrayModelLevel3.ID, estimateAmountOfSeedTrayLevel3);
+                                SeedTrayPermutation newSeedTrayPermutation = new SeedTrayPermutation(
+                                    seedTrayModelLevel1.ID, seedTrayModelLevel1.FreeAmount,
+                                    seedTrayModelLevel2.ID, seedTrayModelLevel2.FreeAmount,
+                                    seedTrayModelLevel3.ID, estimateAmountOfSeedTrayLevel3);
 
-                        if (AreThereFreeSeedTraysOfTheTypesInUse(newSeedTrayPermutation) == true &&
-                            IsThereAreaForTheSeedTraysInUse(newSeedTrayPermutation) == true)
-                        {
-                            _seedTrayPermutations.AddLast(newSeedTrayPermutation);
+                                if (AreThereFreeSeedTraysOfTheTypesInUse(newSeedTrayPermutation) == true &&
+                                    IsThereAreaForTheSeedTraysInUse(newSeedTrayPermutation) == true)
+                                {
+                                    _seedTrayPermutations.AddLast(newSeedTrayPermutation);
+                                }
+                            }
                         }
                     }
                 }
-            }
-        }
             }
         }
 
@@ -444,10 +454,12 @@ namespace Domain
                 .Find(seedTray => seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID);
             firstSeedTrayComprobation = seedTrayModel.FreeAmount >= pSeedTrayPermutation.FirstAmount ? true : false;
 
-            seedTrayModel = SeedBedStatus.SeedTrays.FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID, null);
+            //LATER - Refactor these two methods. If I have a permutation with only a seedtray it have to iterate 
+            //over all the seedtrays to find that the secondId and the thirdId are null. Instead of that include
+            //the look up of the seedtray inside of the if.
             seedTrayModel = SeedBedStatus.SeedTrays
                 .FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID, null);
-            
+
             if (seedTrayModel != null)
             {
                 secondSeedTrayComprobation = seedTrayModel.FreeAmount >= pSeedTrayPermutation.SecondAmount ? true : false;
