@@ -645,6 +645,54 @@ public class DateIteratorAndResourceCheckerTests
         permutations.Count.Should().Be(permutationAmount);
     }
 
+    [Theory]
+    [InlineData(162000, 0)]
+    [InlineData(200000, 0)]
+    [InlineData(300000, 0)]
+    [InlineData(360000, 0)]
+    [InlineData(370000, 10)]
+    [InlineData(380000, 10)]
+    [InlineData(390000, 10)]
+    [InlineData(400000, 10)]
+    [InlineData(450000, 6)]
+    [InlineData(453000, 4)]
+    [InlineData(459000, 2)]
+    [InlineData(460000, 0)]
+    public void GenerateAndAddTriplePermutations_ShouldWork(int seedlingAmount, int permutationAmount)
+    {
+        OrderModel newOrder = new OrderModel(1
+            , new ClientModel(1, "", "")
+            , new ProductModel(1, "", "", 30)
+            , seedlingAmount
+            , new DateOnly()
+            , new DateOnly()
+            , null
+            , null
+            , null
+            , false);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
+
+        foreach (var greenHouse in iterator.SeedBedStatus.GreenHouses)
+        {
+            greenHouse.SeedTrayAvailableArea *= 0.1640m;
+        }
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("GenerateAndAddTriplePermutations"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo.Invoke(iterator, null);
+
+        FieldInfo fieldInfo = typeof(DateIteratorAndResourceChecker)
+            .GetField("_seedTrayPermutations"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        var permutations = (LinkedList<SeedTrayPermutation>)fieldInfo.GetValue(iterator);
+
+        permutations.Count.Should().Be(permutationAmount);
+    }
+
 
     #endregion
 }
