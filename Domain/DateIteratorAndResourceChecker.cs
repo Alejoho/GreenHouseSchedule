@@ -389,19 +389,24 @@ namespace Domain
         {
             foreach (SeedTrayModel seedTrayModelLevel1 in SeedBedStatus.SeedTrays)
             {
-                List<SeedTrayModel> listOfseedTraysLevel2 = (List<SeedTrayModel>)SeedBedStatus.SeedTrays
-                    .Where(seedTray => seedTray.ID != seedTrayModelLevel1.ID);
-                foreach (SeedTrayModel seedTrayModelLevel2 in listOfseedTraysLevel2)
+                int estimateAmountOfSeedlingLevel1 = seedTrayModelLevel1.FreeAmount * seedTrayModelLevel1.AlveolusQuantity;
+
+                if (_orderInProcess.SeedlingAmount > estimateAmountOfSeedlingLevel1)
                 {
-                    List<SeedTrayModel> listOfseedTraysLevel3 = (List<SeedTrayModel>)listOfseedTraysLevel2
-                        .Where(seedTray => seedTray.ID != seedTrayModelLevel2.ID);
-                    foreach (SeedTrayModel seedTrayModelLevel3 in listOfseedTraysLevel3)
+                    var listOfSeedTraysLevel2 = SeedBedStatus.SeedTrays
+                    .Where(seedTray => seedTray.ID != seedTrayModelLevel1.ID);
+
+                    foreach (SeedTrayModel seedTrayModelLevel2 in listOfSeedTraysLevel2)
                     {
-
-                        int estimateAmountOfSeedlingLevel1 = seedTrayModelLevel1.FreeAmount * seedTrayModelLevel1.AlveolusQuantity;
-
                         int estimateAmountOfSeedlingLevel2 = seedTrayModelLevel2.FreeAmount * seedTrayModelLevel2.AlveolusQuantity;
 
+                        if (_orderInProcess.SeedlingAmount > (estimateAmountOfSeedlingLevel1 + estimateAmountOfSeedlingLevel2))
+                {
+                            var listOfSeedTraysLevel3 = listOfSeedTraysLevel2
+                        .Where(seedTray => seedTray.ID != seedTrayModelLevel2.ID);
+
+                            foreach (SeedTrayModel seedTrayModelLevel3 in listOfSeedTraysLevel3)
+                    {
                         int estimateAmountOfSeedTrayLevel3 = (int)Math.Ceiling(
                             (double)(_orderInProcess.SeedlingAmount - (estimateAmountOfSeedlingLevel1 + estimateAmountOfSeedlingLevel2)) /
                             (double)seedTrayModelLevel2.AlveolusQuantity);
@@ -418,6 +423,8 @@ namespace Domain
                         }
                     }
                 }
+            }
+        }
             }
         }
 
