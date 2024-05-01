@@ -558,6 +558,12 @@ public class DateIteratorAndResourceCheckerTests
     [InlineData(200000, 5)]
     [InlineData(100000, 7)]
     [InlineData(800000, 0)]
+    [InlineData(300000, 0)]
+    [InlineData(320000, 0)]
+    [InlineData(250000, 2)]
+    [InlineData(50000, 7)]
+    [InlineData(5000, 7)]
+    [InlineData(1000, 7)]
     public void GenerateAndAddSimplePermutations_ShouldWork(int seedlingAmount, int permutationAmount)
     {
         OrderModel newOrder = new OrderModel(1
