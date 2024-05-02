@@ -564,7 +564,7 @@ public class DateIteratorAndResourceCheckerTests
     [InlineData(50000, 7)]
     [InlineData(5000, 7)]
     [InlineData(1000, 7)]
-    public void GenerateAndAddSimplePermutations_ShouldWork(int seedlingAmount, int permutationAmount)
+    public void GenerateAndAddSimplePermutations_ShouldCreateTheCorrectAmountOfPermutations(int seedlingAmount, int permutationAmount)
     {
         OrderModel newOrder = new OrderModel(1
             , new ClientModel(1, "", "")
@@ -579,7 +579,7 @@ public class DateIteratorAndResourceCheckerTests
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
 
-        foreach(var greenHouse in iterator.SeedBedStatus.GreenHouses)
+        foreach (var greenHouse in iterator.SeedBedStatus.GreenHouses)
         {
             greenHouse.SeedTrayAvailableArea *= 0.1640m; 
         }
@@ -610,7 +610,7 @@ public class DateIteratorAndResourceCheckerTests
     [InlineData(220000, 12)]
     [InlineData(244000, 18)]
     [InlineData(355000, 6)]
-    public void GenerateAndAddDoublePermutations_ShouldWork(int seedlingAmount, int permutationAmount)
+    public void GenerateAndAddDoublePermutations_ShouldCreateTheCorrectAmountOfPermutations(int seedlingAmount, int permutationAmount)
     {
         OrderModel newOrder = new OrderModel(1
             , new ClientModel(1, "", "")
@@ -658,7 +658,7 @@ public class DateIteratorAndResourceCheckerTests
     [InlineData(453000, 4)]
     [InlineData(459000, 2)]
     [InlineData(460000, 0)]
-    public void GenerateAndAddTriplePermutations_ShouldWork(int seedlingAmount, int permutationAmount)
+    public void GenerateAndAddTriplePermutations_ShouldCreateTheCorrectAmountOfPermutations(int seedlingAmount, int permutationAmount)
     {
         OrderModel newOrder = new OrderModel(1
             , new ClientModel(1, "", "")
@@ -690,6 +690,8 @@ public class DateIteratorAndResourceCheckerTests
 
         var permutations = (LinkedList<SeedTrayPermutation>)fieldInfo.GetValue(iterator);
 
+        permutations.Count.Should().Be(permutationAmount);
+    }
         permutations.Count.Should().Be(permutationAmount);
     }
 
