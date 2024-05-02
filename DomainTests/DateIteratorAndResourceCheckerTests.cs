@@ -735,6 +735,47 @@ public class DateIteratorAndResourceCheckerTests
             .Count().Should().Be(permutationAmount);
         permutations.Count().Should().Be(permutationAmount);
     }
+
+    [Theory]
+    [InlineData(280000, 19)]
+    [InlineData(300000, 10)]
+    [InlineData(360000, 5)]
+    [InlineData(600000, 0)]
+    public void SeedTrayAndAreaResources_ShouldGiveOnlyDoublePermutations(
+        int seedlingAmount, int permutationAmount)
+    {
+        OrderModel newOrder = new OrderModel(1
+            , new ClientModel(1, "", "")
+            , new ProductModel(1, "", "", 30)
+            , seedlingAmount
+            , new DateOnly()
+            , new DateOnly()
+            , null
+            , null
+            , null
+            , false);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
+
+        foreach (var greenHouse in iterator.SeedBedStatus.GreenHouses)
+        {
+            greenHouse.SeedTrayAvailableArea *= 0.1640m;
+        }
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("SeedTrayAndAreaResources"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo.Invoke(iterator, null);
+
+        FieldInfo fieldInfo = typeof(DateIteratorAndResourceChecker)
+            .GetField("_seedTrayPermutations"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        var permutations = (LinkedList<SeedTrayPermutation>)fieldInfo.GetValue(iterator);
+
+        permutations.Where(x => x.FirstSeedTrayID > 0 && x.SecondSeedTrayID > 0 && x.ThirdSeedTrayID == 0)
+            .Count().Should().Be(permutationAmount);
         permutations.Count.Should().Be(permutationAmount);
     }
 
