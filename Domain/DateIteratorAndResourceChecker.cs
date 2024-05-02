@@ -278,8 +278,6 @@ namespace Domain
         /// </summary>
         public void LookForAvailability()
         {
-            _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
-
             //CHECK - al crear la instancia de esta clase el status se mueve directo al dia de la orden que se desea agregar
             //y realiza el trabajo de ese dia sin agregar la orden. Pero al pasar al metodo LookForAvailability se va 
             //a trabajar de nuevo el dia requerido por la orden, esto trae consigo que se rewstablezca el potencial de
@@ -310,6 +308,7 @@ namespace Domain
         /// <returns>Returns true if there is work force otherwise false.</returns>
         private bool WorkForceResource()
         {
+            //LATER - Maybe instead of comparing with 0 its better to compare with MinimumLimitOfSeedTrayToSow
             bool IsThereWorkForceOnThisDay = SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > 0 ? true : false;
             return IsThereWorkForceOnThisDay;
         }
@@ -534,6 +533,11 @@ namespace Domain
                     _auxiliarSeedBedStatus.IteratorDate.AddDays(1);
                     DoTheWorkOfThisDay();
                 } while (
+                //CHECK - Here I evaluate if by putting the new order some resources get negattive numbers,
+                //but I don't evaluate the limitation of the amount of seed trays to sow in a day.
+                //tal vez chequeando que las ordernes no tenga un defase mayor a un terminado numero entre
+                //la EstimateSowDate and the RealSowDate. No se digamos de una semana. Este es un valor que se puede 
+                //poner en el app.config
                 _auxiliarSeedBedStatus.IteratorDate <= limitDate &&
                 _auxiliarSeedBedStatus.ThereAreNonNegattiveValuesOfSeedTray() &&
                 _auxiliarSeedBedStatus.ThereAreNonNegattiveValuesOfArea()
