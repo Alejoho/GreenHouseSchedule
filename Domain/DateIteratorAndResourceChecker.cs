@@ -52,6 +52,7 @@ namespace Domain
         public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel orderInProcess = null, bool testing = true)
         {
             _seedBedStatus = new SeedBedStatus(seedBedStatus);
+            _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
 
             if (orderInProcess != null)
             {
@@ -581,8 +582,6 @@ namespace Domain
                 _orderInProcess.ID,
                 pSeedTrayPermutation.FirstAmount,
                 seedlingAmount);
-            orderToAdd.OrderLocations.AddLast(orderLocationToAdd);
-            _auxiliarSeedBedStatus.OrderLocations.AddLast(orderLocationToAdd);
 
             newOrder.OrderLocations.AddLast(newOrderLocation);
 

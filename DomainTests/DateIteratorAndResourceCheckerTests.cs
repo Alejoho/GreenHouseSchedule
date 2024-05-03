@@ -888,5 +888,53 @@ public class DateIteratorAndResourceCheckerTests
         permutations.Count.Should().Be(simplePermutationAmount + doublePermutationAmount + triplePermutationAmount);
     }
 
+    [Theory]
+    [InlineData(75000, 1, 268, 0, 0, 0, 0, 1)]
+    [InlineData(75000, 1, 179, 2, 174, 0, 0, 2)]
+    [InlineData(75000, 1, 90, 2, 174, 4, 116, 3)]
+    public void InsertOrderInProcessIntoSeedBedStatusAuxiliar_ShouldWork(
+        int seedlingAmount
+        , int seedTrayId1, int amount1
+        , int seedTrayId2, int amount2
+        , int seedTrayId3, int amount3
+        , int newOrderLocations)
+    {
+        OrderModel newOrder = new OrderModel(1
+            , new ClientModel(1, "", "")
+            , new ProductModel(1, "", "", 30)
+            , seedlingAmount
+            , new DateOnly()
+            , new DateOnly()
+            , null
+            , null
+            , null
+            , false);
+
+        SeedTrayPermutation permutation = new SeedTrayPermutation(
+            seedTrayId1, amount1
+            , seedTrayId2, amount2
+            , seedTrayId3, amount3);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
+
+        FieldInfo fieldInfo = typeof(DateIteratorAndResourceChecker).GetField("_auxiliarSeedBedStatus"
+            , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        SeedBedStatus auxStatus = (SeedBedStatus)fieldInfo.GetValue(iterator);
+
+        int oldOrderCount = auxStatus.Orders.Count;
+
+        int oldOrderLocationsCount = auxStatus.OrderLocations.Count;
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("InsertOrderInProcessIntoSeedBedStatusAuxiliar"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo.Invoke(iterator, new object[] { permutation });
+
+        auxStatus.Orders.Count.Should().Be(oldOrderCount + 1);
+        auxStatus.OrderLocations.Count.Should().Be(oldOrderLocationsCount + newOrderLocations);
+    }
+
     #endregion
 }
