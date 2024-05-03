@@ -566,17 +566,16 @@ namespace Domain
         /// <param name="pSeedTrayPermutation">The <c>SeedTrayPermutation</c> to use with the new order.</param>
         private void InsertOrderInProcessIntoSeedBedStatusAuxiliar(SeedTrayPermutation pSeedTrayPermutation)
         {
-            OrderModel orderToAdd = new OrderModel(_orderInProcess);
-            OrderLocationModel orderLocationToAdd;
+            OrderModel newOrder = new OrderModel(_orderInProcess);
+            OrderLocationModel newOrderLocation;
 
-            int seedlingAmount = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
+            int alveolus = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
                                   where seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID
-                                  select pSeedTrayPermutation.FirstSeedTrayID).FirstOrDefault(0);
+                            select seedTray.AlveolusQuantity).FirstOrDefault(0);
 
-            //int seedlingAmount2 = _seedBedStatus.SeedTrays.
-            //    FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID).AlveolusQuantity;
+            int seedlingAmount = alveolus * pSeedTrayPermutation.FirstAmount;
 
-            orderLocationToAdd = new OrderLocationModel(
+            newOrderLocation = new OrderLocationModel(
                 _auxiliarSeedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                 pSeedTrayPermutation.FirstSeedTrayID,
                 _orderInProcess.ID,
@@ -585,36 +584,50 @@ namespace Domain
             orderToAdd.OrderLocations.AddLast(orderLocationToAdd);
             _auxiliarSeedBedStatus.OrderLocations.AddLast(orderLocationToAdd);
 
-            if (pSeedTrayPermutation.SecondSeedTrayID != 0)
+            newOrder.OrderLocations.AddLast(newOrderLocation);
+
+            _auxiliarSeedBedStatus.OrderLocations.AddLast(newOrderLocation);
+
+            if (pSeedTrayPermutation.SecondSeedTrayID > 0)
             {
-                seedlingAmount = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
+                alveolus = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
                                   where seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID
-                                  select pSeedTrayPermutation.SecondSeedTrayID).FirstOrDefault(0);
-                orderLocationToAdd = new OrderLocationModel(
+                            select seedTray.AlveolusQuantity).FirstOrDefault(0);
+
+                seedlingAmount = alveolus * pSeedTrayPermutation.FirstAmount;
+
+                newOrderLocation = new OrderLocationModel(
                     _auxiliarSeedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                     pSeedTrayPermutation.SecondSeedTrayID,
                     _orderInProcess.ID,
                     pSeedTrayPermutation.SecondAmount,
                     seedlingAmount);
-                orderToAdd.OrderLocations.AddLast(orderLocationToAdd);
-                _auxiliarSeedBedStatus.OrderLocations.AddLast(orderLocationToAdd);
+
+                newOrder.OrderLocations.AddLast(newOrderLocation);
+
+                _auxiliarSeedBedStatus.OrderLocations.AddLast(newOrderLocation);
             }
 
             if (pSeedTrayPermutation.ThirdSeedTrayID != 0)
             {
-                seedlingAmount = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
+                alveolus = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
                                   where seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID
-                                  select pSeedTrayPermutation.ThirdSeedTrayID).FirstOrDefault(0);
-                orderLocationToAdd = new OrderLocationModel(
+                            select seedTray.AlveolusQuantity).FirstOrDefault(0);
+
+                seedlingAmount = alveolus * pSeedTrayPermutation.FirstAmount;
+
+                newOrderLocation = new OrderLocationModel(
                     _auxiliarSeedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                     pSeedTrayPermutation.ThirdSeedTrayID,
                     _orderInProcess.ID,
                     pSeedTrayPermutation.ThirdAmount,
                     seedlingAmount);
-                orderToAdd.OrderLocations.AddLast(orderLocationToAdd);
-                _auxiliarSeedBedStatus.OrderLocations.AddLast(orderLocationToAdd);
+
+                newOrder.OrderLocations.AddLast(newOrderLocation);
+
+                _auxiliarSeedBedStatus.OrderLocations.AddLast(newOrderLocation);
             }
-            _auxiliarSeedBedStatus.Orders.AddLast(orderToAdd);
+            _auxiliarSeedBedStatus.Orders.AddLast(newOrder);
         }
 
         /// <summary>
