@@ -528,10 +528,10 @@ namespace Domain
             {
                 _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
                 InsertOrderInProcessIntoSeedBedStatusAuxiliar(seedTrayPermutation);
-                _auxiliarSeedBedStatus.IteratorDate.AddDays(-1);
+                _auxiliarSeedBedStatus.IteratorDate = _auxiliarSeedBedStatus.IteratorDate.AddDays(-1);
                 do
                 {
-                    _auxiliarSeedBedStatus.IteratorDate.AddDays(1);
+                    _auxiliarSeedBedStatus.IteratorDate = _auxiliarSeedBedStatus.IteratorDate.AddDays(1);
                     DoTheWorkOfThisDay();
                 } while (
                 //CHECK - Here I evaluate if by putting the new order some resources get negattive numbers,
