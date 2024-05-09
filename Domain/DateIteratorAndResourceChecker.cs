@@ -522,16 +522,17 @@ namespace Domain
         {
             bool output = false;
 
-            DateOnly limitDate = SeedBedStatus.IteratorDate.AddDays(_orderInProcess.Product.ProductionInterval);
+            DateOnly limitDate = _seedBedStatus.IteratorDate.AddDays(_orderInProcess.Product.ProductionInterval);
+
+            _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
 
             foreach (SeedTrayPermutation seedTrayPermutation in _seedTrayPermutations)
             {
-                _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
-                InsertOrderInProcessIntoSeedBedStatusAuxiliar(seedTrayPermutation);
-                _auxiliarSeedBedStatus.IteratorDate = _auxiliarSeedBedStatus.IteratorDate.AddDays(-1);
+                InsertOrderInProcessIntoSeedBedStatus(seedTrayPermutation);
+                _seedBedStatus.IteratorDate = _seedBedStatus.IteratorDate.AddDays(-1);
                 do
                 {
-                    _auxiliarSeedBedStatus.IteratorDate = _auxiliarSeedBedStatus.IteratorDate.AddDays(1);
+                    _seedBedStatus.IteratorDate = _seedBedStatus.IteratorDate.AddDays(1);
                     DoTheWorkOfThisDay();
                 } while (
                 //CHECK - Here I evaluate if by putting the new order some resources get negattive numbers,
@@ -539,12 +540,12 @@ namespace Domain
                 //tal vez chequeando que las ordernes no tenga un defase mayor a un terminado numero entre
                 //la EstimateSowDate and the RealSowDate. No se digamos de una semana. Este es un valor que se puede 
                 //poner en el app.config
-                _auxiliarSeedBedStatus.IteratorDate <= limitDate &&
-                _auxiliarSeedBedStatus.ThereAreNonNegattiveValuesOfSeedTray() &&
-                _auxiliarSeedBedStatus.ThereAreNonNegattiveValuesOfArea()
+                _seedBedStatus.IteratorDate <= limitDate &&
+                _seedBedStatus.ThereAreNonNegattiveValuesOfSeedTray() &&
+                _seedBedStatus.ThereAreNonNegattiveValuesOfArea()
                 );
 
-                if (_auxiliarSeedBedStatus.IteratorDate < limitDate)
+                if (_seedBedStatus.IteratorDate < limitDate)
                 {
                     _seedTrayPermutationsToDelete.Add(seedTrayPermutation);
                 }
@@ -565,19 +566,19 @@ namespace Domain
         /// Inserts the new order with the especified seedtray permutation into the seedbed auxiliar.
         /// </summary>
         /// <param name="pSeedTrayPermutation">The <c>SeedTrayPermutation</c> to use with the new order.</param>
-        private void InsertOrderInProcessIntoSeedBedStatusAuxiliar(SeedTrayPermutation pSeedTrayPermutation)
+        private void InsertOrderInProcessIntoSeedBedStatus(SeedTrayPermutation pSeedTrayPermutation)
         {
             OrderModel newOrder = new OrderModel(_orderInProcess);
             OrderLocationModel newOrderLocation;
 
-            int alveolus = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
+            int alveolus = (from seedTray in _seedBedStatus.SeedTrays
                                   where seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID
                             select seedTray.AlveolusQuantity).FirstOrDefault(0);
 
             int seedlingAmount = alveolus * pSeedTrayPermutation.FirstAmount;
 
             newOrderLocation = new OrderLocationModel(
-                _auxiliarSeedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
+                _seedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                 pSeedTrayPermutation.FirstSeedTrayID,
                 _orderInProcess.ID,
                 pSeedTrayPermutation.FirstAmount,
@@ -585,18 +586,18 @@ namespace Domain
 
             newOrder.OrderLocations.AddLast(newOrderLocation);
 
-            _auxiliarSeedBedStatus.OrderLocations.AddLast(newOrderLocation);
+            _seedBedStatus.OrderLocations.AddLast(newOrderLocation);
 
             if (pSeedTrayPermutation.SecondSeedTrayID > 0)
             {
-                alveolus = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
+                alveolus = (from seedTray in _seedBedStatus.SeedTrays
                                   where seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID
                             select seedTray.AlveolusQuantity).FirstOrDefault(0);
 
                 seedlingAmount = alveolus * pSeedTrayPermutation.FirstAmount;
 
                 newOrderLocation = new OrderLocationModel(
-                    _auxiliarSeedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
+                    _seedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                     pSeedTrayPermutation.SecondSeedTrayID,
                     _orderInProcess.ID,
                     pSeedTrayPermutation.SecondAmount,
@@ -604,19 +605,19 @@ namespace Domain
 
                 newOrder.OrderLocations.AddLast(newOrderLocation);
 
-                _auxiliarSeedBedStatus.OrderLocations.AddLast(newOrderLocation);
+                _seedBedStatus.OrderLocations.AddLast(newOrderLocation);
             }
 
             if (pSeedTrayPermutation.ThirdSeedTrayID != 0)
             {
-                alveolus = (from seedTray in _auxiliarSeedBedStatus.SeedTrays
+                alveolus = (from seedTray in _seedBedStatus.SeedTrays
                                   where seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID
                             select seedTray.AlveolusQuantity).FirstOrDefault(0);
 
                 seedlingAmount = alveolus * pSeedTrayPermutation.FirstAmount;
 
                 newOrderLocation = new OrderLocationModel(
-                    _auxiliarSeedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
+                    _seedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                     pSeedTrayPermutation.ThirdSeedTrayID,
                     _orderInProcess.ID,
                     pSeedTrayPermutation.ThirdAmount,
@@ -624,9 +625,9 @@ namespace Domain
 
                 newOrder.OrderLocations.AddLast(newOrderLocation);
 
-                _auxiliarSeedBedStatus.OrderLocations.AddLast(newOrderLocation);
+                _seedBedStatus.OrderLocations.AddLast(newOrderLocation);
             }
-            _auxiliarSeedBedStatus.Orders.AddLast(newOrder);
+            _seedBedStatus.Orders.AddLast(newOrder);
         }
 
         /// <summary>
