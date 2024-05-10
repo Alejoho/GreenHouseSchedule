@@ -50,7 +50,7 @@ namespace Domain.Models
 
         /// <summary>
         /// Initializes a new instance of <c>OrderLocationModel</c> but without especify 
-        /// the greenhouse and the dates.
+        /// the dates.
         /// </summary>
         /// <remarks>
         /// This constructor is used to create an instance of an <c>OrderLocationModel</c> for 
@@ -65,7 +65,7 @@ namespace Domain.Models
         public OrderLocationModel(int pID, int pSeedTrayType,  int pOrderID, int pSeedTrayAmount, int pSeedlingAmount)
         {
             _ID = pID;
-            _greenHouse = 0;
+            _greenHouse = -1;
             _seedTrayType = pSeedTrayType;
             _orderID = pOrderID;
             _seedTrayAmount = pSeedTrayAmount;            

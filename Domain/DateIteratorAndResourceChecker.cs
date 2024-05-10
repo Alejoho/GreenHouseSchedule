@@ -284,7 +284,8 @@ namespace Domain
             //a trabajar de nuevo el dia requerido por la orden, esto trae consigo que se rewstablezca el potencial de
             //siembra del dia, lo que es un error.
 
-            //TODO - Maybe change this loop to a while.
+            GreenHouseModel tempGreenHouse = new GreenHouseModel(-1, "TempGreenHouse", 0, 0, true);
+            SeedBedStatus.GreenHouses.Add(tempGreenHouse);
 
             do
             {
@@ -292,6 +293,8 @@ namespace Domain
                 _orderInProcess.RequestDate.AddDays(1);
             } while (AreThereResources() == false && DoesItDisplaceFollowingOrders() == true);
             _orderInProcess.RequestDate.AddDays(-1);
+
+            SeedBedStatus.GreenHouses.Remove(tempGreenHouse);
         }
 
         /// <summary>
@@ -664,7 +667,7 @@ namespace Domain
 
         //public OrderModel OrderInProcess { get => _orderInProcess; set => _orderInProcess = value; }
 
-        //public LinkedList<SeedTrayPermutation> SeedTrayPermutations { get => _seedTrayPermutations; set => _seedTrayPermutations = value; }
+        public LinkedList<SeedTrayPermutation> SeedTrayPermutations { get => _seedTrayPermutations; set => _seedTrayPermutations = value; }
 
         //public ArrayList SeedTrayPermutationsToDelete { get => _seedTrayPermutationsToDelete; set => _seedTrayPermutationsToDelete = value; }
 
