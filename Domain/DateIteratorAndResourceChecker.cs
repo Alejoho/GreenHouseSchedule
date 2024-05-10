@@ -569,7 +569,7 @@ namespace Domain
         /// <param name="pSeedTrayPermutation">The <c>SeedTrayPermutation</c> to use with the new order.</param>
         private void InsertOrderInProcessIntoSeedBedStatus(SeedTrayPermutation pSeedTrayPermutation)
         {
-            OrderModel newOrder = new OrderModel(_orderInProcess);
+            OrderModel newOrder = new OrderModel(_orderInProcess, SeedBedStatus.Orders.Max(order => order.ID) + 1);
             OrderLocationModel newOrderLocation;
 
             int alveolus = (from seedTray in _seedBedStatus.SeedTrays
@@ -581,7 +581,7 @@ namespace Domain
             newOrderLocation = new OrderLocationModel(
                 _seedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                 pSeedTrayPermutation.FirstSeedTrayID,
-                _orderInProcess.ID,
+                newOrder.ID,
                 pSeedTrayPermutation.FirstAmount,
                 seedlingAmount);
 
