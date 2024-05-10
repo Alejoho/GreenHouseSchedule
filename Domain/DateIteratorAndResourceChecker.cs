@@ -100,9 +100,7 @@ namespace Domain
 
                 SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(1);
 
-            } while (SeedBedStatus.IteratorDate <= _orderInProcess.EstimateSowDate);
-
-            SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(-1);
+            } while (SeedBedStatus.IteratorDate < _orderInProcess.EstimateSowDate);
         }
 
         private struct NegDate
