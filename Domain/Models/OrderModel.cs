@@ -58,9 +58,16 @@ namespace Domain.Models
         /// Initializes a new duplicate instance of <c>OrderModel</c> from another instance.
         /// </summary>
         /// <param name="pOrderModelOriginal">The instance of the original <c>OrderModel</c>.</param>
-        public OrderModel(OrderModel pOrderModelOriginal)
+        public OrderModel(OrderModel pOrderModelOriginal, int newId = 0)
         {
-            this._ID =pOrderModelOriginal.ID;
+            if (newId == 0)
+            {
+                this._ID = pOrderModelOriginal.ID;
+            }
+            else
+            {
+                this._ID = newId;
+            }
             this._client = new ClientModel(pOrderModelOriginal.Client);
             this._product =new ProductModel(pOrderModelOriginal.Product);
             this._seedlingAmount =pOrderModelOriginal.SeedlingAmount;
