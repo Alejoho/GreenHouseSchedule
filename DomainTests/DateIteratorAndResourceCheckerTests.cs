@@ -892,7 +892,7 @@ public class DateIteratorAndResourceCheckerTests
     [InlineData(75000, 1, 268, 0, 0, 0, 0, 1)]
     [InlineData(75000, 1, 179, 2, 174, 0, 0, 2)]
     [InlineData(75000, 1, 90, 2, 174, 4, 116, 3)]
-    public void InsertOrderInProcessIntoSeedBedStatusAuxiliar_ShouldWork(
+    public void InsertOrderInProcessIntoSeedBedStatusAuxiliar_ShouldInsertAnOrderAndItsOrderLocation(
         int seedlingAmount
         , int seedTrayId1, int amount1
         , int seedTrayId2, int amount2
@@ -917,10 +917,78 @@ public class DateIteratorAndResourceCheckerTests
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
 
-        FieldInfo fieldInfo = typeof(DateIteratorAndResourceChecker).GetField("_auxiliarSeedBedStatus"
+        int oldOrderCount = iterator.SeedBedStatus.Orders.Count;
+
+        int oldOrderLocationsCount = iterator.SeedBedStatus.OrderLocations.Count;
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("InsertOrderInProcessIntoSeedBedStatus"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo.Invoke(iterator, new object[] { permutation });
+
+        iterator.SeedBedStatus.Orders.Count.Should().Be(oldOrderCount + 1);
+        iterator.SeedBedStatus.OrderLocations.Count.Should().Be(oldOrderLocationsCount + newOrderLocations);
+    }
+
+    [Theory]
+    [InlineData(75000, 1, 268, 0, 0, 0, 0)]
+    [InlineData(129228, 7, 1068, 0, 0, 0, 0)]
+    [InlineData(205056, 4, 496, 2, 680, 0, 0)]
+    [InlineData(238733, 5, 1210, 7, 533, 0, 0)]
+    [InlineData(336600, 2, 950, 4, 625, 5, 450)]
+    [InlineData(89700, 7, 100, 3, 150, 1, 200)]
+    [InlineData(154250, 6, 250, 4, 250, 7, 250)]
+    [InlineData(173728, 4, 300, 2, 282, 6, 244)]
+    public void DoesItDisplaceFollowingOrders_ShouldReturnTrueAndNonePermutationBeacuseOfLackOfSeedTrays(
+        int seedlingAmount
+        , int seedTrayId1, int amount1
+        , int seedTrayId2, int amount2
+        , int seedTrayId3, int amount3)
+    {
+        DateOnly wishedDate = new DateOnly(2023, 6, 13);
+
+        OrderModel newOrder = new OrderModel(1
+            , new ClientModel(1, "", "")
+            , new ProductModel(1, "", "", 30)
+            , seedlingAmount
+            , new DateOnly(2023, 6, 10)
+            , wishedDate
+            , null
+            , null
+            , null
+            , false);
+
+        SeedTrayPermutation permutation = new SeedTrayPermutation(
+            seedTrayId1, amount1
+            , seedTrayId2, amount2
+            , seedTrayId3, amount3);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
+
+        iterator.SeedTrayPermutations.AddLast(permutation);
+
+        GreenHouseModel tempGreenHouse = new GreenHouseModel(-1, "TempGreenHouse", 0, 0, true);
+        iterator.SeedBedStatus.GreenHouses.Add(tempGreenHouse);
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("DayByDayToRequestDate"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo.Invoke(iterator, null);
+
+        MethodInfo methodInfo2 = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("DoesItDisplaceFollowingOrders"
             , BindingFlags.NonPublic | BindingFlags.Instance);
 
-        SeedBedStatus auxStatus = (SeedBedStatus)fieldInfo.GetValue(iterator);
+        bool result = (bool)methodInfo2.Invoke(iterator, null);
+
+        result.Should().BeTrue();
+        iterator.SeedTrayPermutations.Count.Should().Be(0);
+        iterator.SeedBedStatus.IteratorDate.Should().BeBefore(wishedDate.AddDays(30));
+        iterator.SeedBedStatus.ThereAreNonNegattiveValuesOfSeedTray().Should().BeFalse();
+        iterator.SeedBedStatus.ThereAreNonNegattiveValuesOfArea().Should().BeTrue();
+    }
 
         int oldOrderCount = auxStatus.Orders.Count;
 
