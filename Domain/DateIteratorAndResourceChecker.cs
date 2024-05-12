@@ -600,7 +600,7 @@ namespace Domain
                 newOrderLocation = new OrderLocationModel(
                     _seedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                     pSeedTrayPermutation.SecondSeedTrayID,
-                    _orderInProcess.ID,
+                    newOrder.ID,
                     pSeedTrayPermutation.SecondAmount,
                     seedlingAmount);
 
@@ -620,7 +620,7 @@ namespace Domain
                 newOrderLocation = new OrderLocationModel(
                     _seedBedStatus.OrderLocations.Max(orderLocation => orderLocation.ID) + 1,
                     pSeedTrayPermutation.ThirdSeedTrayID,
-                    _orderInProcess.ID,
+                    newOrder.ID,
                     pSeedTrayPermutation.ThirdAmount,
                     seedlingAmount);
 
