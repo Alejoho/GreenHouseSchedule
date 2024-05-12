@@ -189,8 +189,8 @@ namespace Domain
         {
             var ordersToSow = SeedBedStatus.Orders
                 .Where(order => order.EstimateSowDate <= SeedBedStatus.IteratorDate && order.Complete == false)
-                .OrderBy(x => x.EstimateSowDate)
-                .ThenBy(x => x.RequestDate);
+                .OrderBy(x => x.RequestDate)
+                .ThenBy(x => x.EstimateSowDate);
 
             foreach (OrderModel order in ordersToSow)
             {
