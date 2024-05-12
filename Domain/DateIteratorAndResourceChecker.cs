@@ -174,7 +174,7 @@ namespace Domain
                         SeedBedStatus.OrderLocationsToDelete.Add(orderLocation);
                     }
                 }
-                if (order.SeedlingAmount == 0)
+                if (order.SeedlingAmount <= 0)
                 {
                     SeedBedStatus.OrdersToDelete.Add(order);
                 }

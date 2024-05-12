@@ -472,7 +472,7 @@ namespace Domain
                         _orderLocationsToDelete.Add(orderLocation);
                     }
                 }
-                if (order.SeedlingAmount == 0)
+                if (order.SeedlingAmount <= 0)
                 {
                     _ordersToDelete.Add(order);
                 }
@@ -497,7 +497,7 @@ namespace Domain
                         _orderLocationsToDelete.Add(orderLocation);
                     }
                 }
-                if (order.SeedlingAmount == 0)
+                if (order.SeedlingAmount <= 0)
                 {
                     _ordersToDelete.Add(order);
                 }
