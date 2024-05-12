@@ -1,9 +1,6 @@
-﻿using DataAccess.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+﻿using DataAccess.Context;
+using DataAccess.Contracts;
 using SupportLayer.Models;
-using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -14,7 +11,7 @@ namespace DataAccess.Repositories
         }
 
         public ProductRepository()
-        {            
+        {
         }
 
         public IEnumerable<Product> GetAll()
@@ -29,23 +26,23 @@ namespace DataAccess.Repositories
 
         public bool Insert(Product entity)
         {
-                _sowScheduleDB.Products.Add(entity);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            _sowScheduleDB.Products.Add(entity);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Remove(int pId)
         {
-                Product product = _sowScheduleDB.Products.Find((byte)pId);
-                _sowScheduleDB.Products.Remove(product);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            Product product = _sowScheduleDB.Products.Find((byte)pId);
+            _sowScheduleDB.Products.Remove(product);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Update(Product entity)
         {
             Product product = _sowScheduleDB.Products.Find(entity.Id);
-            if(product!=null)
+            if (product != null)
             {
                 product.SpecieId = entity.SpecieId;
                 product.Variety = entity.Variety;

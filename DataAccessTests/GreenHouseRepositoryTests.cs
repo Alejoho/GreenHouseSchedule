@@ -1,6 +1,4 @@
 ﻿using Bogus;
-using DataAccess;
-using DataAccess.Contracts;
 using DataAccess.Repositories;
 using FluentAssertions;
 using Moq;

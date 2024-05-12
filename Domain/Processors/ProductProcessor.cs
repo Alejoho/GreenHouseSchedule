@@ -65,7 +65,7 @@ public class ProductProcessor
     }
 
     public IEnumerable<Product> GetAllProducts()
-    {        
+    {
         return _repository.GetAll()
             .OrderBy(x => x.Specie.Name)
             .ThenBy(x => x.Variety);

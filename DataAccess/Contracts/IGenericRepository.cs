@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DataAccess.Contracts
+﻿namespace DataAccess.Contracts
 {
     public interface IGenericRepository<Entity> where Entity : class
     {

@@ -1,6 +1,4 @@
 ﻿using Bogus;
-using DataAccess;
-using DataAccess.Contracts;
 using DataAccess.Repositories;
 using FluentAssertions;
 using Moq;
@@ -109,6 +107,6 @@ public class ClientRepositoryTests
             .RuleFor(x => x.NickName, f => f.Address.StreetName())
             .RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumber())
             .RuleFor(x => x.OtherNumber, f => f.Phone.PhoneNumber())
-            .RuleFor(x => x.OrganizationId, f => f.Random.Short(1,100));
+            .RuleFor(x => x.OrganizationId, f => f.Random.Short(1, 100));
     }
 }

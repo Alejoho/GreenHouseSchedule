@@ -42,7 +42,7 @@ public class DeliveryDetailsRepositoryTests
 
         actual.Count().Should().Be(count);
     }
-    
+
 
     [Fact]
     public void Insert_ShouldInsertARecord()
@@ -126,11 +126,11 @@ public class DeliveryDetailsRepositoryTests
             .RuleFor(x => x.DeliveryDate, f =>
                 DateOnly.FromDateTime(f.Date.Between(startDate, endDate)))
             .RuleFor(x => x.SeedTrayAmountDelivered, f => f.Random.Short(1, 1000))
-            .RuleFor(x => x.Block,(f, u) => new Block()
+            .RuleFor(x => x.Block, (f, u) => new Block()
             {
-                OrderLocation=new OrderLocation()
+                OrderLocation = new OrderLocation()
                 {
-                    Order=new Order()
+                    Order = new Order()
                     {
                         RealSowDate = u.DeliveryDate.AddDays(-30)
                     }

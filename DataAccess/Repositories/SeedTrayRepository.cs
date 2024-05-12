@@ -1,9 +1,6 @@
-﻿using DataAccess.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using DataAccess.Context;
+using DataAccess.Contracts;
 using SupportLayer.Models;
-using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -24,17 +21,17 @@ namespace DataAccess.Repositories
 
         public bool Insert(SeedTray entity)
         {
-                _sowScheduleDB.SeedTrays.Add(entity);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            _sowScheduleDB.SeedTrays.Add(entity);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Remove(int pId)
         {
-                SeedTray seedTray = _sowScheduleDB.SeedTrays.Find((byte)pId);
-                _sowScheduleDB.SeedTrays.Remove(seedTray);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            SeedTray seedTray = _sowScheduleDB.SeedTrays.Find((byte)pId);
+            _sowScheduleDB.SeedTrays.Remove(seedTray);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Update(SeedTray entity)

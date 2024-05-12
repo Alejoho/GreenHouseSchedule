@@ -1,7 +1,6 @@
 ﻿using Domain;
 using Domain.Processors;
 using SupportLayer;
-using System;
 using System.Configuration;
 using System.Windows;
 
@@ -57,10 +56,10 @@ public partial class ConfigurationWindow : Window
     }
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
-    {        
+    {
         if (ValidateDataType() == true)
-        {            
-            if(_processor.SaveConfigurations(_model) == true)
+        {
+            if (_processor.SaveConfigurations(_model) == true)
             {
                 MessageBox.Show("Registro salvado");
                 this.Close();
@@ -68,7 +67,7 @@ public partial class ConfigurationWindow : Window
             else
             {
                 ShowError();
-            }            
+            }
         }
     }
 
@@ -81,7 +80,7 @@ public partial class ConfigurationWindow : Window
     {
         _model = new Configurations();
 
-        if (int.TryParse(lbltxtRegressionDays.FieldContent, 
+        if (int.TryParse(lbltxtRegressionDays.FieldContent,
             out int regressionDays) == true)
         {
             _model.RegressionDays = regressionDays;
@@ -90,9 +89,9 @@ public partial class ConfigurationWindow : Window
         {
             MessageBox.Show("Días de retroceso inválido");
             return false;
-        }      
+        }
 
-        if(int.TryParse(lbltxtDailySowingPotential.FieldContent, 
+        if (int.TryParse(lbltxtDailySowingPotential.FieldContent,
             out int dailySowingPotential) == true)
         {
             _model.DailySowingPotential = dailySowingPotential;
@@ -103,7 +102,7 @@ public partial class ConfigurationWindow : Window
             return false;
         }
 
-        if(int.TryParse(lbltxtMinimumLimitOfSowPerDay.FieldContent, 
+        if (int.TryParse(lbltxtMinimumLimitOfSowPerDay.FieldContent,
             out int minimumLimitOfSowPerDay) == true)
         {
             _model.MinimumLimitOfSowPerDay = minimumLimitOfSowPerDay;
@@ -114,7 +113,7 @@ public partial class ConfigurationWindow : Window
             return false;
         }
 
-        if(int.TryParse(lbltxtLocationMinimumSeedTray.FieldContent, 
+        if (int.TryParse(lbltxtLocationMinimumSeedTray.FieldContent,
             out int locationMinimumSeedTray) == true)
         {
             _model.LocationMinimumSeedTray = locationMinimumSeedTray;
@@ -125,7 +124,7 @@ public partial class ConfigurationWindow : Window
             return false;
         }
 
-        if(double.TryParse(lbltxtSeedlingMultiplier.FieldContent, 
+        if (double.TryParse(lbltxtSeedlingMultiplier.FieldContent,
             out double seedlingMultiplier) == true)
         {
             _model.SeedlingMultiplier = seedlingMultiplier;
@@ -136,7 +135,7 @@ public partial class ConfigurationWindow : Window
             return false;
         }
 
-        if(int.TryParse(lbltxtSowShowRange.FieldContent, 
+        if (int.TryParse(lbltxtSowShowRange.FieldContent,
             out int sowShowRange) == true)
         {
             _model.SowShowRange = sowShowRange;

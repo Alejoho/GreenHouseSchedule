@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SupportLayer.Models;
+﻿namespace SupportLayer.Models;
 
 public partial class Order
 {

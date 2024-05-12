@@ -48,7 +48,7 @@ namespace Domain.Models
             this._usedAmount = pSeedTrayModelOriginal.UsedAmount;
             this._active = pSeedTrayModelOriginal.Active;
         }
-        
+
         /// <value>
         /// Gets the ID of the seedtray.
         /// </value>

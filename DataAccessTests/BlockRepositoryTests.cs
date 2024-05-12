@@ -1,14 +1,7 @@
 ﻿using Bogus;
-using DataAccess.Contracts;
 using DataAccess.Repositories;
-using DataAccess;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessTests;
 
@@ -86,7 +79,7 @@ public class BlockRepositoryTests
         recordUpdated.OrderLocationId.Should().Be(newRecordData.OrderLocationId);
         recordUpdated.BlockNumber.Should().Be(newRecordData.BlockNumber);
         recordUpdated.SeedTrayAmount.Should().Be(newRecordData.SeedTrayAmount);
-        recordUpdated.NumberWithinThBlock.Should().Be(newRecordData.NumberWithinThBlock);            
+        recordUpdated.NumberWithinThBlock.Should().Be(newRecordData.NumberWithinThBlock);
     }
 
     public List<Block> GenerateRecords(int count)

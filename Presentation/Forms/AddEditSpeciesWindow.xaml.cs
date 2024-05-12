@@ -22,7 +22,7 @@ namespace Presentation.Forms
             InitializeComponent();
             _processor = new SpeciesProcessor();
             _model = new Species();
-            _model.Id = 0;            
+            _model.Id = 0;
             _requestor = requestor;
             LlenarCasillas();
         }
@@ -92,7 +92,7 @@ namespace Presentation.Forms
                 }
             }
 
-            if(int.TryParse( lbltxtAmountOfSeedsPerHectare.FieldContent,out int amountOfSeedsPerHectare))
+            if (int.TryParse(lbltxtAmountOfSeedsPerHectare.FieldContent, out int amountOfSeedsPerHectare))
             {
                 _model.AmountOfSeedsPerHectare = amountOfSeedsPerHectare;
             }
@@ -102,7 +102,7 @@ namespace Presentation.Forms
                 return false;
             }
 
-            if(decimal.TryParse(lbltxtWeightOfSeedsPerHectare.FieldContent,out decimal weightOfSeedsPerHectare))
+            if (decimal.TryParse(lbltxtWeightOfSeedsPerHectare.FieldContent, out decimal weightOfSeedsPerHectare))
             {
                 _model.WeightOfSeedsPerHectare = weightOfSeedsPerHectare;
             }
@@ -114,7 +114,7 @@ namespace Presentation.Forms
 
             return true;
         }
-        
+
         private void PopulateData()
         {
             lbltxtName.FieldContent = _model.Name;

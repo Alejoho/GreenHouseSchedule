@@ -6,7 +6,7 @@ namespace Domain.Validators;
 public class MunicipalityValidator : AbstractValidator<Municipality>
 {
     public MunicipalityValidator()
-    {            
+    {
         RuleLevelCascadeMode = CascadeMode.Stop;
 
         RuleFor(x => x.Name).NotEmpty().WithName("Nombre")

@@ -96,7 +96,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     }
 
     private bool ValidateData()
-    {   
+    {
         //LATER - Break down in smaller pieces this method
         if (lblcmbbtnClient.ComboBox.SelectedItem == null)
         {
@@ -142,11 +142,11 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         else if (dtpWishDate.TimePicker.SelectedDate.Value < DateTime.Now)
         {
             MessageBox.Show("La fecha especificada es mas antigua que el dia presente."
-                ,"Fecha inválida"
+                , "Fecha inválida"
             , MessageBoxButton.OK, MessageBoxImage.Warning);
             dtpWishDate.TimePicker.Focus();
             return false;
-        }        
+        }
 
         bool isAnySelected = false;
 

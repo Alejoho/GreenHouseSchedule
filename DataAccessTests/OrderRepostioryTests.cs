@@ -11,7 +11,7 @@ public class OrderRepostioryTests
     List<Order> _orders;
     Mock<SowScheduleContext> _mockSowScheduleDbContex;
     OrderRepository _orderRepository;
-    
+
     public OrderRepostioryTests()
     {
         _orders = GenerateRecords(20);
@@ -27,11 +27,11 @@ public class OrderRepostioryTests
 
         actual.Count().Should().Be(20);
     }
-    
+
     [Fact]
     public void GetByARealSowDateOn_ShouldReturnFilteredRecords()
     {
-        DateOnly date = new DateOnly(2023,7,1);
+        DateOnly date = new DateOnly(2023, 7, 1);
 
         var actual = _orderRepository.GetByARealSowDateOn(date).ToList();
 
@@ -137,7 +137,7 @@ public class OrderRepostioryTests
             .RuleFor(x => x.DateOfRequest, (f, u) => u.WishDate.AddDays(-f.Random.Int(90, 180)))
             .RuleFor(x => x.EstimateSowDate, (f, u) => u.WishDate.AddDays(-f.PickRandom(productionDays)))
             .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.WishDate)
-            .RuleFor(x => x.RealSowDate, (f, u) => 
+            .RuleFor(x => x.RealSowDate, (f, u) =>
                 f.Random.Bool() ? u.EstimateSowDate : null
                 )
             .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate)

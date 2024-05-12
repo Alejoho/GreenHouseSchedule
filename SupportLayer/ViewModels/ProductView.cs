@@ -2,8 +2,8 @@
 
 public partial class Product
 {
-    public string SpeciesAndVariety 
+    public string SpeciesAndVariety
     {
-        get => $"{Specie.Name} - {Variety}"; 
+        get => $"{Specie.Name} - {Variety}";
     }
 }

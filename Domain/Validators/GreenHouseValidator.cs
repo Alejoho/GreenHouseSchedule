@@ -8,11 +8,11 @@ namespace Domain.Validators
         public GreenHouseValidator()
         {
             RuleLevelCascadeMode = CascadeMode.Stop;
-            
+
             RuleFor(x => x.Name).NotEmpty().WithName("Nombre")
                 .WithMessage("El {PropertyName} no debe estar vacío.")
                 .MaximumLength(50)
-                .WithMessage("El {PropertyName} no debe exceder los 50 caracteres.");                
+                .WithMessage("El {PropertyName} no debe exceder los 50 caracteres.");
             RuleFor(x => x.Width).GreaterThan(0).LessThan(200).When(x => x.Width != null)
                 .WithName("Ancho")
                 .WithMessage("El {PropertyName} debe estar entre 0 y 200.");

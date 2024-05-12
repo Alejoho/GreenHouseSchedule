@@ -336,7 +336,7 @@ namespace DomainTests
             }
             else if (type == TypeOfRecord.partial)
             {
-                deliveryDetailCollection = _generator.DeliveryDetails.Where(x=>x.Id==-1).OrderBy(x =>x.Id);
+                deliveryDetailCollection = _generator.DeliveryDetails.Where(x => x.Id == -1).OrderBy(x => x.Id);
             }
             else
             {

@@ -1,12 +1,6 @@
-﻿using DataAccess.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAccess.Context;
+using DataAccess.Contracts;
 using SupportLayer.Models;
-using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
@@ -16,8 +10,8 @@ namespace DataAccess.Repositories
         {
         }
 
-        public ClientRepository() 
-        { 
+        public ClientRepository()
+        {
         }
 
         public IEnumerable<Client> GetAll()
@@ -29,29 +23,29 @@ namespace DataAccess.Repositories
 
         public bool Insert(Client entity)
         {
-                _sowScheduleDB.Clients.Add(entity);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            _sowScheduleDB.Clients.Add(entity);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Remove(int pId)
         {
-                Client client = _sowScheduleDB.Clients.Find((short)pId);
-                _sowScheduleDB.Clients.Remove(client);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            Client client = _sowScheduleDB.Clients.Find((short)pId);
+            _sowScheduleDB.Clients.Remove(client);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Update(Client entity)
         {
             Client client = _sowScheduleDB.Clients.Find(entity.Id);
             if (client != null)
-            {   
-                client.Name=entity.Name;
-                client.NickName=entity.NickName;
-                client.PhoneNumber=entity.PhoneNumber;
-                client.OtherNumber=entity.OtherNumber;
-                client.OrganizationId=entity.OrganizationId;
+            {
+                client.Name = entity.Name;
+                client.NickName = entity.NickName;
+                client.PhoneNumber = entity.PhoneNumber;
+                client.OtherNumber = entity.OtherNumber;
+                client.OrganizationId = entity.OrganizationId;
                 _sowScheduleDB.SaveChanges();
                 return true;
             }

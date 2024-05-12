@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Domain.Models
 {
     /// <summary>
@@ -39,7 +33,7 @@ namespace Domain.Models
         /// <param name="pRealSowDate">The real date on which the order is started to sow.</param>
         /// <param name="pRealDeliveryDate">The real date on which the order is started to deliver.</param>
         /// <param name="pSown">This indicates whether this order is completely sown.</param>
-        public OrderModel(int pID, ClientModel pClient, ProductModel pProduct, int pSeedlingAmount, DateOnly pRequestDate, DateOnly pEstimateSowDate, DateOnly? pEstimateDeliveryDate, DateOnly? pRealSowDate, DateOnly? pRealDeliveryDate,bool pComplete)
+        public OrderModel(int pID, ClientModel pClient, ProductModel pProduct, int pSeedlingAmount, DateOnly pRequestDate, DateOnly pEstimateSowDate, DateOnly? pEstimateDeliveryDate, DateOnly? pRealSowDate, DateOnly? pRealDeliveryDate, bool pComplete)
         {
             _ID = pID;
             _client = pClient;
@@ -69,17 +63,17 @@ namespace Domain.Models
                 this._ID = newId;
             }
             this._client = new ClientModel(pOrderModelOriginal.Client);
-            this._product =new ProductModel(pOrderModelOriginal.Product);
-            this._seedlingAmount =pOrderModelOriginal.SeedlingAmount;
-            this._requestDate =pOrderModelOriginal.RequestDate;
-            this._estimateSowDate =pOrderModelOriginal.EstimateSowDate;
-            this._estimateDeliveryDate =pOrderModelOriginal.EstimateDeliveryDate;
-            this._realSowDate =pOrderModelOriginal.RealSowDate;
-            this._realDeliveryDate =pOrderModelOriginal.RealDeliveryDate;
+            this._product = new ProductModel(pOrderModelOriginal.Product);
+            this._seedlingAmount = pOrderModelOriginal.SeedlingAmount;
+            this._requestDate = pOrderModelOriginal.RequestDate;
+            this._estimateSowDate = pOrderModelOriginal.EstimateSowDate;
+            this._estimateDeliveryDate = pOrderModelOriginal.EstimateDeliveryDate;
+            this._realSowDate = pOrderModelOriginal.RealSowDate;
+            this._realDeliveryDate = pOrderModelOriginal.RealDeliveryDate;
             this._orderLocations = new LinkedList<OrderLocationModel>();
             this._complete = pOrderModelOriginal.Complete;
 
-            foreach(OrderLocationModel orderLocationModel in pOrderModelOriginal.OrderLocations)
+            foreach (OrderLocationModel orderLocationModel in pOrderModelOriginal.OrderLocations)
             {
                 this._orderLocations.AddLast(new OrderLocationModel(orderLocationModel));
             }
@@ -104,7 +98,7 @@ namespace Domain.Models
         /// Gets or sets the amount of seedling
         /// </value>
         public int SeedlingAmount { get => _seedlingAmount; set => _seedlingAmount = value; }
-        
+
         /// <value>
         /// Gets the date on which this order is made up.
         /// </value>

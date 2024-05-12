@@ -7,7 +7,7 @@ namespace Domain.Validators;
 public class ClientValidator : AbstractValidator<Client>
 {
     public ClientValidator()
-	{
+    {
         RuleLevelCascadeMode = CascadeMode.Stop;
 
         RuleFor(x => x.Name).NotEmpty().WithName("Nombre")

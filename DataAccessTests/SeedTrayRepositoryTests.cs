@@ -112,7 +112,7 @@ public class SeedTrayRepositoryTests
         byte index = 1;
         byte preference = 1;
         return new Faker<SeedTray>()
-            .RuleFor(x => x.Id, f => index++)            
+            .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.AlveolusLength, f => f.Random.Byte(10, 25))
             .RuleFor(x => x.AlveolusWidth, f => f.Random.Byte(8, 14))
             .RuleFor(x => x.TotalAlveolus, (f, u) => Convert.ToInt16(u.AlveolusLength * u.AlveolusWidth))

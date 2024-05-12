@@ -31,7 +31,7 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
     {
         InitializeComponent();
         _processor = new ClientProcessor();
-        _model = new Client();        
+        _model = new Client();
         _requester = requestingWindow;
         LoadData();
     }

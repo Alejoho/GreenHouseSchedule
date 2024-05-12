@@ -2,7 +2,7 @@
 
 namespace Domain.Validators
 {
-    public class ConfigurationValidator :AbstractValidator<Configurations>
+    public class ConfigurationValidator : AbstractValidator<Configurations>
     {
         public ConfigurationValidator()
         {
@@ -13,7 +13,7 @@ namespace Domain.Validators
                 .WithMessage("La configuración {PropertyName} debe estar entre {From} y {To}.");
             RuleFor(x => x.DailySowingPotential).LessThanOrEqualTo(1500)
                 .WithName("Potencial de siembra diario")
-                .WithMessage("La configuración {PropertyName} no debe ser mayor que {ComparisonValue}.");            
+                .WithMessage("La configuración {PropertyName} no debe ser mayor que {ComparisonValue}.");
             //LATER - make a custom validator for this property because a need to create custom placeholder
             RuleFor(x => x.MinimumLimitOfSowPerDay).GreaterThan(0).WithName("Siembra diaria mínima")
                 .WithMessage("La configuración {PropertyName} debe ser mayor que {ComparisonValue}.")
@@ -25,7 +25,7 @@ namespace Domain.Validators
             RuleFor(x => x.SeedlingMultiplier).ExclusiveBetween(1, 2)
                 .WithName("Multiplicador de posturas")
                 .WithMessage("La configuración {PropertyName} debe estar entre {From} y {To}.");
-            RuleFor(x => x.SowShowRange).ExclusiveBetween(7,31)
+            RuleFor(x => x.SowShowRange).ExclusiveBetween(7, 31)
                 .WithName("Rango de muestra de siembras")
                 .WithMessage("La configuración {PropertyName} debe estar entre {From} y {To}.");
             RuleFor(x => x.DeliveryShowRange).ExclusiveBetween(7, 31)

@@ -220,7 +220,7 @@ internal class RecordGenerator
                 int[] seedTrayDivision = GetAmountDivision(orderLocation.SeedTrayAmount, amount);
 
                 var fakeBlockRecord = GetBlockFaker(orderLocation, seedTrayDivision);
-                
+
                 //fakeBlockRecord.UseSeed(2467);
 
                 List<Block> newBlocks = fakeBlockRecord.Generate(amount);
@@ -321,7 +321,7 @@ internal class RecordGenerator
     {
         //Randomizer.Seed = new Random(123);
         var fakeRecord = GetSeedTrayFaker();
-        fakeRecord.UseSeed(123);        
+        fakeRecord.UseSeed(123);
 
         return fakeRecord.Generate(count);
     }

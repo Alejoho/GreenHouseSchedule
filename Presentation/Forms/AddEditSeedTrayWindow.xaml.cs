@@ -1,5 +1,4 @@
 ﻿using Domain.Processors;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SupportLayer.Models;
 using System.Windows;
 
@@ -61,7 +60,7 @@ namespace Presentation.Forms
         {
             decimal trayLength = -1;
             decimal trayWidth = -1;
-            
+
             _model.Name = lbltxtName.FieldContent;
 
             if (short.TryParse(lbltxtTotalAlveolus.FieldContent, out short totalAlveolus))
@@ -126,7 +125,7 @@ namespace Presentation.Forms
                 }
             }
 
-            if (trayLength!=-1 && trayWidth !=-1)
+            if (trayLength != -1 && trayWidth != -1)
             {
                 _model.TrayArea = trayLength * trayWidth;
             }
@@ -179,7 +178,7 @@ namespace Presentation.Forms
             lbltxtTrayWidth.FieldContent = "0.7";
             lbltxtLogicalArea.FieldContent = "0.95";
             lbltxtTotalAmount.FieldContent = "2575";
-            lbltxtMaterial.FieldContent = "plástico";            
+            lbltxtMaterial.FieldContent = "plástico";
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using DataAccess.Context;
 using DataAccess.Contracts;
-using Microsoft.EntityFrameworkCore;
 using SupportLayer.Models;
 
 namespace DataAccess.Repositories;

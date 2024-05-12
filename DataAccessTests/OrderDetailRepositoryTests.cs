@@ -1,13 +1,7 @@
 ﻿using Bogus;
 using DataAccess.Repositories;
-using DataAccess;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessTests
 {
@@ -86,7 +80,7 @@ namespace DataAccessTests
             recordUpdated.OrderId.Should().Be(newRecordData.OrderId);
             recordUpdated.SeedsSource.Should().Be(newRecordData.SeedsSource);
             recordUpdated.Germination.Should().Be(newRecordData.Germination);
-            recordUpdated.Description.Should().Be(newRecordData.Description);            
+            recordUpdated.Description.Should().Be(newRecordData.Description);
         }
 
         public List<OrderDetail> GenerateRecords(int count)
@@ -109,9 +103,9 @@ namespace DataAccessTests
             short index = 1;
             return new Faker<OrderDetail>()
                 .RuleFor(x => x.Id, f => index++)
-                .RuleFor(x => x.OrderId, f => f.Random.Short(1,300))
+                .RuleFor(x => x.OrderId, f => f.Random.Short(1, 300))
                 .RuleFor(x => x.SeedsSource, f => f.Address.StreetName())
-                .RuleFor(x => x.Germination, f => f.Random.Byte(45,95))
+                .RuleFor(x => x.Germination, f => f.Random.Byte(45, 95))
                 .RuleFor(x => x.Description, f => f.Commerce.ProductDescription());
         }
     }

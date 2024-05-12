@@ -1,5 +1,4 @@
 ﻿using Domain.Processors;
-using Microsoft.EntityFrameworkCore.Metadata;
 using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +44,7 @@ namespace Presentation.Forms
         {
             EditGreenHouse();
         }
-        
+
         private void btnDeleteGreenHouse_Click(object sender, RoutedEventArgs e)
         {
             if (dgGreenHouses.SelectedItem is GreenHouse greenHouse)
@@ -61,7 +60,7 @@ namespace Presentation.Forms
             else
             {
                 MessageBox.Show("Debe seleccionar el registro que desea eliminar."
-                    ,"",MessageBoxButton.OK,MessageBoxImage.Information);
+                    , "", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 

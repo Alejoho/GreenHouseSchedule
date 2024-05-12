@@ -92,7 +92,7 @@ public partial class AddEditGreenHouseWindow : Window
         }
 
         if (width != -1 && length != -1)
-        {                
+        {
             _model.GreenHouseArea = Math.Round(width * length, 2);
         }
 

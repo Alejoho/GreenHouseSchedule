@@ -1,10 +1,7 @@
 ﻿using Bogus;
-using DataAccess;
 using DataAccess.Repositories;
 using FluentAssertions;
 using Moq;
-using SupportLayer.Models;
-using DataAccess.Context;
 
 namespace DataAccessTests;
 
@@ -111,7 +108,7 @@ public class SpeciesRepositoryTests
             .RuleFor(x => x.Name, f => f.Commerce.Product())
             .RuleFor(x => x.ProductionDays, f => f.PickRandom(productionDays))
             .RuleFor(x => x.WeightOf1000Seeds, f => Convert.ToDecimal(f.Random.Short(800, 1750)))
-            .RuleFor(x => x.AmountOfSeedsPerHectare, f => f.Random.Int(30000,38000))
-            .RuleFor(x => x.WeightOfSeedsPerHectare, (f, u) => Convert.ToDecimal((u.AmountOfSeedsPerHectare*u.WeightOf1000Seeds)/1000));
+            .RuleFor(x => x.AmountOfSeedsPerHectare, f => f.Random.Int(30000, 38000))
+            .RuleFor(x => x.WeightOfSeedsPerHectare, (f, u) => Convert.ToDecimal((u.AmountOfSeedsPerHectare * u.WeightOf1000Seeds) / 1000));
     }
 }

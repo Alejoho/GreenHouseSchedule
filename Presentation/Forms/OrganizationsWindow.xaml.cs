@@ -33,7 +33,7 @@ public partial class OrganizationsWindow : Window
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();        
+        this.Close();
     }
 
     private void btnNewOrganization_Click(object sender, RoutedEventArgs e)
@@ -167,7 +167,7 @@ public partial class OrganizationsWindow : Window
     }
 
     private void RefreshData()
-    {        
+    {
         if (lbltxtSearch.TextBox.Text == string.Empty)
         {
             _organizations = _organizationProcessor.GetAllOrganizations().ToList();

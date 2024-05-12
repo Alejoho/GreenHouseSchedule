@@ -1,10 +1,8 @@
 ﻿using Domain.Processors;
 using SupportLayer.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Presentation.Forms;
 
@@ -56,7 +54,7 @@ public partial class ClientsWindow : Window
     {
         if (dgClients.SelectedItem is Client client)
         {
-            if(MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
+            if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
                     , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 _processor.DeleteClient(client.Id);
@@ -94,7 +92,7 @@ public partial class ClientsWindow : Window
 
     private void EditClient()
     {
-        if(dgClients.SelectedItem is Client client)
+        if (dgClients.SelectedItem is Client client)
         {
             AddEditClientWindow window = new AddEditClientWindow(client);
             window.ShowDialog();

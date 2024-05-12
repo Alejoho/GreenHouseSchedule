@@ -46,7 +46,7 @@ namespace Presentation.Forms
 
         private void btnDeleteSeedTray_Click(object sender, RoutedEventArgs e)
         {
-            if(dgSeedTrays.SelectedItem is SeedTray seedTray)
+            if (dgSeedTrays.SelectedItem is SeedTray seedTray)
             {
                 if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
                     , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
@@ -76,8 +76,8 @@ namespace Presentation.Forms
         }
 
         private void EditSeedTray()
-        {            
-            if(dgSeedTrays.SelectedItem is SeedTray seedTray)
+        {
+            if (dgSeedTrays.SelectedItem is SeedTray seedTray)
             {
                 AddEditSeedTrayWindow window = new AddEditSeedTrayWindow(seedTray);
                 window.ShowDialog();

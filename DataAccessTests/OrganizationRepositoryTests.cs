@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using DataAccess;
 using DataAccess.Repositories;
 using FluentAssertions;
 using Moq;
@@ -104,7 +103,7 @@ public class OrganizationRepositoryTests
         return new Faker<Organization>()
             .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.Name, f => f.Company.CompanyName())
-            .RuleFor(x => x.MunicipalityId, f => f.Random.Short(1,150))
-            .RuleFor(x => x.TypeOfOrganizationId, f => f.Random.Byte(1,6));
+            .RuleFor(x => x.MunicipalityId, f => f.Random.Short(1, 150))
+            .RuleFor(x => x.TypeOfOrganizationId, f => f.Random.Byte(1, 6));
     }
 }

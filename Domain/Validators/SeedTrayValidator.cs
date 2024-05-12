@@ -8,7 +8,7 @@ namespace Domain.Validators
         public SeedTrayValidator()
         {
             RuleLevelCascadeMode = CascadeMode.Stop;
-            
+
             RuleFor(x => x.Name).NotEmpty().WithName("Nombre")
                 .WithMessage("El {PropertyName} no debe estar vacío.")
                 .MaximumLength(50)

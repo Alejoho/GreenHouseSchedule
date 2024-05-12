@@ -19,11 +19,11 @@ public class SeedBedStatusTests
         //CHECK - test in the generated records the filter from a date on of the order
         //, order location and delivery detail repository
 
-        if(_generator == null)
+        if (_generator == null)
         {
             _generator = new RecordGenerator(600, _pastDate);
 
-            _mockOf = new MockOf(_generator, _pastDate);   
+            _mockOf = new MockOf(_generator, _pastDate);
         }
     }
 

@@ -1,22 +1,17 @@
-﻿using DataAccess.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAccess.Context;
+using DataAccess.Contracts;
 using SupportLayer.Models;
-using DataAccess.Context;
 
 namespace DataAccess.Repositories
 {
-    public class SpeciesRepository:GenericRepository,ISpeciesRepository
+    public class SpeciesRepository : GenericRepository, ISpeciesRepository
     {
-        public SpeciesRepository(SowScheduleContext dbContex) :base(dbContex)
-        { 
+        public SpeciesRepository(SowScheduleContext dbContex) : base(dbContex)
+        {
         }
 
         public SpeciesRepository()
-        {           
+        {
         }
 
         public IEnumerable<Species> GetAll()
@@ -31,17 +26,17 @@ namespace DataAccess.Repositories
 
         public bool Insert(Species entity)
         {
-                _sowScheduleDB.Species.Add(entity);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            _sowScheduleDB.Species.Add(entity);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Remove(int pId)
         {
-                Species species = _sowScheduleDB.Species.Find((byte)pId);
-                _sowScheduleDB.Species.Remove(species);
-                _sowScheduleDB.SaveChanges();
-                return true;
+            Species species = _sowScheduleDB.Species.Find((byte)pId);
+            _sowScheduleDB.Species.Remove(species);
+            _sowScheduleDB.SaveChanges();
+            return true;
         }
 
         public bool Update(Species entity)
@@ -52,8 +47,8 @@ namespace DataAccess.Repositories
                 species.Name = entity.Name;
                 species.ProductionDays = entity.ProductionDays;
                 species.WeightOf1000Seeds = entity.WeightOf1000Seeds;
-                species.AmountOfSeedsPerHectare= entity.AmountOfSeedsPerHectare;
-                species.WeightOfSeedsPerHectare=entity.WeightOfSeedsPerHectare;
+                species.AmountOfSeedsPerHectare = entity.AmountOfSeedsPerHectare;
+                species.WeightOfSeedsPerHectare = entity.WeightOfSeedsPerHectare;
                 _sowScheduleDB.SaveChanges();
                 return true;
             }

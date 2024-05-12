@@ -415,9 +415,9 @@ namespace Domain
         /// Advances day by day the status of the seedbed until it reaches to the present day.
         /// </summary>
         private void DayByDayToCurrentDate()
-        {            
+        {
             do
-            {      
+            {
                 ImplementRelease();
                 ImplementReservation();
                 UpdateObjects();

@@ -62,13 +62,13 @@ namespace Domain.Models
         /// <param name="pOrderID">The single ID of the order to wich the order location belongs.</param>
         /// <param name="pSeedTrayAmount">The amount of seedtrays used to sown the order location.</param>
         /// <param name="pSeedlingAmount">The total amount of seedling in the order location.</param>
-        public OrderLocationModel(int pID, int pSeedTrayType,  int pOrderID, int pSeedTrayAmount, int pSeedlingAmount)
+        public OrderLocationModel(int pID, int pSeedTrayType, int pOrderID, int pSeedTrayAmount, int pSeedlingAmount)
         {
             _ID = pID;
             _greenHouse = -1;
             _seedTrayType = pSeedTrayType;
             _orderID = pOrderID;
-            _seedTrayAmount = pSeedTrayAmount;            
+            _seedTrayAmount = pSeedTrayAmount;
             _seedlingAmount = pSeedlingAmount;
             _sowDate = null;
             _estimateDeliveryDate = null;

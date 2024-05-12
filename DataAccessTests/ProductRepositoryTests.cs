@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using DataAccess;
 using DataAccess.Repositories;
 using FluentAssertions;
 using Moq;

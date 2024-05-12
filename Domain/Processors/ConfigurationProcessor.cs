@@ -1,7 +1,5 @@
 ﻿using Domain.Validators;
 using FluentValidation.Results;
-using SupportLayer;
-using SupportLayer.Models;
 using System.Configuration;
 
 namespace Domain.Processors
@@ -9,11 +7,11 @@ namespace Domain.Processors
     public class ConfigurationProcessor
     {
         public string Error { get; set; } = null!;
-        private readonly string UserSettingsDirectory;        
+        private readonly string UserSettingsDirectory;
 
         public ConfigurationProcessor()
         {
-            UserSettingsDirectory=GetUserSettingsDirectory();
+            UserSettingsDirectory = GetUserSettingsDirectory();
         }
 
         private bool ValidateData(Configurations model)
@@ -37,7 +35,7 @@ namespace Domain.Processors
             if (ValidateData(model) == true)
             {
                 string configFilePath = GetUserSettingsDirectory();
-                ExeConfigurationFileMap configFileMap = 
+                ExeConfigurationFileMap configFileMap =
                     new ExeConfigurationFileMap();
                 configFileMap.ExeConfigFilename = configFilePath;
 
