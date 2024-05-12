@@ -1052,7 +1052,65 @@ public class DateIteratorAndResourceCheckerTests
         iterator.SeedBedStatus.ThereAreNonNegattiveValuesOfArea().Should().BeFalse();
     }
 
-        int oldOrderLocationsCount = auxStatus.OrderLocations.Count;
+    [Theory]
+    [InlineData(3600000, 3, 25000, 0, 0, 0, 0)]
+    [InlineData(7200000, 5, 17000, 2, 33000, 0, 0)]
+    [InlineData(8288000, 1, 8000, 3, 19000, 5, 23000)]
+    [InlineData(11953000, 3, 50000, 2, 12000, 7, 25000)]
+    public void DoesItDisplaceFollowingOrders_ShouldReturnTrueAndNonePermutationBecauseOfLackOfWorkForceAndTime(
+        int seedlingAmount
+        , int seedTrayId1, int amount1
+        , int seedTrayId2, int amount2
+        , int seedTrayId3, int amount3)
+    {
+        DateOnly wishedDate = new DateOnly(2023, 6, 13);
+
+        OrderModel newOrder = new OrderModel(1
+            , new ClientModel(1, "", "")
+            , new ProductModel(1, "", "", 30)
+            , seedlingAmount
+            , new DateOnly(2023, 6, 10)
+            , wishedDate
+            , null
+            , null
+            , null
+            , false);
+
+        SeedTrayPermutation permutation = new SeedTrayPermutation(
+            seedTrayId1, amount1
+            , seedTrayId2, amount2
+            , seedTrayId3, amount3);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
+
+        iterator.SeedTrayPermutations.AddLast(permutation);
+
+        GreenHouseModel tempGreenHouse = new GreenHouseModel(-1, "TempGreenHouse", 0, 0, true);
+        iterator.SeedBedStatus.GreenHouses.Add(tempGreenHouse);
+
+        iterator.SeedBedStatus.SeedTrays.ForEach(x => x.FreeAmount *= 100);
+        iterator.SeedBedStatus.GreenHouses.ForEach(x => x.SeedTrayAvailableArea *= 100);
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("DayByDayToRequestDate"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo.Invoke(iterator, null);
+
+        MethodInfo methodInfo2 = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("DoesItDisplaceFollowingOrders"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        bool result = (bool)methodInfo2.Invoke(iterator, null);
+
+        result.Should().BeTrue();
+        iterator.SeedTrayPermutations.Count.Should().Be(0);
+        iterator.SeedBedStatus.IteratorDate.Should().Be(wishedDate.AddDays(30));
+        iterator.SeedBedStatus.Orders.Last.Value.Complete.Should().BeFalse();
+        iterator.SeedBedStatus.ThereAreNonNegattiveValuesOfSeedTray().Should().BeTrue();
+        iterator.SeedBedStatus.ThereAreNonNegattiveValuesOfArea().Should().BeTrue();
+    }
+
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
             .GetMethod("InsertOrderInProcessIntoSeedBedStatusAuxiliar"
