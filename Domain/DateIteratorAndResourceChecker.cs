@@ -529,8 +529,10 @@ namespace Domain
 
             foreach (SeedTrayPermutation seedTrayPermutation in _seedTrayPermutations)
             {
+                _seedBedStatus = new SeedBedStatus(_auxiliarSeedBedStatus);
                 InsertOrderInProcessIntoSeedBedStatus(seedTrayPermutation);
                 _seedBedStatus.IteratorDate = _seedBedStatus.IteratorDate.AddDays(-1);
+
                 do
                 {
                     _seedBedStatus.IteratorDate = _seedBedStatus.IteratorDate.AddDays(1);
