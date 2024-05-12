@@ -476,9 +476,7 @@ public class SeedBedStatusTests
             methodInfo.Invoke(status, null);
             status.IteratorDate = status.IteratorDate.AddDays(1);
         }
-        //TODO - When I run all the tests OrderLocationsToDelete has 4 records 
-        // and when I run it alone, it has 2 records. This a simliar case to the issues
-        //of the DataAccess tests
+
         status.OrderLocationsToDelete.Count.Should().Be(2);
         status.OrdersToDelete.Count.Should().Be(1);
 
