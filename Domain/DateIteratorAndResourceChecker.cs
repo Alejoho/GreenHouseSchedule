@@ -523,7 +523,7 @@ namespace Domain
         {
             bool output = false;
 
-            DateOnly limitDate = _seedBedStatus.IteratorDate.AddDays(_orderInProcess.Product.ProductionInterval);
+            DateOnly limitDate = _seedBedStatus.IteratorDate.AddDays(_orderInProcess.Product.ProductionInterval - 1);
 
             _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
 
@@ -543,12 +543,12 @@ namespace Domain
                 //tal vez chequeando que las ordernes no tenga un defase mayor a un terminado numero entre
                 //la EstimateSowDate and the RealSowDate. No se digamos de una semana. Este es un valor que se puede 
                 //poner en el app.config
-                _seedBedStatus.IteratorDate <= limitDate &&
+                _seedBedStatus.IteratorDate < limitDate &&
                 _seedBedStatus.ThereAreNonNegattiveValuesOfSeedTray() &&
                 _seedBedStatus.ThereAreNonNegattiveValuesOfArea()
                 );
 
-                if (_seedBedStatus.IteratorDate < limitDate)
+                if (_seedBedStatus.IteratorDate < limitDate || _seedBedStatus.Orders.Last.Value.Complete == false)
                 {
                     _seedTrayPermutationsToDelete.Add(seedTrayPermutation);
                 }
