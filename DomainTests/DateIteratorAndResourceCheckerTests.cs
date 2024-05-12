@@ -1165,5 +1165,69 @@ public class DateIteratorAndResourceCheckerTests
         iterator.SeedTrayPermutations.Count.Should().Be(1);
     }
 
+    [Fact]
+    public void DoesItDisplaceFollowingOrders_ShouldWorkProperly()
+    {
+        DateOnly wishedDate = new DateOnly(2023, 6, 13);
+
+        OrderModel newOrder = new OrderModel(1
+            , new ClientModel(1, "", "")
+            , new ProductModel(1, "", "", 30)
+            , 55000
+            , new DateOnly(2023, 6, 10)
+            , wishedDate
+            , null
+            , null
+            , null
+            , false);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
+
+        SeedTrayPermutation permutation = new SeedTrayPermutation(4, 255);
+        iterator.SeedTrayPermutations.AddLast(permutation);
+
+        permutation = new SeedTrayPermutation(7, 455);
+        iterator.SeedTrayPermutations.AddLast(permutation);
+
+        permutation = new SeedTrayPermutation(3, 144, 5, 132);
+        iterator.SeedTrayPermutations.AddLast(permutation);
+
+        permutation = new SeedTrayPermutation(7, 200, 4, 143);
+        iterator.SeedTrayPermutations.AddLast(permutation);
+
+        permutation = new SeedTrayPermutation(2, 75, 4, 100, 7, 187);        
+        iterator.SeedTrayPermutations.AddLast(permutation);
+
+        permutation = new SeedTrayPermutation(1, 20, 3, 194, 5, 150);
+        iterator.SeedTrayPermutations.AddLast(permutation);
+
+        permutation = new SeedTrayPermutation(1, 197);
+        iterator.SeedTrayPermutations.AddLast(permutation);
+
+        permutation = new SeedTrayPermutation(1, 100,6,97);
+        iterator.SeedTrayPermutations.AddLast(permutation);
+
+        permutation = new SeedTrayPermutation(2, 10, 3, 36, 6, 155);
+        iterator.SeedTrayPermutations.AddLast(permutation);
+
+        GreenHouseModel tempGreenHouse = new GreenHouseModel(-1, "TempGreenHouse", 0, 0, true);
+        iterator.SeedBedStatus.GreenHouses.Add(tempGreenHouse);
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("DayByDayToRequestDate"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo.Invoke(iterator, null);
+
+        MethodInfo methodInfo2 = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("DoesItDisplaceFollowingOrders"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        bool result = (bool)methodInfo2.Invoke(iterator, null);
+
+        result.Should().BeFalse();
+        iterator.SeedTrayPermutations.Count.Should().Be(6);
+    }
+
     #endregion
 }
