@@ -888,6 +888,44 @@ public class DateIteratorAndResourceCheckerTests
         permutations.Count.Should().Be(simplePermutationAmount + doublePermutationAmount + triplePermutationAmount);
     }
 
+    [Fact]
+    public void SeedTrayAndAreaResources_ShouldGiveNonePermutations()
+    {
+        OrderModel newOrder = new OrderModel(1
+            , new ClientModel(1, "", "")
+            , new ProductModel(1, "", "", 30)
+            , 163000
+            , new DateOnly()
+            , new DateOnly()
+            , null
+            , null
+            , null
+            , false);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
+
+        foreach (var greenHouse in iterator.SeedBedStatus.GreenHouses)
+        {
+            greenHouse.SeedTrayAvailableArea *= 0.1640m;
+        }
+
+        iterator.SeedBedStatus.SeedTrays.RemoveAll(x => x.ID != 1);
+
+        MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
+            .GetMethod("SeedTrayAndAreaResources"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        methodInfo.Invoke(iterator, null);
+
+        FieldInfo fieldInfo = typeof(DateIteratorAndResourceChecker)
+            .GetField("_seedTrayPermutations"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        var permutations = (LinkedList<SeedTrayPermutation>)fieldInfo.GetValue(iterator);
+
+        permutations.Count().Should().Be(0);
+    }
+
     [Theory]
     [InlineData(75000, 1, 268, 0, 0, 0, 0, 1)]
     [InlineData(75000, 1, 179, 2, 174, 0, 0, 2)]
@@ -1195,7 +1233,7 @@ public class DateIteratorAndResourceCheckerTests
         permutation = new SeedTrayPermutation(7, 200, 4, 143);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
-        permutation = new SeedTrayPermutation(2, 75, 4, 100, 7, 187);        
+        permutation = new SeedTrayPermutation(2, 75, 4, 100, 7, 187);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
         permutation = new SeedTrayPermutation(1, 20, 3, 194, 5, 150);
@@ -1204,7 +1242,7 @@ public class DateIteratorAndResourceCheckerTests
         permutation = new SeedTrayPermutation(1, 197);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
-        permutation = new SeedTrayPermutation(1, 100,6,97);
+        permutation = new SeedTrayPermutation(1, 100, 6, 97);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
         permutation = new SeedTrayPermutation(2, 10, 3, 36, 6, 155);
