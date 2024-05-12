@@ -940,7 +940,7 @@ public class DateIteratorAndResourceCheckerTests
     [InlineData(89700, 7, 100, 3, 150, 1, 200)]
     [InlineData(154250, 6, 250, 4, 250, 7, 250)]
     [InlineData(173728, 4, 300, 2, 282, 6, 244)]
-    public void DoesItDisplaceFollowingOrders_ShouldReturnTrueAndNonePermutationBeacuseOfLackOfSeedTrays(
+    public void DoesItDisplaceFollowingOrders_ShouldReturnTrueAndNonePermutationBecauseOfLackOfSeedTrays(
         int seedlingAmount
         , int seedTrayId1, int amount1
         , int seedTrayId2, int amount2
