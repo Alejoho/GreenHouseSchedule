@@ -84,7 +84,7 @@ namespace Domain
         /// <summary>
         /// Advances the state of the seedbed until the request date of a new order.
         /// </summary>
-        private void DayByDayToRequestDate()
+        private void DayByDayToEstimateSowDate()
         {
             //CHECK - al crear la instancia de esta clase el status se mueve directo al dia de la orden que se desea agregar
             //y realiza el trabajo de ese dia sin agregar la orden. Pero al pasar al metodo LookForAvailability se va 
@@ -289,8 +289,9 @@ namespace Domain
             {
                 DayByDayToRequestDate();
                 _orderInProcess.RequestDate.AddDays(1);
+                _orderInProcess.AdvanceEstimateSowDateOneDay();
             } while (AreThereResources() == false && DoesItDisplaceFollowingOrders() == true);
-            _orderInProcess.RequestDate.AddDays(-1);
+            _orderInProcess.GoBackEstimateSowDateOneDay();
 
             SeedBedStatus.GreenHouses.Remove(tempGreenHouse);
         }
