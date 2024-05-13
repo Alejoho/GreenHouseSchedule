@@ -13,7 +13,7 @@ namespace Domain.Models
         private readonly ProductModel _product;
         private int _seedlingAmount;
         private readonly DateOnly _requestDate;
-        private readonly DateOnly? _estimateSowDate;
+        private DateOnly? _estimateSowDate;
         private readonly DateOnly? _estimateDeliveryDate;
         private DateOnly? _realSowDate;
         private DateOnly? _realDeliveryDate;
@@ -77,6 +77,16 @@ namespace Domain.Models
             {
                 this._orderLocations.AddLast(new OrderLocationModel(orderLocationModel));
             }
+        }
+
+        public void AdvanceEstimateSowDateOneDay()
+        {
+            this._estimateSowDate = this.EstimateSowDate?.AddDays(1);
+        }
+
+        public void GoBackEstimateSowDateOneDay()
+        {
+            this._estimateSowDate = this.EstimateSowDate?.AddDays(-1);
         }
 
         /// <value>
