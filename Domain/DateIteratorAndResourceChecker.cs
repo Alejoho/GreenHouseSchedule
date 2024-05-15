@@ -169,7 +169,7 @@ namespace Domain
                     {
                         outer += orderLocation.SeedTrayAmount;
                         SeedBedStatus.ReleaseSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
-                        SeedBedStatus.ReleaseArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
+                        SeedBedStatus.ReleaseArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
                         order.SeedlingAmount -= orderLocation.SeedlingAmount;
                         SeedBedStatus.OrderLocationsToDelete.Add(orderLocation);
                     }
@@ -205,7 +205,7 @@ namespace Domain
                                 orderLocation.SowDate = SeedBedStatus.IteratorDate;
                                 orderLocation.EstimateDeliveryDate = SeedBedStatus.IteratorDate.AddDays(order.Product.ProductionInterval);
                                 SeedBedStatus.ReserveSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
-                                SeedBedStatus.ReserveArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
+                                SeedBedStatus.ReserveArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
                                 SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay -= orderLocation.SeedTrayAmount;
                                 orderLocation.Sown = true;
                             }
@@ -227,7 +227,7 @@ namespace Domain
                                 newOrderLocation.SeedlingAmount = newOrderLocation.SeedTrayAmount * alveolus;
 
                                 SeedBedStatus.ReserveSeedTray(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType);
-                                SeedBedStatus.ReserveArea(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType, newOrderLocation.GreenHouse);
+                                SeedBedStatus.ReserveArea(newOrderLocation.SeedTrayAmount, newOrderLocation.SeedTrayType);
 
                                 newOrderLocation.Sown = true;
 
