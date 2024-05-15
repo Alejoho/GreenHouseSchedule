@@ -285,15 +285,29 @@ namespace Domain
             GreenHouseModel tempGreenHouse = new GreenHouseModel(-1, "TempGreenHouse", 0, 0, true);
             SeedBedStatus.GreenHouses.Add(tempGreenHouse);
 
-            do
-            {
-                DayByDayToRequestDate();
-                _orderInProcess.RequestDate.AddDays(1);
-                _orderInProcess.AdvanceEstimateSowDateOneDay();
-            } while (AreThereResources() == false && DoesItDisplaceFollowingOrders() == true);
             _orderInProcess.GoBackEstimateSowDateOneDay();
 
+            do
+            {
+                _orderInProcess.AdvanceEstimateSowDateOneDay();
+                DayByDayToEstimateSowDate();
+            } while (CanISowIt() == false);
+
+
             SeedBedStatus.GreenHouses.Remove(tempGreenHouse);
+        }
+
+        private bool CanISowIt()
+        {
+            if (AreThereResources() == true)
+            {
+                if (DoesItDisplaceFollowingOrders() == false)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
