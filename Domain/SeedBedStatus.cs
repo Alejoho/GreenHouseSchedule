@@ -829,6 +829,16 @@ namespace Domain
         /// </value>
         internal ArrayList OrderLocationsToAdd { get => _orderLocationsToAdd; set => _orderLocationsToAdd = value; }
 
+        /// <summary>
+        /// Gets or sets the sum of used area of all active greenhouses.
+        /// </summary>
+        internal decimal GeneralUsedArea { get => _generalUsedArea; set => _generalUsedArea = value; }
+
+        /// <summary>
+        /// Gets or sets the sum of available area of all active greenhouses.
+        /// </summary>
+        internal decimal GeneralAvailableArea { get => _generalAvailableArea; set => _generalAvailableArea = value; }
+
 
         #endregion
     }
