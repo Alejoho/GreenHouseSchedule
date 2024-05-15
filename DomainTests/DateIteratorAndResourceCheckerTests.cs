@@ -1267,5 +1267,27 @@ public class DateIteratorAndResourceCheckerTests
         iterator.SeedTrayPermutations.Count.Should().Be(6);
     }
 
+    [Fact]
+    public void LookForAvailability_ShouldWork()
+    {
+        DateOnly wishedDate = new DateOnly(2023, 6, 13);
+
+        OrderModel newOrder = new OrderModel(1
+            , new ClientModel(1, "", "")
+            , new ProductModel(1, "", "", 30)
+            , 95000
+            , new DateOnly(2023, 6, 10)
+            , wishedDate
+            , null
+            , null
+            , null
+            , false);
+
+        DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
+
+        iterator.LookForAvailability();
+
+        iterator.SeedTrayPermutations.Count.Should().Be(3);
+    }
     #endregion
 }
