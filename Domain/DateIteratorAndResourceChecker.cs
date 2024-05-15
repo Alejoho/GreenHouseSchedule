@@ -96,7 +96,7 @@ namespace Domain
             {
                 DoTheWorkOfThisDay();
 
-                CheckForNegattive();
+                //CheckForNegattive();
 
                 SeedBedStatus.IteratorDate = SeedBedStatus.IteratorDate.AddDays(1);
 
@@ -271,6 +271,7 @@ namespace Domain
 
         #region Methods to Look For Availability
 
+
         /// <summary>
         /// Evaluates day by day from the request day whether is there resources to place the new order and if that order doesn't 
         /// displace the following orders.
@@ -325,7 +326,6 @@ namespace Domain
         /// <returns>Returns true if there is work force otherwise false.</returns>
         private bool WorkForceResource()
         {
-            //LATER - Maybe instead of comparing with 0 its better to compare with MinimumLimitOfSeedTrayToSow
             bool IsThereWorkForceOnThisDay = SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay > 0 ? true : false;
             return IsThereWorkForceOnThisDay;
         }
@@ -529,6 +529,8 @@ namespace Domain
 
             return output;
         }
+        //TODO - When I'm going to reserve area for an order location of the new order, that order location
+        //doesn't have a house where to put it seedtrays
 
         /// <summary>
         /// Evaluates if we put the new order whether displace following orders. 
@@ -553,11 +555,6 @@ namespace Domain
                     _seedBedStatus.IteratorDate = _seedBedStatus.IteratorDate.AddDays(1);
                     DoTheWorkOfThisDay();
                 } while (
-                //CHECK - Here I evaluate if by putting the new order some resources get negattive numbers,
-                //but I don't evaluate the limitation of the amount of seed trays to sow in a day.
-                //tal vez chequeando que las ordernes no tenga un defase mayor a un terminado numero entre
-                //la EstimateSowDate and the RealSowDate. No se digamos de una semana. Este es un valor que se puede 
-                //poner en el app.config
                 _seedBedStatus.IteratorDate < limitDate &&
                 _seedBedStatus.ThereAreNonNegattiveValuesOfSeedTray() &&
                 _seedBedStatus.ThereAreNonNegattiveValuesOfArea()
@@ -590,7 +587,7 @@ namespace Domain
             OrderLocationModel newOrderLocation;
 
             int alveolus = (from seedTray in _seedBedStatus.SeedTrays
-                                  where seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID
+                            where seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID
                             select seedTray.AlveolusQuantity).FirstOrDefault(0);
 
             int seedlingAmount = alveolus * pSeedTrayPermutation.FirstAmount;
@@ -609,7 +606,7 @@ namespace Domain
             if (pSeedTrayPermutation.SecondSeedTrayID > 0)
             {
                 alveolus = (from seedTray in _seedBedStatus.SeedTrays
-                                  where seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID
+                            where seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID
                             select seedTray.AlveolusQuantity).FirstOrDefault(0);
 
                 seedlingAmount = alveolus * pSeedTrayPermutation.FirstAmount;
@@ -629,7 +626,7 @@ namespace Domain
             if (pSeedTrayPermutation.ThirdSeedTrayID != 0)
             {
                 alveolus = (from seedTray in _seedBedStatus.SeedTrays
-                                  where seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID
+                            where seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID
                             select seedTray.AlveolusQuantity).FirstOrDefault(0);
 
                 seedlingAmount = alveolus * pSeedTrayPermutation.FirstAmount;

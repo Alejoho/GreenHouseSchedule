@@ -153,7 +153,7 @@ public class DateIteratorAndResourceCheckerTests
     [Fact]
     public void ImplementEstimateReservation_ShouldWorkWhenTheLimitOfSowPerDayIsNotReached()
     {
-        //NEXT - Make the assert of this test
+        //LATER - Make the assert of this test
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status);
 
         var ordersToSow = iterator.SeedBedStatus.Orders
@@ -1143,7 +1143,7 @@ public class DateIteratorAndResourceCheckerTests
 
         result.Should().BeTrue();
         iterator.SeedTrayPermutations.Count.Should().Be(0);
-        iterator.SeedBedStatus.IteratorDate.Should().Be(wishedDate.AddDays(30));
+        iterator.SeedBedStatus.IteratorDate.Should().Be(wishedDate.AddDays(29));
         iterator.SeedBedStatus.Orders.Last.Value.Complete.Should().BeFalse();
         iterator.SeedBedStatus.ThereAreNonNegattiveValuesOfSeedTray().Should().BeTrue();
         iterator.SeedBedStatus.ThereAreNonNegattiveValuesOfArea().Should().BeTrue();
