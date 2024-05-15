@@ -501,8 +501,7 @@ namespace Domain
         private bool IsThereAreaForTheSeedTraysInUse(SeedTrayPermutation pSeedTrayPermutation)
         {
             bool output;
-            decimal areaUsedByTheSeedTrayTypes;
-            decimal totalAvailableArea = _seedBedStatus.CalculateTotalAvailableArea();
+            decimal areaUsedByTheSeedTrayTypes;          
 
             SeedTrayModel? seedTrayModel = SeedBedStatus.SeedTrays
                 .Find(seedTray => seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID);
@@ -525,7 +524,7 @@ namespace Domain
                 areaUsedByTheSeedTrayTypes += seedTrayModel.Area * pSeedTrayPermutation.ThirdAmount;
             }
 
-            output = totalAvailableArea > areaUsedByTheSeedTrayTypes ? true : false;
+            output = _seedBedStatus.GeneralAvailableArea > areaUsedByTheSeedTrayTypes ? true : false;
 
             return output;
         }
