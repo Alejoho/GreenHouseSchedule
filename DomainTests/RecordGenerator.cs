@@ -471,7 +471,7 @@ internal class RecordGenerator
                 }
                 else
                 {
-                    return 0;
+                    return (byte)0;
                 }
             })
             .RuleFor(x => x.GreenHouse, (f, u) => _greenHouses.FirstOrDefault(x => x.Id == u.GreenHouseId, null))
