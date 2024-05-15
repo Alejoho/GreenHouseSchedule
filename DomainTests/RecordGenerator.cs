@@ -461,8 +461,20 @@ internal class RecordGenerator
         DateTime? actualSowDate = order.RealSowDate != null ? order.RealSowDate?.ToDateTime(TimeOnly.MinValue) : null;
         return new Faker<OrderLocation>()
             .RuleFor(x => x.Id, () => _orderLocationIndex++)
-            .RuleFor(x => x.GreenHouseId, f => f.Random.Byte(1, 8))
-            .RuleFor(x => x.GreenHouse, (f, u) => _greenHouses.Where(x => x.Id == u.GreenHouseId).First())
+            .RuleFor(x => x.GreenHouseId, f =>
+            {
+                byte greenHouseId = f.Random.Byte(1, 8);
+
+                if (completedAmount > 0)
+                {
+                    return greenHouseId;
+                }
+                else
+                {
+                    return 0;
+                }
+            })
+            .RuleFor(x => x.GreenHouse, (f, u) => _greenHouses.FirstOrDefault(x => x.Id == u.GreenHouseId, null))
             .RuleFor(x => x.SeedTrayId, f => f.Random.Byte(1, 7))
             .RuleFor(x => x.SeedTray, (f, u) => _seedTrays.Where(x => x.Id == u.SeedTrayId).First())
             .RuleFor(x => x.OrderId, () => order.Id)
