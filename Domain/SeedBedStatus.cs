@@ -8,6 +8,10 @@ using System.Configuration;
 
 namespace Domain
 {
+    //NEXT - implement a new logic to remove the strict place of the order location in the designate house.
+    //When a store a new order I don't specify in what greenhouse to put it, that information is going to be
+    //specify later in the unsteeve window.
+
     //TODO - Make some clean up of this class
 
     //TODO - I think it'd be good to change the evaluation of availability of sow seedtray per day from seedtray to 
@@ -32,6 +36,10 @@ namespace Domain
         private readonly int _maxAmountOfSeedTrayToSowPerDay;
         private int _remainingAmountOfSeedTrayToSowPerDay;
         private readonly int _minimumLimitOfSeedTrayToSow;
+
+        private readonly decimal _generalTotalArea;
+        private decimal _generalUsedArea;
+        private decimal _generalAvailableArea;
 
         private IGreenHouseRepository _greenHouseRepository;
         private ISeedTrayRepository _seedTrayRepository;
@@ -87,6 +95,7 @@ namespace Domain
             {
                 _greenHouseRepository = greenHouseRepo;
                 _greenHouses = GetGreenHouses();
+
             }
             if (seedTrayRepo != null)
             {
@@ -126,6 +135,9 @@ namespace Domain
                 && working == true)
             {
                 DayByDayToCurrentDate();
+
+                _generalAvailableArea = this.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayAvailableArea);
+                _generalUsedArea = this.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayUsedArea);
             }
         }
 
@@ -163,6 +175,9 @@ namespace Domain
             _orderLocationsToAdd = new ArrayList();
 
             _greenHouses = GetGreenHouses();
+
+            _generalTotalArea = this.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayTotalArea);
+
             _seedTrays = GetSeedTrays();
             _orders = GetMajorityDataOfOrders();
             _orderLocations = GetOrderLocations();
@@ -173,6 +188,9 @@ namespace Domain
             FillOrderLocations();
 
             DayByDayToCurrentDate();
+
+            _generalAvailableArea = this.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayAvailableArea);
+            _generalUsedArea = this.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayUsedArea);
         }
 
         /// <summary>
@@ -196,6 +214,10 @@ namespace Domain
             this._maxAmountOfSeedTrayToSowPerDay = pOriginalSeedBedStatus.MaxAmountOfSeedTrayToSowPerDay;
             this._remainingAmountOfSeedTrayToSowPerDay = pOriginalSeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay;
             this._minimumLimitOfSeedTrayToSow = pOriginalSeedBedStatus._minimumLimitOfSeedTrayToSow;
+
+            this._generalTotalArea = pOriginalSeedBedStatus._generalTotalArea;
+            this._generalUsedArea = pOriginalSeedBedStatus._generalUsedArea;
+            this._generalAvailableArea = pOriginalSeedBedStatus._generalAvailableArea;
 
             this._greenHouseRepository = new GreenHouseRepository();
             this._seedTrayRepository = new SeedTrayRepository();
