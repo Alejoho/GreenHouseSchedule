@@ -641,6 +641,34 @@ namespace Domain
         }
 
         /// <summary>
+        /// Calculate the area used by a determined amount of seedtrays of one type 
+        /// and marks as used that area in the general area.
+        /// </summary>
+        /// <param name="pAmount">The amount of seedtrays.</param>
+        /// <param name="pSeedTrayType">The ID of the seedtray type.</param>
+        internal void ReserveArea(int pAmount, int pSeedTrayType)
+        {
+            SeedTrayModel currentSeedTray = _seedTrays.First(n => n.ID == pSeedTrayType);
+            decimal area = (currentSeedTray.Area * pAmount);
+            _generalAvailableArea -= area;
+            _generalUsedArea += area;
+        }
+
+        /// <summary>
+        /// Calculate the area used by a determined amount of seedtrays of one type 
+        /// and marks as free that area in the general area.
+        /// </summary>
+        /// <param name="pAmount">The amount of seedtrays.</param>
+        /// <param name="pSeedTrayType">The ID of the seedtray type.</param>
+        internal void ReleaseArea(int pAmount, int pSeedTrayType)
+        {
+            SeedTrayModel currentSeedTray = _seedTrays.First(n => n.ID == pSeedTrayType);
+            decimal area = (currentSeedTray.Area * pAmount);
+            _generalAvailableArea += area;
+            _generalUsedArea -= area;
+        }
+
+        /// <summary>
         /// Marks as used the given amount of seedtrays of the especified seedtray type stack.
         /// </summary>
         /// <param name="pAmount">The amount of seedtrays.</param>
