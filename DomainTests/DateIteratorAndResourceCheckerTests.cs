@@ -240,7 +240,7 @@ public class DateIteratorAndResourceCheckerTests
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(localStatus, newOrder, true);
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
-            .GetMethod("DayByDayToRequestDate"
+            .GetMethod("DayByDayToEstimateSowDate"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo.Invoke(iterator, null);
@@ -291,10 +291,16 @@ public class DateIteratorAndResourceCheckerTests
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(localStatus, newOrder, true);
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
-            .GetMethod("DayByDayToRequestDate"
+            .GetMethod("DayByDayToEstimateSowDate"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo.Invoke(iterator, null);
+
+        FieldInfo fieldInfo = typeof(SeedBedStatus)
+            .GetField("_generalTotalArea"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        decimal generalTotalArea = (decimal)fieldInfo.GetValue(iterator.SeedBedStatus);
 
         iterator.SeedBedStatus.IteratorDate.Should().Be(wishedDate);
 
@@ -303,12 +309,11 @@ public class DateIteratorAndResourceCheckerTests
         iterator.SeedBedStatus.SeedTrays
             .ForEach(x => x.FreeAmount.Should().Be(x.TotalAmount));
 
-        iterator.SeedBedStatus.GreenHouses
-            .ForEach(x => x.SeedTrayUsedArea.Should()
-                .BeApproximately(0m, 0.001m));
-        iterator.SeedBedStatus.GreenHouses
-            .ForEach(x => x.SeedTrayAvailableArea.Should()
-                .BeApproximately(x.SeedTrayTotalArea, 0.001m));
+        iterator.SeedBedStatus.GeneralAvailableArea.Should()
+        .BeApproximately(generalTotalArea, 0.001m);
+
+        iterator.SeedBedStatus.GeneralUsedArea.Should()
+        .BeApproximately(0m, 0.001m);
 
         iterator.SeedBedStatus.Orders.Count.Should().Be(0);
         iterator.SeedBedStatus.OrderLocations.Count.Should().Be(0);
@@ -342,7 +347,7 @@ public class DateIteratorAndResourceCheckerTests
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(localStatus, newOrder, true);
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
-            .GetMethod("DayByDayToRequestDate"
+            .GetMethod("DayByDayToEstimateSowDate"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo.Invoke(iterator, null);
@@ -385,10 +390,16 @@ public class DateIteratorAndResourceCheckerTests
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
-            .GetMethod("DayByDayToRequestDate"
+            .GetMethod("DayByDayToEstimateSowDate"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo.Invoke(iterator, null);
+
+        FieldInfo fieldInfo = typeof(SeedBedStatus)
+            .GetField("_generalTotalArea"
+                , BindingFlags.NonPublic | BindingFlags.Instance);
+
+        decimal generalTotalArea = (decimal)fieldInfo.GetValue(iterator.SeedBedStatus);
 
         iterator.SeedBedStatus.IteratorDate.Should().Be(wishedDate);
 
@@ -397,12 +408,12 @@ public class DateIteratorAndResourceCheckerTests
         iterator.SeedBedStatus.SeedTrays
             .ForEach(x => x.FreeAmount.Should().Be(x.TotalAmount));
 
-        iterator.SeedBedStatus.GreenHouses
-            .ForEach(x => x.SeedTrayUsedArea.Should()
-                .BeApproximately(0m, 0.001m));
-        iterator.SeedBedStatus.GreenHouses
-            .ForEach(x => x.SeedTrayAvailableArea.Should()
-                .BeApproximately(x.SeedTrayTotalArea, 0.001m));
+        iterator.SeedBedStatus.GeneralAvailableArea.Should()
+                .BeApproximately(generalTotalArea, 0.001m);
+
+        iterator.SeedBedStatus.GeneralUsedArea.Should()
+        .BeApproximately(0m, 0.001m);
+
 
         iterator.SeedBedStatus.Orders.Count.Should().Be(0);
         iterator.SeedBedStatus.OrderLocations.Count.Should().Be(0);
@@ -584,6 +595,8 @@ public class DateIteratorAndResourceCheckerTests
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
         }
 
+        iterator.SeedBedStatus.GeneralAvailableArea *= 0.1640m;
+
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
             .GetMethod("GenerateAndAddSimplePermutations"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
@@ -629,6 +642,8 @@ public class DateIteratorAndResourceCheckerTests
         {
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
         }
+
+        iterator.SeedBedStatus.GeneralAvailableArea *= 0.1640m;
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
             .GetMethod("GenerateAndAddDoublePermutations"
@@ -678,6 +693,8 @@ public class DateIteratorAndResourceCheckerTests
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
         }
 
+        iterator.SeedBedStatus.GeneralAvailableArea *= 0.1640m;
+
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
             .GetMethod("GenerateAndAddTriplePermutations"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
@@ -718,6 +735,8 @@ public class DateIteratorAndResourceCheckerTests
         {
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
         }
+
+        iterator.SeedBedStatus.GeneralAvailableArea *= 0.1640m;
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
             .GetMethod("SeedTrayAndAreaResources"
@@ -762,6 +781,8 @@ public class DateIteratorAndResourceCheckerTests
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
         }
 
+        iterator.SeedBedStatus.GeneralAvailableArea *= 0.1640m;
+
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
             .GetMethod("SeedTrayAndAreaResources"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
@@ -804,6 +825,8 @@ public class DateIteratorAndResourceCheckerTests
         {
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
         }
+
+        iterator.SeedBedStatus.GeneralAvailableArea *= 0.1640m;
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
             .GetMethod("SeedTrayAndAreaResources"
@@ -1010,7 +1033,7 @@ public class DateIteratorAndResourceCheckerTests
         iterator.SeedBedStatus.GreenHouses.Add(tempGreenHouse);
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
-            .GetMethod("DayByDayToRequestDate"
+            .GetMethod("DayByDayToEstimateSowDate"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo.Invoke(iterator, null);
@@ -1072,7 +1095,7 @@ public class DateIteratorAndResourceCheckerTests
         iterator.SeedBedStatus.SeedTrays.Add(new SeedTrayModel(7, "121 alveolos", 2.2m, 121, 2550, true));
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
-            .GetMethod("DayByDayToRequestDate"
+            .GetMethod("DayByDayToEstimateSowDate"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo.Invoke(iterator, null);
@@ -1128,9 +1151,10 @@ public class DateIteratorAndResourceCheckerTests
 
         iterator.SeedBedStatus.SeedTrays.ForEach(x => x.FreeAmount *= 100);
         iterator.SeedBedStatus.GreenHouses.ForEach(x => x.SeedTrayAvailableArea *= 100);
+        iterator.SeedBedStatus.GeneralAvailableArea *= 100;
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
-            .GetMethod("DayByDayToRequestDate"
+            .GetMethod("DayByDayToEstimateSowDate"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo.Invoke(iterator, null);
@@ -1188,7 +1212,7 @@ public class DateIteratorAndResourceCheckerTests
         iterator.SeedBedStatus.GreenHouses.Add(tempGreenHouse);
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
-            .GetMethod("DayByDayToRequestDate"
+            .GetMethod("DayByDayToEstimateSowDate"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo.Invoke(iterator, null);
@@ -1252,7 +1276,7 @@ public class DateIteratorAndResourceCheckerTests
         iterator.SeedBedStatus.GreenHouses.Add(tempGreenHouse);
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
-            .GetMethod("DayByDayToRequestDate"
+            .GetMethod("DayByDayToEstimateSowDate"
                 , BindingFlags.NonPublic | BindingFlags.Instance);
 
         methodInfo.Invoke(iterator, null);
