@@ -638,6 +638,8 @@ public class SeedBedStatusTests
 
         SeedBedStatus status = new SeedBedStatus(greenHouseRepo: mockGreenHouseRepository.Object);
 
+        status.GeneralAvailableArea = 100;
+
         bool result = status.ThereAreNonNegattiveValuesOfArea();
 
         result.Should().Be(true);
@@ -651,7 +653,7 @@ public class SeedBedStatusTests
 
         SeedBedStatus status = new SeedBedStatus(greenHouseRepo: mockGreenHouseRepository.Object);
 
-        status.GreenHouses.First(x => x.Active == true).SeedTrayAvailableArea = -100000;
+        status.GeneralAvailableArea = -100;
 
         bool result = status.ThereAreNonNegattiveValuesOfArea();
 

@@ -96,6 +96,10 @@ namespace Domain
                 _greenHouseRepository = greenHouseRepo;
                 _greenHouses = GetGreenHouses();
 
+                _generalTotalArea = this.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayTotalArea);
+                _generalAvailableArea = _generalTotalArea;
+                _generalUsedArea = 0m;
+
             }
             if (seedTrayRepo != null)
             {
@@ -135,9 +139,6 @@ namespace Domain
                 && working == true)
             {
                 DayByDayToCurrentDate();
-
-                _generalAvailableArea = this.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayAvailableArea);
-                _generalUsedArea = this.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayUsedArea);
             }
         }
 
@@ -610,62 +611,65 @@ namespace Domain
 
         /// <summary>
         /// Calculate the area used by a determined amount of seedtrays of one type 
-        /// and marks as used that area in the specified greenhouse.
+        /// and marks as used that area in the proper members.
         /// </summary>
         /// <param name="pAmount">The amount of seedtrays.</param>
         /// <param name="pSeedTrayType">The ID of the seedtray type.</param>
         /// <param name="pGreenHouse"> The ID of the greenhouse.</param>
         internal void ReserveArea(int pAmount, int pSeedTrayType, int pGreenHouse)
         {
-            GreenHouseModel currentGreenHouse = _greenHouses.First(n => n.ID == pGreenHouse);
             SeedTrayModel currentSeedTray = _seedTrays.First(n => n.ID == pSeedTrayType);
             decimal area = (currentSeedTray.Area * pAmount);
-            currentGreenHouse.SeedTrayAvailableArea -= area;
-            currentGreenHouse.SeedTrayUsedArea += area;
+
+            if (pGreenHouse > 0)
+            {
+                GreenHouseModel currentGreenHouse = _greenHouses.First(n => n.ID == pGreenHouse);
+                currentGreenHouse.SeedTrayAvailableArea -= area;
+                currentGreenHouse.SeedTrayUsedArea += area;
+
+                if (currentGreenHouse.Active == true)
+                {
+                    _generalAvailableArea -= area;
+                    _generalUsedArea += area;
+                }
+            }
+            else
+            {
+                _generalAvailableArea -= area;
+                _generalUsedArea += area;
+            }
         }
 
         /// <summary>
         /// Calculate the area used by a determined amount of seedtrays of one type 
-        /// and marks as free that area in the specified greenhouse.
+        /// and marks as free that area in the proper members.
         /// </summary>
         /// <param name="pAmount">The amount of seedtrays.</param>
         /// <param name="pSeedTrayType">The ID of the seedtray type.</param>
         /// <param name="pGreenHouse"> The ID of the greenhouse.</param>
         internal void ReleaseArea(int pAmount, int pSeedTrayType, int pGreenHouse)
         {
-            GreenHouseModel currentGreenHouse = _greenHouses.First(n => n.ID == pGreenHouse);
-            SeedTrayModel currentSeedTray = _seedTrays.First(n => n.ID == pSeedTrayType);
-            decimal area = (currentSeedTray.Area * pAmount);
-            currentGreenHouse.SeedTrayAvailableArea += area;
-            currentGreenHouse.SeedTrayUsedArea -= area;
-        }
 
-        /// <summary>
-        /// Calculate the area used by a determined amount of seedtrays of one type 
-        /// and marks as used that area in the general area.
-        /// </summary>
-        /// <param name="pAmount">The amount of seedtrays.</param>
-        /// <param name="pSeedTrayType">The ID of the seedtray type.</param>
-        internal void ReserveArea(int pAmount, int pSeedTrayType)
-        {
             SeedTrayModel currentSeedTray = _seedTrays.First(n => n.ID == pSeedTrayType);
             decimal area = (currentSeedTray.Area * pAmount);
-            _generalAvailableArea -= area;
-            _generalUsedArea += area;
-        }
 
-        /// <summary>
-        /// Calculate the area used by a determined amount of seedtrays of one type 
-        /// and marks as free that area in the general area.
-        /// </summary>
-        /// <param name="pAmount">The amount of seedtrays.</param>
-        /// <param name="pSeedTrayType">The ID of the seedtray type.</param>
-        internal void ReleaseArea(int pAmount, int pSeedTrayType)
-        {
-            SeedTrayModel currentSeedTray = _seedTrays.First(n => n.ID == pSeedTrayType);
-            decimal area = (currentSeedTray.Area * pAmount);
-            _generalAvailableArea += area;
-            _generalUsedArea -= area;
+            if (pGreenHouse > 0)
+            {
+                GreenHouseModel currentGreenHouse = _greenHouses.First(n => n.ID == pGreenHouse);
+                currentGreenHouse.SeedTrayAvailableArea += area;
+                currentGreenHouse.SeedTrayUsedArea -= area;
+
+                if (currentGreenHouse.Active == true)
+                {
+                    _generalAvailableArea += area;
+                    _generalUsedArea -= area;
+                }
+            }
+            else
+            {
+                _generalAvailableArea += area;
+                _generalUsedArea -= area;
+            }
         }
 
         /// <summary>
