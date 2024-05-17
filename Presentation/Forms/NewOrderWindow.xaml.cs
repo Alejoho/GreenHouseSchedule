@@ -21,6 +21,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     private List<Client> _clients;
     private List<Product> _products;
     private List<SeedTray> _seedTrays;
+    private DateIteratorAndResourceChecker _iterator;
     public NewOrderWindow()
     {
         InitializeComponent();
@@ -87,37 +88,13 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         {
             _seedTrayProcessor.CheckChangeInTheSelection(_seedTrays);
 
-            Client selectedClient = (Client)lblcmbbtnClient.ComboBox.SelectedItem;
-
-            ClientModel clientModel = new ClientModel(selectedClient.Id
-                , selectedClient.Name
-                , selectedClient.NickName);
-
-            Product selectedProduct = (Product)lblcmbbtnProduct.ComboBox.SelectedItem;
-
-            ProductModel productModel = new ProductModel(selectedProduct.Id
-                , selectedProduct.Variety
-                , selectedProduct.Specie.Name
-                , selectedProduct.Specie.ProductionDays);
-
-            OrderModel newOrder = new OrderModel(0
-                , clientModel
-                , productModel
-                , int.Parse(txtAmountOfSeedlings.FieldContent)
-                , DateOnly.FromDateTime(DateTime.Now)
-                , DateOnly.FromDateTime((DateTime)dtpWishDate.TimePicker.SelectedDate)
-                , null
-                , null
-                , null
-                , false);
-
             SeedBedStatus seedBed = new SeedBedStatus();
-            DateIteratorAndResourceChecker iterator = 
-                new DateIteratorAndResourceChecker(seedBed, newOrder);
 
-            iterator.LookForAvailability();
+            _iterator = new DateIteratorAndResourceChecker(seedBed, CreateTheNewOrder());
 
-            if(iterator.SeedTrayPermutations.Count>=0)
+            _iterator.LookForAvailability();
+
+            if (_iterator.SeedTrayPermutations.Count > 0)
             {
                 DisplayResults();
             }
@@ -130,8 +107,37 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void DisplayResults()
     {
-        //TODO - Do the logic of this method
-        MessageBox.Show("Encontrado espacio para la nueva orden.");
+        //NEXT - Do the logic of this method
+        MessageBox.Show($"Encontrado espacio para la nueva orden. {_iterator.SeedTrayPermutations.Count}");
+    }
+
+    private OrderModel CreateTheNewOrder()
+    {
+        Client selectedClient = (Client)lblcmbbtnClient.ComboBox.SelectedItem;
+
+        ClientModel clientModel = new ClientModel(selectedClient.Id
+            , selectedClient.Name
+            , selectedClient.NickName);
+
+        Product selectedProduct = (Product)lblcmbbtnProduct.ComboBox.SelectedItem;
+
+        ProductModel productModel = new ProductModel(selectedProduct.Id
+            , selectedProduct.Variety
+            , selectedProduct.Specie.Name
+            , selectedProduct.Specie.ProductionDays);
+
+        OrderModel output = new OrderModel(0
+            , clientModel
+            , productModel
+            , int.Parse(txtAmountOfSeedlings.FieldContent)
+            , DateOnly.FromDateTime(DateTime.Now)
+            , DateOnly.FromDateTime((DateTime)dtpWishDate.TimePicker.SelectedDate)
+            , null
+            , null
+            , null
+            , false);
+
+        return output;
     }
 
     private bool ValidateData()
