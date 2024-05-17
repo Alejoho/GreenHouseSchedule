@@ -9,8 +9,8 @@ public partial class Block
     public byte BlockNumber { get; set; }
 
     public short SeedTrayAmount { get; set; }
-    //TODO - Fix the name of this property
-    public byte NumberWithinThBlock { get; set; }
+
+    public byte NumberWithinTheBlock { get; set; }
 
     public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; } = new List<DeliveryDetail>();
 

@@ -8,10 +8,6 @@ using System.Configuration;
 
 namespace Domain
 {
-    //NEXT - implement a new logic to remove the strict place of the order location in the designate house.
-    //When a store a new order I don't specify in what greenhouse to put it, that information is going to be
-    //specify later in the unsteeve window.
-
     //TODO - Make some clean up of this class
 
     //TODO - I think it'd be good to change the evaluation of availability of sow seedtray per day from seedtray to 

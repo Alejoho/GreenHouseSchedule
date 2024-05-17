@@ -79,7 +79,7 @@ public class BlockRepositoryTests
         recordUpdated.OrderLocationId.Should().Be(newRecordData.OrderLocationId);
         recordUpdated.BlockNumber.Should().Be(newRecordData.BlockNumber);
         recordUpdated.SeedTrayAmount.Should().Be(newRecordData.SeedTrayAmount);
-        recordUpdated.NumberWithinThBlock.Should().Be(newRecordData.NumberWithinThBlock);
+        recordUpdated.NumberWithinTheBlock.Should().Be(newRecordData.NumberWithinTheBlock);
     }
 
     public List<Block> GenerateRecords(int count)
@@ -105,7 +105,7 @@ public class BlockRepositoryTests
             .RuleFor(x => x.OrderLocationId, f => f.Random.Byte())
             .RuleFor(x => x.BlockNumber, f => f.Random.Byte(1, 4))
             .RuleFor(x => x.SeedTrayAmount, f => f.Random.Short(1, 1000))
-            .RuleFor(x => x.NumberWithinThBlock, f => f.Random.Byte(1, 25));
+            .RuleFor(x => x.NumberWithinTheBlock, f => f.Random.Byte(1, 25));
     }
 
 }

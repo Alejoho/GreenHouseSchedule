@@ -38,7 +38,7 @@ public class BlockRepository : GenericRepository, IBlockRepository
             block.OrderLocationId = entity.OrderLocationId;
             block.BlockNumber = entity.BlockNumber;
             block.SeedTrayAmount = entity.SeedTrayAmount;
-            block.NumberWithinThBlock = entity.NumberWithinThBlock;
+            block.NumberWithinTheBlock = entity.NumberWithinTheBlock;
             _sowScheduleDB.SaveChanges();
             return true;
         }

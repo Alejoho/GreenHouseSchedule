@@ -205,7 +205,7 @@ namespace Domain
                                 orderLocation.SowDate = SeedBedStatus.IteratorDate;
                                 orderLocation.EstimateDeliveryDate = SeedBedStatus.IteratorDate.AddDays(order.Product.ProductionInterval);
                                 SeedBedStatus.ReserveSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
-                                SeedBedStatus.ReserveArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType,orderLocation.GreenHouse);
+                                SeedBedStatus.ReserveArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                                 SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay -= orderLocation.SeedTrayAmount;
                                 orderLocation.Sown = true;
                             }
@@ -338,6 +338,7 @@ namespace Domain
         {
             bool output;
             _seedTrayPermutations.Clear();
+            //NEXT - In these three methods add a filter to only generate permutation of the selected seedTrays.
             GenerateAndAddSimplePermutations();
             GenerateAndAddDoublePermutations();
             GenerateAndAddTriplePermutations();

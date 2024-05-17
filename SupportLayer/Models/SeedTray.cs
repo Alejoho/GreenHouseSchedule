@@ -28,5 +28,7 @@ public partial class SeedTray
 
     public bool Active { get; set; }
 
+    public bool Selected { get; set; }
+
     public virtual ICollection<OrderLocation> OrderLocations { get; set; } = new List<OrderLocation>();
 }
