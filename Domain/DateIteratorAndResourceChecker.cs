@@ -283,6 +283,8 @@ namespace Domain
             //a trabajar de nuevo el dia requerido por la orden, esto trae consigo que se rewstablezca el potencial de
             //siembra del dia, lo que es un error.
 
+            DateOnly limit = (DateOnly)_orderInProcess.EstimateSowDate?.AddDays(180);
+
             GreenHouseModel tempGreenHouse = new GreenHouseModel(-1, "TempGreenHouse", 0, 0, true);
             SeedBedStatus.GreenHouses.Add(tempGreenHouse);
 
@@ -292,7 +294,7 @@ namespace Domain
             {
                 _orderInProcess.AdvanceEstimateSowDateOneDay();
                 DayByDayToEstimateSowDate();
-            } while (CanISowIt() == false);
+            } while (_orderInProcess.EstimateSowDate < limit && CanISowIt() == false);
 
 
             SeedBedStatus.GreenHouses.Remove(tempGreenHouse);
@@ -338,8 +340,7 @@ namespace Domain
         {
             bool output;
             _seedTrayPermutations.Clear();
-            //NEXT - In these three methods add a filter to only generate permutation of the selected seedTrays.
-            //NEXT - Redo the test for these three methods.
+            //TODO - Redo the test for these three methods.
             GenerateAndAddSimplePermutations();
             GenerateAndAddDoublePermutations();
             GenerateAndAddTriplePermutations();
