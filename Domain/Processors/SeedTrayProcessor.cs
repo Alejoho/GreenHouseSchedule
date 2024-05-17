@@ -1,5 +1,6 @@
 ﻿using DataAccess.Contracts;
 using DataAccess.Repositories;
+using Domain.Models;
 using Domain.Validators;
 using FluentValidation.Results;
 using SupportLayer.Models;
@@ -72,6 +73,14 @@ namespace Domain.Processors
         {
             return _repository.GetAll().Where(x => x.Active == true)
                 .OrderBy(x => x.Name);
+        }
+
+        //NEXT - add a method to check if the selection of the seedTray in the newOrder window was changed
+        //if so save the change in the database
+
+        public void CheckChangeInTheSelection(List<SeedTray> selectedsSeedTrays)
+        {
+            
         }
     }
 }

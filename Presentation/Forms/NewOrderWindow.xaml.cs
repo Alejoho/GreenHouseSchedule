@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Models;
 using Domain.Processors;
 using SupportLayer.Models;
 using System;
@@ -16,6 +17,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 {
     private ClientProcessor _clientProcessor;
     private ProductProcessor _productProcessor;
+    private SeedTrayProcessor seedTrayProcessor;
     private List<Client> _clients;
     private List<Product> _products;
     private List<SeedTray> _seedTrays;
@@ -24,6 +26,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         InitializeComponent();
         _clientProcessor = new ClientProcessor();
         _productProcessor = new ProductProcessor();
+        seedTrayProcessor = new SeedTrayProcessor();
         LoadData();
     }
 
@@ -39,7 +42,6 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
         //----------------------------------------------------------------
 
-        SeedTrayProcessor seedTrayProcessor = new SeedTrayProcessor();
         _seedTrays = seedTrayProcessor.GetActiveSeedTrays().ToList();
         dgSeedTraySelector.DataContext = this;
         dgSeedTraySelector.ItemsSource = _seedTrays;
@@ -80,24 +82,59 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void btnSearchAvailability_Click(object sender, RoutedEventArgs e)
     {
-        //if (ValidateData() == true)
-        //{
-        //DateOnly date = new DateOnly(2023, 3, 12);
+        if (ValidateData() == true)
+        {
+            seedTrayProcessor.CheckChangeInTheSelection(new List<SeedTray>());
 
-        //date = date.AddDays(1);
-        //date = date.AddDays(1);
-        //date = date.AddDays(1);
-        //date = date.AddDays(1);
-        //date = date.AddDays(1);
-        //date = date.AddDays(1);
-        SeedBedStatus seedBed = new SeedBedStatus();
-        MessageBox.Show("SeedBedStatus ready.");
-        //}
+            Client selectedClient = (Client)lblcmbbtnClient.ComboBox.SelectedItem;
+
+            ClientModel clientModel = new ClientModel(selectedClient.Id
+                , selectedClient.Name
+                , selectedClient.NickName);
+
+            Product selectedProduct = (Product)lblcmbbtnProduct.ComboBox.SelectedItem;
+
+            ProductModel productModel = new ProductModel(selectedProduct.Id
+                , selectedProduct.Variety
+                , selectedProduct.Specie.Name
+                , selectedProduct.Specie.ProductionDays);
+
+            OrderModel newOrder = new OrderModel(0
+                , clientModel
+                , productModel
+                , int.Parse(txtAmountOfSeedlings.FieldContent)
+                , DateOnly.FromDateTime(DateTime.Now)
+                , DateOnly.FromDateTime((DateTime)dtpWishDate.TimePicker.SelectedDate)
+                , null
+                , null
+                , null
+                , false);
+
+            SeedBedStatus seedBed = new SeedBedStatus();
+            DateIteratorAndResourceChecker iterator = 
+                new DateIteratorAndResourceChecker(seedBed, newOrder);
+
+            iterator.LookForAvailability();
+
+            if(iterator.SeedTrayPermutations.Count>=0)
+            {
+                DisplayResults();
+            }
+            else
+            {
+                MessageBox.Show("No se encontro espacio para ubicar la nueva orden.");
+            }
+        }
+    }
+
+    private void DisplayResults()
+    {
+        //TODO - Do the logic of this method
+        MessageBox.Show("Encontrado espacio para la nueva orden.");
     }
 
     private bool ValidateData()
     {
-        //LATER - Break down in smaller pieces this method
         if (lblcmbbtnClient.ComboBox.SelectedItem == null)
         {
             MessageBox.Show("Debe seleccionar un cliente.", "Dato faltante"
