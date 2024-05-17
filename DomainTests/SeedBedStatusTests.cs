@@ -248,7 +248,7 @@ public class SeedBedStatusTests
         mockGreenHouseRepository.VerifyAll();
     }
 
-    [Theory]    
+    [Theory]
     [InlineData(263, 3, 6)]
     [InlineData(111, 6, 5)]
     [InlineData(47, 5, 7)]
@@ -352,6 +352,63 @@ public class SeedBedStatusTests
         mockSeedTrayRepository.VerifyAll();
         mockGreenHouseRepository.VerifyAll();
     }
+
+    [Theory]
+    [InlineData(159, 3, 0)]
+    [InlineData(357, 5, 0)]
+    [InlineData(321, 1, 0)]
+    public void ReleaseArea_ShouldChangeTheGeneralAreaVariablesWhenThereIsNoSpecifyGreenHouse(int amount, int seedTrayType, int greenHouse)
+    {
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
+
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
+
+        SeedBedStatus status = new SeedBedStatus(
+            seedTrayRepo: mockSeedTrayRepository.Object,
+            greenHouseRepo: mockGreenHouseRepository.Object);
+
+        status.ReleaseArea(amount, seedTrayType, greenHouse);
+
+        SeedTrayModel selectedSeedTray = status.SeedTrays.Where(x => x.ID == seedTrayType).First();
+
+        status.GeneralAvailableArea.Should()
+            .Be(status.GreenHouses.Where(x => x.Active == true)
+            .Sum(x => x.SeedTrayTotalArea) + (selectedSeedTray.Area * amount));
+
+        status.GeneralUsedArea.Should().Be(0 - (selectedSeedTray.Area * amount));
+
+        mockSeedTrayRepository.VerifyAll();
+        mockGreenHouseRepository.VerifyAll();
+    }
+
+    [Theory]
+    [InlineData(179, 7, 0)]
+    [InlineData(258, 3, 0)]
+    [InlineData(298, 2, 0)]
+    public void ReserveArea_ShouldChangeTheGeneralAreaVariablesWhenThereIsNoSpecifyGreenHouse(int amount, int seedTrayType, int greenHouse)
+    {
+        Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
+
+        Mock<IGreenHouseRepository> mockGreenHouseRepository = _mockOf.GreenHouseRepository;
+
+        SeedBedStatus status = new SeedBedStatus(
+            seedTrayRepo: mockSeedTrayRepository.Object,
+            greenHouseRepo: mockGreenHouseRepository.Object);
+
+        status.ReserveArea(amount, seedTrayType, greenHouse);
+
+        SeedTrayModel selectedSeedTray = status.SeedTrays.Where(x => x.ID == seedTrayType).First();
+
+        status.GeneralAvailableArea.Should()
+            .Be(status.GreenHouses.Where(x => x.Active == true)
+            .Sum(x => x.SeedTrayTotalArea) - (selectedSeedTray.Area * amount));
+
+        status.GeneralUsedArea.Should().Be(0 + (selectedSeedTray.Area * amount));
+
+        mockSeedTrayRepository.VerifyAll();
+        mockGreenHouseRepository.VerifyAll();
+    }
+
     [Fact]
     public void RemoveDeliveryDetails_ShouldRemoveAllDeliveriesOfTheDay()
     {
