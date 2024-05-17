@@ -75,12 +75,15 @@ namespace Domain.Processors
                 .OrderBy(x => x.Name);
         }
 
-        //NEXT - add a method to check if the selection of the seedTray in the newOrder window was changed
-        //if so save the change in the database
-
-        public void CheckChangeInTheSelection(List<SeedTray> selectedsSeedTrays)
+        public void CheckChangeInTheSelection(List<SeedTray> seedTrays)
         {
-            
+            var changedSeedTrays = seedTrays.Where(x => x.IsSelected != x.Selected);
+
+            foreach (var st in changedSeedTrays)
+            {
+                st.Selected = st.IsSelected;
+                this.SaveSeedTray(st);
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 {
     private ClientProcessor _clientProcessor;
     private ProductProcessor _productProcessor;
-    private SeedTrayProcessor seedTrayProcessor;
+    private SeedTrayProcessor _seedTrayProcessor;
     private List<Client> _clients;
     private List<Product> _products;
     private List<SeedTray> _seedTrays;
@@ -26,7 +26,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         InitializeComponent();
         _clientProcessor = new ClientProcessor();
         _productProcessor = new ProductProcessor();
-        seedTrayProcessor = new SeedTrayProcessor();
+        _seedTrayProcessor = new SeedTrayProcessor();
         LoadData();
     }
 
@@ -42,7 +42,8 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
         //----------------------------------------------------------------
 
-        _seedTrays = seedTrayProcessor.GetActiveSeedTrays().ToList();
+        _seedTrays = _seedTrayProcessor.GetActiveSeedTrays().ToList();
+        _seedTrays.ForEach(x => x.IsSelected = x.Selected);
         dgSeedTraySelector.DataContext = this;
         dgSeedTraySelector.ItemsSource = _seedTrays;
 
@@ -84,7 +85,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     {
         if (ValidateData() == true)
         {
-            seedTrayProcessor.CheckChangeInTheSelection(new List<SeedTray>());
+            _seedTrayProcessor.CheckChangeInTheSelection(_seedTrays);
 
             Client selectedClient = (Client)lblcmbbtnClient.ComboBox.SelectedItem;
 
