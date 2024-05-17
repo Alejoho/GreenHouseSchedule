@@ -300,7 +300,8 @@ namespace Domain
                     seedTray.LogicalTrayArea,
                     seedTray.TotalAlveolus,
                     seedTray.TotalAmount,
-                    seedTray.Active
+                    seedTray.Active,
+                    seedTray.Selected
                     ));
             }
             return seedTrayModelList;

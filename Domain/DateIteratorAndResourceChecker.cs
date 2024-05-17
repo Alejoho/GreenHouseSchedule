@@ -339,6 +339,7 @@ namespace Domain
             bool output;
             _seedTrayPermutations.Clear();
             //NEXT - In these three methods add a filter to only generate permutation of the selected seedTrays.
+            //NEXT - Redo the test for these three methods.
             GenerateAndAddSimplePermutations();
             GenerateAndAddDoublePermutations();
             GenerateAndAddTriplePermutations();
@@ -354,7 +355,10 @@ namespace Domain
         /// </summary>
         private void GenerateAndAddSimplePermutations()
         {
-            foreach (SeedTrayModel seedTrayModelLevel1 in SeedBedStatus.SeedTrays)
+            var listOfSeedTraysLevel1 = SeedBedStatus.SeedTrays
+                        .Where(seedTray => seedTray.Selected == true);
+
+            foreach (SeedTrayModel seedTrayModelLevel1 in listOfSeedTraysLevel1)
             {
                 int estimateAmountOfSeedTrayLevel1 =
                     (int)Math.Ceiling(
@@ -378,7 +382,10 @@ namespace Domain
         /// </summary>
         private void GenerateAndAddDoublePermutations()
         {
-            foreach (SeedTrayModel seedTrayModelLevel1 in SeedBedStatus.SeedTrays)
+            var listOfSeedTraysLevel1 = SeedBedStatus.SeedTrays
+            .Where(seedTray => seedTray.Selected == true);
+
+            foreach (SeedTrayModel seedTrayModelLevel1 in listOfSeedTraysLevel1)
             {
                 int estimateAmountOfSeedlingLevel1 =
                     seedTrayModelLevel1.FreeAmount * seedTrayModelLevel1.AlveolusQuantity;
@@ -386,7 +393,8 @@ namespace Domain
                 if (_orderInProcess.SeedlingAmount > estimateAmountOfSeedlingLevel1)
                 {
                     var listOfSeedTraysLevel2 = SeedBedStatus.SeedTrays
-                        .Where(seedTray => seedTray.ID != seedTrayModelLevel1.ID);
+                        .Where(seedTray => seedTray.ID != seedTrayModelLevel1.ID
+                            && seedTray.Selected == true);
 
                     foreach (SeedTrayModel seedTrayModelLevel2 in listOfSeedTraysLevel2)
                     {
@@ -414,14 +422,18 @@ namespace Domain
         /// </summary>
         private void GenerateAndAddTriplePermutations()
         {
-            foreach (SeedTrayModel seedTrayModelLevel1 in SeedBedStatus.SeedTrays)
+            var listOfSeedTraysLevel1 = SeedBedStatus.SeedTrays
+                .Where(seedTray => seedTray.Selected == true);
+
+            foreach (SeedTrayModel seedTrayModelLevel1 in listOfSeedTraysLevel1)
             {
                 int estimateAmountOfSeedlingLevel1 = seedTrayModelLevel1.FreeAmount * seedTrayModelLevel1.AlveolusQuantity;
 
                 if (_orderInProcess.SeedlingAmount > estimateAmountOfSeedlingLevel1)
                 {
                     var listOfSeedTraysLevel2 = SeedBedStatus.SeedTrays
-                        .Where(seedTray => seedTray.ID != seedTrayModelLevel1.ID);
+                        .Where(seedTray => seedTray.ID != seedTrayModelLevel1.ID
+                            && seedTray.Selected == true);
 
                     foreach (SeedTrayModel seedTrayModelLevel2 in listOfSeedTraysLevel2)
                     {
@@ -430,7 +442,8 @@ namespace Domain
                         if (_orderInProcess.SeedlingAmount > (estimateAmountOfSeedlingLevel1 + estimateAmountOfSeedlingLevel2))
                         {
                             var listOfSeedTraysLevel3 = listOfSeedTraysLevel2
-                                .Where(seedTray => seedTray.ID != seedTrayModelLevel2.ID);
+                                .Where(seedTray => seedTray.ID != seedTrayModelLevel2.ID
+                                    && seedTray.Selected == true);
 
                             foreach (SeedTrayModel seedTrayModelLevel3 in listOfSeedTraysLevel3)
                             {

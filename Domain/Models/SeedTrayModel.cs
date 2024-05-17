@@ -13,6 +13,7 @@ namespace Domain.Models
         private int _freeAmount;
         private int _usedAmount;
         private bool _active;
+        private bool _selected;
         /// <summary>
         /// Initializes a new instance of <c>SeedTrayModel</c>.
         /// </summary>
@@ -22,7 +23,8 @@ namespace Domain.Models
         /// <param name="pAlveolusQuantity"> The total of alveolus of the seedtray.</param>
         /// <param name="pTotalAmount">The total amount of seedtrays of this type available for explotation.</param>
         /// <param name="pActive">This indicates whether the seedtray type is in explotation.</param>
-        public SeedTrayModel(int pID, string pName, decimal pArea, int pAlveolusQuantity, int pTotalAmount, bool pActive)
+        /// <param name="pSelected">This indicates whether the seedtray type is selected to generate seedtray permutations.</param>
+        public SeedTrayModel(int pID, string pName, decimal pArea, int pAlveolusQuantity, int pTotalAmount, bool pActive, bool pSelected)
         {
             _ID = pID;
             _name = pName;
@@ -32,6 +34,7 @@ namespace Domain.Models
             _freeAmount = pTotalAmount;
             _usedAmount = 0;
             _active = pActive;
+            _selected = pSelected;
         }
         /// <summary>
         /// Initializes a new duplicate instance of <c>SeedTrayModel</c> from another instance.
@@ -47,6 +50,7 @@ namespace Domain.Models
             this._freeAmount = pSeedTrayModelOriginal.FreeAmount;
             this._usedAmount = pSeedTrayModelOriginal.UsedAmount;
             this._active = pSeedTrayModelOriginal.Active;
+            this._selected = pSeedTrayModelOriginal.Selected;
         }
 
         /// <value>
@@ -88,5 +92,10 @@ namespace Domain.Models
         /// Gets a bool value that indicates whether the seedtray is in explotation.
         /// </value>
         public bool Active => _active;
+
+        /// <value>
+        /// Gets a bool value that indicates whether the seedtray is selected to generate seedtray permutations.
+        /// </value>
+        public bool Selected => _selected;
     }
 }

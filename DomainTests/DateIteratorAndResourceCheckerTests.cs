@@ -1092,7 +1092,7 @@ public class DateIteratorAndResourceCheckerTests
 
         iterator.SeedBedStatus.SeedTrays.Remove(seedtray);
 
-        iterator.SeedBedStatus.SeedTrays.Add(new SeedTrayModel(7, "121 alveolos", 2.2m, 121, 2550, true));
+        iterator.SeedBedStatus.SeedTrays.Add(new SeedTrayModel(7, "121 alveolos", 2.2m, 121, 2550, true, true));
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
             .GetMethod("DayByDayToEstimateSowDate"
