@@ -214,11 +214,10 @@ public class SeedBedStatusTests
     }
 
     [Theory]
-    [InlineData(123, 3, 4)]
-    [InlineData(321, 5, 8)]
-    [InlineData(222, 1, 2)]
-    [InlineData(307, 6, 6)]
-    public void ReleaseArea_ShouldWork(int amount, int seedTrayType, int greenHouse)
+    [InlineData(123, 3, 5)]
+    [InlineData(321, 5, 6)]
+    [InlineData(222, 1, 7)]
+    public void ReleaseArea_ShouldNotChangeTheGeneralAreaVariablesWhenTheGreenHouseIsNotActive(int amount, int seedTrayType, int greenHouse)
     {
         Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
@@ -239,16 +238,21 @@ public class SeedBedStatusTests
         selectedGreenHouse.SeedTrayUsedArea.Should()
             .Be(0 - (selectedSeedTray.Area * amount));
 
+        status.GeneralAvailableArea.Should()
+            .Be(status.GreenHouses.Where(x => x.Active == true)
+            .Sum(x => x.SeedTrayTotalArea));
+
+        status.GeneralUsedArea.Should().Be(0);
+
         mockSeedTrayRepository.VerifyAll();
         mockGreenHouseRepository.VerifyAll();
     }
 
-    [Theory]
-    [InlineData(76, 1, 7)]
+    [Theory]    
     [InlineData(263, 3, 6)]
     [InlineData(111, 6, 5)]
-    [InlineData(47, 5, 3)]
-    public void ReserveArea_ShouldWork(int amount, int seedTrayType, int greenHouse)
+    [InlineData(47, 5, 7)]
+    public void ReserveArea_ShouldNotChangeTheGeneralAreaVariablesWhenTheGreenHouseIsNotActive(int amount, int seedTrayType, int greenHouse)
     {
         Mock<ISeedTrayRepository> mockSeedTrayRepository = _mockOf.SeedTrayRepository;
 
@@ -268,6 +272,12 @@ public class SeedBedStatusTests
 
         selectedGreenHouse.SeedTrayUsedArea.Should()
             .Be(0 + (selectedSeedTray.Area * amount));
+
+        status.GeneralAvailableArea.Should()
+            .Be(status.GreenHouses.Where(x => x.Active == true)
+            .Sum(x => x.SeedTrayTotalArea));
+
+        status.GeneralUsedArea.Should().Be(0);
 
         mockSeedTrayRepository.VerifyAll();
         mockGreenHouseRepository.VerifyAll();
