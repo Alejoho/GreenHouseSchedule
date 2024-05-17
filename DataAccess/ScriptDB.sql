@@ -129,6 +129,7 @@ create table "SeedTrays"(
 	"Material" nvarchar(20),
 	"Preference" tinyint not null,
 	"Active" bit not null,
+	"Selected" bit not null,
 	CONSTRAINT [PK_SeedTrays] primary key ("ID"),
 	CONSTRAINT [UC_SeedTrays_Name] UNIQUE ("Name"),
 	CONSTRAINT [CK_SeedTrays_TotalAlveolus] CHECK ("TotalAlveolus" > 0 and "TotalAlveolus" < 400),
@@ -198,13 +199,13 @@ create table "Blocks"(
 	"OrderLocationId" int not null,
 	"BlockNumber" tinyint not null,
 	"SeedTrayAmount" smallint not null,
-	"NumberWithinThBlock" tinyint not null,
+	"NumberWithinTheBlock" tinyint not null,
 	CONSTRAINT [PK_Blocks] primary key ("ID"),
 	CONSTRAINT [FK_Blocks_OrderLocationId] foreign key ("OrderLocationId") 
 	references "OrderLocations" ("ID") ON DELETE CASCADE,
 	CONSTRAINT [CK_Blocks_SeedTrayAmount] CHECK ("SeedTrayAmount" > 0),
 	CONSTRAINT [CK_Blocks_BlockNumber] CHECK ("BlockNumber" > 0),
-	CONSTRAINT [CK_Blocks_NumberWithinThBlock] CHECK ("NumberWithinThBlock" > 0)
+	CONSTRAINT [CK_Blocks_NumberWithinTheBlock] CHECK ("NumberWithinTheBlock" > 0)
 );
 
 go
