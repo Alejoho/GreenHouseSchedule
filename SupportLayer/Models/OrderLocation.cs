@@ -14,6 +14,8 @@ public partial class OrderLocation
 
     public int SeedlingAmount { get; set; }
 
+    public DateOnly? EstimateSowDate { get; set; }
+
     public DateOnly? SowDate { get; set; }
 
     public DateOnly? EstimateDeliveryDate { get; set; }
