@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Domain.ValuableObjects;
 using System.Collections;
+using System.Configuration;
 
 namespace Domain
 {
@@ -38,6 +39,8 @@ namespace Domain
         /// </summary>
         private ArrayList _seedTrayPermutationsToDelete;
 
+        private double _multiplier;
+
         #endregion
 
 
@@ -56,7 +59,9 @@ namespace Domain
 
             if (orderInProcess != null)
             {
+                double multiplier = 1.2;
                 _orderInProcess = orderInProcess;
+                _orderInProcess.SeedlingAmount = Convert.ToInt32(_orderInProcess.SeedlingAmount * multiplier);
             }
 
             _seedTrayPermutations = new LinkedList<SeedTrayPermutation>();
@@ -71,7 +76,14 @@ namespace Domain
         public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel pOrderInProcess)
         {
             _seedBedStatus = seedBedStatus;
+
+            double multiplier;
+            double.TryParse(ConfigurationManager.AppSettings["MinimumLimitOfSow"], out multiplier);
+            _multiplier = multiplier;
+
             _orderInProcess = pOrderInProcess;
+            _orderInProcess.SeedlingAmount = Convert.ToInt32(_orderInProcess.SeedlingAmount * multiplier);
+
             _seedTrayPermutations = new LinkedList<SeedTrayPermutation>();
             _seedTrayPermutationsToDelete = new ArrayList();
         }
