@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Domain.Models;
 using Domain.Processors;
+using Domain.ValuableObjects;
 using SupportLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     private List<Product> _products;
     private List<SeedTray> _seedTrays;
     private DateIteratorAndResourceChecker _iterator;
+    private Order _resultingOrder;
     public NewOrderWindow()
     {
         InitializeComponent();
@@ -109,9 +111,59 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     {
         //NEXT - Do the logic of this method
         dgSeedTrayPermutations.Items.Clear();
+        dgSeedTrayPermutations.ItemsSource = null;
         dgSeedTrayPermutations.ItemsSource = _iterator.SeedTrayPermutations;
 
-        MessageBox.Show($"Encontrado espacio para la nueva orden. {_iterator.SeedTrayPermutations.Count}");
+        SetTheResultingOrder((SeedTrayPermutation)dgSeedTrayPermutations.Items[0]);
+
+        DisplayOrderLocations();
+    }
+
+    private void DisplayOrderLocations()
+    {
+        //NEXT - Do the logic of this method
+
+    }
+
+    private void SetTheResultingOrder(SeedTrayPermutation permutation)
+    {
+        OrderModel orderModel = _iterator.GetSelectedOrderInProcess(permutation);
+
+        Order newOrder = new Order()
+        {
+            Id = 0,
+            ClientId = orderModel.Client.ID,
+            //CHECK - If this ProductId refers to the variety of the specie
+            ProductId = orderModel.Product.ID,
+            AmountOfWishedSeedlings = int.Parse(txtAmountOfSeedlings.FieldContent),
+            AmountOfAlgorithmSeedlings = orderModel.SeedlingAmount,
+            WishDate = DateOnly.FromDateTime((DateTime)dtpWishDate.TimePicker.SelectedDate),
+            DateOfRequest = orderModel.RequestDate,
+            EstimateSowDate = (DateOnly)orderModel.EstimateSowDate,
+            EstimateDeliveryDate = (DateOnly)orderModel.EstimateDeliveryDate,
+            Complete = false
+        };
+
+        foreach (OrderLocationModel orderLocationModel in orderModel.OrderLocations)
+        {
+            OrderLocation orderLocation = new OrderLocation()
+            {
+                Id = 0,
+                GreenHouseId = 0,
+                //LATER - Maybe change this type from int to byte
+                SeedTrayId = Convert.ToByte(orderLocationModel.SeedTrayType),
+                OrderId = 0,
+                //LATER - Maybe change this type from int to short
+                SeedTrayAmount = Convert.ToInt16(orderLocationModel.SeedTrayAmount),
+                SeedlingAmount = orderLocationModel.SeedlingAmount,
+                EstimateSowDate = orderLocationModel.SowDate,
+                EstimateDeliveryDate = orderLocationModel.EstimateDeliveryDate,
+            };
+
+            newOrder.OrderLocations.Add(orderLocation);
+        }
+
+        _resultingOrder = newOrder;
     }
 
     private OrderModel CreateTheNewOrder()

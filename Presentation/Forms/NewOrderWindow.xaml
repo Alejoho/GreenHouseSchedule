@@ -64,10 +64,10 @@
         <DataGrid x:Name="dgSeedTrayPermutations" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="450" Height="125"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15 5" AutoGenerateColumns="False" 
                     SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False"                     
-                    CanUserResizeRows="False" CanUserSortColumns="True" ColumnWidth="auto" HeadersVisibility="Column">>
+                    CanUserResizeRows="False" CanUserSortColumns="True" ColumnWidth="auto" HeadersVisibility="Column">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" IsReadOnly="True"/>
+                <DataGridTextColumn Header="" IsReadOnly="True"/>
                 <DataGridTextColumn Header="1ra bandeja" Binding="{Binding FirstSeedTrayName}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Cantidad" Binding="{Binding FirstAmount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="2da bandeja" Binding="{Binding SecondSeedTrayName}" IsReadOnly="True"/>
@@ -86,7 +86,20 @@
         <!--#region Fourth Row-->
 
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <DataGrid x:Name="dgOrderLocations" Width="460" Margin="15 10">
+            <DataGrid x:Name="dgOrderLocations" Width="460" Height="130" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15 10" AutoGenerateColumns="False" 
+                    SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False"                     
+                    CanUserResizeRows="False" CanUserSortColumns="False" ColumnWidth="auto" HeadersVisibility="Column">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Tipo de bandeja" Binding="{Binding SeedTrayName}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Bandejas" Binding="{Binding SeedTrayAmount}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Posturas" Binding="{Binding SeedlingAmount}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Fecha de siembra" Binding="{Binding EstimateSowDate}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Fecha de entrega" Binding="{Binding EstimateDeliveryDate}" IsReadOnly="True"/>
+                </DataGrid.Columns>
+                
             </DataGrid>
 
             <Button x:Name="btnAddOrderLocation" Width="80" Height="50" VerticalAlignment="Top" Margin="0 20 0 0">
