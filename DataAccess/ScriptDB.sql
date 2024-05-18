@@ -179,8 +179,9 @@ create table "OrderLocations"(
 	"OrderId" smallint not null,
 	"SeedTrayAmount" smallint not null,
 	"SeedlingAmount" int not null,
-	"SowDate" date,
-	"EstimateDeliveryDate" date,
+	"EstimateSowDate" date,
+    "EstimateDeliveryDate" date,
+	"RealSowDate" date,
 	"RealDeliveryDate" date,
 	CONSTRAINT [PK_OrderLocations] primary key ("ID"),
 	CONSTRAINT [FK_OrderLocations_SeedTrayId] foreign key ("SeedTrayId") 
