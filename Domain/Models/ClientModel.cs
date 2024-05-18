@@ -5,7 +5,7 @@ namespace Domain.Models
     /// </summary>
     public class ClientModel
     {
-        private readonly int _ID;
+        private readonly short _ID;
         private readonly string _name;
         private readonly string _nickName;
 
@@ -15,7 +15,7 @@ namespace Domain.Models
         /// <param name="pID">The single ID of the client.</param>
         /// <param name="pName">The full name of the client</param>
         /// <param name="pNickName">The nickname of the client</param>
-        public ClientModel(int pID, string pName, string pNickName)
+        public ClientModel(short pID, string pName, string pNickName)
         {
             _ID = pID;
             _name = pName;
@@ -36,7 +36,7 @@ namespace Domain.Models
         /// <summary>
         /// Gets the ID of the client.
         /// </summary>
-        public int ID => _ID;
+        public short ID => _ID;
 
         /// <summary>
         /// Gets the name of the client.

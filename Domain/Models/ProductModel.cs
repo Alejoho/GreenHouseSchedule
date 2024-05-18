@@ -5,10 +5,10 @@ namespace Domain.Models
     /// </summary>
     public class ProductModel
     {
-        private readonly int _ID;
+        private readonly byte _ID;
         private readonly string _variety;
         private readonly string _specie;
-        private readonly int _productionInterval;
+        private readonly short _productionInterval;
 
         /// <summary>
         /// Initializes a new instance of <c>ProductModel</c>.
@@ -17,7 +17,7 @@ namespace Domain.Models
         /// <param name="pVariety">The variety name of the product.</param>
         /// <param name="pSpecie">The species name of the product.</param>
         /// <param name="pProductionInterval">The days that the product takes to be ready to deliver.</param>
-        public ProductModel(int pID, string pVariety, string pSpecie, int pProductionInterval)
+        public ProductModel(byte pID, string pVariety, string pSpecie, short pProductionInterval)
         {
             _ID = pID;
             _variety = pVariety;
@@ -39,7 +39,7 @@ namespace Domain.Models
         /// <value>
         /// Gets the ID of the product
         /// </value>        
-        public int ID => _ID;
+        public byte ID => _ID;
         /// <value>
         /// Gets the name of the variety
         /// </value>
@@ -51,6 +51,6 @@ namespace Domain.Models
         /// <value>
         /// Gets the days that a ProductModel takes to be ready to deliver
         /// </value>
-        public int ProductionInterval => _productionInterval;
+        public short ProductionInterval => _productionInterval;
     }
 }
