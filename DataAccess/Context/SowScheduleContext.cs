@@ -151,8 +151,9 @@ public partial class SowScheduleContext : DbContext
         {
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.EstimateDeliveryDate).HasColumnType("date");
+            entity.Property(e => e.EstimateSowDate).HasColumnType("date");
             entity.Property(e => e.RealDeliveryDate).HasColumnType("date");
-            entity.Property(e => e.SowDate).HasColumnType("date");
+            entity.Property(e => e.RealSowDate).HasColumnType("date");
 
             entity.HasOne(d => d.GreenHouse).WithMany(p => p.OrderLocations)
                 .HasForeignKey(d => d.GreenHouseId)

@@ -37,7 +37,7 @@ public class OrderLocationRepositoryTests
 
         int count = _orderLocations
             .Where(x => x.Order.RealSowDate >= date || x.Order.RealSowDate == null
-                    && (x.SowDate >= date || x.SowDate == null))
+                    && (x.RealSowDate >= date || x.RealSowDate == null))
             .Count();
         actual.Count().Should().Be(count);
     }
@@ -96,7 +96,7 @@ public class OrderLocationRepositoryTests
         recordUpdated.OrderId.Should().Be(newRecordData.OrderId);
         recordUpdated.SeedTrayAmount.Should().Be(newRecordData.SeedTrayAmount);
         recordUpdated.SeedlingAmount.Should().Be(newRecordData.SeedlingAmount);
-        recordUpdated.SowDate.Should().Be(newRecordData.SowDate);
+        recordUpdated.RealSowDate.Should().Be(newRecordData.RealSowDate);
         recordUpdated.EstimateDeliveryDate.Should().Be(newRecordData.EstimateDeliveryDate);
         recordUpdated.RealDeliveryDate.Should().Be(newRecordData.RealDeliveryDate);
     }
@@ -128,7 +128,7 @@ public class OrderLocationRepositoryTests
             .RuleFor(x => x.OrderId, f => f.Random.Short(1, 500))
             .RuleFor(x => x.SeedTrayAmount, f => f.Random.Short(200, 750))
             .RuleFor(x => x.SeedlingAmount, (f, u) => u.SeedTrayAmount * alveolus[u.SeedTrayId])
-            .RuleFor(x => x.SowDate, f =>
+            .RuleFor(x => x.RealSowDate, f =>
             f.Random.Bool() == true ?
                 DateOnly.FromDateTime(
                     f.Date.Between(new DateTime(2023, 1, 1),
@@ -137,9 +137,9 @@ public class OrderLocationRepositoryTests
                 )
             .RuleFor(x => x.Order, (f, u) => new Order()
             {
-                RealSowDate = u.SowDate
+                RealSowDate = u.RealSowDate
             })
-            .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.SowDate)
+            .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.RealSowDate)
             .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);
     }
 }

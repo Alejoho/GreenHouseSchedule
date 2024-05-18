@@ -16,9 +16,9 @@ public partial class OrderLocation
 
     public DateOnly? EstimateSowDate { get; set; }
 
-    public DateOnly? SowDate { get; set; }
-
     public DateOnly? EstimateDeliveryDate { get; set; }
+
+    public DateOnly? RealSowDate { get; set; }
 
     public DateOnly? RealDeliveryDate { get; set; }
 

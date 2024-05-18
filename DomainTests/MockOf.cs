@@ -62,8 +62,8 @@ namespace DomainTests
         {
             var orderLocationCollection = _generator.OrderLocations
                 .Where(x => x.Order.RealSowDate >= pastDate
-                    || x.SowDate == null)
-                .OrderBy(x => x.SowDate)
+                    || x.RealSowDate == null)
+                .OrderBy(x => x.RealSowDate)
                 .ThenBy(x => x.Id);
 
             _orderLocationProcessor = new Mock<IOrderLocationProcessor>();
@@ -289,7 +289,7 @@ namespace DomainTests
                 orderLocationCollection = _generator.OrderLocations
                 .Where(x => x.Order.RealSowDate >= presentDate.AddDays(-90)
                     && x.Order.Complete == true)
-                .OrderBy(x => x.SowDate)
+                .OrderBy(x => x.RealSowDate)
                 .ThenBy(x => x.Id);
             }
             else if (type == TypeOfRecord.partial)
@@ -297,14 +297,14 @@ namespace DomainTests
                 orderLocationCollection = _generator.OrderLocations
                 .Where(x => x.Order.RealSowDate <= presentDate
                     && x.Order.Complete == false)
-                .OrderBy(x => x.SowDate)
+                .OrderBy(x => x.RealSowDate)
                 .ThenBy(x => x.Id);
             }
             else
             {
                 orderLocationCollection = _generator.OrderLocations
                 .Where(x => x.Order.EstimateSowDate >= presentDate)
-                .OrderBy(x => x.SowDate)
+                .OrderBy(x => x.RealSowDate)
                 .ThenBy(x => x.Id);
             }
 

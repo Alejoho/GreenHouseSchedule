@@ -54,7 +54,7 @@ internal class RecordGenerator
 
         _numberOfSelectedOrderLocations = _orderLocations
             .Where(x => x.Order.RealSowDate >= date
-                || x.SowDate == null)
+                || x.RealSowDate == null)
             .Count();
 
         _numberOfSelectedDeliveryDetails = _deliveryDetails
@@ -213,7 +213,7 @@ internal class RecordGenerator
         {
             orderLocation.SeedlingAmount = orderLocation.SeedTrayAmount * orderLocation.SeedTray.TotalAlveolus;
 
-            if (orderLocation.SowDate != null && orderLocation.SowDate < new DateOnly(2023, 6, 8))
+            if (orderLocation.RealSowDate != null && orderLocation.RealSowDate < new DateOnly(2023, 6, 8))
             {
                 int amount = random.Next(1, 4);
 
@@ -277,8 +277,8 @@ internal class RecordGenerator
 
         int CompleteOrdersSeedTrayAmount = completeOrders.Sum(x => x.OrderLocations.Sum(y => y.SeedTrayAmount));
 
-        int seedTrayAmountSown = partialOrders.Sum(x => x.OrderLocations.Where(y => y.SowDate != null).Sum(y => y.SeedTrayAmount));
-        int seedTrayAmountDelayed = partialOrders.Sum(x => x.OrderLocations.Where(y => y.SowDate == null).Sum(y => y.SeedTrayAmount));
+        int seedTrayAmountSown = partialOrders.Sum(x => x.OrderLocations.Where(y => y.RealSowDate != null).Sum(y => y.SeedTrayAmount));
+        int seedTrayAmountDelayed = partialOrders.Sum(x => x.OrderLocations.Where(y => y.RealSowDate == null).Sum(y => y.SeedTrayAmount));
 
         int EmptyOrdersSeedTrayAmount = emptyOrders.Sum(x => x.OrderLocations.Sum(y => y.SeedTrayAmount));
     }
@@ -328,6 +328,7 @@ internal class RecordGenerator
 
     private Faker<SeedTray> GetSeedTrayFaker()
     {
+        //TODO - Add the selected field to the generator of seedtrays
         byte index = 1;
         byte preference = 1;
         short[] amounts = { 1100, 2100, 2450, 1800, 2600, 1050, 2550 };
@@ -487,7 +488,7 @@ internal class RecordGenerator
                 return seedTrayAmount;
             })
 
-            .RuleFor(x => x.SowDate, (f, u) =>
+            .RuleFor(x => x.RealSowDate, (f, u) =>
             {
                 if (order.RealSowDate != null && completedAmount > 0 && actualSowDate < new DateTime(2023, 6, 10))
                 {
@@ -507,7 +508,7 @@ internal class RecordGenerator
             })
 
             .RuleFor(x => x.EstimateDeliveryDate,
-                (f, u) => u.SowDate?.AddDays(order.Product.Specie.ProductionDays))
+                (f, u) => u.RealSowDate?.AddDays(order.Product.Specie.ProductionDays))
             .RuleFor(x => x.RealDeliveryDate, (f, u) =>
                 u.EstimateDeliveryDate < new DateOnly(2023, 6, 10) ? u.EstimateDeliveryDate : null);
     }
@@ -633,7 +634,7 @@ internal class RecordGenerator
             .RuleFor(x => x.OrderId, f => f.Random.Short(1, 12))
             .RuleFor(x => x.SeedTrayAmount, f => f.Random.Short(50, 500))
             .RuleFor(x => x.SeedlingAmount, f => f.Random.Int(5000, 35000))
-            .RuleFor(x => x.SowDate,
+            .RuleFor(x => x.RealSowDate,
                 f => f.Random.Bool() == true ?
                     DateOnly.FromDateTime(
                         f.Date.Between(
@@ -644,7 +645,7 @@ internal class RecordGenerator
                     : null
                     )
             .RuleFor(x => x.EstimateDeliveryDate,
-                (f, u) => u.SowDate?.AddDays(f.PickRandom(productionDays)))
+                (f, u) => u.RealSowDate?.AddDays(f.PickRandom(productionDays)))
             .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate);
     }
 

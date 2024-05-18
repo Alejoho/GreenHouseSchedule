@@ -24,7 +24,7 @@ namespace DataAccess.Repositories
         {
             return _sowScheduleDB.OrderLocations
                 .Where(x => x.Order.RealSowDate >= date || x.Order.RealSowDate == null
-                    && (x.SowDate >= date || x.SowDate == null));
+                    && (x.RealSowDate >= date || x.RealSowDate == null));
         }
 
         public bool Insert(OrderLocation entity)
@@ -52,8 +52,9 @@ namespace DataAccess.Repositories
                 orderLocation.OrderId = entity.OrderId;
                 orderLocation.SeedTrayAmount = entity.SeedTrayAmount;
                 orderLocation.SeedlingAmount = entity.SeedlingAmount;
-                orderLocation.SowDate = entity.SowDate;
+                orderLocation.EstimateSowDate = entity.EstimateSowDate;
                 orderLocation.EstimateDeliveryDate = entity.EstimateDeliveryDate;
+                orderLocation.RealSowDate = entity.RealSowDate;
                 orderLocation.RealDeliveryDate = entity.RealDeliveryDate;
                 _sowScheduleDB.SaveChanges();
                 return true;

@@ -15,7 +15,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
     public IEnumerable<OrderLocation> GetOrderLocationsFromADateOn(DateOnly date)
     {
         IEnumerable<OrderLocation> output = _repository.GetByASowDateOn(date)
-            .OrderBy(x => x.SowDate)
+            .OrderBy(x => x.RealSowDate)
             .ThenBy(x => x.Id);
 
         return output;
