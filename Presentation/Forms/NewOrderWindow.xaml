@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
-        Title="Nueva orden" Height="700" Width="600" ResizeMode="NoResize"
+        Title="Nueva orden" Height="575" Width="600" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="160"/>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="0"/>
             <RowDefinition Height="140"/>
             <RowDefinition Height="150"/>
             <RowDefinition Height="*"/>
@@ -36,7 +36,7 @@
             <Button x:Name="btnSearchAvailability" Content="Buscar disponibilidad" Height="35" Width="150" Margin="0 10 0 0"
                     Click="btnSearchAvailability_Click"/>
         </StackPanel>
-        <!--NEXT: Wire up this datagrid -->
+        
         <DataGrid x:Name="dgSeedTraySelector" Grid.Row="1" Grid.Column="1" Width="150" Height="150" HorizontalAlignment="Left" 
                     VerticalAlignment="Top" Margin="15 0 0 0" AutoGenerateColumns="False" SelectionMode="Single" 
                     CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" 
@@ -59,41 +59,26 @@
         <!--#endregion-->
 
 
-        <!--#region Second Row-->
-
-        <DataGrid x:Name="dgAvailabilityOfGreenHousesArea" Grid.Row="2" Grid.Column="0" Margin="15 5">
-            
-        </DataGrid>
-
-        <DataGrid x:Name="dgAvailabilityOfSeedTray" Grid.Row="2" Grid.Column="1" Margin="15 5">
-
-        </DataGrid>
-        
-        <!--#endregion-->
-
-
         <!--#region Third Row-->
 
-        <DataGrid x:Name="dgSeedTrayPermutations" Grid.Row="3" Grid.Column="0" Margin="15 5">
-            
+        <DataGrid x:Name="dgSeedTrayPermutations" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="450" Height="125"
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15 5" AutoGenerateColumns="False" 
+                    SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False"                     
+                    CanUserResizeRows="False" CanUserSortColumns="True" ColumnWidth="auto" HeadersVisibility="Column">>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1ra bandeja" Binding="{Binding FirstSeedTrayName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Cantidad" Binding="{Binding FirstAmount}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="2da bandeja" Binding="{Binding SecondSeedTrayName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Cantidad" Binding="{Binding SecondAmount}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="3ra bandeja" Binding="{Binding ThirdSeedTrayName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Cantidad" Binding="{Binding ThirdAmount}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+
         </DataGrid>
 
-        <StackPanel Grid.Row="3" Grid.Column="1">
-            <DataGrid x:Name="dgSeedTrayAreaToPlace" Margin="15 5" Height="100">
-                
-            </DataGrid>
-            <StackPanel Orientation="Horizontal" Margin="0 -7 0 0">
-                <Button x:Name="btnChoosePermutation" Width="80" Margin="0 7 0 0">
-                    <Grid>
-                        <TextBlock Margin="0 -2 0 10" TextAlignment="Center">Seleccionar</TextBlock>
-                        <TextBlock Margin="0 10 0 0" TextAlignment="Center">Combinación</TextBlock>
-                    </Grid>
-                </Button>
-                <custom:TextBoxWithLabel x:Name="lbltxtDate" FieldLabel="Fecha" Width="190" HorizontalAlignment="Left" Margin="0 5 0 0"/>
-                
-            </StackPanel>
 
-        </StackPanel>
 
         <!--#endregion-->
         
@@ -119,8 +104,8 @@
 
         <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal"
                     VerticalAlignment="Top">
-            <Button x:Name="btnSave" Content="Guardar" Height="35" Width="100" Margin="110 0 30 0" FontSize="15"/>
-            <Button x:Name="btnCancel" Content="Cancelar" Height="35" Width="100" Margin="30 0 0 0" FontSize="15" Click="btnCancel_Click"/>
+            <Button x:Name="btnSave" Content="Guardar" Height="35" Width="100" Margin="110 8 30 0" FontSize="15"/>
+            <Button x:Name="btnCancel" Content="Cancelar" Height="35" Width="100" Margin="30 8 0 0" FontSize="15" Click="btnCancel_Click"/>
         </StackPanel>
 
         <!--#endregion-->

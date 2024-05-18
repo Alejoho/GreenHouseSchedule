@@ -45,7 +45,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
         _seedTrays = _seedTrayProcessor.GetActiveSeedTrays().ToList();
         _seedTrays.ForEach(x => x.IsSelected = x.Selected);
-        dgSeedTraySelector.DataContext = this;
+        //dgSeedTraySelector.DataContext = this;
         dgSeedTraySelector.ItemsSource = _seedTrays;
 
     }
@@ -108,6 +108,9 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     private void DisplayResults()
     {
         //NEXT - Do the logic of this method
+        dgSeedTrayPermutations.Items.Clear();
+        dgSeedTrayPermutations.ItemsSource = _iterator.SeedTrayPermutations;
+
         MessageBox.Show($"Encontrado espacio para la nueva orden. {_iterator.SeedTrayPermutations.Count}");
     }
 
