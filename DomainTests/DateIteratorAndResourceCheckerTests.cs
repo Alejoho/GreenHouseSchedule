@@ -435,7 +435,7 @@ public class DateIteratorAndResourceCheckerTests
     public void AreThereFreeSeedTraysOfTheTypesInUse_ShouldReturnTheCorrectResultWithASimplePermutation(
         int firstSeedtrayId, int firstAmount, bool result)
     {
-        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount);
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, "", firstAmount);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
 
@@ -459,8 +459,8 @@ public class DateIteratorAndResourceCheckerTests
     public void AreThereFreeSeedTraysOfTheTypesInUse_ShouldReturnTheCorrectResultWithADoublePermutation(
         int firstSeedtrayId, int firstAmount, int secondSeedtrayId, int secondAmount, bool result)
     {
-        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount
-            , secondSeedtrayId, secondAmount);
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, "", firstAmount
+            , secondSeedtrayId, "", secondAmount);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
 
@@ -484,8 +484,8 @@ public class DateIteratorAndResourceCheckerTests
         int firstSeedtrayId, int firstAmount, int secondSeedtrayId, int secondAmount
         , int thirdSeedtrayId, int thirdAmount, bool result)
     {
-        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount
-            , secondSeedtrayId, secondAmount, thirdSeedtrayId, thirdAmount);
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, "", firstAmount
+            , secondSeedtrayId, "", secondAmount, thirdSeedtrayId, "", thirdAmount);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
 
@@ -508,7 +508,7 @@ public class DateIteratorAndResourceCheckerTests
     public void IsThereAreaForTheSeedTraysInUse_ShouldReturnTheCorrectResultWithASimplePermutation(
         int firstSeedtrayId, int firstAmount, bool result)
     {
-        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount);
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, "", firstAmount);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
 
@@ -530,8 +530,8 @@ public class DateIteratorAndResourceCheckerTests
     public void IsThereAreaForTheSeedTraysInUse_ShouldReturnTheCorrectResultWithADoublePermutation(
         int firstSeedtrayId, int firstAmount, int secondSeedtrayId, int secondAmount, bool result)
     {
-        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount
-            , secondSeedtrayId, secondAmount);
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, "", firstAmount
+            , secondSeedtrayId, "", secondAmount);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
 
@@ -551,8 +551,8 @@ public class DateIteratorAndResourceCheckerTests
         int firstSeedtrayId, int firstAmount, int secondSeedtrayId, int secondAmount
         , int thirdSeedtrayId, int thirdAmount, bool result)
     {
-        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, firstAmount
-            , secondSeedtrayId, secondAmount, thirdSeedtrayId, thirdAmount);
+        SeedTrayPermutation permutation = new SeedTrayPermutation(firstSeedtrayId, "", firstAmount
+            , secondSeedtrayId, "", secondAmount, thirdSeedtrayId, "", thirdAmount);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, null, true);
 
@@ -972,9 +972,9 @@ public class DateIteratorAndResourceCheckerTests
             , false);
 
         SeedTrayPermutation permutation = new SeedTrayPermutation(
-            seedTrayId1, amount1
-            , seedTrayId2, amount2
-            , seedTrayId3, amount3);
+            seedTrayId1, "", amount1
+            , seedTrayId2, "", amount2
+            , seedTrayId3, "", amount3);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
 
@@ -1021,9 +1021,9 @@ public class DateIteratorAndResourceCheckerTests
             , false);
 
         SeedTrayPermutation permutation = new SeedTrayPermutation(
-            seedTrayId1, amount1
-            , seedTrayId2, amount2
-            , seedTrayId3, amount3);
+            seedTrayId1, "", amount1
+            , seedTrayId2, "", amount2
+            , seedTrayId3, "", amount3);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
 
@@ -1077,9 +1077,9 @@ public class DateIteratorAndResourceCheckerTests
             , false);
 
         SeedTrayPermutation permutation = new SeedTrayPermutation(
-            seedTrayId1, amount1
-            , seedTrayId2, amount2
-            , seedTrayId3, amount3);
+            seedTrayId1, "", amount1
+            , seedTrayId2, "", amount2
+            , seedTrayId3, "", amount3);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
 
@@ -1138,9 +1138,9 @@ public class DateIteratorAndResourceCheckerTests
             , false);
 
         SeedTrayPermutation permutation = new SeedTrayPermutation(
-            seedTrayId1, amount1
-            , seedTrayId2, amount2
-            , seedTrayId3, amount3);
+            seedTrayId1, "", amount1
+            , seedTrayId2, "", amount2
+            , seedTrayId3, "", amount3);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
 
@@ -1200,9 +1200,9 @@ public class DateIteratorAndResourceCheckerTests
             , false);
 
         SeedTrayPermutation permutation = new SeedTrayPermutation(
-            seedTrayId1, amount1
-            , seedTrayId2, amount2
-            , seedTrayId3, amount3);
+            seedTrayId1, "", amount1
+            , seedTrayId2, "", amount2
+            , seedTrayId3, "", amount3);
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
 
@@ -1245,31 +1245,31 @@ public class DateIteratorAndResourceCheckerTests
 
         DateIteratorAndResourceChecker iterator = new DateIteratorAndResourceChecker(_status, newOrder, true);
 
-        SeedTrayPermutation permutation = new SeedTrayPermutation(4, 255);
+        SeedTrayPermutation permutation = new SeedTrayPermutation(4, "", 255);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
-        permutation = new SeedTrayPermutation(7, 455);
+        permutation = new SeedTrayPermutation(7, "", 455);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
-        permutation = new SeedTrayPermutation(3, 144, 5, 132);
+        permutation = new SeedTrayPermutation(3, "", 144, 5, "", 132);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
-        permutation = new SeedTrayPermutation(7, 200, 4, 143);
+        permutation = new SeedTrayPermutation(7, "", 200, 4, "", 143);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
-        permutation = new SeedTrayPermutation(2, 75, 4, 100, 7, 187);
+        permutation = new SeedTrayPermutation(2, "", 75, 4, "", 100, 7, "", 187);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
-        permutation = new SeedTrayPermutation(1, 20, 3, 194, 5, 150);
+        permutation = new SeedTrayPermutation(1, "", 20, 3, "", 194, 5, "", 150);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
-        permutation = new SeedTrayPermutation(1, 197);
+        permutation = new SeedTrayPermutation(1, "", 197);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
-        permutation = new SeedTrayPermutation(1, 100, 6, 97);
+        permutation = new SeedTrayPermutation(1, "", 100, 6, "", 97);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
-        permutation = new SeedTrayPermutation(2, 10, 3, 36, 6, 155);
+        permutation = new SeedTrayPermutation(2, "", 10, 3, "", 36, 6, "", 155);
         iterator.SeedTrayPermutations.AddLast(permutation);
 
         GreenHouseModel tempGreenHouse = new GreenHouseModel(-1, "TempGreenHouse", 0, 0, true);

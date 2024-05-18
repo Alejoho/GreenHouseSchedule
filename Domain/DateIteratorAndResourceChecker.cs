@@ -367,7 +367,9 @@ namespace Domain
                         (double)seedTrayModelLevel1.AlveolusQuantity
                         );
                 SeedTrayPermutation newSeedTrayPermutation =
-                    new SeedTrayPermutation(seedTrayModelLevel1.ID, estimateAmountOfSeedTrayLevel1);
+                    new SeedTrayPermutation(seedTrayModelLevel1.ID
+                        , seedTrayModelLevel1.Name
+                        , estimateAmountOfSeedTrayLevel1);
 
                 if (AreThereFreeSeedTraysOfTheTypesInUse(newSeedTrayPermutation) == true &&
                     IsThereAreaForTheSeedTraysInUse(newSeedTrayPermutation) == true)
@@ -404,8 +406,8 @@ namespace Domain
                             (double)seedTrayModelLevel2.AlveolusQuantity);
 
                         SeedTrayPermutation newSeedTrayPermutation = new SeedTrayPermutation(
-                            seedTrayModelLevel1.ID, seedTrayModelLevel1.FreeAmount,
-                            seedTrayModelLevel2.ID, estimateAmountOfSeedTrayLevel2);
+                            seedTrayModelLevel1.ID, seedTrayModelLevel1.Name, seedTrayModelLevel1.FreeAmount,
+                            seedTrayModelLevel2.ID, seedTrayModelLevel2.Name, estimateAmountOfSeedTrayLevel2);
 
                         if (AreThereFreeSeedTraysOfTheTypesInUse(newSeedTrayPermutation) == true &&
                             IsThereAreaForTheSeedTraysInUse(newSeedTrayPermutation) == true)
@@ -453,9 +455,9 @@ namespace Domain
                                     (double)seedTrayModelLevel2.AlveolusQuantity);
 
                                 SeedTrayPermutation newSeedTrayPermutation = new SeedTrayPermutation(
-                                    seedTrayModelLevel1.ID, seedTrayModelLevel1.FreeAmount,
-                                    seedTrayModelLevel2.ID, seedTrayModelLevel2.FreeAmount,
-                                    seedTrayModelLevel3.ID, estimateAmountOfSeedTrayLevel3);
+                                    seedTrayModelLevel1.ID, seedTrayModelLevel1.Name, seedTrayModelLevel1.FreeAmount,
+                                    seedTrayModelLevel2.ID, seedTrayModelLevel2.Name, seedTrayModelLevel2.FreeAmount,
+                                    seedTrayModelLevel3.ID, seedTrayModelLevel3.Name, estimateAmountOfSeedTrayLevel3);
 
                                 if (AreThereFreeSeedTraysOfTheTypesInUse(newSeedTrayPermutation) == true &&
                                     IsThereAreaForTheSeedTraysInUse(newSeedTrayPermutation) == true)
@@ -579,6 +581,8 @@ namespace Domain
                     _seedTrayPermutationsToDelete.Add(seedTrayPermutation);
                 }
             }
+
+            _seedBedStatus = new SeedBedStatus(_auxiliarSeedBedStatus);
 
             RemoveSeedTrayPermutations();
             ClearSeedTrayPermutationToDeleteArrayList();
