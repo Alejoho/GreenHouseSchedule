@@ -102,10 +102,10 @@
                 
             </DataGrid>
 
-            <Button x:Name="btnAddOrderLocation" Width="80" Height="50" VerticalAlignment="Top" Margin="0 20 0 0">
+            <Button x:Name="btnSelectPermutation" Width="80" Height="50" VerticalAlignment="Top" Margin="0 20 0 0" Click="btnSelectPermutation_Click">
                 <Grid>
-                    <TextBlock Margin="0 0 0 18" TextAlignment="Center">Agregar</TextBlock>
-                    <TextBlock Margin="0 18 0 0" TextAlignment="Center">Locación</TextBlock>
+                    <TextBlock Margin="0 0 0 18" TextAlignment="Center">Selecionar</TextBlock>
+                    <TextBlock Margin="0 18 0 0" TextAlignment="Center">Permutación</TextBlock>
                 </Grid>
             </Button>
         </StackPanel>

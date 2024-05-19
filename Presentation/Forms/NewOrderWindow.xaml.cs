@@ -86,6 +86,8 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void btnSearchAvailability_Click(object sender, RoutedEventArgs e)
     {
+        //TODO - add a logic to block the data input when this method run succefully, and change the label to somethig
+        //like "Cambiar valores" o "Buscar de nuevo" to star again without closing and reopen the window 
         if (ValidateData() == true)
         {
             _seedTrayProcessor.CheckChangeInTheSelection(_seedTrays);
@@ -109,7 +111,10 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void DisplayResults()
     {
-        //NEXT - Do the logic of this method
+        //TODO - Look how to put and id to the permutation but without putting it in the class.
+
+        //dgSeedTrayPermutations.DataContext = this;
+
         dgSeedTrayPermutations.Items.Clear();
         dgSeedTrayPermutations.ItemsSource = null;
         dgSeedTrayPermutations.ItemsSource = _iterator.SeedTrayPermutations;
@@ -121,8 +126,8 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void DisplayOrderLocations()
     {
-        //NEXT - Do the logic of this method
-
+        dgOrderLocations.ItemsSource = null;
+        dgOrderLocations.ItemsSource = _resultingOrder.OrderLocations;
     }
 
     private void SetTheResultingOrder(SeedTrayPermutation permutation)
@@ -266,5 +271,19 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         }
 
         return true;
+    }
+
+    private void btnSelectPermutation_Click(object sender, RoutedEventArgs e)
+    {
+        if (dgSeedTrayPermutations.SelectedItem is SeedTrayPermutation permutation)
+        {
+            SetTheResultingOrder(permutation);
+
+            DisplayOrderLocations();
+        }
+        else
+        {
+            MessageBox.Show("Debe seleccionar una permutacion para mostrar las locaciones de la orden.");
+        }
     }
 }
