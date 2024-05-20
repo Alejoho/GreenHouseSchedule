@@ -32,7 +32,6 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         _clientProcessor = new ClientProcessor();
         _productProcessor = new ProductProcessor();
         _seedTrayProcessor = new SeedTrayProcessor();
-        _status = new SeedBedStatus();
         LoadData();
     }
 
@@ -94,6 +93,8 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         if (ValidateData() == true)
         {
             _seedTrayProcessor.CheckChangeInTheSelection(_seedTrays);
+
+            _status = new SeedBedStatus();
 
             _iterator = new DateIteratorAndResourceChecker(_status, CreateTheNewOrder());
 
