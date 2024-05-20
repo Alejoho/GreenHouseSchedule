@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
-        Title="Nueva orden" Height="575" Width="580" ResizeMode="NoResize"
+        Title="Nueva orden" Height="575" Width="590" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
@@ -79,7 +79,8 @@
         </DataGrid>
 
 
-            <Button x:Name="btnSelectPermutation" Width="80" Height="50" VerticalAlignment="Top" Margin="0 20 0 0" Click="btnSelectPermutation_Click">
+            <Button x:Name="btnSelectPermutation" Width="80" Height="50" VerticalAlignment="Top" Margin="0 20 0 0"
+                    IsEnabled="False" Click="btnSelectPermutation_Click">
                 <Grid>
                     <TextBlock Margin="0 0 0 18" TextAlignment="Center">Selecionar</TextBlock>
                     <TextBlock Margin="0 18 0 0" TextAlignment="Center">Permutación</TextBlock>

@@ -47,11 +47,8 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         lblcmbbtnProduct.ComboBox.ItemsSource = _products;
         lblcmbbtnProduct.ComboBox.DisplayMemberPath = "SpeciesAndVariety";
 
-        //----------------------------------------------------------------
-
         _seedTrays = _seedTrayProcessor.GetActiveSeedTrays().ToList();
         _seedTrays.ForEach(x => x.IsSelected = x.Selected);
-        //dgSeedTraySelector.DataContext = this;
         dgSeedTraySelector.ItemsSource = _seedTrays;
 
     }
@@ -126,6 +123,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         txtAmountOfSeedlings.IsEnabled = _areControlsEnabled;
         dtpWishDate.IsEnabled = _areControlsEnabled;
         dgSeedTraySelector.IsEnabled = _areControlsEnabled;
+        btnSelectPermutation.IsEnabled = !_areControlsEnabled;
 
         btnSearchAvailability.Content =
             _areControlsEnabled == true ? "Buscar disponibilidad" : "Cambiar valores";
