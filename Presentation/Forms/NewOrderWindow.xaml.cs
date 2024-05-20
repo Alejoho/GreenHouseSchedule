@@ -22,7 +22,9 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     private List<Client> _clients;
     private List<Product> _products;
     private List<SeedTray> _seedTrays;
+    private SeedBedStatus _status;
     private DateIteratorAndResourceChecker _iterator;
+    private LinkedList<SeedTrayPermutation> permutationsToDisplay;
     private Order _resultingOrder;
     public NewOrderWindow()
     {
@@ -30,6 +32,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         _clientProcessor = new ClientProcessor();
         _productProcessor = new ProductProcessor();
         _seedTrayProcessor = new SeedTrayProcessor();
+        _status = new SeedBedStatus();
         LoadData();
     }
 
@@ -92,14 +95,13 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         {
             _seedTrayProcessor.CheckChangeInTheSelection(_seedTrays);
 
-            SeedBedStatus seedBed = new SeedBedStatus();
-
-            _iterator = new DateIteratorAndResourceChecker(seedBed, CreateTheNewOrder());
+            _iterator = new DateIteratorAndResourceChecker(_status, CreateTheNewOrder());
 
             _iterator.LookForAvailability();
 
             if (_iterator.SeedTrayPermutations.Count > 0)
             {
+                permutationsToDisplay = _iterator.SeedTrayPermutations;
                 DisplayResults();
             }
             else
@@ -117,7 +119,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
         dgSeedTrayPermutations.Items.Clear();
         dgSeedTrayPermutations.ItemsSource = null;
-        dgSeedTrayPermutations.ItemsSource = _iterator.SeedTrayPermutations;
+        dgSeedTrayPermutations.ItemsSource = permutationsToDisplay;
 
         SetTheResultingOrder((SeedTrayPermutation)dgSeedTrayPermutations.Items[0]);
 
@@ -132,7 +134,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void SetTheResultingOrder(SeedTrayPermutation permutation)
     {
-        OrderModel orderModel = _iterator.GetSelectedOrderInProcess(permutation);
+        OrderModel orderModel = _iterator.GenerateOrderModel(permutation, _status);
 
         Order newOrder = new Order()
         {
