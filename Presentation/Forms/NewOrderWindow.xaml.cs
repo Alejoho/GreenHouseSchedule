@@ -192,6 +192,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
                 SeedlingAmount = orderLocationModel.SeedlingAmount,
                 EstimateSowDate = orderLocationModel.SowDate,
                 EstimateDeliveryDate = orderLocationModel.EstimateDeliveryDate,
+                SeedTrayName = _seedTrays.First(x => x.Id == orderLocationModel.SeedTrayType).Name
             };
 
             newOrder.OrderLocations.Add(orderLocation);
