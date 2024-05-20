@@ -102,7 +102,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
             if (_iterator.SeedTrayPermutations.Count > 0)
             {
-                permutationsToDisplay = _iterator.SeedTrayPermutations;
+                permutationsToDisplay = new LinkedList<SeedTrayPermutation>(_iterator.SeedTrayPermutations);
                 ToggleControls();
                 DisplayResults();
             }
