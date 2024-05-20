@@ -26,12 +26,14 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     private DateIteratorAndResourceChecker _iterator;
     private LinkedList<SeedTrayPermutation> permutationsToDisplay;
     private Order _resultingOrder;
+    private bool _areControlsEnabled;
     public NewOrderWindow()
     {
         InitializeComponent();
         _clientProcessor = new ClientProcessor();
         _productProcessor = new ProductProcessor();
         _seedTrayProcessor = new SeedTrayProcessor();
+        _areControlsEnabled = true;
         LoadData();
     }
 
@@ -88,9 +90,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void btnSearchAvailability_Click(object sender, RoutedEventArgs e)
     {
-        //TODO - add a logic to block the data input when this method run succefully, and change the label to somethig
-        //like "Cambiar valores" o "Buscar de nuevo" to star again without closing and reopen the window 
-        if (ValidateData() == true)
+        if (_areControlsEnabled == true && ValidateData() == true)
         {
             _seedTrayProcessor.CheckChangeInTheSelection(_seedTrays);
 
@@ -103,12 +103,37 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             if (_iterator.SeedTrayPermutations.Count > 0)
             {
                 permutationsToDisplay = _iterator.SeedTrayPermutations;
+                ToggleControls();
                 DisplayResults();
             }
             else
             {
-                MessageBox.Show("No se encontro espacio para ubicar la nueva orden.");
+                MessageBox.Show("No se encontró espacio para ubicar la nueva orden.");
             }
+        }
+        else
+        {
+            ToggleControls();
+        }
+            }
+
+    private void ToggleControls()
+    {
+        _areControlsEnabled = !_areControlsEnabled;
+
+        lblcmbbtnClient.IsEnabled = _areControlsEnabled;
+        lblcmbbtnProduct.IsEnabled = _areControlsEnabled;
+        txtAmountOfSeedlings.IsEnabled = _areControlsEnabled;
+        dtpWishDate.IsEnabled = _areControlsEnabled;
+        dgSeedTraySelector.IsEnabled = _areControlsEnabled;
+
+        btnSearchAvailability.Content =
+            _areControlsEnabled == true ? "Buscar disponibilidad" : "Cambiar valores";
+
+        if (_areControlsEnabled == true)
+        {
+            dgSeedTrayPermutations.ItemsSource = null;
+            dgOrderLocations.ItemsSource = null;
         }
     }
 
