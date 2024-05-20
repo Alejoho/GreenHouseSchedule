@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
-        Title="Nueva orden" Height="575" Width="600" ResizeMode="NoResize"
+        Title="Nueva orden" Height="575" Width="580" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
@@ -60,8 +60,8 @@
 
 
         <!--#region Third Row-->
-
-        <DataGrid x:Name="dgSeedTrayPermutations" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="450" Height="125"
+        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <DataGrid x:Name="dgSeedTrayPermutations"  Width="450" Height="125"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15 5" AutoGenerateColumns="False" 
                     SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False"                     
                     CanUserResizeRows="False" CanUserSortColumns="True" ColumnWidth="auto" HeadersVisibility="Column">
@@ -79,35 +79,6 @@
         </DataGrid>
 
 
-
-        <!--#endregion-->
-        
-        
-        <!--#region Fourth Row-->
-
-        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <DataGrid x:Name="dgOrderLocations" Width="460" Height="130" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15 10" AutoGenerateColumns="False" 
-                    SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False"                     
-                    CanUserResizeRows="False" CanUserSortColumns="False" ColumnWidth="auto" HeadersVisibility="Column">
-
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Tipo de bandeja" Binding="{Binding SeedTrayName}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Bandejas" Binding="{Binding SeedTrayAmount}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Posturas" Binding="{Binding SeedlingAmount}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Fecha de siembra" Binding="{Binding EstimateSowDate}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Fecha de entrega" Binding="{Binding EstimateDeliveryDate}" IsReadOnly="True"/>
-                </DataGrid.Columns>
-
-                <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
-                        <Setter Property="IsHitTestVisible" Value="False"/>
-                    </Style>
-                </DataGrid.RowStyle>
-
-            </DataGrid>
-
             <Button x:Name="btnSelectPermutation" Width="80" Height="50" VerticalAlignment="Top" Margin="0 20 0 0" Click="btnSelectPermutation_Click">
                 <Grid>
                     <TextBlock Margin="0 0 0 18" TextAlignment="Center">Selecionar</TextBlock>
@@ -116,9 +87,36 @@
             </Button>
         </StackPanel>
 
+        <!--#endregion-->
+        
+        
+        <!--#region Fourth Row-->
+
+        <DataGrid x:Name="dgOrderLocations" Width="450" Height="130" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15 10" AutoGenerateColumns="False" 
+                    SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False"                     
+                    CanUserResizeRows="False" CanUserSortColumns="False" ColumnWidth="auto" HeadersVisibility="Column">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Tipo de bandeja" Binding="{Binding SeedTrayName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Bandejas" Binding="{Binding SeedTrayAmount}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Posturas" Binding="{Binding SeedlingAmount}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Fecha de siembra" Binding="{Binding EstimateSowDate}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Fecha de entrega" Binding="{Binding EstimateDeliveryDate}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="IsHitTestVisible" Value="False"/>
+                </Style>
+            </DataGrid.RowStyle>
+
+        </DataGrid>
 
         <!--#endregion-->
 
+        
         <!--#region Fourth Row-->
 
         <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal"
