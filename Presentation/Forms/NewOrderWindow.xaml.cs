@@ -143,14 +143,9 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
         //dgSeedTrayPermutations.DataContext = this;
 
-        dgSeedTrayPermutations.Items.Clear();
         dgSeedTrayPermutations.ItemsSource = null;
+        dgSeedTrayPermutations.Items.Clear();
         dgSeedTrayPermutations.ItemsSource = permutationsToDisplay;
-        dgSeedTrayPermutations.SelectedItem = dgSeedTrayPermutations.Items[0];
-
-        SetTheResultingOrder((SeedTrayPermutation)dgSeedTrayPermutations.Items[0]);
-
-        DisplayOrderLocations();
     }
 
     private void DisplayOrderLocations()
@@ -167,7 +162,6 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         {
             Id = 0,
             ClientId = orderModel.Client.ID,
-            //CHECK - If this ProductId refers to the variety of the specie
             ProductId = orderModel.Product.ID,
             AmountOfWishedSeedlings = int.Parse(txtAmountOfSeedlings.FieldContent),
             AmountOfAlgorithmSeedlings = orderModel.SeedlingAmount,
