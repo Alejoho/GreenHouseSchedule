@@ -111,7 +111,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
                 MessageBox.Show("No se encontró espacio para ubicar la nueva orden.");
             }
         }
-        else
+        else if (_areControlsEnabled == false)
         {
             ToggleControls();
         }
