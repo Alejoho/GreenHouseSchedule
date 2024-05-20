@@ -107,12 +107,6 @@ namespace Domain
         /// </summary>
         private void DayByDayToEstimateSowDate()
         {
-            //CHECK - al crear la instancia de esta clase el status se mueve directo al dia de la orden que se desea agregar
-            //y realiza el trabajo de ese dia sin agregar la orden. Pero al pasar al metodo LookForAvailability se va 
-            //a trabajar de nuevo el dia requerido por la orden, esto trae consigo que se rewstablezca el potencial de
-            //siembra del dia, lo que es un error.
-
-            //TODO - Maybe change this loop to a while.
             do
             {
                 DoTheWorkOfThisDay();
@@ -200,7 +194,6 @@ namespace Domain
             }
         }
 
-        //TODO - Maybe implement a restriction to avoid sow seedtrays on sundays.
         /// <summary>
         /// Marks as used, the area and the seedtrays used by the order locations that will be sown on the iterator date.
         /// </summary>
@@ -279,11 +272,6 @@ namespace Domain
         {
             SeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay = SeedBedStatus.MaxAmountOfSeedTrayToSowPerDay;
         }
-
-        //public void AssignOrderInProcess(OrderModel pOrder)
-        //{
-        //    OrderInProcess = pOrder;
-        //}
 
         #endregion
 
@@ -564,8 +552,6 @@ namespace Domain
 
             return output;
         }
-        //TODO - When I'm going to reserve area for an order location of the new order, that order location
-        //doesn't have a house where to put it seedtrays
 
         /// <summary>
         /// Evaluates if we put the new order whether displace following orders. 
@@ -600,8 +586,6 @@ namespace Domain
                     _seedTrayPermutationsToDelete.Add(seedTrayPermutation);
                 }
             }
-
-            _seedBedStatus = new SeedBedStatus(_auxiliarSeedBedStatus);
 
             RemoveSeedTrayPermutations();
             ClearSeedTrayPermutationToDeleteArrayList();
