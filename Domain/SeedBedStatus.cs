@@ -357,10 +357,10 @@ namespace Domain
                     orderLocation.OrderId,
                     orderLocation.SeedTrayAmount,
                     orderLocation.SeedlingAmount,
-                    orderLocation.SowDate,
+                    orderLocation.RealSowDate,
                     orderLocation.EstimateDeliveryDate,
                     orderLocation.RealDeliveryDate,
-                    orderLocation.SowDate == null ? false : true
+                    orderLocation.RealSowDate == null ? false : true
                     ));
             }
 
