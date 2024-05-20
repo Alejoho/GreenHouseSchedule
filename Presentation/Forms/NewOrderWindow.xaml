@@ -99,7 +99,13 @@
                     <DataGridTextColumn Header="Fecha de siembra" Binding="{Binding EstimateSowDate}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Fecha de entrega" Binding="{Binding EstimateDeliveryDate}" IsReadOnly="True"/>
                 </DataGrid.Columns>
-                
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="IsHitTestVisible" Value="False"/>
+                    </Style>
+                </DataGrid.RowStyle>
+
             </DataGrid>
 
             <Button x:Name="btnSelectPermutation" Width="80" Height="50" VerticalAlignment="Top" Margin="0 20 0 0" Click="btnSelectPermutation_Click">
