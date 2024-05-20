@@ -702,6 +702,48 @@ namespace Domain
             _seedTrayPermutationsToDelete.Clear();
         }
 
+        /// <summary>
+        /// Generates a full <c>OrderModel</c> object with the specify <c>SeedTrayPermutation</c> object.
+        /// </summary>
+        /// <param name="permutation">The <c>SeedTrayPermutation</c> object.</param>
+        /// <returns>A full <c>OrderModel</c> object, with its <c>OrderLocationModels</c> included.</returns>
+        public OrderModel GenerateOrderModel(SeedTrayPermutation permutation,SeedBedStatus status)
+        {
+            //NEXT - Do this method.
+            _seedBedStatus = new SeedBedStatus(status);
+
+            _orderInProcess = new OrderModel(_auxOrderInProcess);
+
+            _seedTrayPermutations.Clear();
+            _seedTrayPermutations.AddLast(permutation);
+
+            GreenHouseModel tempGreenHouse = new GreenHouseModel(-1, "TempGreenHouse", 0, 0, true);
+            SeedBedStatus.GreenHouses.Add(tempGreenHouse);
+
+            _orderInProcess.GoBackEstimateSowDateOneDay();
+
+            do
+            {
+                _orderInProcess.AdvanceEstimateSowDateOneDay();
+                DayByDayToEstimateSowDate();
+            } while (WorkForceResource() == false
+                || AreThereFreeSeedTraysOfTheTypesInUse(permutation) == false
+                || IsThereAreaForTheSeedTraysInUse(permutation) == false
+                || DoesItDisplaceFollowingOrders() == true);
+
+
+            SeedBedStatus.GreenHouses.Remove(tempGreenHouse);
+
+            OrderModel output = new OrderModel(_seedBedStatus.Orders.Where(x => x.ID == 0).First());
+
+            output.SetEstimateDates(
+                (DateOnly)output.OrderLocations.Min(x => x.SowDate),
+                (DateOnly)output.OrderLocations.Min(x => x.EstimateDeliveryDate)
+            );
+
+            return output;
+        }
+
 
         #endregion
 
