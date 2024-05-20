@@ -73,10 +73,10 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     public void ClientComplete(Client model)
     {
         _clients.Add(model);
-        lblcmbbtnClient.ComboBox.Items.Refresh();
+        lblcmbbtnClient.ComboBox.ItemsSource = _clients.OrderBy(x => x.Name);
         lblcmbbtnClient.ComboBox.SelectedItem = model;
     }
-    //CHECK - that all of the combobox with button order their items when a new item is inserted
+  
     public void ProductComplete(Product model)
     {
         Product newProduct = _productProcessor.GetAProductById(model.Id);
