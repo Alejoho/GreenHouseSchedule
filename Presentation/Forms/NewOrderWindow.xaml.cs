@@ -129,7 +129,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     private void DisplayOrderLocations()
     {
         dgOrderLocations.ItemsSource = null;
-        dgOrderLocations.ItemsSource = _resultingOrder.OrderLocations;
+        dgOrderLocations.ItemsSource = _resultingOrder.OrderLocations.OrderBy(x => x.EstimateSowDate);
     }
 
     private void SetTheResultingOrder(SeedTrayPermutation permutation)
