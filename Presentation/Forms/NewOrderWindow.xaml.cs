@@ -146,6 +146,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         dgSeedTrayPermutations.Items.Clear();
         dgSeedTrayPermutations.ItemsSource = null;
         dgSeedTrayPermutations.ItemsSource = permutationsToDisplay;
+        dgSeedTrayPermutations.SelectedItem = dgSeedTrayPermutations.Items[0];
 
         SetTheResultingOrder((SeedTrayPermutation)dgSeedTrayPermutations.Items[0]);
 
