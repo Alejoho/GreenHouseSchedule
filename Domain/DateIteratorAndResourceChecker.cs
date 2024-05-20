@@ -30,6 +30,11 @@ namespace Domain
         private OrderModel _orderInProcess;
 
         /// <summary>
+        /// A save of the initial state of the order that its required to place in the seedbed.
+        /// </summary>
+        private OrderModel _auxOrderInProcess;
+
+        /// <summary>
         /// A linked list with the diferent permutations of the available amounts of seedtrays.
         /// </summary>
         private LinkedList<SeedTrayPermutation> _seedTrayPermutations;
@@ -62,6 +67,8 @@ namespace Domain
                 double multiplier = 1.2;
                 _orderInProcess = orderInProcess;
                 _orderInProcess.SeedlingAmount = Convert.ToInt32(_orderInProcess.SeedlingAmount * multiplier);
+
+                _auxOrderInProcess = new OrderModel(_orderInProcess);
             }
 
             _seedTrayPermutations = new LinkedList<SeedTrayPermutation>();
@@ -75,14 +82,16 @@ namespace Domain
         /// <param name="pOrderInProcess">The order that to place in the seedbed.</param>
         public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel pOrderInProcess)
         {
-            _seedBedStatus = seedBedStatus;
+            _seedBedStatus = new SeedBedStatus(seedBedStatus);
 
             double multiplier;
-            double.TryParse(ConfigurationManager.AppSettings["MinimumLimitOfSow"], out multiplier);
+            double.TryParse(ConfigurationManager.AppSettings["SeedlingMultiplier"], out multiplier);
             _multiplier = multiplier;
 
-            _orderInProcess = pOrderInProcess;
+            _orderInProcess = new OrderModel(pOrderInProcess);
             _orderInProcess.SeedlingAmount = Convert.ToInt32(_orderInProcess.SeedlingAmount * multiplier);
+
+            _auxOrderInProcess = new OrderModel(_orderInProcess);
 
             _seedTrayPermutations = new LinkedList<SeedTrayPermutation>();
             _seedTrayPermutationsToDelete = new ArrayList();
@@ -172,14 +181,12 @@ namespace Domain
         /// </summary>
         private void ImplementEstimateRelease()
         {
-            int outer = 0;
             foreach (OrderModel order in SeedBedStatus.Orders)
             {
                 foreach (OrderLocationModel orderLocation in order.OrderLocations)
                 {
                     if (orderLocation.EstimateDeliveryDate == SeedBedStatus.IteratorDate)
                     {
-                        outer += orderLocation.SeedTrayAmount;
                         SeedBedStatus.ReleaseSeedTray(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType);
                         SeedBedStatus.ReleaseArea(orderLocation.SeedTrayAmount, orderLocation.SeedTrayType, orderLocation.GreenHouse);
                         order.SeedlingAmount -= orderLocation.SeedlingAmount;
@@ -703,6 +710,9 @@ namespace Domain
 
         //LATER - Evaluar si quitar estas propiedades ya que no se usan fuera de la clase
 
+        /// <summary>
+        /// Gets the actual SeedBedStatus or sets an separate instance of one.
+        /// </summary>
         public SeedBedStatus SeedBedStatus { get => _seedBedStatus; set => _seedBedStatus = value; }
 
         //public SeedBedStatus SeedBedStatusAuxiliar { get => _seedBedStatusAuxiliar; set => _seedBedStatusAuxiliar = value; }
