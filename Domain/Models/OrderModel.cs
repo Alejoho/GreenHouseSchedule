@@ -14,7 +14,7 @@ namespace Domain.Models
         private int _seedlingAmount;
         private readonly DateOnly _requestDate;
         private DateOnly? _estimateSowDate;
-        private readonly DateOnly? _estimateDeliveryDate;
+        private DateOnly? _estimateDeliveryDate;
         private DateOnly? _realSowDate;
         private DateOnly? _realDeliveryDate;
         private LinkedList<OrderLocationModel> _orderLocations;
@@ -79,14 +79,20 @@ namespace Domain.Models
             }
         }
 
-        public void AdvanceEstimateSowDateOneDay()
+        internal void AdvanceEstimateSowDateOneDay()
         {
             this._estimateSowDate = this.EstimateSowDate?.AddDays(1);
         }
 
-        public void GoBackEstimateSowDateOneDay()
+        internal void GoBackEstimateSowDateOneDay()
         {
             this._estimateSowDate = this.EstimateSowDate?.AddDays(-1);
+        }
+
+        internal void SetEstimateDates(DateOnly estimateSowDate, DateOnly estimateDeliveryDate)
+        {
+            this._estimateSowDate = estimateSowDate;
+            this._estimateDeliveryDate = estimateDeliveryDate;
         }
 
         /// <value>
@@ -117,7 +123,7 @@ namespace Domain.Models
         /// <value>
         /// Gets the estimate date on which the order must be sown.
         /// </value>
-        public DateOnly? EstimateSowDate => _estimateSowDate;
+        public DateOnly? EstimateSowDate  => _estimateSowDate; 
 
         /// <value>
         /// Gets estimate date on which the order must be delivered.
