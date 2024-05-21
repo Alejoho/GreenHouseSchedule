@@ -630,7 +630,7 @@ namespace Domain
                             where seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID
                             select seedTray.AlveolusQuantity).FirstOrDefault(0);
 
-                seedlingAmount = alveolus * pSeedTrayPermutation.FirstAmount;
+                seedlingAmount = alveolus * pSeedTrayPermutation.SecondAmount;
 
                 newOrderLocation = new OrderLocationModel(
                     0,
@@ -650,7 +650,7 @@ namespace Domain
                             where seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID
                             select seedTray.AlveolusQuantity).FirstOrDefault(0);
 
-                seedlingAmount = alveolus * pSeedTrayPermutation.FirstAmount;
+                seedlingAmount = alveolus * pSeedTrayPermutation.ThirdAmount;
 
                 newOrderLocation = new OrderLocationModel(
                     0,
