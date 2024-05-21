@@ -162,7 +162,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             ClientId = orderModel.Client.ID,
             ProductId = orderModel.Product.ID,
             AmountOfWishedSeedlings = int.Parse(txtAmountOfSeedlings.FieldContent),
-            AmountOfAlgorithmSeedlings = orderModel.SeedlingAmount,
+            AmountOfAlgorithmSeedlings = orderModel.OrderLocations.Sum(x => x.SeedlingAmount),
             WishDate = DateOnly.FromDateTime((DateTime)dtpWishDate.TimePicker.SelectedDate),
             DateOfRequest = orderModel.RequestDate,
             EstimateSowDate = (DateOnly)orderModel.EstimateSowDate,
@@ -307,5 +307,21 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         {
             MessageBox.Show("Debe seleccionar una permutacion para mostrar las locaciones de la orden.");
         }
+    }
+
+    private void btnSave_Click(object sender, RoutedEventArgs e)
+    {
+        OrderProcessor processor = new OrderProcessor();
+        if (processor.SaveOrder(_resultingOrder) == true)
+        {
+            MessageBox.Show("Nueva orden guardada");
+            this.Close();
+        }
+        else
+        {
+            MessageBox.Show(processor.Error);
+            this.Close();
+        }
+            
     }
 }
