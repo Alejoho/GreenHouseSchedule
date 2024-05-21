@@ -16,7 +16,7 @@ namespace DataAccess.Repositories
 
         public IEnumerable<GreenHouse> GetAll()
         {
-            var output = _sowScheduleDB.GreenHouses;
+            var output = _sowScheduleDB.GreenHouses.Where(x => x.Id > 0);
             return output;
         }
 

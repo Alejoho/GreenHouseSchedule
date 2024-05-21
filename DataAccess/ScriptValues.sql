@@ -86,6 +86,8 @@ insert into "Products" values
 
 go
 insert into "GreenHouses" values
+	('Ghost', 'This is a ghost house to put 
+	the dont sown order locations', 1, 1, 1, 1, 1, 0),
 	('Casa 1', null, 11.58, 35, 405.3, 306.81, 4, 1),
 	('Casa 2', null, 11.58, 34.6, 400.67, 306.72, 4, 1),
 	('Casa 3', null, 11.32, 35, 396.2, 256.81, 4, 1),

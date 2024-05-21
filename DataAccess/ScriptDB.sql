@@ -150,7 +150,7 @@ go
 drop table if exists "GreenHouses";
 go
 create table "GreenHouses"(
-	"ID" tinyint identity(1,1),
+	"ID" tinyint identity(0,1),
 	"Name" nvarchar(50) not null,
 	"Description" nvarchar(700),
 	"Width" numeric(4,2),
