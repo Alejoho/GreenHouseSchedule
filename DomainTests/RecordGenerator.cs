@@ -359,7 +359,8 @@ internal class RecordGenerator
             .RuleFor(x => x.Material, f => f.Vehicle.Type())
             .RuleFor(x => x.Preference, f => preference++)
             .RuleFor(x => x.Active, f => f.Random.Bool())
-            .RuleFor(x => x.IsSelected, true);
+            .RuleFor(x => x.IsSelected, true)
+            .RuleFor(x => x.Selected, true);
     }
 
     private Faker<Order> GetCompleteOrderFaker()
