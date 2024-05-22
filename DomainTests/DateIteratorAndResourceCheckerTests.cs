@@ -566,13 +566,13 @@ public class DateIteratorAndResourceCheckerTests
     }
 
     [Theory]
-    [InlineData(100000, 7)]
+    [InlineData(100000, 4)]
     [InlineData(800000, 0)]
     [InlineData(300000, 0)]
     [InlineData(320000, 0)]
-    [InlineData(50000, 7)]
-    [InlineData(5000, 7)]
-    [InlineData(1000, 7)]
+    [InlineData(50000, 4)]
+    [InlineData(5000, 4)]
+    [InlineData(1000, 4)]
     public void GenerateAndAddSimplePermutations_ShouldCreateTheCorrectAmountOfPermutations(int seedlingAmount, int permutationAmount)
     {
         OrderModel newOrder = new OrderModel(1
@@ -593,6 +593,8 @@ public class DateIteratorAndResourceCheckerTests
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
         }
 
+        var comprobationOfArea = iterator.SeedBedStatus.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayAvailableArea);
+
         iterator.SeedBedStatus.GeneralAvailableArea *= 0.1640m;
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
@@ -608,17 +610,18 @@ public class DateIteratorAndResourceCheckerTests
         var permutations = (LinkedList<SeedTrayPermutation>)fieldInfo.GetValue(iterator);
 
         permutations.Count.Should().Be(permutationAmount);
+        iterator.SeedBedStatus.GeneralAvailableArea.Should().BeApproximately(comprobationOfArea, 0.001m);
     }
 
     [Theory]
     [InlineData(1000, 0)]
     [InlineData(100000, 0)]
     [InlineData(900000, 0)]
-    [InlineData(163000, 6)]
+    [InlineData(163000, 3)]
     [InlineData(318000, 0)]
-    [InlineData(280000, 6)]
-    [InlineData(220000, 19)]
-    [InlineData(244000, 13)]
+    [InlineData(280000, 0)]
+    [InlineData(220000, 6)]
+    [InlineData(244000, 3)]
     public void GenerateAndAddDoublePermutations_ShouldCreateTheCorrectAmountOfPermutations(int seedlingAmount, int permutationAmount)
     {
         OrderModel newOrder = new OrderModel(1
@@ -639,6 +642,8 @@ public class DateIteratorAndResourceCheckerTests
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
         }
 
+        var comprobationOfArea = iterator.SeedBedStatus.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayAvailableArea);
+
         iterator.SeedBedStatus.GeneralAvailableArea *= 0.1640m;
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
@@ -654,21 +659,23 @@ public class DateIteratorAndResourceCheckerTests
         var permutations = (LinkedList<SeedTrayPermutation>)fieldInfo.GetValue(iterator);
 
         permutations.Count.Should().Be(permutationAmount);
+        iterator.SeedBedStatus.GeneralAvailableArea.Should().BeApproximately(comprobationOfArea,0.001m);
+
     }
 
     [Theory]
+    [InlineData(50000, 0)]
+    [InlineData(65600, 4)]
+    [InlineData(70000, 8)]      
+    [InlineData(80000, 16)]      
+    [InlineData(90000, 24)]      
+    [InlineData(100000, 20)]     
+    [InlineData(110000, 16)]
+    [InlineData(120000, 10)]
+    [InlineData(130000, 8)]
+    [InlineData(150000, 5)]
+    [InlineData(160000, 1)]
     [InlineData(162000, 0)]
-    [InlineData(200000, 0)]
-    [InlineData(300000, 0)]
-    [InlineData(360000, 8)]
-    [InlineData(370000, 6)]
-    [InlineData(380000, 2)]
-    [InlineData(390000, 0)]
-    [InlineData(400000, 0)]
-    //[InlineData(450000, 6)]
-    //[InlineData(453000, 4)]
-    //[InlineData(459000, 2)]
-    //[InlineData(460000, 0)]
     public void GenerateAndAddTriplePermutations_ShouldCreateTheCorrectAmountOfPermutations(int seedlingAmount, int permutationAmount)
     {
         OrderModel newOrder = new OrderModel(1
@@ -689,6 +696,13 @@ public class DateIteratorAndResourceCheckerTests
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
         }
 
+        foreach (var seedTrays in iterator.SeedBedStatus.SeedTrays)
+        {
+            seedTrays.FreeAmount = Convert.ToInt32(seedTrays.FreeAmount * 0.2m);
+        }
+
+        var comprobationOfArea = iterator.SeedBedStatus.GreenHouses.Where(x => x.Active == true).Sum(x => x.SeedTrayAvailableArea);
+
         iterator.SeedBedStatus.GeneralAvailableArea *= 0.1640m;
 
         MethodInfo methodInfo = typeof(DateIteratorAndResourceChecker)
@@ -704,12 +718,12 @@ public class DateIteratorAndResourceCheckerTests
         var permutations = (LinkedList<SeedTrayPermutation>)fieldInfo.GetValue(iterator);
 
         permutations.Count.Should().Be(permutationAmount);
+        iterator.SeedBedStatus.GeneralAvailableArea.Should().BeApproximately(comprobationOfArea, 0.001m);
     }
 
     [Theory]
-    [InlineData(5000, 7)]
-    [InlineData(162000, 6)]
-    [InlineData(39000, 7)]
+    [InlineData(5000, 4)]
+    [InlineData(39000, 4)]
     [InlineData(500000, 0)]
     public void SeedTrayAndAreaResources_ShouldGiveOnlySimplePermutations(
         int seedlingAmount, int permutationAmount)
@@ -752,10 +766,12 @@ public class DateIteratorAndResourceCheckerTests
     }
 
     [Theory]
-    [InlineData(280000, 6)]
-    [InlineData(300000, 5)]
-    [InlineData(360000, 0)]
-    [InlineData(60000, 0)]
+    [InlineData(50000, 12)]
+    [InlineData(60000, 12)]//ok
+    [InlineData(65000, 12)]
+    //[InlineData(80000, 20)]
+    //[InlineData(90000, 24)]
+    //[InlineData(100000, 20)]
     public void SeedTrayAndAreaResources_ShouldGiveOnlyDoublePermutations(
         int seedlingAmount, int permutationAmount)
     {
@@ -775,6 +791,11 @@ public class DateIteratorAndResourceCheckerTests
         foreach (var greenHouse in iterator.SeedBedStatus.GreenHouses)
         {
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
+        }
+
+        foreach(var seedtray in iterator.SeedBedStatus.SeedTrays)
+        {
+            seedtray.FreeAmount = Convert.ToInt32(seedtray.FreeAmount * 0.2m);
         }
 
         iterator.SeedBedStatus.GeneralAvailableArea *= 0.1640m;
@@ -797,10 +818,9 @@ public class DateIteratorAndResourceCheckerTests
     }
 
     [Theory]
-    [InlineData(400000, 10)]
-    [InlineData(430000, 8)]
-    [InlineData(440000, 6)]
-    [InlineData(455000, 4)]
+    [InlineData(90000, 24)]
+    [InlineData(92000, 23)]
+    [InlineData(95500, 22)]
     public void SeedTrayAndAreaResources_ShouldGiveOnlyTriplePermutations(
         int seedlingAmount, int permutationAmount)
     {
@@ -820,6 +840,11 @@ public class DateIteratorAndResourceCheckerTests
         foreach (var greenHouse in iterator.SeedBedStatus.GreenHouses)
         {
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
+        }
+
+        foreach (var seedtray in iterator.SeedBedStatus.SeedTrays)
+        {
+            seedtray.FreeAmount = Convert.ToInt32(seedtray.FreeAmount * 0.2m);
         }
 
         iterator.SeedBedStatus.GeneralAvailableArea *= 0.1640m;
@@ -842,20 +867,19 @@ public class DateIteratorAndResourceCheckerTests
     }
 
     [Theory]
-    [InlineData(10000, 7, 0, 0)]
-    [InlineData(15000, 7, 0, 0)]
-    [InlineData(20000, 5, 12, 0)]
-    [InlineData(25000, 4, 18, 0)]
-    [InlineData(30000, 2, 30, 0)]
-    [InlineData(50000, 1, 20, 80)]
-    [InlineData(65000, 0, 12, 120)]
-    [InlineData(70000, 0, 12, 102)]
-    [InlineData(75000, 0, 12, 86)]
-    [InlineData(80000, 0, 10, 88)]
-    [InlineData(85000, 0, 8, 87)]
-    [InlineData(90000, 0, 2, 102)]
-    [InlineData(95000, 0, 0, 94)]
-    [InlineData(255000, 0, 0, 0)]
+    [InlineData(10000, 4, 0, 0)]
+    [InlineData(15000, 3, 3, 0)]
+    [InlineData(20000, 3, 3, 0)]
+    [InlineData(25000, 1, 9, 0)]
+    [InlineData(30000, 1, 9, 0)]
+    [InlineData(40000, 1, 5, 8)]
+    [InlineData(50000, 1, 3, 12)]
+    [InlineData(65000, 0, 4, 12)]
+    [InlineData(70000, 0, 4, 12)]
+    [InlineData(75000, 0, 0, 20)]
+    [InlineData(80000, 0, 0, 15)]
+    [InlineData(85000, 0, 0, 12)]
+    [InlineData(90000, 0, 0, 12)]
     public void SeedTrayAndAreaResources_ShouldGiveMixedPermutations(int seedlingAmount
         , int simplePermutationAmount
         , int doublePermutationAmount
@@ -1309,7 +1333,7 @@ public class DateIteratorAndResourceCheckerTests
 
         iterator.LookForAvailability();
 
-        iterator.SeedTrayPermutations.Count.Should().Be(3);
+        iterator.SeedTrayPermutations.Count.Should().Be(1);
     }
     #endregion
 }
