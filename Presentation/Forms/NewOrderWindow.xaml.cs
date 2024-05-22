@@ -2,6 +2,7 @@
 using Domain.Models;
 using Domain.Processors;
 using Domain.ValuableObjects;
+using Presentation.IRequesters;
 using SupportLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 {
     private ClientProcessor _clientProcessor;
     private ProductProcessor _productProcessor;
-    private SeedTrayProcessor _seedTrayProcessor;
+    private SeedTrayProcessor _seedTrayProcessor;    
     private List<Client> _clients;
     private List<Product> _products;
     private List<SeedTray> _seedTrays;
@@ -112,7 +113,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         {
             ToggleControls();
         }
-            }
+    }
 
     private void ToggleControls()
     {
@@ -137,10 +138,10 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void DisplayResults()
     {
-        //TODO - Look how to put and id to the permutation but without putting it in the class.
+        //NEXT - Look how to put and id to the permutation but without putting it in the class.
 
-        //dgSeedTrayPermutations.DataContext = this;
-
+        //TODO - iTHINK THIS IS SOLVED. There are permutation that dont have the 3 types of seedtrays but
+        //in spite of that print the zero in the column
         dgSeedTrayPermutations.ItemsSource = null;
         dgSeedTrayPermutations.Items.Clear();
         dgSeedTrayPermutations.ItemsSource = permutationsToDisplay;
@@ -324,4 +325,5 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         }
             
     }
+    //LATER - Check the look of all MessageBox.Show methods and standarize them
 }

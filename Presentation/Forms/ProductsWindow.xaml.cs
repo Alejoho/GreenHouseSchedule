@@ -1,4 +1,5 @@
 ﻿using Domain.Processors;
+using Presentation.IRequesters;
 using SupportLayer.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class ProductsWindow : Window, ISpeciesRequester
 {
+    //LATER - Maybe implement the logic of the use of "ObservableCollection" in all the others.
     private ObservableCollection<Species> _species;
     private SpeciesProcessor _speciesProcessor;
     private ProductProcessor _productProcessor;
@@ -84,6 +86,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
     private void LoadData()
     {
         _species = new ObservableCollection<Species>(_speciesProcessor.GetAllSpecies());
+        //CHECK - if it's necessary specify the data context for this form.
         dgSpecies.DataContext = this;
         dgSpecies.ItemsSource = _species;
         lstVarieties.DisplayMemberPath = "Variety";

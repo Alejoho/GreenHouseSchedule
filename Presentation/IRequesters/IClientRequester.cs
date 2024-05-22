@@ -1,6 +1,6 @@
 ﻿using SupportLayer.Models;
 
-namespace Presentation;
+namespace Presentation.IRequesters;
 
 public interface IClientRequester
 {

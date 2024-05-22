@@ -12,7 +12,11 @@ namespace Presentation.Forms;
 public partial class OrderListWindow : Window
 {
     //LATER - Add HeadersVisibility = "Column" to the datagrids across the board
+    //LATER - Find out how to delete and order. Now I couldn't because the relation between order and orderlocations
+    //is severed so i have to delete the orderlocations first in order to delete the actual order. I think I could set
+    //"delete on cascade".
     public ObservableCollection<Order> _orders;
+
     private OrderProcessor _processor;
 
     public OrderListWindow()
@@ -72,7 +76,7 @@ public partial class OrderListWindow : Window
     }
 }
 
-//LATER - Give to this class a better name
+//LATER - Give to this class a better name. And extract it in a separated file
 public class DataContextHolderClass
 {
     private ObservableCollection<Order> _orders;
