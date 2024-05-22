@@ -3,6 +3,7 @@ using DataAccess.Repositories;
 using Domain.Validators;
 using FluentValidation.Results;
 using SupportLayer.Models;
+using System.Configuration;
 
 namespace Domain.Processors;
 
@@ -101,6 +102,21 @@ public class OrderProcessor : IOrderProcessor
                 .OrderBy(x => x.EstimateSowDate)
                 .ThenBy(x => x.DateOfRequest);
         }
+
+        return output;
+    }
+
+    public IEnumerable<Order> GetNextOrdersToSow()
+    {
+        IEnumerable<Order> output = null!;
+
+        int interval = int.Parse(ConfigurationManager.AppSettings["SowShowRange"]);
+
+        DateOnly date = DateOnly.FromDateTime(DateTime.Now.AddDays(interval));
+
+        output = _repository.GetIncompleteBeforeADate(date)
+            .OrderBy(x => x.DateOfRequest)
+            .ThenBy(x => x.EstimateSowDate);
 
         return output;
     }

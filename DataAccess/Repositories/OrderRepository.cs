@@ -24,13 +24,13 @@ namespace DataAccess.Repositories
         {
             return _sowScheduleDB.Orders.Where(x => x.RealSowDate >= date || x.RealSowDate == null);
         }
-
+        //LATER - Make the test for this method.
         public IEnumerable<Order> GetIncompleteBeforeADate(DateOnly date)
         {
             return _sowScheduleDB.Orders.Where(x => x.Complete == false && x.EstimateSowDate <= date);
         }
 
-            public bool Insert(Order entity)
+        public bool Insert(Order entity)
         {
             _sowScheduleDB.Orders.Add(entity);
             _sowScheduleDB.SaveChanges();
