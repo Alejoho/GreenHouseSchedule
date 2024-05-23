@@ -1,0 +1,30 @@
+﻿<Window x:Class="Presentation.InputForms.SowInputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation.InputForms"
+        xmlns:custom="clr-namespace:Presentation.CustomControls"
+        mc:Ignorable="d"
+        Title="Siembra" Height="150" Width="300" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Especifique la fecha y cuantas bandejas se sembraron." Height="20" 
+                   Margin="2 10 0 5" HorizontalAlignment="Center"/>
+        <custom:DatePickerWithLabel Grid.Row="1" FieldLabel="Fecha" Margin="2 0 25 0"/>
+        <custom:TextBoxWithLabel Grid.Row="2" FieldLabel="Bandejas sembradas" Margin="2 0 25 0"/>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="center"  Height="50">
+            <Button x:Name="btnConfirm" Content="Confirmar" Margin="20 12" Width="80" Click="btnConfirm_Click"/>
+            <Button x:Name="btnCancel" Content="Cancelar" Margin="20 12" Width="80" Click="btnCancel_Click"/>
+        </StackPanel>
+
+
+    </Grid>
+</Window>
