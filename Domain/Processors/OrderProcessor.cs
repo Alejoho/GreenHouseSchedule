@@ -118,6 +118,16 @@ public class OrderProcessor : IOrderProcessor
             .OrderBy(x => x.DateOfRequest)
             .ThenBy(x => x.EstimateSowDate);
 
+        foreach (Order order in output)
+        {
+            var orderLocationsToDelete = order.OrderLocations.Where(x => x.RealSowDate != null);
+
+            while (orderLocationsToDelete.Count() > 0)
+            {
+                order.OrderLocations.Remove(orderLocationsToDelete.First());
+            }
+        }
+
         return output;
     }
 }
