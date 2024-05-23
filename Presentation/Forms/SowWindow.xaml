@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:local1="clr-namespace:Presentation"
         mc:Ignorable="d"
-        Title="Siembras pendientes" Height="450" Width="800" ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="Siembras pendientes" Height="550" Width="1035" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" WindowState="Normal">
 
     <Window.Resources>
         <local1:RowDetailSymbolConverter x:Key="Converter"/>
@@ -19,7 +19,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" x:Name="dgDeliveryList" Height="300" Margin="20 30 20 0"                    
+        <DataGrid Grid.Row="0" x:Name="dgDeliveryList" Height="400" Margin="20 30 20 0"                    
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
                     CanUserReorderColumns="False" CanUserResizeColumns="False" 
                     CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
@@ -53,13 +53,10 @@
                 <DataGridTextColumn Header="Variedad" Binding="{Binding Product.Variety}"/>
                 <DataGridTextColumn Header="Posturas pedidas" Binding="{Binding AmountOfWishedSeedlings}"/>
                 <DataGridTextColumn Header="Posturas calculadas" Binding="{Binding AmountOfAlgorithmSeedlings}"/>
-                <DataGridTextColumn Header="Fecha requerida" Binding="{Binding WishDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                 <DataGridTextColumn Header="Fecha de pedido" Binding="{Binding DateOfRequest, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                <DataGridTextColumn Header="Fecha requerida" Binding="{Binding WishDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                 <DataGridTextColumn Header="Fecha de siembra estimada" Binding="{Binding EstimateSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                 <DataGridTextColumn Header="Fecha de entrega estimada" Binding="{Binding EstimateDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                <DataGridTextColumn Header="Fecha de siembra real" Binding="{Binding RealSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                <DataGridTextColumn Header="Fecha de entrega real" Binding="{Binding RealDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                <DataGridCheckBoxColumn Header="Completada" Binding="{Binding Complete}"/>
             </DataGrid.Columns>
 
             <DataGrid.RowDetailsTemplate>
@@ -69,7 +66,7 @@
                         SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" 
                         CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
                         IsReadOnly="True" ItemsSource="{Binding OrderLocations}" 
-                        HeadersVisibility="Column" Width="923" HorizontalScrollBarVisibility="Hidden"
+                        HeadersVisibility="Column" Width="Auto" HorizontalScrollBarVisibility="Hidden"
                         SelectionChanged="dgOrderLocationChild_SelectionChanged"
                         >
 
@@ -81,14 +78,11 @@
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Header="Casa" Binding="{Binding GreenHouse.Name}"/>
                             <DataGridTextColumn Header="Bandeja" Binding="{Binding SeedTray.Name}"/>
                             <DataGridTextColumn Header="Cantidad de bandejas" Binding="{Binding SeedTrayAmount}"/>
                             <DataGridTextColumn Header="Cantidad de posturas" Binding="{Binding SeedlingAmount}"/>
-                            <DataGridTextColumn Header="Fecha de siembra estimada" Binding="{Binding EstimateSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                            <DataGridTextColumn Header="Fecha de siembra real" Binding="{Binding RealSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                            <DataGridTextColumn Header="Fecha de entrega estimada" Binding="{Binding EstimateDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                            <DataGridTextColumn Header="Fecha de entrega real" Binding="{Binding RealDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Fecha de siembra estimada" Binding="{Binding EstimateSowDate
+                                , StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DataTemplate>
