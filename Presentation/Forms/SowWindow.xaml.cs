@@ -73,9 +73,9 @@ public partial class SowWindow : Window, IOrderLocationChangeRequester
         }
     }
 
-    public void SetTheSownOrderLocation(DateOnly date, int value)
+    public void SetTheSownOrderLocation(DateOnly date, short sownSeedTrays)
     {
-
+        _orderLocationProcessor.SaveSownOrderLocationChange(_orderLocationInProcess, date, sownSeedTrays);
 
         throw new NotImplementedException();
 

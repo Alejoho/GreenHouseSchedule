@@ -24,6 +24,7 @@ public partial class SowInputWindow : Window
         if (ValidateData() == true)
         {
             _requester.SetTheSownOrderLocation(dtpSowDate.SelectedDateOnly, lbltxtSownAmount.IntNumber);
+                _requester.SetTheSownOrderLocation(dtpSowDate.SelectedDateOnly, lbltxtSownAmount.ShortNumber);
             this.Close();
         }
     }
@@ -47,7 +48,7 @@ public partial class SowInputWindow : Window
             lbltxtSownAmount.TextBox.Focus();
             return false;
         }
-        else if (int.TryParse(lbltxtSownAmount.FieldContent, out int amountOfSeedlings) == false)
+        else if (short.TryParse(lbltxtSownAmount.FieldContent, out short amountOfSeedlings) == false)
         {
             MessageBox.Show("La cantidad de bandejas sembradas no esta en el formato correcto."
                 , "Cantidad de bandejas sembradas inválida"
