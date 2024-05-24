@@ -20,4 +20,11 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
         return output;
     }
+
+    public void SaveSownOrderLocationChange(OrderLocation orderLocation, DateOnly date, short sownSeedTrays)
+    {
+    }
+
+    }
+    }
 }

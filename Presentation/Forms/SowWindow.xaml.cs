@@ -17,19 +17,22 @@ namespace Presentation.Forms;
 public partial class SowWindow : Window, IOrderLocationChangeRequester
 {
     private ObservableCollection<Order> _orders;
-    private OrderProcessor _processor;
+    private OrderProcessor _orderProcessor;
+    private OrderLocationProcessor _orderLocationProcessor;
     private OrderLocation _orderLocationInProcess;
 
     public SowWindow()
     {
         InitializeComponent();
-        _processor = new OrderProcessor();
+        _orderProcessor = new OrderProcessor();
+        _orderLocationProcessor = new OrderLocationProcessor();
         LoadData();
     }
 
     private void LoadData()
     {
         _orders = new ObservableCollection<Order>(_processor.GetNextOrdersToSow());
+        _orders = new ObservableCollection<Order>(_orderProcessor.GetNextOrdersToSow());
         dgDeliveryList.DataContext = this;
         dgDeliveryList.ItemsSource = _orders;
     }
@@ -81,5 +84,5 @@ public partial class SowWindow : Window, IOrderLocationChangeRequester
 
     }
 
-    public OrderLocation OrderLocationInProcess { get => _orderLocationInProcess;}
+    public OrderLocation OrderLocationInProcess { get => _orderLocationInProcess; }
 }
