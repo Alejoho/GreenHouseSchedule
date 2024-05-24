@@ -23,9 +23,30 @@ public partial class SowInputWindow : Window
     {
         if (ValidateData() == true)
         {
-            _requester.SetTheSownOrderLocation(dtpSowDate.SelectedDateOnly, lbltxtSownAmount.IntNumber);
+            try
+            {
                 _requester.SetTheSownOrderLocation(dtpSowDate.SelectedDateOnly, lbltxtSownAmount.ShortNumber);
             this.Close();
+        }
+            catch (ArgumentException ex)
+            {
+                //TODO - Make something to delete the "(Parameter 'date')" from the message.
+                MessageBox.Show($"{ex.Message}");
+
+                if (ex.ParamName == "date")
+                {
+                    this.dtpSowDate.TimePicker.Focus();
+    }
+                else if (ex.ParamName == "sownSeedTrays")
+                {
+                    this.lbltxtSownAmount.TextBox.Focus();
+                }
+            }
+            catch(Exception ex)
+            {
+                //LATER - Implement the log.
+                MessageBox.Show($"{ex.Message}");
+            }
         }
     }
 
