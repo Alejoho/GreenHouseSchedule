@@ -27,6 +27,20 @@ public class OrderLocationProcessor : IOrderLocationProcessor
     }
 
 
+    private OrderLocation GetCopyOfAnOrderLocation(OrderLocation orderLocation)
+    {
+        return new OrderLocation()
+        {
+            Id = 0,
+            GreenHouseId = orderLocation.GreenHouseId,
+            SeedTrayId = orderLocation.SeedTrayId,
+            OrderId = orderLocation.OrderId,
+            SeedTrayAmount = orderLocation.SeedTrayAmount,
+            SeedlingAmount = orderLocation.SeedlingAmount,
+            EstimateSowDate = orderLocation.EstimateSowDate,
+            EstimateDeliveryDate = orderLocation.EstimateDeliveryDate
+        };
+    }
     
     private void ValidateChanges(OrderLocation orderLocation, DateOnly date, int sownSeedTrays)
     {
