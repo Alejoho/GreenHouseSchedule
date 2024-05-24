@@ -33,5 +33,7 @@ namespace Presentation.CustomControls
         {
             TextChanged?.Invoke(sender, e);
         }
+
+        public int IntNumber { get => int.Parse(TextBox.Text); }
     }
 }
