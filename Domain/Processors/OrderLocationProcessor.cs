@@ -24,8 +24,30 @@ public class OrderLocationProcessor : IOrderLocationProcessor
     public void SaveSownOrderLocationChange(OrderLocation orderLocation, DateOnly date, short sownSeedTrays)
     {
         ValidateChanges(orderLocation, date, sownSeedTrays);
+
+        if (orderLocation.SeedTrayAmount == sownSeedTrays)
+        {
+            orderLocation.RealSowDate = date;
+            _repository.Update(orderLocation);
+        }
+        else
+        {
+            OrderLocation orderLocationCopy = GetCopyOfAnOrderLocation(orderLocation);
+
+            int alveolus = orderLocation.SeedTrayAmount / orderLocation.SeedTrayAmount;
+
+            orderLocation.SeedTrayAmount -= sownSeedTrays;
+            orderLocation.SeedlingAmount = orderLocation.SeedTrayAmount * alveolus;
+
+            orderLocationCopy.SeedTrayAmount = sownSeedTrays;
+            orderLocationCopy.SeedlingAmount = orderLocationCopy.SeedTrayAmount * alveolus;
+            orderLocationCopy.RealSowDate = date;
+
+            _repository.Update(orderLocation);
+            _repository.Insert(orderLocationCopy);
     }
 
+    }
 
     private OrderLocation GetCopyOfAnOrderLocation(OrderLocation orderLocation)
     {
