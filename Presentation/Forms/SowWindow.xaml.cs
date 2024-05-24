@@ -1,4 +1,5 @@
 ﻿using Domain.Processors;
+using Presentation.InputForms;
 using SupportLayer.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -13,10 +14,11 @@ namespace Presentation.Forms;
 /// <summary>
 /// Interaction logic for SowWindow.xaml
 /// </summary>
-public partial class SowWindow : Window
+public partial class SowWindow : Window, IOrderLocationChangeRequester
 {
     private ObservableCollection<Order> _orders;
     private OrderProcessor _processor;
+    private OrderLocation _orderLocationInProcess;
 
     public SowWindow()
     {
@@ -41,20 +43,18 @@ public partial class SowWindow : Window
 
     private void btnSow_Click(object sender, RoutedEventArgs e)
     {
-        SetTheSownOrderLocation();
+        CallSownOrderLocationSetter();
     }   
 
     private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        SetTheSownOrderLocation();
+        CallSownOrderLocationSetter();
     }
 
-    private void SetTheSownOrderLocation()
+    private void CallSownOrderLocationSetter()
     {
-        throw new NotImplementedException();
-        //1-si el order location se sembro completo se le asigna la fecha real de siembra y el completo
-        //2-si no, se crea un nuevo orderLocation y se le asigna lo que se sembró, la fecha y el completo 
-        //3-se refresca el dg
+        SowInputWindow window = new SowInputWindow(this);
+        window.ShowDialog();
     }
 
     private void btnRowDetail_Click(object sender, RoutedEventArgs e)
@@ -65,5 +65,21 @@ public partial class SowWindow : Window
         Visibility.Collapsed : Visibility.Visible;
     }
 
+    private void dgOrderLocationChild_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is DataGrid datagrid)
+        {
+            _orderLocationInProcess = (OrderLocation)datagrid.SelectedItem;           
+        }
+    }
 
+    public void SetTheSownOrderLocation(DateOnly date, int value)
+    {
+
+
+        throw new NotImplementedException();
+
+    }
+
+    public OrderLocation OrderLocationInProcess { get => _orderLocationInProcess;}
 }

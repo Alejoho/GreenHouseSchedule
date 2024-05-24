@@ -16,9 +16,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Especifique la fecha y cuantas bandejas se sembraron." Height="20" 
-                   Margin="2 10 0 5" HorizontalAlignment="Center"/>
-        <custom:DatePickerWithLabel Grid.Row="1" FieldLabel="Fecha" Margin="2 0 25 0"/>
-        <custom:TextBoxWithLabel Grid.Row="2" FieldLabel="Bandejas sembradas" Margin="2 0 25 0"/>
+                   Margin="2 15 0 5" HorizontalAlignment="Center"/>
+        <custom:DatePickerWithLabel x:Name="dtpSowDate" Grid.Row="1" FieldLabel="Fecha" Margin="2 0 25 0"/>
+        <custom:TextBoxWithLabel x:Name="lbltxtSownAmount" Grid.Row="2" FieldLabel="Bandejas sembradas" Margin="2 0 25 0"/>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="center"  Height="50">
             <Button x:Name="btnConfirm" Content="Confirmar" Margin="20 12" Width="80" Click="btnConfirm_Click"/>
