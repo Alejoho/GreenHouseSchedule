@@ -34,7 +34,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         {
             OrderLocation orderLocationCopy = GetCopyOfAnOrderLocation(orderLocation);
 
-            int alveolus = orderLocation.SeedTrayAmount / orderLocation.SeedTrayAmount;
+            int alveolus = orderLocation.SeedlingAmount / orderLocation.SeedTrayAmount;
 
             orderLocation.SeedTrayAmount -= sownSeedTrays;
             orderLocation.SeedlingAmount = orderLocation.SeedTrayAmount * alveolus;
