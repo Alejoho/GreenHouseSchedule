@@ -1,5 +1,6 @@
 ﻿using Domain.Models;
 using Domain.ValuableObjects;
+using SupportLayer;
 using System.Collections;
 using System.Configuration;
 
@@ -84,8 +85,7 @@ namespace Domain
         {
             _seedBedStatus = new SeedBedStatus(seedBedStatus);
 
-            double multiplier;
-            double.TryParse(ConfigurationManager.AppSettings["SeedlingMultiplier"], out multiplier);
+            double multiplier = double.Parse(ConfigurationManager.AppSettings[ConfigurationNames.SeedlingMultiplier]);
             _multiplier = multiplier;
 
             _orderInProcess = new OrderModel(pOrderInProcess);

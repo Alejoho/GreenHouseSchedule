@@ -143,20 +143,17 @@ namespace Domain
         /// </summary>
         public SeedBedStatus()
         {
-            int daysToMoveBack;
-            int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.RegressionDays], out daysToMoveBack);
+            int daysToMoveBack = int.Parse(ConfigurationManager.AppSettings[ConfigurationNames.RegressionDays]);
 
             _presentDate = DateOnly.FromDateTime(DateTime.Now);
 
             _iteratorDate = _presentDate.AddDays(-daysToMoveBack);
 
-            int seedTraysPerDay;
-            int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.DailySowingPotential], out seedTraysPerDay);
+            int seedTraysPerDay = int.Parse(ConfigurationManager.AppSettings[ConfigurationNames.DailySowingPotential]);
             _maxAmountOfSeedTrayToSowPerDay = seedTraysPerDay;
             _remainingAmountOfSeedTrayToSowPerDay = _maxAmountOfSeedTrayToSowPerDay;
 
-            int minimumLimitOfSow;
-            int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.MinimumLimitOfSowPerDay], out minimumLimitOfSow);
+            int minimumLimitOfSow = int.Parse(ConfigurationManager.AppSettings[ConfigurationNames.MinimumLimitOfSowPerDay]);
             _minimumLimitOfSeedTrayToSow = minimumLimitOfSow;
 
             _greenHouseRepository = new GreenHouseRepository();
