@@ -2,6 +2,7 @@
 using DataAccess.Repositories;
 using Domain.Validators;
 using FluentValidation.Results;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Configuration;
 
@@ -110,7 +111,7 @@ public class OrderProcessor : IOrderProcessor
     {
         IEnumerable<Order> output = null!;
 
-        int interval = int.Parse(ConfigurationManager.AppSettings["SowShowRange"]);
+        int interval = int.Parse(ConfigurationManager.AppSettings[ConfigurationNames.SowShowRange]);
 
         DateOnly date = DateOnly.FromDateTime(DateTime.Now.AddDays(interval));
 

@@ -156,7 +156,7 @@ namespace Domain
             _remainingAmountOfSeedTrayToSowPerDay = _maxAmountOfSeedTrayToSowPerDay;
 
             int minimumLimitOfSow;
-            int.TryParse(ConfigurationManager.AppSettings["MinimumLimitOfSow"], out minimumLimitOfSow);
+            int.TryParse(ConfigurationManager.AppSettings[ConfigurationNames.MinimumLimitOfSowPerDay], out minimumLimitOfSow);
             _minimumLimitOfSeedTrayToSow = minimumLimitOfSow;
 
             _greenHouseRepository = new GreenHouseRepository();
