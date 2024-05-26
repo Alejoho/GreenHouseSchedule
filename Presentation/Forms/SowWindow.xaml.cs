@@ -1,5 +1,6 @@
 ﻿using Domain.Processors;
 using Presentation.InputForms;
+using Presentation.IRequesters;
 using SupportLayer.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -31,10 +32,9 @@ public partial class SowWindow : Window, IOrderLocationChangeRequester
 
     private void LoadData()
     {
-        _orders = new ObservableCollection<Order>(_processor.GetNextOrdersToSow());
         _orders = new ObservableCollection<Order>(_orderProcessor.GetNextOrdersToSow());
-        dgDeliveryList.DataContext = this;
-        dgDeliveryList.ItemsSource = _orders;
+        dgSowList.DataContext = this;
+        dgSowList.ItemsSource = _orders;
     }
 
     //NEXT - continue doing the logic of this window
