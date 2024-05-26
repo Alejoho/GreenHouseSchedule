@@ -140,8 +140,6 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     {
         //NEXT - Look how to put and id to the permutation but without putting it in the class.
 
-        //TODO - iTHINK THIS IS SOLVED. There are permutation that dont have the 3 types of seedtrays but
-        //in spite of that print the zero in the column
         dgSeedTrayPermutations.ItemsSource = null;
         dgSeedTrayPermutations.Items.Clear();
         dgSeedTrayPermutations.ItemsSource = permutationsToDisplay;
@@ -171,11 +169,13 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             Complete = false
         };
 
+        int orderLocationIndex = 1;
+
         foreach (OrderLocationModel orderLocationModel in orderModel.OrderLocations)
         {
             OrderLocation orderLocation = new OrderLocation()
             {
-                Id = 0,
+                Id = orderLocationIndex++,
                 GreenHouseId = 0,
                 //LATER - Maybe change this type from int to byte
                 SeedTrayId = Convert.ToByte(orderLocationModel.SeedTrayType),
@@ -313,6 +313,12 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
         OrderProcessor processor = new OrderProcessor();
+
+        foreach (OrderLocation orderLocation in _resultingOrder.OrderLocations)
+        {
+            orderLocation.Id = 0;
+        }
+
         if (processor.SaveOrder(_resultingOrder) == true)
         {
             MessageBox.Show("Nueva orden guardada");
@@ -325,5 +331,6 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         }
             
     }
+
     //LATER - Check the look of all MessageBox.Show methods and standarize them
 }

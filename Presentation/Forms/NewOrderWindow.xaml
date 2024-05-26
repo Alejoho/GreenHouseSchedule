@@ -107,7 +107,7 @@
                     CanUserResizeRows="False" CanUserSortColumns="False" ColumnWidth="auto" HeadersVisibility="Column">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="" IsReadOnly="True"/>
+                <DataGridTextColumn Header="" Binding="{Binding Id}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Tipo de bandeja" Binding="{Binding SeedTrayName}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Bandejas" Binding="{Binding SeedTrayAmount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Posturas" Binding="{Binding SeedlingAmount}" IsReadOnly="True"/>
