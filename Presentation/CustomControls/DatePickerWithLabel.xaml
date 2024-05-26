@@ -9,7 +9,7 @@
     <Grid>
         <DockPanel  Margin="0 0 0 0" LastChildFill="False">
 
-            <DatePicker Text="{Binding Path=FieldContent}" VerticalContentAlignment="Center"
+            <DatePicker VerticalContentAlignment="Center"
                  HorizontalAlignment="Right" Padding="5 0 0 0" Margin="0 3" DockPanel.Dock="Right"
                  Width="150" x:Name="TimePicker"/>
 

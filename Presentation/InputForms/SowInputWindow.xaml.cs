@@ -10,13 +10,12 @@ namespace Presentation.InputForms;
 /// </summary>
 public partial class SowInputWindow : Window
 {
-
     private IOrderLocationChangeRequester _requester;
     public SowInputWindow(IOrderLocationChangeRequester requestingWindow)
     {
         InitializeComponent();
         _requester = requestingWindow;
-        dtpSowDate.TimePicker.SelectedDate = (DateTime?)DateTime.Now;
+        dtpSowDate.TimePicker.SelectedDate = DateTime.Today;
     }
 
     private void btnConfirm_Click(object sender, RoutedEventArgs e)
