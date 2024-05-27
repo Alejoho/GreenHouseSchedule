@@ -21,6 +21,7 @@ public partial class SowWindow : Window, IOrderLocationChangeRequester
     private OrderProcessor _orderProcessor;
     private OrderLocationProcessor _orderLocationProcessor;
     private OrderLocation _orderLocationInProcess;
+    private DataGrid _activeOrderLocationDataGrid;
 
     public SowWindow()
     {
@@ -33,6 +34,10 @@ public partial class SowWindow : Window, IOrderLocationChangeRequester
     private void LoadData()
     {
         _orders = new ObservableCollection<Order>(_orderProcessor.GetNextOrdersToSow());
+        foreach (Order order in _orders)
+        {
+            order.OrderLocationsView = new ObservableCollection<OrderLocation>(order.OrderLocations);
+        }
         dgSowList.DataContext = this;
         dgSowList.ItemsSource = _orders;
     }
@@ -73,7 +78,10 @@ public partial class SowWindow : Window, IOrderLocationChangeRequester
         if (sender is DataGrid datagrid)
         {
             _orderLocationInProcess = (OrderLocation)datagrid.SelectedItem;           
+            _activeOrderLocationDataGrid = datagrid;
         }
+
+
     }
 
     public void SetTheSownOrderLocation(DateOnly date, short sownSeedTrays)
