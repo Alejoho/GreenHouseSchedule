@@ -65,7 +65,7 @@
                         Margin="20 5 20 5" AutoGenerateColumns="False" HorizontalAlignment="Left"
                         SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" 
                         CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
-                        IsReadOnly="True" ItemsSource="{Binding OrderLocations}" 
+                        IsReadOnly="True" ItemsSource="{Binding OrderLocationsView}" 
                         HeadersVisibility="Column" Width="Auto" HorizontalScrollBarVisibility="Hidden"
                         SelectionChanged="dgOrderLocationChild_SelectionChanged"
                         >
