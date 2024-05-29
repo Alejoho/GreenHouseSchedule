@@ -122,7 +122,7 @@ public class OrderProcessor : IOrderProcessor
         return output;
     }
 
-    public void UpdateOrderStatus(Order model)
+    public void UpdateOrderStatusAfterSow(Order model)
     {
         bool edited = false;
         if (model.RealSowDate == null)
