@@ -2,4 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Color x:Key="Delayed">red</Color>
     <Color x:Key="OnDay">blue</Color>
+    <Color x:Key="Mixed">Yellow</Color>
 </ResourceDictionary>
