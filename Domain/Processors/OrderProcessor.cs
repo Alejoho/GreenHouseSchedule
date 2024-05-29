@@ -122,8 +122,24 @@ public class OrderProcessor : IOrderProcessor
         return output;
     }
 
-    public void UpdateOrderStatus()
+    public void UpdateOrderStatus(Order model)
+    {
+        bool edited = false;
+        if (model.RealSowDate == null)
+        {
+            model.RealSowDate = model.OrderLocations.Min(x => x.RealSowDate);
+            edited = true;
+        }
+
+        if (model.OrderLocations.All(x => x.RealSowDate != null))
+        {
+            model.Complete = true;
+            edited = true;
+        }
+
+        if (edited == true)
             {
-        throw new NotImplementedException();
+            _repository.Update(model);
+        }
     }
 }
