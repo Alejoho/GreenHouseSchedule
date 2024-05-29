@@ -94,6 +94,24 @@ public partial class SowWindow : Window, IOrderLocationChangeRequester
         
         _orderProcessor.UpdateOrderStatusAfterSow(_orderLocationInProcess.Order);
 
+        RefreshTheDataGrids();
+    }
+
+    private void RefreshTheDataGrids()
+    {
+        if (_orderLocationInProcess.Order.Complete == true)
+        {
+            _orders.Remove(_orderLocationInProcess.Order);
+        }
+        else if (_orderLocationInProcess.RealSowDate != null)
+        {
+            Order order = _orderLocationInProcess.Order;
+            order.OrderLocationsView.Remove(_orderLocationInProcess);
+        }
+        else
+        {
+            _activeOrderLocationDataGrid.Items.Refresh();
+        }
     }
 
     public OrderLocation OrderLocationInProcess { get => _orderLocationInProcess; }
