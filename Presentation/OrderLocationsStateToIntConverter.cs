@@ -26,6 +26,10 @@ namespace Presentation
                 {
                     return -1;
                 }
+                else
+                {
+                    return 2;
+                }
             }
 
             throw new FormatException("Error al intentar determinar el color de fondo de una orden.");
