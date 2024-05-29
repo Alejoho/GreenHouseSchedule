@@ -29,8 +29,11 @@ public partial class SowInputWindow : Window
         }
             catch (ArgumentException ex)
             {
-                //TODO - Make something to delete the "(Parameter 'date')" from the message.
-                MessageBox.Show($"{ex.Message}");
+                int endIndex = ex.Message.IndexOf('(');
+
+                endIndex--;
+
+                MessageBox.Show($"{ex.Message.Substring(0, endIndex)}.");
 
                 if (ex.ParamName == "date")
                 {
