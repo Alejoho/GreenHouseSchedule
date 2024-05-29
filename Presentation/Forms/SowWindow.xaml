@@ -8,6 +8,9 @@
         mc:Ignorable="d"
         Title="Siembras pendientes" Height="550" Width="1035" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowState="Normal">
+    <Window.Resources>
+        <local1:SowDateStateToIntConverter x:Key="SowDateStateToIntConverter"/>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -75,6 +78,22 @@
                                 <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
                             </Style>
                         </DataGrid.Resources>
+
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding EstimateSowDate, 
+                                        Converter={StaticResource SowDateStateToIntConverter}}" Value="-1">
+                                        <Setter Property="Background" Value="{StaticResource Delayed}"/>
+                                    </DataTrigger>
+                                    
+                                    <DataTrigger Binding="{Binding EstimateSowDate, 
+                                        Converter={StaticResource SowDateStateToIntConverter}}" Value="0">
+                                        <Setter Property="Background" Value="{StaticResource OnDay}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
