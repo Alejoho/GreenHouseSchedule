@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="Delayed">red</Color>
-    <Color x:Key="OnDay">blue</Color>
-    <Color x:Key="Mixed">Yellow</Color>
+    <SolidColorBrush x:Key="Delayed">#FF7F7F</SolidColorBrush>
+    <SolidColorBrush x:Key="OnDay">#7F7FFF</SolidColorBrush>
+    <SolidColorBrush x:Key="Mixed">#FFFF7F</SolidColorBrush>
+    <SolidColorBrush x:Key="Normal">White</SolidColorBrush>
 </ResourceDictionary>
