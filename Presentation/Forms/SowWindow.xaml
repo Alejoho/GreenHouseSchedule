@@ -27,12 +27,36 @@
             
             <DataGrid.Resources>
                 <local1:RowDetailSymbolConverter x:Key="Converter"/>
+                <local1:OrderLocationsStateToIntConverter x:Key="OrderLocationsStateToIntConverter"/>
             </DataGrid.Resources>
 
             <DataGrid.DataContext>
                 <local:DataContextHolderClass/>
             </DataGrid.DataContext>
 
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding OrderLocationsView,
+                            Converter={StaticResource OrderLocationsStateToIntConverter}}"
+                            Value="1">
+                            <Setter Property="Background" Value="{DynamicResource Mixed}"/>
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding OrderLocationsView,
+                            Converter={StaticResource OrderLocationsStateToIntConverter}}"
+                            Value="0">
+                            <Setter Property="Background" Value="{DynamicResource OnDay}"/>
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding OrderLocationsView,
+                            Converter={StaticResource OrderLocationsStateToIntConverter}}"
+                            Value="-1">
+                            <Setter Property="Background" Value="{DynamicResource Delayed}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
 
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
