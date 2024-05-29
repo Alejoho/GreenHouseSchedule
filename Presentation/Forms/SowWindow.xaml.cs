@@ -4,6 +4,7 @@ using Presentation.IRequesters;
 using SupportLayer.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -34,10 +35,13 @@ public partial class SowWindow : Window, IOrderLocationChangeRequester
     private void LoadData()
     {
         _orders = new ObservableCollection<Order>(_orderProcessor.GetNextOrdersToSow());
+
         foreach (Order order in _orders)
         {
-            order.OrderLocationsView = new ObservableCollection<OrderLocation>(order.OrderLocations);
+            var orderLocationsToDisplay = order.OrderLocations.Where(x => x.RealSowDate == null);
+            order.OrderLocationsView = new ObservableCollection<OrderLocation>(orderLocationsToDisplay);
         }
+
         dgSowList.DataContext = this;
         dgSowList.ItemsSource = _orders;
     }
