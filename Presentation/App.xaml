@@ -4,9 +4,11 @@
              xmlns:local="clr-namespace:Presentation" 
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
+
     <Application.Resources>
 
         <ResourceDictionary>
+
             <ResourceDictionary.MergedDictionaries>
 
                 <ResourceDictionary Source="Formats.xaml"/>

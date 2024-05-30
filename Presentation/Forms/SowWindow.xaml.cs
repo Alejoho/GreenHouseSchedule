@@ -9,9 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Presentation.Forms;
-//TODO - Extract the whole dg to a custom control because I have to reuse in other places. Tener en cuenta que 
-//hay un evento que teng oque asignar que es el doble click en el dg hijo. Y tambien el cambio de algunas columnas 
-//de los dg.
 
 /// <summary>
 /// Interaction logic for SowWindow.xaml
@@ -46,7 +43,6 @@ public partial class SowWindow : Window, IOrderLocationChangeRequester
         dgSowList.ItemsSource = _orders;
     }
 
-    //NEXT - continue doing the logic of this window
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
         this.Close();
@@ -84,8 +80,6 @@ public partial class SowWindow : Window, IOrderLocationChangeRequester
             _orderLocationInProcess = (OrderLocation)datagrid.SelectedItem;           
             _activeOrderLocationDataGrid = datagrid;
         }
-
-
     }
 
     public void SetTheSownOrderLocation(DateOnly date, short sownSeedTrays)

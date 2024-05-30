@@ -691,9 +691,8 @@ namespace Domain
         /// </summary>
         /// <param name="permutation">The <c>SeedTrayPermutation</c> object.</param>
         /// <returns>A full <c>OrderModel</c> object, with its <c>OrderLocationModels</c> included.</returns>
-        public OrderModel GenerateOrderModel(SeedTrayPermutation permutation,SeedBedStatus status)
+        public OrderModel GenerateOrderModel(SeedTrayPermutation permutation, SeedBedStatus status)
         {
-            //NEXT - Do this method.
             _seedBedStatus = new SeedBedStatus(status);
 
             _orderInProcess = new OrderModel(_auxOrderInProcess);

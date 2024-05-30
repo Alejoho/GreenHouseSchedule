@@ -45,8 +45,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
             _repository.Update(orderLocation);
             _repository.Insert(orderLocationCopy);
-    }
-
+        }
     }
 
     private OrderLocation GetCopyOfAnOrderLocation(OrderLocation orderLocation)
@@ -75,6 +74,6 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         {
             throw new ArgumentException("La cantidad de bandejas sembradas debe estar entre 0 " +
                 "y la cantidad de bandejas de la Locación", "sownSeedTrays");
-    }
+        }
     }
 }

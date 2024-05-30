@@ -25,6 +25,9 @@
     <Compile Update="Forms\AddProductWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="InputForms\SowInputWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CustomControls\ComboBoxWithLabel.xaml">
@@ -39,6 +42,9 @@
     <Page Update="CustomControls\TextBoxWithLabel.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="DataGridRowColors.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Formats.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -46,6 +52,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\AddProductWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="InputForms\SowInputWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

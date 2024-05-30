@@ -806,7 +806,6 @@ namespace Domain
         /// </value>
         internal int MinimumLimitOfSeedTrayToSow { get => _minimumLimitOfSeedTrayToSow; }
 
-
         /// <value>
         /// Gets or sets an array list of orders marked to delete at the end of the day.
         /// </value>
