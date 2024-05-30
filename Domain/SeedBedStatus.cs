@@ -8,9 +8,7 @@ using System.Configuration;
 
 namespace Domain
 {
-    //TODO - Make some clean up of this class
-
-    //TODO - I think it'd be good to change the evaluation of availability of sow seedtray per day from seedtray to 
+    //LATER - I think it'd be good to change the evaluation of availability of sow seedtray per day from seedtray to 
     //seedlings, because diferent types of seedtrays change the amount of seedtray that can be sown in one day
     // -----(mientras que) amount of seedling remaings the same.
 
@@ -28,7 +26,6 @@ namespace Domain
         private LinkedList<OrderModel> _orders;
         private LinkedList<OrderLocationModel> _orderLocations;
         private List<DeliveryDetailModel> _deliveryDetails;
-        //private DateTime _daysOfProduction;
         private readonly int _maxAmountOfSeedTrayToSowPerDay;
         private int _remainingAmountOfSeedTrayToSowPerDay;
         private readonly int _minimumLimitOfSeedTrayToSow;
@@ -203,8 +200,6 @@ namespace Domain
             this._orderLocations = new LinkedList<OrderLocationModel>();
             this._deliveryDetails = new List<DeliveryDetailModel>();
 
-            //CHECK - I don't remeber what this variable is for.
-            //this._daysOfProduction = pOriginalSeedBedStatus.DaysOfProduction;
             this._maxAmountOfSeedTrayToSowPerDay = pOriginalSeedBedStatus.MaxAmountOfSeedTrayToSowPerDay;
             this._remainingAmountOfSeedTrayToSowPerDay = pOriginalSeedBedStatus.RemainingAmountOfSeedTrayToSowPerDay;
             this._minimumLimitOfSeedTrayToSow = pOriginalSeedBedStatus._minimumLimitOfSeedTrayToSow;
@@ -785,11 +780,6 @@ namespace Domain
         /// Gets or sets the delivery details of the order locations
         /// </value>
         public List<DeliveryDetailModel> DeliveryDetails { get => _deliveryDetails; set => _deliveryDetails = value; }
-
-        /// <value>
-        /// I dont know what I need this for.
-        /// </value>
-        //public DateTime DaysOfProduction { get => _daysOfProduction; set => _daysOfProduction = value; }
 
         /// <value>
         /// Gets or sets the amount of seedtrays that can be sown in one day.

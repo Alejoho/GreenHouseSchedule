@@ -114,6 +114,9 @@ public class OrderProcessor : IOrderProcessor
         int interval = int.Parse(ConfigurationManager.AppSettings[ConfigurationNames.SowShowRange]);
 
         DateOnly date = DateOnly.FromDateTime(DateTime.Now.AddDays(interval));
+        //CHECK - If executting the next line, without having the signature of "GetIncompleteBeforeADate" in the
+        //interface this works.
+        //((OrderRepository)_repository).GetIncompleteBeforeADate(date);
 
         output = _repository.GetIncompleteBeforeADate(date)
             .OrderBy(x => x.DateOfRequest)
@@ -138,8 +141,13 @@ public class OrderProcessor : IOrderProcessor
         }
 
         if (edited == true)
-            {
+        {
             _repository.Update(model);
         }
+    }
+
+    public IEnumerable<Order> GetNextOrdersToUnload()
+    {
+        throw new NotImplementedException();
     }
 }

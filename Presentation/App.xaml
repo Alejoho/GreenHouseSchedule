@@ -3,17 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Presentation" 
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             StartupUri="MainWindow.xaml">
+              StartupUri="MainWindow.xaml">
+    <!--StartupUri="Forms/SowWindow.xaml">-->
 
     <Application.Resources>
-
+        <!--<Color x:Key="ColorTest">#FF4FFF</Color>-->
+        
         <ResourceDictionary>
 
             <ResourceDictionary.MergedDictionaries>
 
                 <ResourceDictionary Source="Formats.xaml"/>
                 <ResourceDictionary Source="DataGridRowColors.xaml"/>
-                
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

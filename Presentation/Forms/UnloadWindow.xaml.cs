@@ -8,20 +8,23 @@ using System.Windows.Controls;
 
 namespace Presentation.Forms;
 
-    /// <summary>
-    /// Interaction logic for UnloadWindow.xaml
-    /// </summary>
+//NEXT - To all the logic of this window 
+
+//NEXT - Add to the orderlocation table in the db a new field to store the unload date.
+/// <summary>
+/// Interaction logic for UnloadWindow.xaml
+/// </summary>
 public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
-    {
+{
     private ObservableCollection<Order> _orders;
     private OrderProcessor _orderProcessor;
     private OrderLocationProcessor _orderLocationProcessor;
     private OrderLocation _orderLocationInProcess;
     private DataGrid _activeOrderLocationDataGrid;
 
-        public UnloadWindow()
-        {
-            InitializeComponent();
+    public UnloadWindow()
+    {
+        InitializeComponent();
         _orderProcessor = new OrderProcessor();
         _orderLocationProcessor = new OrderLocationProcessor();
         LoadData();
@@ -58,7 +61,8 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
 
     private void CallOrderLocationPlaceSetter()
     {
-        }
+        //NEXT - Create the window to place an orderlocation
+    }
 
     private void btnRowDetail_Click(object sender, RoutedEventArgs e)
     {
@@ -79,6 +83,7 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
 
     public void SetThePlacedOrderLocation(int greenHouse, int block, short sownSeedTrays)
     {
+        //NEXT - Make this method. this is the method which is called from the input window
 
         _orderLocationProcessor.SavePlacedOrderLocationChange(_orderLocationInProcess, greenHouse, block, sownSeedTrays);
 

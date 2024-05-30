@@ -12,7 +12,7 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class AddEditOrganizationWindow : Window
 {
-    //TODO - Added to this window the funcionality to add a new location in window
+    //TODO - Add to this window the funcionality to add a new location in window
     private OrganizationProcessor _processor;
     private Organization _model;
     private List<TypesOfOrganization> _typesOfOrganizations;

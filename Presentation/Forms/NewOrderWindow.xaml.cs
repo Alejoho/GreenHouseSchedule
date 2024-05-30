@@ -19,7 +19,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 {
     private ClientProcessor _clientProcessor;
     private ProductProcessor _productProcessor;
-    private SeedTrayProcessor _seedTrayProcessor;    
+    private SeedTrayProcessor _seedTrayProcessor;
     private List<Client> _clients;
     private List<Product> _products;
     private List<SeedTray> _seedTrays;
@@ -77,7 +77,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         lblcmbbtnClient.ComboBox.ItemsSource = _clients.OrderBy(x => x.Name);
         lblcmbbtnClient.ComboBox.SelectedItem = model;
     }
-  
+
     public void ProductComplete(Product model)
     {
         Product newProduct = _productProcessor.GetAProductById(model.Id);
@@ -138,7 +138,8 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void DisplayResults()
     {
-        //NEXT - Look how to put and id to the permutation but without putting it in the class.
+        //LATER - Look how to put and id to the permutation but without putting it in the class.
+        //I think I will have to add an id field to the class.
 
         dgSeedTrayPermutations.ItemsSource = null;
         dgSeedTrayPermutations.Items.Clear();
@@ -317,6 +318,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
+        //TODO - Find out why when I save a new order its order locations are saved in reverse. I mean the olders first.
         OrderProcessor processor = new OrderProcessor();
 
         foreach (OrderLocation orderLocation in _resultingOrder.OrderLocations)
@@ -334,7 +336,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             MessageBox.Show(processor.Error);
             this.Close();
         }
-            
+
     }
 
     //LATER - Check the look of all MessageBox.Show methods and standarize them

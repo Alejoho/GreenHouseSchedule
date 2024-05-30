@@ -23,7 +23,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
     public void SaveSownOrderLocationChange(OrderLocation orderLocation, DateOnly date, short sownSeedTrays)
     {
-        ValidateChanges(orderLocation, date, sownSeedTrays);
+        ValidateSowChanges(orderLocation, date, sownSeedTrays);
 
         if (orderLocation.SeedTrayAmount == sownSeedTrays)
         {
@@ -59,11 +59,13 @@ public class OrderLocationProcessor : IOrderLocationProcessor
             SeedTrayAmount = orderLocation.SeedTrayAmount,
             SeedlingAmount = orderLocation.SeedlingAmount,
             EstimateSowDate = orderLocation.EstimateSowDate,
-            EstimateDeliveryDate = orderLocation.EstimateDeliveryDate
+            EstimateDeliveryDate = orderLocation.EstimateDeliveryDate,
+            RealSowDate = orderLocation.RealSowDate,
+            RealDeliveryDate = orderLocation.RealDeliveryDate
         };
     }
-    
-    private void ValidateChanges(OrderLocation orderLocation, DateOnly date, int sownSeedTrays)
+
+    private void ValidateSowChanges(OrderLocation orderLocation, DateOnly date, int sownSeedTrays)
     {
         if (date > DateOnly.FromDateTime(DateTime.Now))
         {
@@ -75,5 +77,16 @@ public class OrderLocationProcessor : IOrderLocationProcessor
             throw new ArgumentException("La cantidad de bandejas sembradas debe estar entre 0 " +
                 "y la cantidad de bandejas de la Locación", "sownSeedTrays");
         }
+    }
+
+    //NEXT - make these two methods
+    public void SavePlacedOrderLocationChange(OrderLocation orderLocationInProcess, int greenHouse, int block, short sownSeedTrays)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void ValidatePlaceChanges(OrderLocation orderLocation, int sownSeedTrays)
+    {
+        throw new NotImplementedException();
     }
 }

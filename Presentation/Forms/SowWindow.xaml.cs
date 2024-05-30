@@ -10,6 +10,13 @@ using System.Windows.Controls;
 
 namespace Presentation.Forms;
 
+//TODO - made something for when i have several dgorderlocation open and i change from one to another
+//selecting an orderlocation que la seleccion del anterior se ponga a null.
+
+//TODO - Falta determinar que voy a hacer con el EstimateDelivaryDate. Cuando yo siembro la 1ra orderlocation de una
+//orden y no coincide con el estimate sowdate que hago con el estimate deliverydate, lo dejo como estaba o lo actualizo
+//para que tenga coerencia con el realsowdate
+
 /// <summary>
 /// Interaction logic for SowWindow.xaml
 /// </summary>
@@ -51,8 +58,12 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
 
     private void btnSow_Click(object sender, RoutedEventArgs e)
     {
+        //TODO - Place a comprobation to open the sow input window because if I select an orderlocation
+        //, close the rowdetail of the order and click the sowbutton it opens the window but it should
+        //at least the row detail is open. And do the solution i came up with in the other similar methods
+
         CallSownOrderLocationSetter();
-    }   
+    }
 
     private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
@@ -77,7 +88,7 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
     {
         if (sender is DataGrid datagrid)
         {
-            _orderLocationInProcess = (OrderLocation)datagrid.SelectedItem;           
+            _orderLocationInProcess = (OrderLocation)datagrid.SelectedItem;
             _activeOrderLocationDataGrid = datagrid;
         }
     }
@@ -85,7 +96,10 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
     public void SetTheSownOrderLocation(DateOnly date, short sownSeedTrays)
     {
         _orderLocationProcessor.SaveSownOrderLocationChange(_orderLocationInProcess, date, sownSeedTrays);
-        
+
+        //NEXT - I have a bug here. When I sow part of an order location, that order location is splitted one half is
+        //saved to the db and the order not but how do I access the one that was saved to determine if the order needs
+        //to be set its real sow date this without calling to the db
         _orderProcessor.UpdateOrderStatusAfterSow(_orderLocationInProcess.Order);
 
         RefreshTheDataGrids();

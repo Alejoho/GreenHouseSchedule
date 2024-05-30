@@ -12,7 +12,7 @@ namespace Domain
     /// </summary>
     public class DateIteratorAndResourceChecker
     {
-
+        //TODO - Maybe implement a restriction to avoid sow seedtrays on sundays.
         #region Fields
 
         /// <summary>
@@ -290,6 +290,8 @@ namespace Domain
             //a trabajar de nuevo el dia requerido por la orden, esto trae consigo que se rewstablezca el potencial de
             //siembra del dia, lo que es un error.
 
+
+            //LATER - Maybe add this configuration to the appConfig
             DateOnly limit = (DateOnly)_orderInProcess.EstimateSowDate?.AddDays(180);
 
             GreenHouseModel tempGreenHouse = new GreenHouseModel(-1, "TempGreenHouse", 0, 0, true);
@@ -348,6 +350,9 @@ namespace Domain
             bool output;
             _seedTrayPermutations.Clear();
             //TODO - Redo the test for these three methods.
+            //TODO - I think it is solved but in case of anything i leave it here. there is a bug in these method.
+            //lets say there is a situation where i used all the seedtrays of 
+            //one type so that type shouldn't appear in any seedtray permutation but it does. Find out why?
             GenerateAndAddSimplePermutations();
             GenerateAndAddDoublePermutations();
             GenerateAndAddTriplePermutations();
@@ -690,7 +695,7 @@ namespace Domain
         /// Generates a full <c>OrderModel</c> object with the specify <c>SeedTrayPermutation</c> object.
         /// </summary>
         /// <param name="permutation">The <c>SeedTrayPermutation</c> object.</param>
-        /// <returns>A full <c>OrderModel</c> object, with its <c>OrderLocationModels</c> included.</returns>
+        /// <returns>A full <c>OrderModel</c> object, with its <c>OrderLocationModels</c> included.</returns>        
         public OrderModel GenerateOrderModel(SeedTrayPermutation permutation, SeedBedStatus status)
         {
             _seedBedStatus = new SeedBedStatus(status);

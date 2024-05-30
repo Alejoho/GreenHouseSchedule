@@ -25,8 +25,8 @@ public partial class SowInputWindow : Window
             try
             {
                 _requester.SetTheSownOrderLocation(dtpSowDate.SelectedDateOnly, lbltxtSownAmount.ShortNumber);
-            this.Close();
-        }
+                this.Close();
+            }
             catch (ArgumentException ex)
             {
                 int endIndex = ex.Message.IndexOf('(');
@@ -38,17 +38,18 @@ public partial class SowInputWindow : Window
                 if (ex.ParamName == "date")
                 {
                     this.dtpSowDate.TimePicker.Focus();
-    }
+                }
                 else if (ex.ParamName == "sownSeedTrays")
                 {
                     this.lbltxtSownAmount.TextBox.Focus();
                 }
             }
-            catch(Exception ex)
-            {
-                //LATER - Implement the log.
-                MessageBox.Show($"{ex.Message}");
-            }
+            //LATER - Discoment this error handler
+            //catch(Exception ex)
+            //{
+            //    //LATER - Implement the log.
+            //    MessageBox.Show($"{ex.Message}");
+            //}
         }
     }
 
@@ -61,7 +62,7 @@ public partial class SowInputWindow : Window
                 , MessageBoxButton.OK, MessageBoxImage.Information);
             dtpSowDate.TimePicker.Focus();
             return false;
-    }
+        }
 
         if (lbltxtSownAmount.FieldContent == null
             || lbltxtSownAmount.FieldContent == "")

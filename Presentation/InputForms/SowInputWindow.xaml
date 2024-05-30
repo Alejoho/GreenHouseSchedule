@@ -7,7 +7,7 @@
         xmlns:local1="clr-namespace:Presentation"
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
-        Title="Siembra" Height="200" Width="340" WindowStartupLocation="CenterScreen"
+        Title="Sembrar locación" Height="200" Width="340" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>

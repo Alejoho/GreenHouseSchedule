@@ -21,7 +21,7 @@ namespace Presentation
                 else
                 {
                     return 1;
-                }  
+                }
             }
 
             throw new FormatException("Error al intentar convertir un dato tipo Fecha a Bool.");
