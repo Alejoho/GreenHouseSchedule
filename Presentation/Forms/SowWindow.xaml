@@ -40,19 +40,25 @@
                         <DataTrigger Binding="{Binding OrderLocationsView,
                             Converter={StaticResource OrderLocationsStateToIntConverter}}"
                             Value="1">
-                            <Setter Property="Background" Value="{DynamicResource Mixed}"/>
+                            <Setter Property="Background" Value="{StaticResource Mixed}"/>
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding OrderLocationsView,
                             Converter={StaticResource OrderLocationsStateToIntConverter}}"
                             Value="0">
-                            <Setter Property="Background" Value="{DynamicResource OnDay}"/>
+                            <Setter Property="Background" Value="{StaticResource OnDay}"/>
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding OrderLocationsView,
                             Converter={StaticResource OrderLocationsStateToIntConverter}}"
                             Value="-1">
-                            <Setter Property="Background" Value="{DynamicResource Delayed}"/>
+                            <Setter Property="Background" Value="{StaticResource Delayed}"/>
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding OrderLocationsView,
+                            Converter={StaticResource OrderLocationsStateToIntConverter}}"
+                            Value="2">
+                            <Setter Property="Background" Value="{StaticResource Normal}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -94,8 +100,7 @@
                         CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
                         IsReadOnly="True" ItemsSource="{Binding OrderLocationsView}" 
                         HeadersVisibility="Column" Width="Auto" HorizontalScrollBarVisibility="Hidden"
-                        SelectionChanged="dgOrderLocationChild_SelectionChanged"
-                        >
+                        SelectionChanged="dgOrderLocationChild_SelectionChanged">
 
                         <DataGrid.Resources>
                             <Style TargetType="DataGridRow">
