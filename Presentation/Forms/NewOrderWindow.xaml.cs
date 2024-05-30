@@ -216,7 +216,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             , clientModel
             , productModel
             , int.Parse(txtAmountOfSeedlings.FieldContent)
-            , DateOnly.FromDateTime(DateTime.Now)
+            , new DateOnly().Today()
             , estimateSowDate
             , null
             , null

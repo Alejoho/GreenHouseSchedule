@@ -10,11 +10,11 @@ namespace Presentation
         {
             if (value is DateOnly date)
             {
-                if(date == DateOnly.FromDateTime(DateTime.Today))
+                if (date == new DateOnly().Today())
                 {
                     return 0;
                 }
-                else if (date < DateOnly.FromDateTime(DateTime.Today))
+                else if (date < new DateOnly().Today())
                 {
                     return -1;
                 }
