@@ -49,6 +49,24 @@ namespace Presentation.InputForms
 
         private bool ValidateData()
         {
+            if (lblcmbGreenHouse.ComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Debe especificar la casa en la que se ubicaron estas bandejas"
+                    , "Dato faltante"
+                    , MessageBoxButton.OK, MessageBoxImage.Information);
+                lblcmbGreenHouse.ComboBox.Focus();
+                return false;
+            }
+
+            if (lblcmbGreenHouse.ComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Debe especificar el bloque en el que se ubicaron estas bandejas"
+                    , "Dato faltante"
+                    , MessageBoxButton.OK, MessageBoxImage.Information);
+                lblcmbBlock.ComboBox.Focus();
+                return false;
+            }
+
             if (lbltxtPlacedAmount.FieldContent == null
                 || lbltxtPlacedAmount.FieldContent == "")
             {
@@ -59,12 +77,14 @@ namespace Presentation.InputForms
             }
             else if (short.TryParse(lbltxtPlacedAmount.FieldContent, out short amountOfSeedlings) == false)
             {
-                MessageBox.Show("La cantidad de bandejas sembradas no esta en el formato correcto."
-                    , "Cantidad de bandejas sembradas inválida"
+                MessageBox.Show("La cantidad de bandejas ubicadas no esta en el formato correcto."
+                    , "Cantidad de bandejas ubicadas inválida"
                     , MessageBoxButton.OK, MessageBoxImage.Warning);
                 lbltxtPlacedAmount.TextBox.Focus();
                 return false;
             }
+
+            return true;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
