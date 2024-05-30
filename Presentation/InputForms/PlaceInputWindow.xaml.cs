@@ -1,4 +1,5 @@
 ﻿using Presentation.IRequesters;
+using SupportLayer.Models;
 using System;
 using System.Windows;
 
@@ -23,7 +24,11 @@ namespace Presentation.InputForms
             {
                 try
                 {
-                    _requester.SetThePlacedOrderLocation();
+                    byte greenHouseId = ((GreenHouse)lblcmbGreenHouse.ComboBox.SelectedItem).Id;
+                    byte blockNumber = Convert.ToByte(lblcmbBlock.ComboBox.SelectedItem);
+                    short placedSeedTrays = short.Parse(lbltxtPlacedAmount.FieldContent);
+
+                    _requester.SetThePlacedOrderLocation(greenHouseId, blockNumber, placedSeedTrays);
                     this.Close();
                 }
                 catch (ArgumentException ex)
