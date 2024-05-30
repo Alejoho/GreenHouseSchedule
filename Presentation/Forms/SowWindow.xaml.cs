@@ -13,7 +13,7 @@ namespace Presentation.Forms;
 /// <summary>
 /// Interaction logic for SowWindow.xaml
 /// </summary>
-public partial class SowWindow : Window, IOrderLocationChangeRequester
+public partial class SowWindow : Window, ISownOrderLocationChangeRequester
 {
     private ObservableCollection<Order> _orders;
     private OrderProcessor _orderProcessor;

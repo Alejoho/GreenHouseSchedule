@@ -10,8 +10,8 @@ namespace Presentation.InputForms;
 /// </summary>
 public partial class SowInputWindow : Window
 {
-    private IOrderLocationChangeRequester _requester;
-    public SowInputWindow(IOrderLocationChangeRequester requestingWindow)
+    private ISownOrderLocationChangeRequester _requester;
+    public SowInputWindow(ISownOrderLocationChangeRequester requestingWindow)
     {
         InitializeComponent();
         _requester = requestingWindow;

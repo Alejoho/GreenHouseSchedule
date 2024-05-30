@@ -3,8 +3,8 @@ using System;
 
 namespace Presentation.IRequesters;
 
-public interface IOrderLocationChangeRequester
+public interface ISownOrderLocationChangeRequester
 {
     void SetTheSownOrderLocation(DateOnly date, short sownSeedTrays);
-    OrderLocation OrderLocationInProcess { get;}
+    OrderLocation OrderLocationInProcess { get; }
 }
