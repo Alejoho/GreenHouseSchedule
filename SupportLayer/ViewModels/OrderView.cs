@@ -10,7 +10,7 @@ namespace SupportLayer.Models
         private int _trigger;
 
         [NotMapped]
-        public int Trigger
+        public int UIColorsUpdateTrigger
         {
             get => _trigger;
             set
