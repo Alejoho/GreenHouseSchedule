@@ -209,12 +209,15 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             , selectedProduct.Specie.Name
             , selectedProduct.Specie.ProductionDays);
 
+        DateOnly estimateSowDate = DateOnly.FromDateTime((DateTime)dtpWishDate.TimePicker.SelectedDate);
+        estimateSowDate = estimateSowDate.AddDays(-selectedProduct.Specie.ProductionDays);
+
         OrderModel output = new OrderModel(0
             , clientModel
             , productModel
             , int.Parse(txtAmountOfSeedlings.FieldContent)
             , DateOnly.FromDateTime(DateTime.Now)
-            , DateOnly.FromDateTime((DateTime)dtpWishDate.TimePicker.SelectedDate)
+            , estimateSowDate
             , null
             , null
             , null
@@ -258,6 +261,8 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             return false;
         }
 
+        int daysToDeliver = ((Product)lblcmbbtnProduct.ComboBox.SelectedItem).Specie.ProductionDays;
+
         if (dtpWishDate.TimePicker.SelectedDate == null)
         {
             MessageBox.Show("Debe especificar la fecha en la que el cliente " +
@@ -266,9 +271,9 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             dtpWishDate.TimePicker.Focus();
             return false;
         }
-        else if (dtpWishDate.TimePicker.SelectedDate.Value < DateTime.Now)
+        else if (dtpWishDate.TimePicker.SelectedDate.Value < DateTime.Today.AddDays(daysToDeliver))
         {
-            MessageBox.Show("La fecha especificada es mas antigua que el dia presente."
+            MessageBox.Show("La fecha deseada debe ser más futura que el día presente, en tantos días necesite el producto para estar listo."
                 , "Fecha inválida"
             , MessageBoxButton.OK, MessageBoxImage.Warning);
             dtpWishDate.TimePicker.Focus();
