@@ -107,6 +107,7 @@ public partial class SowWindow : Window, IOrderLocationChangeRequester
         {
             Order order = _orderLocationInProcess.Order;
             order.OrderLocationsView.Remove(_orderLocationInProcess);
+            order.Trigger++;
         }
         else
         {
