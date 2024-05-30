@@ -81,7 +81,7 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
         }
     }
 
-    public void SetThePlacedOrderLocation(int greenHouse, int block, short sownSeedTrays)
+    public void SetThePlacedOrderLocation(byte greenHouse, byte block, short sownSeedTrays)
     {
         //NEXT - Make this method. this is the method which is called from the input window
 

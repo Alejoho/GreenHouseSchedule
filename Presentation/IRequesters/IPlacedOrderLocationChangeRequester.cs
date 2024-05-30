@@ -4,7 +4,7 @@ namespace Presentation.IRequesters
 {
     public interface IPlacedOrderLocationChangeRequester
     {
-        void SetThePlacedOrderLocation(int greenHouse, int block, short sownSeedTrays);
+        void SetThePlacedOrderLocation(byte greenHouse, byte block, short sownSeedTrays);
         OrderLocation OrderLocationInProcess { get; }
     }
 }
