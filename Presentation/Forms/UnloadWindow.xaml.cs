@@ -1,4 +1,5 @@
 ﻿using Domain.Processors;
+using Presentation.InputForms;
 using Presentation.IRequesters;
 using SupportLayer.Models;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ using System.Windows.Controls;
 
 namespace Presentation.Forms;
 
-//NEXT - To all the logic of this window 
+//NEXT - Do the logic of the orderlocation processor
 
 //NEXT - Add to the orderlocation table in the db a new field to store the unload date.
 /// <summary>
@@ -61,7 +62,8 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
 
     private void CallOrderLocationPlaceSetter()
     {
-        //NEXT - Create the window to place an orderlocation
+        PlaceInputWindow window = new PlaceInputWindow(this);
+        window.ShowDialog();
     }
 
     private void btnRowDetail_Click(object sender, RoutedEventArgs e)
@@ -83,8 +85,6 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
 
     public void SetThePlacedOrderLocation(byte greenHouse, byte block, short sownSeedTrays)
     {
-        //NEXT - Make this method. this is the method which is called from the input window
-
         _orderLocationProcessor.SavePlacedOrderLocationChange(_orderLocationInProcess, greenHouse, block, sownSeedTrays);
 
         RefreshTheDataGrids();
