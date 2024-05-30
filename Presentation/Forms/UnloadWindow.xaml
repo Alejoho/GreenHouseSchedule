@@ -89,6 +89,10 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
-
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="150 10 0 0" Height="50">
+            <Button x:Name="btnUnload" Content="Desestibar" Margin="20 12" Width="80" Click="btnUnload_Click"/>
+            <Button x:Name="btnCancel" Content="Atrás" Margin="20 12" Width="80" Click="btnCancel_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
