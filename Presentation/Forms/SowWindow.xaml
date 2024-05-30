@@ -102,14 +102,11 @@
                         HeadersVisibility="Column" Width="Auto" HorizontalScrollBarVisibility="Hidden"
                         SelectionChanged="dgOrderLocationChild_SelectionChanged">
 
-                        <DataGrid.Resources>
-                            <Style TargetType="DataGridRow">
-                                <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
-                            </Style>
-                        </DataGrid.Resources>
-
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
+                                
+                                <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+                                
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding EstimateSowDate, 
                                         Converter={StaticResource SowDateStateToIntConverter}}" Value="-1">
