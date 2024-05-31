@@ -117,28 +117,22 @@ public class OrderLocationProcessor : IOrderLocationProcessor
                 && x.RealSowDate == orderLocation.RealSowDate
             );
 
-        if (isThereBrother == false)
-        {
-            if (seedTrays == orderLocation.SeedTrayAmount)
+        if (isThereBrother == false && seedTrays == orderLocation.SeedTrayAmount)
             {
                 return OrderLocationType.WholeWithOutBrothers;
             }
-            else if (seedTrays < orderLocation.SeedTrayAmount)
+        else if (isThereBrother == false && seedTrays < orderLocation.SeedTrayAmount)
             {
                 return OrderLocationType.PartialWithOutBrothers;
             }
-        }
-        else if (isThereBrother == true)
-        {
-            if (seedTrays == orderLocation.SeedTrayAmount)
+        else if (isThereBrother == true && seedTrays == orderLocation.SeedTrayAmount)
             {
                 return OrderLocationType.WholeWithBrothers;
             }
-            else if (seedTrays < orderLocation.SeedTrayAmount)
+        else if (isThereBrother == true && seedTrays < orderLocation.SeedTrayAmount)
             {
                 return OrderLocationType.PartialWithBrothers;
             }
-        }
 
         throw new Exception("Tipo the locacion no encontrada");
     }
