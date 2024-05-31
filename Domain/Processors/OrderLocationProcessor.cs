@@ -95,6 +95,40 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         blockRepository.Insert(blockEntity);
     }
 
+    private void SavePartialWithoutBrothersOrderLocation(OrderLocation orderLocation, byte greenHouse, byte block, short placedSeedTrays)
+    {
+        //1-crear una copia del orderlocation
+        OrderLocation orderLocationCopy = GetCopyOfAnOrderLocation(orderLocation);
+
+        //2-asignarle a la copia sus valores(casa, cantidad de bandejas, cantidad de posturas)
+        orderLocationCopy.GreenHouseId = greenHouse;
+        int alveolus = orderLocation.SeedlingAmount / orderLocation.SeedTrayAmount;
+        orderLocationCopy.SeedTrayAmount = placedSeedTrays;
+        orderLocationCopy.SeedlingAmount = placedSeedTrays * alveolus;
+
+        //3-salvar la copia y recuperar su id
+        //NEXT - Check if this id is retrieve from the DB
+        _repository.Insert(orderLocationCopy);
+
+        //4-reducir la cantidad de bandejas y posturas del OL original y salvarlo a la DB
+        orderLocation.SeedTrayAmount -= orderLocationCopy.SeedTrayAmount;
+        orderLocation.SeedlingAmount -= orderLocationCopy.SeedlingAmount;
+        _repository.Update(orderLocation);
+
+        //5-crear un block object, asignarle sus valores(OLid, blocknumber and seedtrayamount) en base al OLCopy
+        //y salvarlo en la DB.
+
+        Block blockEntity = new Block()
+        {
+            OrderLocationId = orderLocationCopy.Id,
+            BlockNumber = block,
+            SeedTrayAmount = placedSeedTrays
+        };
+
+        BlockRepository blockRepository = new BlockRepository();
+        blockRepository.Insert(blockEntity);
+    }
+
     public void SavePlacedOrderLocationChange(OrderLocation orderLocationInProcess, byte greenHouse, byte block, short placedSeedTrays)
     {
         ValidatePlaceChanges(orderLocationInProcess, placedSeedTrays);
@@ -108,6 +142,8 @@ public class OrderLocationProcessor : IOrderLocationProcessor
                 break;
 
             case OrderLocationType.PartialWithoutBrothers:
+
+                SavePartialWithoutBrothersOrderLocation(orderLocationInProcess, greenHouse, block, placedSeedTrays);
 
                 break;
 
