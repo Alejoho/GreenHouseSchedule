@@ -79,7 +79,22 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         }
     }
 
-    //NEXT - make these two methods
+    private void SaveCompleteWithoutBrothersOrderLocation(OrderLocation orderLocation, byte greenHouse, byte block, short placedSeedTrays)
+    {
+        orderLocation.GreenHouseId = greenHouse;
+        _repository.Update(orderLocation);
+
+        Block blockEntity = new Block()
+        {
+            OrderLocationId = orderLocation.Id,
+            BlockNumber = block,
+            SeedTrayAmount = placedSeedTrays
+        };
+
+        BlockRepository blockRepository = new BlockRepository();
+        blockRepository.Insert(blockEntity);
+    }
+
     public void SavePlacedOrderLocationChange(OrderLocation orderLocationInProcess, byte greenHouse, byte block, short placedSeedTrays)
     {
         ValidatePlaceChanges(orderLocationInProcess, placedSeedTrays);
@@ -87,6 +102,8 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         switch (DetermineOrderLocationType(orderLocationInProcess, greenHouse, placedSeedTrays))
         {
             case OrderLocationType.CompleteWithoutBrothers:
+
+                SaveCompleteWithoutBrothersOrderLocation(orderLocationInProcess, greenHouse, block, placedSeedTrays);
 
                 break;
 
