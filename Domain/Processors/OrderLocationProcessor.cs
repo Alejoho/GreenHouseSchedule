@@ -141,6 +141,17 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         //salvar el hermano
         _repository.Update(orderLocationBrother);
 
+        //crear el nuevo block y salvarlo
+        Block blockEntity = new Block()
+        {
+            OrderLocationId = orderLocationBrother.Id,
+            BlockNumber = block,
+            SeedTrayAmount = placedSeedTrays
+        };
+
+        BlockRepository blockRepository = new BlockRepository();
+        blockRepository.Insert(blockEntity);
+
         //eliminar el original
         _repository.Remove(orderLocation.Id);
     }
@@ -171,18 +182,31 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
         //asignar editar los valores en los dos objetos(sumar al hermano y quitar al original)
         orderLocationBrother.SeedTrayAmount += placedSeedTrays;
-        orderLocation.SeedTrayAmount -= placedSeedTrays;
-
         orderLocationBrother.SeedlingAmount += placedSeedTrays * alveolus;
+
+        orderLocation.SeedTrayAmount -= placedSeedTrays;
         orderLocation.SeedlingAmount -= placedSeedTrays * alveolus;
 
         //actualizar ambos objetos en la DB
         _repository.Update(orderLocation);
         _repository.Update(orderLocationBrother);
+
+        //crear el nuevo bloque y salvarlo
+        Block blockEntity = new Block()
+        {
+            OrderLocationId = orderLocationBrother.Id,
+            BlockNumber = block,
+            SeedTrayAmount = placedSeedTrays
+        };
+
+        BlockRepository blockRepository = new BlockRepository();
+        blockRepository.Insert(blockEntity);
     }
 
     public void SavePlacedOrderLocationChange(OrderLocation orderLocationInProcess, byte greenHouse, byte block, short placedSeedTrays)
     {
+        //brother OL are OL's that have the same real sow date, the same seedtray type and the same greenhouse
+
         ValidatePlaceChanges(orderLocationInProcess, placedSeedTrays);
 
         switch (DetermineOrderLocationType(orderLocationInProcess, greenHouse, placedSeedTrays))
@@ -212,8 +236,6 @@ public class OrderLocationProcessor : IOrderLocationProcessor
                 break;
 
         }
-
-    }
     }
 
     private OrderLocationType DetermineOrderLocationType(OrderLocation orderLocation, byte greenHouse, short seedTrays)
@@ -246,9 +268,6 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
         throw new Exception("Tipo the locacion no encontrada");
     }
-    {
-        throw new NotImplementedException();
-    }
 
     private void ValidatePlaceChanges(OrderLocation orderLocation, short placedSeedTrays)
     {
@@ -258,7 +277,6 @@ public class OrderLocationProcessor : IOrderLocationProcessor
                 "y la cantidad de bandejas por ubicar de la Locación", "sownSeedTrays");
         }
         }
-    }
 
     private enum OrderLocationType
     {
