@@ -10,6 +10,10 @@ public class BlockRepository : GenericRepository, IBlockRepository
     {
     }
 
+    public BlockRepository()
+    {
+    }
+
     public IEnumerable<Block> GetAll()
     {
         return _sowScheduleDB.Blocks;
