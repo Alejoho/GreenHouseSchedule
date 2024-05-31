@@ -81,6 +81,43 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
     //NEXT - make these two methods
     public void SavePlacedOrderLocationChange(OrderLocation orderLocationInProcess, int greenHouse, int block, short sownSeedTrays)
+
+    private OrderLocationType DetermineOrderLocationType(OrderLocation orderLocation, byte greenHouse, short seedTrays)
+    {
+        Order order = orderLocation.Order;
+
+        bool isThereBrother = order.OrderLocations
+            .Any(x =>
+                x.GreenHouseId == greenHouse
+                && x.SeedTrayId == orderLocation.SeedTrayId
+                && x.RealSowDate == orderLocation.RealSowDate
+            );
+
+        if (isThereBrother == false)
+        {
+            if (seedTrays == orderLocation.SeedTrayAmount)
+            {
+                return OrderLocationType.WholeWithOutBrothers;
+            }
+            else if (seedTrays < orderLocation.SeedTrayAmount)
+            {
+                return OrderLocationType.PartialWithOutBrothers;
+            }
+        }
+        else if (isThereBrother == true)
+        {
+            if (seedTrays == orderLocation.SeedTrayAmount)
+            {
+                return OrderLocationType.WholeWithBrothers;
+            }
+            else if (seedTrays < orderLocation.SeedTrayAmount)
+            {
+                return OrderLocationType.PartialWithBrothers;
+            }
+        }
+
+        throw new Exception("Tipo the locacion no encontrada");
+    }
     {
         throw new NotImplementedException();
     }
