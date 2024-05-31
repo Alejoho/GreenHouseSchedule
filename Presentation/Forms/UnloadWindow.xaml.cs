@@ -11,7 +11,6 @@ namespace Presentation.Forms;
 
 //NEXT - Do the logic of the orderlocation processor
 
-//NEXT - Add to the orderlocation table in the db a new field to store the unload date.
 /// <summary>
 /// Interaction logic for UnloadWindow.xaml
 /// </summary>
