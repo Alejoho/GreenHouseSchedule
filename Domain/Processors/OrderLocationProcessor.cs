@@ -129,6 +129,22 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         blockRepository.Insert(blockEntity);
     }
 
+    private void SaveCompleteWithBrothersOrderLocation(OrderLocation orderLocation, byte greenHouse, byte block, short placedSeedTrays)
+    {
+        //encontrar el hermano
+        OrderLocation orderLocationBrother = GetOrderLocationsBrother(orderLocation, greenHouse);
+
+        //agregar los datos al hermano
+        orderLocationBrother.SeedTrayAmount += orderLocation.SeedTrayAmount;
+        orderLocationBrother.SeedlingAmount += orderLocation.SeedlingAmount;
+
+        //salvar el hermano
+        _repository.Update(orderLocationBrother);
+
+        //eliminar el original
+        _repository.Remove(orderLocation.Id);
+    }
+
     private OrderLocation GetOrderLocationsBrother(OrderLocation orderLocation, byte greenHouse)
     {
         Order order = orderLocation.Order;
@@ -165,6 +181,8 @@ public class OrderLocationProcessor : IOrderLocationProcessor
                 break;
 
             case OrderLocationType.CompleteWithBrothers:
+
+                SaveCompleteWithBrothersOrderLocation(orderLocationInProcess, greenHouse, block, placedSeedTrays);
 
                 break;
 
