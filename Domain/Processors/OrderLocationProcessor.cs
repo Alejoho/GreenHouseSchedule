@@ -86,15 +86,15 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
         switch (DetermineOrderLocationType(orderLocationInProcess, greenHouse, placedSeedTrays))
         {
-            case OrderLocationType.WholeWithOutBrothers:
+            case OrderLocationType.CompleteWithoutBrothers:
 
                 break;
 
-            case OrderLocationType.PartialWithOutBrothers:
+            case OrderLocationType.PartialWithoutBrothers:
 
                 break;
 
-            case OrderLocationType.WholeWithBrothers:
+            case OrderLocationType.CompleteWithBrothers:
 
                 break;
 
@@ -119,15 +119,15 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
         if (isThereBrother == false && seedTrays == orderLocation.SeedTrayAmount)
             {
-                return OrderLocationType.WholeWithOutBrothers;
+            return OrderLocationType.CompleteWithoutBrothers;
             }
         else if (isThereBrother == false && seedTrays < orderLocation.SeedTrayAmount)
             {
-                return OrderLocationType.PartialWithOutBrothers;
+            return OrderLocationType.PartialWithoutBrothers;
             }
         else if (isThereBrother == true && seedTrays == orderLocation.SeedTrayAmount)
             {
-                return OrderLocationType.WholeWithBrothers;
+            return OrderLocationType.CompleteWithBrothers;
             }
         else if (isThereBrother == true && seedTrays < orderLocation.SeedTrayAmount)
             {
@@ -152,9 +152,9 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
     private enum OrderLocationType
     {
-        WholeWithOutBrothers,
-        PartialWithOutBrothers,
-        WholeWithBrothers,
+        CompleteWithoutBrothers,
+        PartialWithoutBrothers,
+        CompleteWithBrothers,
         PartialWithBrothers
     };
 }
