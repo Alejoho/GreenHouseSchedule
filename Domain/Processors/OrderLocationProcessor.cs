@@ -94,4 +94,14 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         }
         }
     }
+
+    private enum OrderLocationType
+    {
+        WholeWithOutBrothers,
+        PartialWithOutBrothers,
+        WholeWithBrothers,
+        PartialWithBrothers
+    };
 }
+
+
