@@ -80,7 +80,31 @@ public class OrderLocationProcessor : IOrderLocationProcessor
     }
 
     //NEXT - make these two methods
-    public void SavePlacedOrderLocationChange(OrderLocation orderLocationInProcess, int greenHouse, int block, short sownSeedTrays)
+    public void SavePlacedOrderLocationChange(OrderLocation orderLocationInProcess, byte greenHouse, byte block, short placedSeedTrays)
+    {
+        ValidatePlaceChanges(orderLocationInProcess, placedSeedTrays);
+
+        switch (DetermineOrderLocationType(orderLocationInProcess, greenHouse, placedSeedTrays))
+        {
+            case OrderLocationType.WholeWithOutBrothers:
+
+                break;
+
+            case OrderLocationType.PartialWithOutBrothers:
+
+                break;
+
+            case OrderLocationType.WholeWithBrothers:
+
+                break;
+
+            case OrderLocationType.PartialWithBrothers:
+
+                break;
+
+        }
+
+    }
 
     private OrderLocationType DetermineOrderLocationType(OrderLocation orderLocation, byte greenHouse, short seedTrays)
     {
