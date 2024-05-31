@@ -162,6 +162,25 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         return output.First();
     }
 
+    private void SavePartialWithBrothersOrderLocation(OrderLocation orderLocation, byte greenHouse, byte block, short placedSeedTrays)
+    {
+        //encontrar el hermano y los alveolos de la bandeja usadadas
+        OrderLocation orderLocationBrother = GetOrderLocationsBrother(orderLocation, greenHouse);
+
+        int alveolus = orderLocation.SeedlingAmount / orderLocation.SeedTrayAmount;
+
+        //asignar editar los valores en los dos objetos(sumar al hermano y quitar al original)
+        orderLocationBrother.SeedTrayAmount += placedSeedTrays;
+        orderLocation.SeedTrayAmount -= placedSeedTrays;
+
+        orderLocationBrother.SeedlingAmount += placedSeedTrays * alveolus;
+        orderLocation.SeedlingAmount -= placedSeedTrays * alveolus;
+
+        //actualizar ambos objetos en la DB
+        _repository.Update(orderLocation);
+        _repository.Update(orderLocationBrother);
+    }
+
     public void SavePlacedOrderLocationChange(OrderLocation orderLocationInProcess, byte greenHouse, byte block, short placedSeedTrays)
     {
         ValidatePlaceChanges(orderLocationInProcess, placedSeedTrays);
@@ -188,10 +207,13 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
             case OrderLocationType.PartialWithBrothers:
 
+                SavePartialWithBrothersOrderLocation(orderLocationInProcess, greenHouse, block, placedSeedTrays);
+
                 break;
 
         }
 
+    }
     }
 
     private OrderLocationType DetermineOrderLocationType(OrderLocation orderLocation, byte greenHouse, short seedTrays)
