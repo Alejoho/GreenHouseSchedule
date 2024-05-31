@@ -129,6 +129,23 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         blockRepository.Insert(blockEntity);
     }
 
+    private OrderLocation GetOrderLocationsBrother(OrderLocation orderLocation, byte greenHouse)
+    {
+        Order order = orderLocation.Order;
+
+        var output = order.OrderLocations.Where(x =>
+                x.GreenHouseId == greenHouse
+                && x.SeedTrayId == orderLocation.SeedTrayId
+                && x.RealSowDate == orderLocation.RealSowDate);
+
+        if (output.Count() != 1)
+        {
+            throw new ApplicationException("There's more than 1 order location brother.");
+        }
+
+        return output.First();
+    }
+
     public void SavePlacedOrderLocationChange(OrderLocation orderLocationInProcess, byte greenHouse, byte block, short placedSeedTrays)
     {
         ValidatePlaceChanges(orderLocationInProcess, placedSeedTrays);
