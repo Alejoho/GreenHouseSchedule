@@ -29,6 +29,11 @@ namespace DataAccess.Repositories
         {
             return _sowScheduleDB.Orders.Where(x => x.Complete == false && x.EstimateSowDate <= date);
         }
+        //LATER - Make the test for this method.
+        public IEnumerable<Order> GetSownsWithoutPlace()
+        {
+            return _sowScheduleDB.Orders.Where(x => x.OrderLocations.Any(y => y.RealSowDate != null && y.GreenHouseId == 0));
+        }
 
         public bool Insert(Order entity)
         {

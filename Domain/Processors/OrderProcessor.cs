@@ -148,6 +148,7 @@ public class OrderProcessor : IOrderProcessor
 
     public IEnumerable<Order> GetNextOrdersToUnload()
     {
-        throw new NotImplementedException();
+        var output = _repository.GetSownsWithoutPlace().OrderByDescending(x => x.RealSowDate);
+        return output;
     }
 }

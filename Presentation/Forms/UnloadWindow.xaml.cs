@@ -9,8 +9,6 @@ using System.Windows.Controls;
 
 namespace Presentation.Forms;
 
-//NEXT - Do the logic of the orderlocation processor
-
 /// <summary>
 /// Interaction logic for UnloadWindow.xaml
 /// </summary>
