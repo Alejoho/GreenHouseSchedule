@@ -72,5 +72,11 @@ namespace Presentation
         {
             MessageBox.Show("You need to create this window first!!!!!");
         }
+
+        private void btnUnloads_Click(object sender, RoutedEventArgs e)
+        {
+            UnloadWindow window = new UnloadWindow();
+            window.ShowDialog();
+        }
     }
 }
