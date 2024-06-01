@@ -2,6 +2,11 @@ go
 use "SowScheduleDB";
 
 go
+DELETE FROM YourTableName
+
+
+
+go
 insert into "Provinces" values
 	('Pinar del Río'),
 	('Artemisa'),
@@ -120,8 +125,8 @@ insert into "Orders" values
 	(3, 5, 60000, 72000, '6-3-2024', '4-21-2024', '5-4-2024', '6-3-2024', '5-4-2024', '6-3-2024', 1),
 	(2, 8, 45000, 54000, '5-24-2024', '3-15-2024', '4-9-2024', '5-24-2024', '4-9-2024', '5-24-2024', 1),
 	(4, 3, 18000, 21600, '4-30-2024', '1-11-2024', '3-28-2024', '4-30-2024', '3-28-2024', '4-30-2024', 1),
-	(1, 6, 37000, 44400, DATEADD(DAY, 28, @currentDate), '5-17-2024', DATEADD(DAY, -2, @currentDate), DATEADD(DAY, 28, @currentDate), DATEADD(DAY, -2, @currentDate), null, 1),
-	(3, 8, 29000, 34800, DATEADD(DAY, 41, @currentDate), '3-21-2024', DATEADD(DAY, -4, @currentDate), DATEADD(DAY, 41, @currentDate), DATEADD(DAY, -3, @currentDate), null, 1),
+	(1, 6, 37000, 44400, DATEADD(DAY, 28, @currentDate), '5-17-2024', DATEADD(DAY, -2, @currentDate), DATEADD(DAY, 28, @currentDate), DATEADD(DAY, -2, @currentDate), null, 1),		
+	(3, 8, 29000, 34800, DATEADD(DAY, 41, @currentDate), '3-21-2024', DATEADD(DAY, -4, @currentDate), DATEADD(DAY, 41, @currentDate), DATEADD(DAY, -3, @currentDate), null, 0),	
 	(5, 7, 33800, 40560, DATEADD(DAY, 33, @currentDate), '3-27-2024', DATEADD(DAY, 3, @currentDate), DATEADD(DAY, 33, @currentDate), null, null, 0),
 	(3, 4, 21000, 25200, DATEADD(DAY, 38, @currentDate), '5-29-2024', DATEADD(DAY, 8, @currentDate), DATEADD(DAY, 38, @currentDate), null, null, 0);
 
@@ -143,8 +148,9 @@ insert into "OrderLocations" values
 	(3, 1, 5, 82, 21648, '3-28-2024', '4-30-2024', '3-28-2024', '4-27-2024'),
 	(0, 1, 6, 80, 21120, DATEADD(DAY, -2, @currentDate), DATEADD(DAY, 28, @currentDate), DATEADD(DAY, -2, @currentDate), null),
 	(0, 2, 6, 35, 9100, DATEADD(DAY, -2, @currentDate), DATEADD(DAY, 28, @currentDate), DATEADD(DAY, -2, @currentDate), null),
-	(0, 6, 6, 51, 14280, DATEADD(DAY, -1, @currentDate), DATEADD(DAY, 29, @currentDate), DATEADD(DAY, -1, @currentDate), null),
-	(0, 2, 7, 134, 34840, DATEADD(DAY, -4, @currentDate), DATEADD(DAY, 41, @currentDate), DATEADD(DAY, -3, @currentDate), null),
+	(0, 6, 6, 51, 14280, DATEADD(DAY, -1, @currentDate), DATEADD(DAY, 29, @currentDate), DATEADD(DAY, -1, @currentDate), null),	
+	(0, 2, 7, 100, 26000, DATEADD(DAY, -4, @currentDate), DATEADD(DAY, 41, @currentDate), DATEADD(DAY, -3, @currentDate), null),
+	(0, 2, 7, 34, 8840, DATEADD(DAY, -2, @currentDate), DATEADD(DAY, 43, @currentDate), null, null),	
 	(0, 2, 8, 93, 24180, DATEADD(DAY, 3, @currentDate), DATEADD(DAY, 33, @currentDate), null, null),
 	(0, 2, 8, 63, 16380, DATEADD(DAY, 5, @currentDate), DATEADD(DAY, 35, @currentDate), null, null),
 	(0, 2, 9, 25, 6500, DATEADD(DAY, 8, @currentDate), DATEADD(DAY, 38, @currentDate), null, null),
@@ -167,15 +173,15 @@ insert into "Blocks" values
 	(6, 4, 130, 10),
 	(7, 4, 100, 11),
 	(7, 4, 108, 12),
-	(8, 3, 82, 13),
-	(9, 2, 80, 14),
-	(10, 1, 35, 15),
-	(11, 1, 51, 16),
-	(12, 4, 134, 17),
-	(13, 1, 50, 18),
-	(13, 2, 53, 19),
-	(13, 1, 24, 20),
-	(13, 3, 26, 21);
+	(8, 3, 82, 13);
+	--(9, 2, 80, 14),
+	--(10, 1, 35, 15),
+	--(11, 1, 51, 16),
+	--(12, 4, 134, 17),
+	--(13, 1, 50, 18),
+	--(13, 2, 53, 19),
+	--(13, 1, 24, 20),
+	--(13, 3, 26, 21);
 
 
 
@@ -200,20 +206,6 @@ insert into "DeliveryDetails" values
 (13, '4-27-2023', 82);
 
 
-
-
-
-
---(1, '5-8-2023', 102),
---(1, '5-10-2023', 80),
---(2, '4-19-2023', 76),
---(3,'4-19-2023',60),
---(3,'4-20-2023',40),
---(4,'6-3-2023',180),
---(5,'6-4-2023',80),
---(6,'5-24-2023',115),
---(7,'5-24-2023',126),
---(7,'5-29-2023',65);
 
 
 
