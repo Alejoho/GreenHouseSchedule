@@ -122,12 +122,9 @@ insert into "Orders" values
 	(4, 3, 18000, 21600, '4-30-2024', '1-11-2024', '3-28-2024', '4-30-2024', '3-28-2024', '4-30-2024', 1),
 	(1, 6, 37000, 44400, DATEADD(DAY, 28, @currentDate), '5-17-2024', DATEADD(DAY, -2, @currentDate), DATEADD(DAY, 28, @currentDate), DATEADD(DAY, -2, @currentDate), null, 1),
 	(3, 8, 29000, 34800, DATEADD(DAY, 41, @currentDate), '3-21-2024', DATEADD(DAY, -4, @currentDate), DATEADD(DAY, 41, @currentDate), DATEADD(DAY, -3, @currentDate), null, 1),
+	(5, 7, 33800, 40560, DATEADD(DAY, 33, @currentDate), '3-27-2024', DATEADD(DAY, 3, @currentDate), DATEADD(DAY, 33, @currentDate), null, null, 0),
+	(3, 4, 21000, 25200, DATEADD(DAY, 38, @currentDate), '5-29-2024', DATEADD(DAY, 8, @currentDate), DATEADD(DAY, 38, @currentDate), null, null, 0);
 
-	
-	(5, 7, 33800, 40560, '7-11-2024', '3-27-2024', '5-27-2024', '7-11-2024', null, null, 0),
-
-
-	(3, 4, 21000, 25200, '7-3-2024', '5-29-2024', '6-4-2024', '7-3-2024', null, null, 0);
 
 go
 
@@ -148,15 +145,13 @@ insert into "OrderLocations" values
 	(0, 2, 6, 35, 9100, DATEADD(DAY, -2, @currentDate), DATEADD(DAY, 28, @currentDate), DATEADD(DAY, -2, @currentDate), null),
 	(0, 6, 6, 51, 14280, DATEADD(DAY, -1, @currentDate), DATEADD(DAY, 29, @currentDate), DATEADD(DAY, -1, @currentDate), null),
 	(0, 2, 7, 134, 34840, DATEADD(DAY, -4, @currentDate), DATEADD(DAY, 41, @currentDate), DATEADD(DAY, -3, @currentDate), null),
+	(0, 2, 8, 93, 24180, DATEADD(DAY, 3, @currentDate), DATEADD(DAY, 33, @currentDate), null, null),
+	(0, 2, 8, 63, 16380, DATEADD(DAY, 5, @currentDate), DATEADD(DAY, 35, @currentDate), null, null),
+	(0, 2, 9, 25, 6500, DATEADD(DAY, 8, @currentDate), DATEADD(DAY, 38, @currentDate), null, null),
+	(0, 3, 9, 54, 8640, DATEADD(DAY, 8, @currentDate), DATEADD(DAY, 38, @currentDate), null, null),
+	(0, 3, 9, 63, 10080, DATEADD(DAY, 11, @currentDate), DATEADD(DAY, 41, @currentDate), null, null);
 
 
-	(0, 2, 8, 93, 24180, '5-27-2024', '7-11-2024', null, null),
-	(0, 2, 8, 63, 16380, '5-27-2024', '7-11-2024', null, null),
-
-
-	(0, 2, 9, 25, 6500, '6-4-2024', '7-3-2024', null, null),
-	(0, 3, 9, 54, 8640, '6-4-2024', '7-3-2024', null, null),
-	(0, 3, 9, 63, 10080, '6-25-2024', '7-24-2024', null, null);
 
 go
 insert into "Blocks" values
