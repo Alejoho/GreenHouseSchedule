@@ -1,4 +1,5 @@
-﻿using Presentation.IRequesters;
+﻿using Domain.Processors;
+using Presentation.IRequesters;
 using SupportLayer.Models;
 using System;
 using System.Windows;
@@ -16,6 +17,18 @@ namespace Presentation.InputForms
         {
             InitializeComponent();
             _requester = requestingWindow;
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            GreenHouseProcessor processor = new GreenHouseProcessor();
+            var greenHouses = processor.GetActiveGreenHouses();
+
+            lblcmbGreenHouse.ComboBox.ItemsSource = greenHouses;
+            lblcmbGreenHouse.ComboBox.DisplayMemberPath = "Name";
+        }
+
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)

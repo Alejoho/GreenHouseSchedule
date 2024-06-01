@@ -20,6 +20,12 @@ namespace DataAccess.Repositories
             return output;
         }
 
+        public IEnumerable<GreenHouse> GetOnlyActive()
+        {
+            var output = _sowScheduleDB.GreenHouses.Where(x => x.Active == true);
+            return output;
+        }
+
         public bool Insert(GreenHouse entity)
         {
             _sowScheduleDB.GreenHouses.Add(entity);

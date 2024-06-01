@@ -250,21 +250,21 @@ public class OrderLocationProcessor : IOrderLocationProcessor
             );
 
         if (isThereBrother == false && seedTrays == orderLocation.SeedTrayAmount)
-            {
+        {
             return OrderLocationType.CompleteWithoutBrothers;
-            }
+        }
         else if (isThereBrother == false && seedTrays < orderLocation.SeedTrayAmount)
-            {
+        {
             return OrderLocationType.PartialWithoutBrothers;
-            }
+        }
         else if (isThereBrother == true && seedTrays == orderLocation.SeedTrayAmount)
-            {
+        {
             return OrderLocationType.CompleteWithBrothers;
-            }
+        }
         else if (isThereBrother == true && seedTrays < orderLocation.SeedTrayAmount)
-            {
-                return OrderLocationType.PartialWithBrothers;
-            }
+        {
+            return OrderLocationType.PartialWithBrothers;
+        }
 
         throw new Exception("Tipo the locacion no encontrada");
     }
@@ -272,11 +272,11 @@ public class OrderLocationProcessor : IOrderLocationProcessor
     private void ValidatePlaceChanges(OrderLocation orderLocation, short placedSeedTrays)
     {
         if (placedSeedTrays <= 0 || placedSeedTrays > orderLocation.RestOfSeedTraysToBeLocated)
-    {
+        {
             throw new ArgumentException("La cantidad de bandejas ubicadas debe estar entre 0 " +
                 "y la cantidad de bandejas por ubicar de la Locación", "sownSeedTrays");
         }
-        }
+    }
 
     private enum OrderLocationType
     {
