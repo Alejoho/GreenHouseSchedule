@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation.CustomControls"
-                          mc:Ignorable="d" 
+             mc:Ignorable="d" 
              d:DesignHeight="26" d:DesignWidth="330">
     <Grid>
 
@@ -12,7 +12,7 @@
 
             <ComboBox Grid.Column="1" VerticalContentAlignment="Center" DockPanel.Dock="Right"
                  HorizontalAlignment="Right" Padding="5 0 0 0" Margin="0 3" Height="20"
-                 Width="150" x:Name="ComboBox">
+                 Width="150" x:Name="ComboBox" SelectionChanged="ComboBox_SelectionChanged">
             </ComboBox>
 
             <TextBlock Grid.Column="0" Text="{Binding Path=FieldLabel}" VerticalAlignment="Center" 

@@ -7,14 +7,21 @@ namespace Presentation.CustomControls
     /// </summary>
     public partial class ComboBoxWithLabelNoButton : UserControl
     {
+        public SelectionChangedEventHandler Selection_Changed { get; set; }
+
+        private string _fieldLabel;
+
         public ComboBoxWithLabelNoButton()
         {
             InitializeComponent();
             this.DataContext = this;
         }
 
-        private string _fieldLabel;
-
         public string FieldLabel { get => _fieldLabel; set => _fieldLabel = value; }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Selection_Changed?.Invoke(sender, e);
+        }
     }
 }
