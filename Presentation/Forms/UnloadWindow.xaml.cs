@@ -34,7 +34,7 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
 
         foreach (Order order in _orders)
         {
-            var orderLocationsToDisplay = order.OrderLocations.Where(x => x.GreenHouseId == 0);
+            var orderLocationsToDisplay = order.OrderLocations.Where(x => x.RealSowDate != null && x.GreenHouseId == 0);
             order.OrderLocationsView = new ObservableCollection<OrderLocation>(orderLocationsToDisplay);
         }
 
