@@ -206,7 +206,7 @@ create table "Blocks"(
 	references "OrderLocations" ("ID") ON DELETE CASCADE,
 	CONSTRAINT [CK_Blocks_SeedTrayAmount] CHECK ("SeedTrayAmount" > 0),
 	CONSTRAINT [CK_Blocks_BlockNumber] CHECK ("BlockNumber" > 0),
-	CONSTRAINT [CK_Blocks_NumberWithinTheBlock] CHECK ("NumberWithinTheBlock" > 0)
+	CONSTRAINT [CK_Blocks_NumberWithinTheBlock] CHECK ("NumberWithinTheBlock" >= 0)
 );
 
 go

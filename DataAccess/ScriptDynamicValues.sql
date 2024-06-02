@@ -1,10 +1,6 @@
 go
 use "SowScheduleDB";
 
-go
-DELETE FROM YourTableName
-
-
 
 go
 insert into "Provinces" values

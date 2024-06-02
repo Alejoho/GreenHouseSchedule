@@ -165,9 +165,14 @@ public class OrderLocationProcessor : IOrderLocationProcessor
                 && x.SeedTrayId == orderLocation.SeedTrayId
                 && x.RealSowDate == orderLocation.RealSowDate);
 
-        if (output.Count() != 1)
+        if (output.Count() > 1)
         {
             throw new ApplicationException("There's more than 1 order location brother.");
+        }
+
+        if (output.Count() == 0)
+        {
+            throw new ApplicationException("There's no order location brother.");
         }
 
         return output.First();
