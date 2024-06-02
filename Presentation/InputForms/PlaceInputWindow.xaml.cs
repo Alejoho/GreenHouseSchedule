@@ -3,6 +3,7 @@ using Presentation.IRequesters;
 using SupportLayer.Models;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Presentation.InputForms
 {
@@ -29,6 +30,16 @@ namespace Presentation.InputForms
             lblcmbGreenHouse.ComboBox.DisplayMemberPath = "Name";
         }
 
+        private void lblcmbGreenHouse_Selection_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            int amountOfBlocks = ((GreenHouse)lblcmbGreenHouse.ComboBox.SelectedItem).AmountOfBlocks;
+
+            lblcmbBlock.ComboBox.Items.Clear();
+
+            for (int i = 1; i <= amountOfBlocks; i++)
+            {
+                lblcmbBlock.ComboBox.Items.Add(i);
+            }
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
@@ -76,7 +87,7 @@ namespace Presentation.InputForms
                 return false;
             }
 
-            if (lblcmbGreenHouse.ComboBox.SelectedItem == null)
+            if (lblcmbBlock.ComboBox.SelectedItem == null)
             {
                 MessageBox.Show("Debe especificar el bloque en el que se ubicaron estas bandejas"
                     , "Dato faltante"
