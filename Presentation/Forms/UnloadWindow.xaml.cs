@@ -89,20 +89,19 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
 
     private void RefreshTheDataGrids()
     {
-        if (_orderLocationInProcess.Order.Complete == true)
+        Order order = _orderLocationInProcess.Order;
+
+        if (_orderLocationInProcess.GreenHouseId > 0)
         {
-            _orders.Remove(_orderLocationInProcess.Order);
-        }
-        else if (_orderLocationInProcess.RealSowDate != null)
-        {
-            Order order = _orderLocationInProcess.Order;
             order.OrderLocationsView.Remove(_orderLocationInProcess);
-            order.UIColorsUpdateTrigger++;
         }
-        else
+
+        if (order.OrderLocationsView.Count == 0)
         {
-            _activeOrderLocationDataGrid.Items.Refresh();
+            _orders.Remove(order);
         }
+
+        _activeOrderLocationDataGrid.Items.Refresh();
     }
 
     public OrderLocation OrderLocationInProcess { get => _orderLocationInProcess; }
