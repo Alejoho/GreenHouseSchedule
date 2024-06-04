@@ -15,6 +15,7 @@ namespace Presentation.Forms;
 public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
 {
     private ObservableCollection<Order> _orders;
+    //TODO - Move the order processor to the only palce is used, the LoadData method
     private OrderProcessor _orderProcessor;
     private OrderLocationProcessor _orderLocationProcessor;
     private OrderLocation _orderLocationInProcess;
