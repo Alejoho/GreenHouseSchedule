@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
 
-namespace Presentation
+namespace Presentation.Converters
 {
     public class OrderLocationsStateToIntConverter : IValueConverter
     {

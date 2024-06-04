@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation.Forms"
-        xmlns:local1="clr-namespace:Presentation"
+        xmlns:converters="clr-namespace:Presentation.Converters"
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
         Title="Nueva orden" Height="575" Width="590" ResizeMode="NoResize"
@@ -68,7 +68,7 @@
                     CanUserResizeRows="False" CanUserSortColumns="True" ColumnWidth="auto" HeadersVisibility="Column">
 
                 <DataGrid.Resources>
-                    <local1:ZeroToEmptyStringConverter x:Key="ZeroToEmptyStringConverter"/>
+                    <converters:ZeroToEmptyStringConverter x:Key="ZeroToEmptyStringConverter"/>
                 </DataGrid.Resources>
                 
             <DataGrid.Columns>

@@ -4,12 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation.Forms"
-        xmlns:local1="clr-namespace:Presentation"
+        xmlns:converters="clr-namespace:Presentation.Converters"
         mc:Ignorable="d"
         Title="Siembras pendientes" Height="550" Width="1035" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowState="Normal">
     <Window.Resources>
-        <local1:SowDateStateToIntConverter x:Key="SowDateStateToIntConverter"/>
+        <converters:SowDateStateToIntConverter x:Key="SowDateStateToIntConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -26,8 +26,8 @@
                     RowDetailsVisibilityMode="Collapsed">
             
             <DataGrid.Resources>
-                <local1:RowDetailSymbolConverter x:Key="RowDetailSymbolConverter"/>
-                <local1:OrderLocationsStateToIntConverter x:Key="OrderLocationsStateToIntConverter"/>
+                <converters:RowDetailSymbolConverter x:Key="RowDetailSymbolConverter"/>
+                <converters:OrderLocationsStateToIntConverter x:Key="OrderLocationsStateToIntConverter"/>
             </DataGrid.Resources>
 
             <DataGrid.DataContext>

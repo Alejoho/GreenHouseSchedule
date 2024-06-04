@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:custom="clr-namespace:Presentation.CustomControls" 
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
-        xmlns:local1="clr-namespace:Presentation"
+        xmlns:converters="clr-namespace:Presentation.Converters"
         mc:Ignorable="d"
         Title="Lista de órdenes" Height="650" Width="1300" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowState="Maximized">
@@ -14,7 +14,7 @@
         <local:OrderListWindow/>
     </Window.DataContext>-->
     <Window.Resources>
-        <local1:RowDetailSymbolConverter x:Key="Converter"/>
+        <converters:RowDetailSymbolConverter x:Key="Converter"/>
     </Window.Resources>
 
 
