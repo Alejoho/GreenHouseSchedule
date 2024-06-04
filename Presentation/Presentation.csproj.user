@@ -28,6 +28,9 @@
     <Compile Update="Forms\UnloadWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="InputForms\DeliverInputWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="InputForms\PlaceInputWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -46,6 +49,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CustomControls\TextBoxWithLabel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="InputForms\DeliverInputWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Resources\DataGridRowColors.xaml">
