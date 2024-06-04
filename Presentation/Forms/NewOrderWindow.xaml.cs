@@ -3,6 +3,7 @@ using Domain.Models;
 using Domain.Processors;
 using Domain.ValuableObjects;
 using Presentation.IRequesters;
+using Presentation.Resources;
 using SupportLayer.Models;
 using System;
 using System.Collections.Generic;

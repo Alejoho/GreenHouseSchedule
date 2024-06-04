@@ -48,10 +48,10 @@
     <Page Update="CustomControls\TextBoxWithLabel.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="DataGridRowColors.xaml">
+    <Page Update="Resources\DataGridRowColors.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Formats.xaml">
+    <Page Update="Resources\Formats.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\AddEditOrganizationWindow.xaml">

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Presentation
+namespace Presentation.Resources
 {
     public static class DateOnlyExtensions
     {

@@ -1,4 +1,5 @@
-﻿using SupportLayer.Models;
+﻿using Presentation.Resources;
+using SupportLayer.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
