@@ -43,5 +43,22 @@ namespace SupportLayer.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        [NotMapped]
+        private ObservableCollection<Block> _blocksView;
+
+        [NotMapped]
+        public ObservableCollection<Block> BlocksView
+        {
+            get
+            {
+                return _blocksView;
+            }
+
+            set
+            {
+                _blocksView = value;
+            }
+        }
     }
 }
