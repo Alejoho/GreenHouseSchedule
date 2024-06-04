@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
-namespace Presentation.Forms;
+namespace Presentation.AddEditForms;
 
 /// <summary>
 /// Interaction logic for AddEditOrganizationWindow.xaml

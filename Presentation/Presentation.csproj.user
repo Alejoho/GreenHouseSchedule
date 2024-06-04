@@ -19,10 +19,10 @@
     <Compile Update="CustomControls\TextBoxWithLabel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Forms\AddEditOrganizationWindow.xaml.cs">
+    <Compile Update="AddEditForms\AddEditOrganizationWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Forms\AddProductWindow.xaml.cs">
+    <Compile Update="AddEditForms\AddProductWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Forms\UnloadWindow.xaml.cs">
@@ -54,10 +54,10 @@
     <Page Update="Resources\Formats.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Forms\AddEditOrganizationWindow.xaml">
+    <Page Update="AddEditForms\AddEditOrganizationWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Forms\AddProductWindow.xaml">
+    <Page Update="AddEditForms\AddProductWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\UnloadWindow.xaml">

@@ -13,8 +13,8 @@
 
             <ResourceDictionary.MergedDictionaries>
 
-                <ResourceDictionary Source="Formats.xaml"/>
-                <ResourceDictionary Source="DataGridRowColors.xaml"/>
+                <ResourceDictionary Source="Resources/Formats.xaml"/>
+                <ResourceDictionary Source="Resources/DataGridRowColors.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

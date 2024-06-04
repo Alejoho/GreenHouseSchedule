@@ -2,7 +2,7 @@
 using SupportLayer.Models;
 using System.Windows;
 
-namespace Presentation.Forms
+namespace Presentation.AddEditForms
 {
     /// <summary>
     /// Interaction logic for SeedTraysWindow.xaml
