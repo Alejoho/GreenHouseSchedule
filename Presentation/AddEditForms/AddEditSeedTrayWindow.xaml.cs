@@ -19,7 +19,6 @@ namespace Presentation.AddEditForms
             _model = new SeedTray();
             _model.Id = 0;
             _model.Preference = nextPreferenceValue;
-            LlenarCasillas();
         }
 
         public AddEditSeedTrayWindow(SeedTray model)
@@ -167,18 +166,6 @@ namespace Presentation.AddEditForms
             lbltxtTotalAmount.FieldContent = _model.TotalAmount.ToString();
             lbltxtMaterial.FieldContent = _model.Material;
             chkActive.IsChecked = _model.Active;
-        }
-        private void LlenarCasillas()
-        {
-            lbltxtName.FieldContent = "300 plásticas";
-            lbltxtTotalAlveolus.FieldContent = "300";
-            lbltxtAlveolusLength.FieldContent = "30";
-            lbltxtAlveolusWidth.FieldContent = "10";
-            lbltxtTrayLength.FieldContent = "1.2";
-            lbltxtTrayWidth.FieldContent = "0.7";
-            lbltxtLogicalArea.FieldContent = "0.95";
-            lbltxtTotalAmount.FieldContent = "2575";
-            lbltxtMaterial.FieldContent = "plástico";
         }
     }
 }
