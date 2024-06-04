@@ -23,8 +23,6 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
         InitializeComponent();
         _processor = new ClientProcessor();
         _model = new Client();
-        //TODO - Remove the assigment of the id in all the models
-        //_model.Id = 0;
         LoadData();
     }
 

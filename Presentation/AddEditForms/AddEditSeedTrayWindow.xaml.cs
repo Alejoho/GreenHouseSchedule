@@ -12,12 +12,13 @@ namespace Presentation.AddEditForms
         private SeedTrayProcessor _processor;
         private SeedTray _model;
 
+        //LATER - Evaluate if I really need the preference logic in the seedtrays.
+
         public AddEditSeedTrayWindow(byte nextPreferenceValue)
         {
             InitializeComponent();
             _processor = new SeedTrayProcessor();
             _model = new SeedTray();
-            _model.Id = 0;
             _model.Preference = nextPreferenceValue;
         }
 

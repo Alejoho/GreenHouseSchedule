@@ -19,7 +19,6 @@ public partial class AddEditGreenHouseWindow : Window
         InitializeComponent();
         _processor = new GreenHouseProcessor();
         _model = new GreenHouse();
-        _model.Id = 0;
     }
 
     public AddEditGreenHouseWindow(GreenHouse model)

@@ -23,7 +23,6 @@ namespace Presentation.AddEditForms
             InitializeComponent();
             _processor = new SpeciesProcessor();
             _model = new Species();
-            _model.Id = 0;
             _requestor = requestor;
             LlenarCasillas();
         }

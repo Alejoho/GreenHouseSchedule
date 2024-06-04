@@ -24,7 +24,6 @@ public partial class AddEditOrganizationWindow : Window
         InitializeComponent();
         _processor = new OrganizationProcessor();
         _model = new Organization();
-        _model.Id = 0;
         LoadData();
     }
 
@@ -33,7 +32,6 @@ public partial class AddEditOrganizationWindow : Window
         InitializeComponent();
         _processor = new OrganizationProcessor();
         _model = new Organization();
-        _model.Id = 0;
         _requester = requestingWindow;
         LoadData();
     }
