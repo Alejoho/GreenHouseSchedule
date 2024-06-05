@@ -26,10 +26,14 @@ insert into "Orders" values
 	(3, 5, 60000, 72000, '6-3-2024', '4-21-2024', '5-4-2024', '6-3-2024', '5-4-2024', '6-3-2024', 1),
 	(2, 8, 45000, 54000, '5-24-2024', '3-15-2024', '4-9-2024', '5-24-2024', '4-9-2024', '5-24-2024', 1),
 	(4, 3, 18000, 21600, '4-30-2024', '1-11-2024', '3-28-2024', '4-30-2024', '3-28-2024', '4-30-2024', 1),
-	(1, 6, 37000, 44400, DATEADD(DAY, 28, @currentDate), '5-17-2024', DATEADD(DAY, -2, @currentDate), DATEADD(DAY, 28, @currentDate), DATEADD(DAY, -2, @currentDate), null, 1),		
-	(3, 8, 29000, 34800, DATEADD(DAY, 41, @currentDate), '3-21-2024', DATEADD(DAY, -4, @currentDate), DATEADD(DAY, 41, @currentDate), DATEADD(DAY, -3, @currentDate), null, 0),	
-	(5, 7, 33800, 40560, DATEADD(DAY, 33, @currentDate), '3-27-2024', DATEADD(DAY, 3, @currentDate), DATEADD(DAY, 33, @currentDate), null, null, 0),
-	(3, 4, 21000, 25200, DATEADD(DAY, 38, @currentDate), '5-29-2024', DATEADD(DAY, 8, @currentDate), DATEADD(DAY, 38, @currentDate), null, null, 0);
+	(1, 6, 37000, 44400, DATEADD(DAY, 28, @currentDate), DATEADD(DAY, -105, @currentDate), DATEADD(DAY, -2, @currentDate), DATEADD(DAY, 28, @currentDate), DATEADD(DAY, -2, @currentDate), null, 1),		
+	(3, 8, 29000, 34800, DATEADD(DAY, 41, @currentDate), DATEADD(DAY, -150, @currentDate), DATEADD(DAY, -4, @currentDate), DATEADD(DAY, 41, @currentDate), DATEADD(DAY, -3, @currentDate), null, 0),	
+	(5, 7, 33800, 40560, DATEADD(DAY, 33, @currentDate), DATEADD(DAY, -140, @currentDate), DATEADD(DAY, 3, @currentDate), DATEADD(DAY, 33, @currentDate), null, null, 0),
+	(3, 4, 21000, 25200, DATEADD(DAY, 38, @currentDate), DATEADD(DAY, -95, @currentDate), DATEADD(DAY, 8, @currentDate), DATEADD(DAY, 38, @currentDate), null, null, 0),
+	(2, 3, 75000, 90160, DATEADD(DAY, -5, @currentDate), DATEADD(DAY, -80, @currentDate), DATEADD(DAY, -35, @currentDate), DATEADD(DAY, -5, @currentDate), DATEADD(DAY, -35, @currentDate), DATEADD(DAY, -5, @currentDate), 1),
+	(1, 9, 83000, 99760, DATEADD(DAY, -1, @currentDate), DATEADD(DAY, -200, @currentDate), DATEADD(DAY, -46, @currentDate), DATEADD(DAY, -1, @currentDate), DATEADD(DAY, -46, @currentDate), null, 1),
+	(4, 5, 47250, 56700, DATEADD(DAY, 9, @currentDate), DATEADD(DAY, -185, @currentDate), DATEADD(DAY, -21, @currentDate), DATEADD(DAY, 9, @currentDate), DATEADD(DAY, -21, @currentDate), null, 1);
+
 
 
 go
@@ -56,7 +60,14 @@ insert into "OrderLocations" values
 	(0, 2, 8, 63, 16380, DATEADD(DAY, 5, @currentDate), DATEADD(DAY, 35, @currentDate), null, null),
 	(0, 2, 9, 25, 6500, DATEADD(DAY, 8, @currentDate), DATEADD(DAY, 38, @currentDate), null, null),
 	(0, 3, 9, 54, 8640, DATEADD(DAY, 8, @currentDate), DATEADD(DAY, 38, @currentDate), null, null),
-	(0, 3, 9, 63, 10080, DATEADD(DAY, 11, @currentDate), DATEADD(DAY, 41, @currentDate), null, null);
+	(0, 3, 9, 63, 10080, DATEADD(DAY, 11, @currentDate), DATEADD(DAY, 41, @currentDate), null, null),
+	(2, 6, 10, 200, 56000, DATEADD(DAY, -35, @currentDate), DATEADD(DAY, -5, @currentDate), DATEADD(DAY, -35, @currentDate),DATEADD(DAY, -5, @currentDate)),
+	(4, 6, 10, 122, 34160, DATEADD(DAY, -33, @currentDate), DATEADD(DAY, -3, @currentDate), DATEADD(DAY, -33, @currentDate),null),
+	(1, 2, 11, 116, 30160, DATEADD(DAY, -46, @currentDate), DATEADD(DAY, -1, @currentDate), DATEADD(DAY, -46, @currentDate), null),
+	(2, 5, 11, 125,  20000, DATEADD(DAY, -45, @currentDate), @currentDate, DATEADD(DAY, -45, @currentDate), null),
+	(3, 5, 11, 310, 49600, DATEADD(DAY, -43, @currentDate), DATEADD(DAY, 2, @currentDate), DATEADD(DAY, -43, @currentDate), null),
+	(7, 4, 12, 267, 40050, DATEADD(DAY, -21, @currentDate), DATEADD(DAY, 9, @currentDate), DATEADD(DAY, -21, @currentDate), null),
+	(8, 4, 12, 111, 16650, DATEADD(DAY, -20, @currentDate), DATEADD(DAY, 10, @currentDate), DATEADD(DAY, -20, @currentDate), null);
 
 
 
@@ -74,11 +85,24 @@ insert into "Blocks" values
 	(6, 4, 130, 10),
 	(7, 4, 100, 11),
 	(7, 4, 108, 12),
-	(8, 3, 82, 13);
+	(8, 3, 82, 13),
+	(19, 1, 150, 0),
+	(19, 2, 50, 0),
+	(20, 2, 122, 0),
+	(21, 1, 116, 0),
+	(22, 2, 125, 0),
+	(23, 3, 310, 0),
+	(24, 2, 267, 0),
+	(25, 1, 111, 0);
 
 
 
 go
+
+DECLARE @currentDate DATETIME;
+
+SET @currentDate = GETDATE();
+
 insert into "DeliveryDetails" values
 (1, '5-8-2023', 42),
 (1, '5-8-2023', 40),
@@ -95,7 +119,8 @@ insert into "DeliveryDetails" values
 (11, '5-24-2023', 80),
 (11, '5-29-2023', 20),
 (12, '5-29-2023', 108),
-(13, '4-27-2023', 82);
+(13, '4-27-2023', 82),
+(14, DATEADD(DAY, -5, @currentDate) , 35);
 
 
 
