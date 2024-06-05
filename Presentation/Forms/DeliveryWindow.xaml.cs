@@ -29,9 +29,11 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
 
     private void LoadData()
     {
-        //NEXT - Make the method in the order processor to load the need orders
-        //NEXT - Make the load data method
-        throw new NotImplementedException();
+        _orders = new ObservableCollection<Order>(_orderProcessor.GetNextOrdersToDeliver());
+
+        //CHECK - If is really needed to set the datacontex
+        dgDeliveryList.DataContext = this;
+        dgDeliveryList.ItemsSource = _orders;
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -51,7 +53,6 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
 
     private void CallBlockDeliverSetter()
     {
-        //NEXT - Implement the correct ctor
         DeliverInputWindow window = new DeliverInputWindow(this);
         window.ShowDialog();
     }
