@@ -151,4 +151,19 @@ public class OrderProcessor : IOrderProcessor
         var output = _repository.GetSownsWithoutPlace().OrderByDescending(x => x.RealSowDate);
         return output;
     }
+
+    public IEnumerable<Order> GetNextOrdersToDeliver()
+    {
+        IEnumerable<Order> output = null!;
+
+        int interval = int.Parse(ConfigurationManager.AppSettings[ConfigurationNames.DeliveryShowRange]);
+
+        DateOnly date = DateOnly.FromDateTime(DateTime.Now.AddDays(interval));
+
+        output = _repository.GetReadyToDeliver(date)
+            .OrderBy(x => x.EstimateDeliveryDate)
+            .ThenBy(x => x.DateOfRequest);
+
+        return output;
+    }
 }
