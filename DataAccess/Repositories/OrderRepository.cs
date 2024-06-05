@@ -34,6 +34,11 @@ namespace DataAccess.Repositories
         {
             return _sowScheduleDB.Orders.Where(x => x.OrderLocations.Any(y => y.RealSowDate != null && y.GreenHouseId == 0));
         }
+        //LATER - Make the test for this method.
+        public IEnumerable<Order> GetReadyToDeliver(DateOnly date)
+        {
+            return _sowScheduleDB.Orders.Where(x => x.EstimateDeliveryDate <= date);
+        }
 
         public bool Insert(Order entity)
         {

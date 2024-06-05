@@ -7,5 +7,7 @@ namespace DataAccess.Contracts
         IEnumerable<Order> GetByARealSowDateOn(DateOnly date);
         IEnumerable<Order> GetIncompleteBeforeADate(DateOnly date);
         IEnumerable<Order> GetSownsWithoutPlace();
+        IEnumerable<Order> GetReadyToDeliver(DateOnly date);
+
     }
 }
