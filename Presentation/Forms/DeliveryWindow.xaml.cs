@@ -65,7 +65,7 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
         Visibility.Collapsed : Visibility.Visible;
     }
 
-    private void dgOrderLocationChild_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    private void dgBlockChild_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
         if (sender is DataGrid datagrid)
         {
