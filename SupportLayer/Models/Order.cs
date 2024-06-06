@@ -26,6 +26,8 @@ public partial class Order
 
     public bool Sown { get; set; }
 
+    public bool Delivered { get; set; }
+
     public virtual Client Client { get; set; } = null!;
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
