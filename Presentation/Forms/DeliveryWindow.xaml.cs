@@ -30,10 +30,6 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
 
     private void LoadData()
     {
-        //NEXT - Change the charge of the order to delivery in the order repository
-        // agregar los dos nuevos campos a la DB. Pero antes de cambiarlo hacer un rename 
-        //en toda la solucion y cambiar el "Complete" por "Sown" o mejor "CompletelySown"
-        // por si hay alguna variable que se llame sown y coincidan en contexto
         _orders = new ObservableCollection<Order>(_orderProcessor.GetNextOrdersToDeliver());
         //NEXT - Load the BlocksView of the Order object
 

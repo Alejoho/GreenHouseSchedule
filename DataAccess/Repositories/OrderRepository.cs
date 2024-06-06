@@ -37,10 +37,7 @@ namespace DataAccess.Repositories
         //LATER - Make the test for this method.
         public IEnumerable<Order> GetReadyToDeliver(DateOnly date)
         {
-            //Next - agregar algo mas porque si no me va a dar todas las ordenes desde date para atras
-            //talvez hacer un nuevo campo en la table de ordenes uno que diga entregada y cambiar el de
-            //completada por sembrada
-            return _sowScheduleDB.Orders.Where(x => x.EstimateDeliveryDate <= date);
+            return _sowScheduleDB.Orders.Where(x => x.EstimateDeliveryDate <= date && x.Delivered == false);
         }
 
         public bool Insert(Order entity)
