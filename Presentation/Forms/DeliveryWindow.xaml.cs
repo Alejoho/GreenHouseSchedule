@@ -31,8 +31,19 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
     private void LoadData()
     {
         _orders = new ObservableCollection<Order>(_orderProcessor.GetNextOrdersToDeliver());
-        //NEXT - Load the BlocksView of the Order object
 
+        foreach (Order order in _orders)
+        {
+            order.BlocksView = new ObservableCollection<Block>();
+
+            foreach (OrderLocation orderLocation in order.OrderLocations)
+            {
+                foreach (Block block in orderLocation.Blocks)
+                {
+                    order.BlocksView.Add(block);
+                }
+            }
+        }
 
         //CHECK - If is really needed to set the datacontex
         dgDeliveryList.DataContext = this;
