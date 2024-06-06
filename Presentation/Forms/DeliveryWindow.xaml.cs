@@ -88,7 +88,7 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
         }
     }
 
-    public void SetTheDeliveredBlock()
+    public void SetTheDeliveredBlock(DateOnly date, short deliveredSeedTrays)
     {
         //NEXT - Create the method to save the delivers in the BlockProcessor.
         //NEXT - Create this method.
