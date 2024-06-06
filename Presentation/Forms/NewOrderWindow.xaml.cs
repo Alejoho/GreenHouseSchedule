@@ -169,7 +169,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             DateOfRequest = orderModel.RequestDate,
             EstimateSowDate = (DateOnly)orderModel.EstimateSowDate,
             EstimateDeliveryDate = (DateOnly)orderModel.EstimateDeliveryDate,
-            Complete = false
+            Sown = false
         };
 
         int orderLocationIndex = 1;

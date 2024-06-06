@@ -321,7 +321,7 @@ namespace Domain
                     order.EstimateDeliveryDate,
                     order.RealSowDate,
                     order.RealDeliveryDate,
-                    order.Complete
+                    order.Sown
                     ));
             }
 

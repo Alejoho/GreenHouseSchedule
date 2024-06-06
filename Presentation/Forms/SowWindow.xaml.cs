@@ -107,7 +107,7 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
 
     private void RefreshTheDataGrids()
     {
-        if (_orderLocationInProcess.Order.Complete == true)
+        if (_orderLocationInProcess.Order.Sown == true)
         {
             _orders.Remove(_orderLocationInProcess.Order);
         }

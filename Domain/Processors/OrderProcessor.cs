@@ -136,7 +136,7 @@ public class OrderProcessor : IOrderProcessor
 
         if (model.OrderLocations.All(x => x.RealSowDate != null))
         {
-            model.Complete = true;
+            model.Sown = true;
             edited = true;
         }
 

@@ -27,7 +27,7 @@ namespace DataAccess.Repositories
         //LATER - Make the test for this method.
         public IEnumerable<Order> GetIncompleteBeforeADate(DateOnly date)
         {
-            return _sowScheduleDB.Orders.Where(x => x.Complete == false && x.EstimateSowDate <= date);
+            return _sowScheduleDB.Orders.Where(x => x.Sown == false && x.EstimateSowDate <= date);
         }
         //LATER - Make the test for this method.
         public IEnumerable<Order> GetSownsWithoutPlace()
@@ -74,7 +74,7 @@ namespace DataAccess.Repositories
                 order.EstimateDeliveryDate = entity.EstimateDeliveryDate;
                 order.RealSowDate = entity.RealSowDate;
                 order.RealDeliveryDate = entity.RealDeliveryDate;
-                order.Complete = entity.Complete;
+                order.Sown = entity.Sown;
                 _sowScheduleDB.SaveChanges();
                 return true;
             }

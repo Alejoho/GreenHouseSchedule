@@ -392,7 +392,7 @@ internal class RecordGenerator
             .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.WishDate)
             .RuleFor(x => x.RealDeliveryDate, (f, u) =>
                 u.EstimateDeliveryDate < new DateOnly(2023, 6, 10) ? u.EstimateDeliveryDate : null)
-            .RuleFor(x => x.Complete, () => true);
+            .RuleFor(x => x.Sown, () => true);
     }
 
     private Faker<Order> GetPartialOrderFaker()
@@ -423,7 +423,7 @@ internal class RecordGenerator
             .RuleFor(x => x.DateOfRequest, (f, u) => u.WishDate.AddDays(-f.Random.Int(60, 180)))
             .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.WishDate)
             .RuleFor(x => x.RealDeliveryDate, () => null)
-            .RuleFor(x => x.Complete, () => false);
+            .RuleFor(x => x.Sown, () => false);
     }
 
     private Faker<Order> GetEmptyOrderFaker()
@@ -454,7 +454,7 @@ internal class RecordGenerator
             .RuleFor(x => x.DateOfRequest, (f, u) => u.WishDate.AddDays(-f.Random.Int(80, 180)))
             .RuleFor(x => x.EstimateDeliveryDate, (f, u) => u.WishDate)
             .RuleFor(x => x.RealDeliveryDate, () => null)
-            .RuleFor(x => x.Complete, () => false);
+            .RuleFor(x => x.Sown, () => false);
     }
 
     private Faker<OrderLocation> GetOrderLocationFaker(Order order, int[] seedlingDivision, int completedAmount)
@@ -598,7 +598,7 @@ internal class RecordGenerator
                     u.RealSowDate?.AddDays(u.Product.Specie.ProductionDays)
                 )
 
-            .RuleFor(x => x.Complete,
+            .RuleFor(x => x.Sown,
                 (f, u) =>
                 {
                     if (u.RealSowDate != null)

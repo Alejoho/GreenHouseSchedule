@@ -100,7 +100,7 @@ public class OrderRepostioryTests
         recordUpdated.EstimateDeliveryDate.Should().Be(newRecordData.EstimateDeliveryDate);
         recordUpdated.RealSowDate.Should().Be(newRecordData.RealSowDate);
         recordUpdated.RealDeliveryDate.Should().Be(newRecordData.RealDeliveryDate);
-        recordUpdated.Complete.Should().Be(newRecordData.Complete);
+        recordUpdated.Sown.Should().Be(newRecordData.Sown);
     }
 
     public List<Order> GenerateRecords(int count)
@@ -141,6 +141,6 @@ public class OrderRepostioryTests
                 f.Random.Bool() ? u.EstimateSowDate : null
                 )
             .RuleFor(x => x.RealDeliveryDate, (f, u) => u.EstimateDeliveryDate)
-            .RuleFor(x => x.Complete, f => f.Random.Bool());
+            .RuleFor(x => x.Sown, f => f.Random.Bool());
     }
 }

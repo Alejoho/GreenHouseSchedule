@@ -246,14 +246,14 @@ namespace DomainTests
             if (type == TypeOfRecord.complete)
             {
                 orderCollection = _generator.Orders
-                    .Where(x => x.RealSowDate >= presentDate.AddDays(-90) && x.Complete == true)
+                    .Where(x => x.RealSowDate >= presentDate.AddDays(-90) && x.Sown == true)
                     .OrderBy(x => x.EstimateSowDate)
                     .ThenBy(x => x.DateOfRequest);
             }
             else if (type == TypeOfRecord.partial)
             {
                 orderCollection = _generator.Orders
-                    .Where(x => x.RealSowDate <= presentDate && x.Complete == false)
+                    .Where(x => x.RealSowDate <= presentDate && x.Sown == false)
                     .OrderBy(x => x.EstimateSowDate)
                     .ThenBy(x => x.DateOfRequest);
             }
@@ -288,7 +288,7 @@ namespace DomainTests
             {
                 orderLocationCollection = _generator.OrderLocations
                 .Where(x => x.Order.RealSowDate >= presentDate.AddDays(-90)
-                    && x.Order.Complete == true)
+                    && x.Order.Sown == true)
                 .OrderBy(x => x.RealSowDate)
                 .ThenBy(x => x.Id);
             }
@@ -296,7 +296,7 @@ namespace DomainTests
             {
                 orderLocationCollection = _generator.OrderLocations
                 .Where(x => x.Order.RealSowDate <= presentDate
-                    && x.Order.Complete == false)
+                    && x.Order.Sown == false)
                 .OrderBy(x => x.RealSowDate)
                 .ThenBy(x => x.Id);
             }
@@ -331,7 +331,7 @@ namespace DomainTests
             {
                 deliveryDetailCollection = _generator.DeliveryDetails
                 .Where(x => x.Block.OrderLocation.Order.RealSowDate >= presentDate.AddDays(-90)
-                    && x.Block.OrderLocation.Order.Complete == true)
+                    && x.Block.OrderLocation.Order.Sown == true)
                 .OrderBy(x => x.DeliveryDate);
             }
             else if (type == TypeOfRecord.partial)

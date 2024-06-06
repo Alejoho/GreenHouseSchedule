@@ -24,7 +24,7 @@ public partial class Order
 
     public DateOnly? RealDeliveryDate { get; set; }
 
-    public bool Complete { get; set; }
+    public bool Sown { get; set; }
 
     public virtual Client Client { get; set; } = null!;
 
