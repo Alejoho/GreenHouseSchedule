@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:converters="clr-namespace:Presentation.Converters"
         mc:Ignorable="d"
-        Title="Siembras pendientes" Height="550" Width="1035" ResizeMode="NoResize"
+        Title="Siembras pendientes" Height="550" Width="1100" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowState="Normal">
     <Window.Resources>
         <converters:SowDateStateToIntConverter x:Key="SowDateStateToIntConverter"/>
