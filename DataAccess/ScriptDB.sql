@@ -240,7 +240,8 @@ create table "Orders"(
 	"EstimateDeliveryDate" date not null,
 	"RealSowDate" date,
 	"RealDeliveryDate" date,
-	"Complete" bit not null,
+	"Sown" bit not null,
+	"Delivered" bit not null,
 	CONSTRAINT [PK_Orders] primary key ("ID"),
 	CONSTRAINT [FK_Orders_ClientId] foreign key ("ClientId") 
 	references "Clients" ("ID"),
