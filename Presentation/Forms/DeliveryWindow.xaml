@@ -99,7 +99,7 @@
                             <DataGridTextColumn Header="Bandeja" Binding="{Binding OrderLocation.SeedTray.Name}"/>
                             <DataGridTextColumn Header="Cantidad de bandejas" Binding="{Binding SeedTrayAmount}"/>
                             <DataGridTextColumn Header="Cantidad de posturas" Binding="{Binding SeedlingAmount}"/>
-                            <DataGridTextColumn Header="Fecha de siembra estimada" Binding="{Binding OrderLocation.EstimateDeliveryDate
+                            <DataGridTextColumn Header="Fecha de entrega estimada" Binding="{Binding OrderLocation.EstimateDeliveryDate
                                 , StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
