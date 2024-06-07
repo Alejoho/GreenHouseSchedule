@@ -33,7 +33,7 @@ public class DeliveryDetailProcessor : IDeliveryDetailProcessor
 
         _repository.Insert(deliveryDetail);
 
-        block.SeedTrayAmount -= deliveredSeedTrays;
+        block.DeliveryDetails.Add(deliveryDetail);
     }
 
     private void ValidateDeliveryChanges(Block block, DateOnly date, short deliveredSeedTrays)
@@ -43,7 +43,10 @@ public class DeliveryDetailProcessor : IDeliveryDetailProcessor
             throw new ArgumentException("La fecha debe ser igual o anterior que el dia presente", "date");
         }
 
-        if (deliveredSeedTrays <= 0 || deliveredSeedTrays > block.SeedTrayAmount)
+        int seedTraysAlreadyDelivered = block.DeliveryDetails.Sum(x => x.SeedTrayAmountDelivered);
+        int seedTraysToBeDelivered = block.SeedTrayAmount - seedTraysAlreadyDelivered;
+
+        if (deliveredSeedTrays <= 0 || deliveredSeedTrays > seedTraysToBeDelivered)
         {
             throw new ArgumentException("La cantidad de bandejas entregadas debe estar entre 0 " +
                 "y la cantidad de bandejas del bloque", "deliveredSeedTrays");
