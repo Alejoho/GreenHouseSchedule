@@ -4,6 +4,7 @@ using Presentation.IRequesters;
 using SupportLayer.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -30,7 +31,6 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
 
     private void LoadData()
     {
-        //NEXT - Every time I load the records is like anything had been delivered and it's not like that
         _orders = new ObservableCollection<Order>(_orderProcessor.GetNextOrdersToDeliver());
 
         foreach (Order order in _orders)
@@ -41,9 +41,14 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
             {
                 foreach (Block block in orderLocation.Blocks)
                 {
+                    int seedTraysAlreadyDelivered = block.DeliveryDetails.Sum(x => x.SeedTrayAmountDelivered);
+                    int seedTraysToBeDelivered = block.SeedTrayAmount - seedTraysAlreadyDelivered;
+                    if (seedTraysToBeDelivered > 0)
+                    {
                     order.BlocksView.Add(block);
                 }
             }
+        }
         }
 
         //CHECK - If is really needed to set the datacontex
