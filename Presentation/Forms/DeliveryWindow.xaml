@@ -95,10 +95,10 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Casa" Binding="{Binding OrderLocation.GreenHouse.Name}"/>
-                            <DataGridTextColumn Header="Bloque" Binding="{Binding BlockNumber}"/>
+                            <DataGridTextColumn Header="Bloque" Binding="{Binding BlockName}"/>
                             <DataGridTextColumn Header="Bandeja" Binding="{Binding OrderLocation.SeedTray.Name}"/>
-                            <DataGridTextColumn Header="Cantidad de bandejas" Binding="{Binding SeedTrayAmount}"/>
-                            <DataGridTextColumn Header="Cantidad de posturas" Binding="{Binding SeedlingAmount}"/>
+                            <DataGridTextColumn Header="Cantidad de bandejas" Binding="{Binding SeedTraysAmountToBeDelivered}"/>
+                            <DataGridTextColumn Header="Cantidad de posturas" Binding="{Binding SeedlingAmountToBeDelivered}"/>
                             <DataGridTextColumn Header="Fecha de entrega estimada" Binding="{Binding OrderLocation.EstimateDeliveryDate
                                 , StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                         </DataGrid.Columns>
