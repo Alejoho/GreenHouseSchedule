@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Presentation.InputForms" 
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
-        Title="Entregar bloque" Height="200" Width="340">
+        Title="Entregar bloque" Height="200" Width="340" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

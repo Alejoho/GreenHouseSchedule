@@ -94,8 +94,8 @@
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Header="Bandeja" Binding="{Binding OrderLocation.GreenHouse.Name}"/>
-                            <DataGridTextColumn Header="Bandeja" Binding="{Binding BlockNumber}"/>
+                            <DataGridTextColumn Header="Casa" Binding="{Binding OrderLocation.GreenHouse.Name}"/>
+                            <DataGridTextColumn Header="Bloque" Binding="{Binding BlockNumber}"/>
                             <DataGridTextColumn Header="Bandeja" Binding="{Binding OrderLocation.SeedTray.Name}"/>
                             <DataGridTextColumn Header="Cantidad de bandejas" Binding="{Binding SeedTrayAmount}"/>
                             <DataGridTextColumn Header="Cantidad de posturas" Binding="{Binding SeedlingAmount}"/>
