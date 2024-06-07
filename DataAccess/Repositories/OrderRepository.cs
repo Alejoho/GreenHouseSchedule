@@ -72,6 +72,7 @@ namespace DataAccess.Repositories
                 order.RealSowDate = entity.RealSowDate;
                 order.RealDeliveryDate = entity.RealDeliveryDate;
                 order.Sown = entity.Sown;
+                order.Delivered = entity.Delivered;
                 _sowScheduleDB.SaveChanges();
                 return true;
             }
