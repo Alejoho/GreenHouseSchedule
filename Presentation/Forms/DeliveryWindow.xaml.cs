@@ -45,10 +45,10 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
                     int seedTraysToBeDelivered = block.SeedTrayAmount - seedTraysAlreadyDelivered;
                     if (seedTraysToBeDelivered > 0)
                     {
-                    order.BlocksView.Add(block);
+                        order.BlocksView.Add(block);
+                    }
                 }
             }
-        }
         }
 
         //CHECK - If is really needed to set the datacontex
@@ -97,6 +97,8 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
     public void SetTheDeliveredBlock(DateOnly date, short deliveredSeedTrays)
     {
         _deliveryDetailProcessor.SaveNewDeliveryDetails(_blockInProcess, date, deliveredSeedTrays);
+
+        _orderProcessor.UpdateOrderStatusAfterDelivery(_blockInProcess.OrderLocation.Order);
 
         RefreshTheDataGrids();
     }

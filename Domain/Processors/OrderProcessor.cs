@@ -166,4 +166,30 @@ public class OrderProcessor : IOrderProcessor
 
         return output;
     }
+
+    public void UpdateOrderStatusAfterDelivery(Order model)
+    {
+        bool markAsDelivered = true;
+
+        foreach (OrderLocation orderLocation in model.OrderLocations)
+        {
+            foreach (Block block in orderLocation.Blocks)
+            {
+                int seedTraysAlreadyDelivered = block.DeliveryDetails.Sum(x => x.SeedTrayAmountDelivered);
+                int seedTraysToBeDelivered = block.SeedTrayAmount - seedTraysAlreadyDelivered;
+
+                if (seedTraysToBeDelivered > 0)
+                {
+                    markAsDelivered = false;
+                    return;
+                }
+            }
+        }
+
+        if (markAsDelivered == true)
+        {
+            model.Delivered = true;
+            _repository.Update(model);
+        }
+    }
 }
