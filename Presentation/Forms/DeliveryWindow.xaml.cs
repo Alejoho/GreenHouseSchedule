@@ -105,9 +105,8 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
     {
         Order order = _blockInProcess.OrderLocation.Order;
 
-        if (_blockInProcess.SeedTrayAmount == 0)
+        if (_blockInProcess.SeedTraysAmountToBeDelivered == 0)
         {
-
             order.BlocksView.Remove(_blockInProcess);
         }
 
