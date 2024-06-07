@@ -16,7 +16,7 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
 {
     private ObservableCollection<Order> _orders;
     private OrderProcessor _orderProcessor;
-    private BlockProcessor _blockProcessor;
+    private DeliveryDetailProcessor _deliveryDetailProcessor;
     private Block _blockInProcess;
     private DataGrid _activeBlockDataGrid;
 
@@ -24,12 +24,13 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
     {
         InitializeComponent();
         _orderProcessor = new OrderProcessor();
-        _blockProcessor = new BlockProcessor();
+        _deliveryDetailProcessor = new DeliveryDetailProcessor();
         LoadData();
     }
 
     private void LoadData()
     {
+        //NEXT - Every time I load the records is like anything had been delivered and it's not like that
         _orders = new ObservableCollection<Order>(_orderProcessor.GetNextOrdersToDeliver());
 
         foreach (Order order in _orders)
@@ -79,7 +80,7 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
         Visibility.Collapsed : Visibility.Visible;
     }
 
-    private void dgBlockChild_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    private void dgBlockChild_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (sender is DataGrid datagrid)
         {
@@ -90,16 +91,27 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
 
     public void SetTheDeliveredBlock(DateOnly date, short deliveredSeedTrays)
     {
-        //NEXT - Create the method to save the delivers in the BlockProcessor.
-        //NEXT - Create this method.
+        _deliveryDetailProcessor.SaveNewDeliveryDetails(_blockInProcess, date, deliveredSeedTrays);
 
         RefreshTheDataGrids();
     }
 
     private void RefreshTheDataGrids()
     {
-        //NEXT - Create the method to update the dg
-        throw new NotImplementedException();
+        Order order = _blockInProcess.OrderLocation.Order;
+
+        if (_blockInProcess.SeedTrayAmount == 0)
+        {
+
+            order.BlocksView.Remove(_blockInProcess);
+        }
+
+        if (order.BlocksView.Count == 0)
+        {
+            _orders.Remove(order);
+        }
+
+        _activeBlockDataGrid.Items.Refresh();
     }
 
     public Block BlockInProcess { get => _blockInProcess; }
