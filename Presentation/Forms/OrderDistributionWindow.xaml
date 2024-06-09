@@ -55,7 +55,7 @@
                 <DataGridTextColumn Header="Fecha requerida" Binding="{Binding WishDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                 <DataGridTextColumn Header="Fecha de siembra estimada" Binding="{Binding EstimateSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                 <DataGridTextColumn Header="Fecha de entrega estimada" Binding="{Binding EstimateDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                <DataGridTextColumn Header="Fecha de entrega estimada" Binding="{Binding RealSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                <DataGridTextColumn Header="Fecha de siembra real" Binding="{Binding RealSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
             </DataGrid.Columns>
 
             <DataGrid.RowDetailsTemplate>

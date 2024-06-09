@@ -9,8 +9,11 @@ using System.Windows.Input;
 
 namespace Presentation.Forms
 {
+    //Later - Set a background to the row detail template to show the information in a clearer way.
+
     //NEXT - Agregarle a este window un textBox para busqueda, un combobox para seleccionar casa y otro para bandeja
     // y un check para mostrar solo ordenes no ubicadas.
+
     /// <summary>
     /// Interaction logic for OrderDistributionWindow.xaml
     /// </summary>
