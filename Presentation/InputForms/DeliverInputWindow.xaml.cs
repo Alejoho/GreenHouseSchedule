@@ -9,7 +9,6 @@ namespace Presentation.InputForms;
 /// </summary>
 public partial class DeliverInputWindow : Window
 {
-    //NEXT - Make the logic of this window
     private IDeliveredBlockRequester _requester;
     public DeliverInputWindow(IDeliveredBlockRequester requestingWindow)
     {

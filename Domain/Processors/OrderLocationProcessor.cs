@@ -107,7 +107,6 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         orderLocationCopy.SeedlingAmount = placedSeedTrays * alveolus;
 
         //3-salvar la copia y recuperar su id
-        //NEXT - Check if this id is retrieve from the DB
         _repository.Insert(orderLocationCopy);
 
         //4-reducir la cantidad de bandejas y posturas del OL original y salvarlo a la DB
