@@ -1,32 +1,107 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Domain.Processors;
+using SupportLayer.Models;
+using System;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Presentation.Forms
 {
+    //NEXT - Agregarle a este window un textBox para busqueda, un combobox para seleccionar casa y otro para bandeja
+    // y un check para mostrar solo ordenes no ubicadas.
     /// <summary>
     /// Interaction logic for OrderDistributionWindow.xaml
     /// </summary>
     public partial class OrderDistributionWindow : Window
     {
+        private ObservableCollection<Order> _orders;
+        private OrderProcessor _orderProcessor;
+        private Block _blockInProcess;
+        private DataGrid _activeBlockDataGrid;
         public OrderDistributionWindow()
         {
             InitializeComponent();
+            _orderProcessor = new OrderProcessor();
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            _orders = new ObservableCollection<Order>(_orderProcessor.GetOrdersInTheSeedBed());
+
+            foreach (Order order in _orders)
+            {
+                order.BlocksView = new ObservableCollection<Block>();
+
+                foreach (OrderLocation orderLocation in order.OrderLocations)
+                {
+                    foreach (Block block in orderLocation.Blocks)
+                    {
+                        int seedTraysAlreadyDelivered = block.DeliveryDetails.Sum(x => x.SeedTrayAmountDelivered);
+                        int seedTraysToBeDelivered = block.SeedTrayAmount - seedTraysAlreadyDelivered;
+                        if (seedTraysToBeDelivered > 0)
+                        {
+                            order.BlocksView.Add(block);
+                        }
+                    }
+                }
+            }
+
+            //CHECK - If is really needed to set the datacontex
+            dgDistributionList.DataContext = this;
+            dgDistributionList.ItemsSource = _orders;
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnRelocate_Click(object sender, RoutedEventArgs e)
+        {
+            CallRelocateBlokSetter();
+        }
+
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            CallRelocateBlokSetter();
+        }
+
+        private void CallRelocateBlokSetter()
+        {
+            throw new NotImplementedException();
         }
 
         private void btnRowDetail_Click(object sender, RoutedEventArgs e)
         {
+            //LATER - Maybe extract this logic to a static class
+            var row = DataGridRow.GetRowContainingElement((Button)sender);
 
+            row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ?
+            Visibility.Collapsed : Visibility.Visible;
         }
+
+        private void dgBlockChild_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is DataGrid datagrid)
+            {
+                _blockInProcess = (Block)datagrid.SelectedItem;
+                _activeBlockDataGrid = datagrid;
+            }
+        }
+
+        public void SetTheRelocatedBlock()
+        {
+            RefreshTheDataGrids();
+        }
+
+        private void RefreshTheDataGrids()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Block BlockInProcess { get => _blockInProcess; }
     }
 }
