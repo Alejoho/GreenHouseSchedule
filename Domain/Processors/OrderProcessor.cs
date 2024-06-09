@@ -192,4 +192,11 @@ public class OrderProcessor : IOrderProcessor
             _repository.Update(model);
         }
     }
+
+    public IEnumerable<Order> GetOrdersInTheSeedBed()
+    {
+        var output = _repository.GetSownsWithPlace().OrderBy(x => x.RealSowDate);
+
+        return output;
+    }
 }

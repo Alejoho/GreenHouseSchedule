@@ -8,6 +8,6 @@ namespace DataAccess.Contracts
         IEnumerable<Order> GetIncompleteBeforeADate(DateOnly date);
         IEnumerable<Order> GetSownsWithoutPlace();
         IEnumerable<Order> GetReadyToDeliver(DateOnly date);
-
+        IEnumerable<Order> GetSownsWithPlace();
     }
 }
