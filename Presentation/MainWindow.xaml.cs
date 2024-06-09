@@ -70,7 +70,8 @@ namespace Presentation
 
         private void btnOrderDistribution_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You need to create this window first!!!!!");
+            OrderDistributionWindow window = new OrderDistributionWindow();
+            window.ShowDialog();
         }
 
         private void btnUnloads_Click(object sender, RoutedEventArgs e)
