@@ -58,13 +58,53 @@
                 <DataGridTextColumn Header="Fecha de entrega estimada" Binding="{Binding RealSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
             </DataGrid.Columns>
 
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <DataGrid x:Name="dgBlockChild" 
+                        Margin="20 5 20 5" AutoGenerateColumns="False" HorizontalAlignment="Left"
+                        SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" 
+                        CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
+                        IsReadOnly="True" ItemsSource="{Binding BlocksView}" 
+                        HeadersVisibility="Column" Width="Auto" HorizontalScrollBarVisibility="Hidden"
+                        SelectionChanged="dgBlockChild_SelectionChanged">
 
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+
+                                <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+
+                                <Style.Triggers>
+
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Casa" Binding="{Binding OrderLocation.GreenHouse.Name}"/>
+                            <DataGridTextColumn Header="Bloque" Binding="{Binding BlockName}"/>
+                            <DataGridTextColumn Header="Bandeja" Binding="{Binding OrderLocation.SeedTray.Name}"/>
+                            <DataGridTextColumn Header="Cantidad de bandejas" Binding="{Binding SeedTraysAmountToBeDelivered}"/>
+                            <DataGridTextColumn Header="Cantidad de posturas" Binding="{Binding SeedlingAmountToBeDelivered}"/>
+                            <DataGridTextColumn Header="Fecha de siembra estimada" Binding="{Binding OrderLocation.EstimateSowDate
+                                , StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Fecha de siembra real" Binding="{Binding OrderLocation.RealSowDate
+                                , StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Fecha de entrega estimada" Binding="{Binding OrderLocation.EstimateDeliveryDate
+                                , StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Fecha de entrega real" Binding="{Binding OrderLocation.RealDeliveryDate
+                                , StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
 
         </DataGrid>
-        
-        
-        
-        
-        
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="150 10 0 0" Height="50">
+            <Button x:Name="btnRelocate" Content="Reubicar" Margin="20 12" Width="80" Click="btnRelocate_Click"/>
+            <Button x:Name="btnCancel" Content="Atrás" Margin="20 12" Width="80" Click="btnCancel_Click"/>
+        </StackPanel>
+
     </Grid>
 </Window>
