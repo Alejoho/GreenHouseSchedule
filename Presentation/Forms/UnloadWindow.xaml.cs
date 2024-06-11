@@ -81,9 +81,9 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
         }
     }
 
-    public void SetThePlacedOrderLocation(byte greenHouse, byte block, short sownSeedTrays)
+    public void SetThePlacedOrderLocation(byte greenHouse, byte block, short placedSeedTrays)
     {
-        _orderLocationProcessor.SavePlacedOrderLocationChange(_orderLocationInProcess, greenHouse, block, sownSeedTrays);
+        _orderLocationProcessor.SavePlacedOrderLocationChange(_orderLocationInProcess, greenHouse, block, placedSeedTrays);
 
         RefreshTheDataGrids();
     }
