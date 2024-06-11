@@ -1,0 +1,36 @@
+﻿<Window x:Class="Presentation.InputForms.RelocateInputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation.InputForms" 
+        xmlns:custom="clr-namespace:Presentation.CustomControls"
+        mc:Ignorable="d"
+        Title="Reubicar locación" Height="220" Width="370" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Especifique la casa, el bloque y cuantas bandejas se reubicaron." Height="20" 
+                   Margin="2 15 0 5" HorizontalAlignment="Center"/>
+
+        <custom:ComboBoxWithLabelNoButton x:Name="lblcmbGreenHouse" FieldLabel="Casa" Grid.Row="1" Width="290" 
+                                  Selection_Changed="lblcmbGreenHouse_Selection_Changed" Margin="0 0 50 0"/>
+
+        <custom:ComboBoxWithLabelNoButton x:Name="lblcmbBlock" FieldLabel="Bloque" Grid.Row="2" Width="290" Margin="0 0 50 0"/>
+
+        <custom:TextBoxWithLabel x:Name="lbltxtPlacedAmount" Grid.Row="3" FieldLabel="Bandejas ubicadas" Margin="2 0 57 0"/>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="center"  Height="50" VerticalAlignment="Top"
+            Margin="0 4 0 0">
+            <Button x:Name="btnConfirm" Content="Confirmar" Margin="20 12" Width="80" Click="btnConfirm_Click"/>
+            <Button x:Name="btnCancel" Content="Cancelar" Margin="20 12" Width="80" Click="btnCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

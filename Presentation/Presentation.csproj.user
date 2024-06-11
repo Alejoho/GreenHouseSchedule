@@ -37,6 +37,9 @@
     <Compile Update="InputForms\PlaceInputWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="InputForms\RelocateInputWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="InputForms\SowInputWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -58,6 +61,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="InputForms\DeliverInputWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="InputForms\RelocateInputWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Resources\DataGridRowColors.xaml">
