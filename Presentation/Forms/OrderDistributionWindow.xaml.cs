@@ -2,7 +2,6 @@
 using SupportLayer.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -42,9 +41,7 @@ namespace Presentation.Forms
                 {
                     foreach (Block block in orderLocation.Blocks)
                     {
-                        int seedTraysAlreadyDelivered = block.DeliveryDetails.Sum(x => x.SeedTrayAmountDelivered);
-                        int seedTraysToBeDelivered = block.SeedTrayAmount - seedTraysAlreadyDelivered;
-                        if (seedTraysToBeDelivered > 0)
+                        if (block.SeedTraysAmountToBeDelivered > 0)
                         {
                             order.BlocksView.Add(block);
                         }
