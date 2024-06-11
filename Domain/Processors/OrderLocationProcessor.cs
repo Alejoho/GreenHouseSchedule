@@ -275,10 +275,12 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
     private void ValidatePlaceChanges(OrderLocation orderLocation, short placedSeedTrays)
     {
-        if (placedSeedTrays <= 0 || placedSeedTrays > orderLocation.RestOfSeedTraysToBeLocated)
+        int restOfSeedTraysToBeLocated = orderLocation.SeedTrayAmount - orderLocation.Blocks.Sum(x => x.SeedTrayAmount);
+
+        if (placedSeedTrays <= 0 || placedSeedTrays > restOfSeedTraysToBeLocated)
         {
             throw new ArgumentException("La cantidad de bandejas ubicadas debe estar entre 0 " +
-                "y la cantidad de bandejas por ubicar de la Locación", "sownSeedTrays");
+                "y la cantidad de bandejas por ubicar de la locación", "placedSeedTrays");
         }
     }
 
