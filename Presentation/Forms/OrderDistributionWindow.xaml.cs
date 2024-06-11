@@ -61,15 +61,15 @@ namespace Presentation.Forms
 
         private void btnRelocate_Click(object sender, RoutedEventArgs e)
         {
-            CallRelocateBlokSetter();
+            CallRelocatedBlockSetter();
         }
 
         private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            CallRelocateBlokSetter();
+            CallRelocatedBlockSetter();
         }
 
-        private void CallRelocateBlokSetter()
+        private void CallRelocatedBlockSetter()
         {
             throw new NotImplementedException();
         }

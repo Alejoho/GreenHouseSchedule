@@ -63,15 +63,15 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
 
     private void btnDeliver_Click(object sender, RoutedEventArgs e)
     {
-        CallBlockDeliverSetter();
+        CallDeliveredBlockSetter();
     }
 
     private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        CallBlockDeliverSetter();
+        CallDeliveredBlockSetter();
     }
 
-    private void CallBlockDeliverSetter()
+    private void CallDeliveredBlockSetter()
     {
         DeliverInputWindow window = new DeliverInputWindow(this);
         window.ShowDialog();
