@@ -1,4 +1,5 @@
 ﻿using Domain.Processors;
+using Presentation.IRequesters;
 using SupportLayer.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -16,7 +17,7 @@ namespace Presentation.Forms
     /// <summary>
     /// Interaction logic for OrderDistributionWindow.xaml
     /// </summary>
-    public partial class OrderDistributionWindow : Window
+    public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
     {
         private ObservableCollection<Order> _orders;
         private OrderProcessor _orderProcessor;
@@ -92,8 +93,10 @@ namespace Presentation.Forms
             }
         }
 
-        public void SetTheRelocatedBlock()
+        public void SetTheRelocatedBlock(byte greenHouse, byte block, short relocatedSeedTrays)
         {
+
+
             RefreshTheDataGrids();
         }
 
