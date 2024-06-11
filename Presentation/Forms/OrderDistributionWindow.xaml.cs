@@ -95,7 +95,9 @@ namespace Presentation.Forms
 
         public void SetTheRelocatedBlock(byte greenHouse, byte block, short relocatedSeedTrays)
         {
+            BlockProcessor processor = new BlockProcessor();
 
+            processor.SaveRelocateBlockChange(BlockInProcess, greenHouse, block, relocatedSeedTrays);
 
             RefreshTheDataGrids();
         }
