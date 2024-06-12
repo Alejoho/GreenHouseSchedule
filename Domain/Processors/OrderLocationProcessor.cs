@@ -1,4 +1,5 @@
 ﻿using DataAccess.Repositories;
+using Domain.ValuableObjects;
 using SupportLayer.Models;
 
 namespace Domain.Processors;
@@ -32,7 +33,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         }
         else
         {
-            OrderLocation orderLocationCopy = GetCopyOfAnOrderLocation(orderLocation);
+            OrderLocation orderLocationCopy = HelpingMethods.GetCopyOfAnOrderLocation(orderLocation);
 
             int alveolus = orderLocation.SeedlingAmount / orderLocation.SeedTrayAmount;
 
@@ -46,23 +47,6 @@ public class OrderLocationProcessor : IOrderLocationProcessor
             _repository.Update(orderLocation);
             _repository.Insert(orderLocationCopy);
         }
-    }
-
-    private OrderLocation GetCopyOfAnOrderLocation(OrderLocation orderLocation)
-    {
-        return new OrderLocation()
-        {
-            Id = 0,
-            GreenHouseId = orderLocation.GreenHouseId,
-            SeedTrayId = orderLocation.SeedTrayId,
-            OrderId = orderLocation.OrderId,
-            SeedTrayAmount = orderLocation.SeedTrayAmount,
-            SeedlingAmount = orderLocation.SeedlingAmount,
-            EstimateSowDate = orderLocation.EstimateSowDate,
-            EstimateDeliveryDate = orderLocation.EstimateDeliveryDate,
-            RealSowDate = orderLocation.RealSowDate,
-            RealDeliveryDate = orderLocation.RealDeliveryDate
-        };
     }
 
     private void ValidateSowChanges(OrderLocation orderLocation, DateOnly date, int sownSeedTrays)
@@ -98,7 +82,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
     private void SavePartialWithoutBrothersOrderLocation(OrderLocation orderLocation, byte greenHouse, byte block, short placedSeedTrays)
     {
         //1-crear una copia del orderlocation
-        OrderLocation orderLocationCopy = GetCopyOfAnOrderLocation(orderLocation);
+        OrderLocation orderLocationCopy = HelpingMethods.GetCopyOfAnOrderLocation(orderLocation);
 
         //2-asignarle a la copia sus valores(casa, cantidad de bandejas, cantidad de posturas)
         orderLocationCopy.GreenHouseId = greenHouse;
@@ -131,7 +115,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
     private void SaveCompleteWithBrothersOrderLocation(OrderLocation orderLocation, byte greenHouse, byte block, short placedSeedTrays)
     {
         //encontrar el hermano
-        OrderLocation orderLocationBrother = GetOrderLocationsBrother(orderLocation, greenHouse);
+        OrderLocation orderLocationBrother = HelpingMethods.GetOrderLocationsBrother(orderLocation, greenHouse);
 
         //agregar los datos al hermano
         orderLocationBrother.SeedTrayAmount += orderLocation.SeedTrayAmount;
@@ -155,32 +139,10 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         _repository.Remove(orderLocation.Id);
     }
 
-    private OrderLocation GetOrderLocationsBrother(OrderLocation orderLocation, byte greenHouse)
-    {
-        Order order = orderLocation.Order;
-
-        var output = order.OrderLocations.Where(x =>
-                x.GreenHouseId == greenHouse
-                && x.SeedTrayId == orderLocation.SeedTrayId
-                && x.RealSowDate == orderLocation.RealSowDate);
-
-        if (output.Count() > 1)
-        {
-            throw new ApplicationException("There's more than 1 order location brother.");
-        }
-
-        if (output.Count() == 0)
-        {
-            throw new ApplicationException("There's no order location brother.");
-        }
-
-        return output.First();
-    }
-
     private void SavePartialWithBrothersOrderLocation(OrderLocation orderLocation, byte greenHouse, byte block, short placedSeedTrays)
     {
         //encontrar el hermano y los alveolos de la bandeja usadadas
-        OrderLocation orderLocationBrother = GetOrderLocationsBrother(orderLocation, greenHouse);
+        OrderLocation orderLocationBrother = HelpingMethods.GetOrderLocationsBrother(orderLocation, greenHouse);
 
         int alveolus = orderLocation.SeedlingAmount / orderLocation.SeedTrayAmount;
 

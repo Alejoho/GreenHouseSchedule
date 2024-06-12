@@ -1,4 +1,5 @@
 ﻿using DataAccess.Repositories;
+using Domain.ValuableObjects;
 using SupportLayer.Models;
 
 namespace Domain.Processors
@@ -94,7 +95,7 @@ namespace Domain.Processors
             //LATER - remover estos comentarios
 
             //consiguo el orderlocation brother y el original
-            OrderLocation orderLocationBrother = GetOrderLocationsBrother(blockInProcess.OrderLocation, greenHouse);
+            OrderLocation orderLocationBrother = HelpingMethods.GetOrderLocationsBrother(blockInProcess.OrderLocation, greenHouse);
 
             //llamo a este metodo
             TransferBlock(orderLocationBrother, blockInProcess, block, relocatedSeedTrays);
@@ -102,52 +103,13 @@ namespace Domain.Processors
 
         private void UpdateBlockPlaceOutAHouseWithOutBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
         {
-            OrderLocation orderLocationCopy = GetCopyOfAnOrderLocation(blockInProcess.OrderLocation);
+            OrderLocation orderLocationCopy = HelpingMethods.GetCopyOfAnOrderLocation(blockInProcess.OrderLocation);
 
             OrderLocationRepository orderLocationRepository = new OrderLocationRepository();
 
             orderLocationRepository.Insert(orderLocationCopy);
 
             TransferBlock(orderLocationCopy, blockInProcess, block, relocatedSeedTrays);
-        }
-
-        private OrderLocation GetCopyOfAnOrderLocation(OrderLocation orderLocation)
-        {
-            return new OrderLocation()
-            {
-                Id = 0,
-                GreenHouseId = orderLocation.GreenHouseId,
-                SeedTrayId = orderLocation.SeedTrayId,
-                OrderId = orderLocation.OrderId,
-                SeedTrayAmount = orderLocation.SeedTrayAmount,
-                SeedlingAmount = orderLocation.SeedlingAmount,
-                EstimateSowDate = orderLocation.EstimateSowDate,
-                EstimateDeliveryDate = orderLocation.EstimateDeliveryDate,
-                RealSowDate = orderLocation.RealSowDate,
-                RealDeliveryDate = orderLocation.RealDeliveryDate
-            };
-        }
-
-        private OrderLocation GetOrderLocationsBrother(OrderLocation orderLocation, byte greenHouse)
-        {
-            Order order = orderLocation.Order;
-
-            var output = order.OrderLocations.Where(x =>
-                    x.GreenHouseId == greenHouse
-                    && x.SeedTrayId == orderLocation.SeedTrayId
-                    && x.RealSowDate == orderLocation.RealSowDate);
-
-            if (output.Count() > 1)
-            {
-                throw new ApplicationException("There's more than 1 order location brother.");
-            }
-
-            if (output.Count() == 0)
-            {
-                throw new ApplicationException("There's no order location brother.");
-            }
-
-            return output.First();
         }
 
         public void SaveRelocateBlockChange(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
