@@ -3,6 +3,8 @@ using SupportLayer.Models;
 
 namespace Domain.Processors
 {
+    //NEXT - change in the database the action ON DELETE from CASCADE to RESTRICT. To avoid delete a record with 
+    //dependent records attached to it.
     public class BlockProcessor
     {
         private BlockRepository _repository;
@@ -34,8 +36,62 @@ namespace Domain.Processors
             {
                 _repository.Update(blockInProcess);
             }
-            //NEXT - change in the database the action ON DELETE from CASCADE to RESTRICT. To avoid delete a record with 
-            //dependent records attached to it.
+        }
+
+
+        private void UpdateBlockPlaceOutAHouseWithBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
+        {
+            //LATER - remover estos comentarios
+
+            //consiguo el orderlocation brother y el original
+            OrderLocation orderLocationBrother = GetOrderLocationsBrother(blockInProcess.OrderLocation, greenHouse);
+            OrderLocation orderLocationOriginal = blockInProcess.OrderLocation;
+
+            //actualizar las bandejas y las posturas en el brother
+            int alveolus = orderLocationBrother.SeedlingAmount / orderLocationBrother.SeedTrayAmount;
+            orderLocationBrother.SeedTrayAmount += relocatedSeedTrays;
+            orderLocationBrother.SeedlingAmount += relocatedSeedTrays * alveolus;
+
+            //actualizo el brother en la DB
+            OrderLocationRepository orderLocationRepository = new OrderLocationRepository();
+
+            orderLocationRepository.Update(orderLocationBrother);
+
+            //creo el nuebo bloque y lo inserto en la DB
+            Block newBlock = new Block()
+            {
+                OrderLocationId = orderLocationBrother.Id,
+                BlockNumber = block,
+                SeedTrayAmount = relocatedSeedTrays
+            };
+
+            _repository.Insert(newBlock);
+
+            //actualizo el bloque original guardo cambios en la DB
+            blockInProcess.SeedTrayAmount -= relocatedSeedTrays;
+
+            if (blockInProcess.SeedTrayAmount == 0)
+            {
+                _repository.Remove(blockInProcess.Id);
+            }
+            else
+            {
+                _repository.Update(blockInProcess);
+            }
+
+            //actualizo el orderLocationOriginal en la DB
+            orderLocationOriginal.SeedTrayAmount -= relocatedSeedTrays;
+            orderLocationOriginal.SeedlingAmount -= relocatedSeedTrays * alveolus;
+
+            if (orderLocationOriginal.SeedTrayAmount == 0)
+            {
+                orderLocationRepository.Remove(orderLocationOriginal.Id);
+            }
+            else
+            {
+                orderLocationRepository.Update(orderLocationOriginal);
+            }
+        }
         }
 
         public void SaveRelocateBlockChange(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
