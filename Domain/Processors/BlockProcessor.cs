@@ -50,7 +50,15 @@ namespace Domain.Processors
                     UpdateBlockPlaceInAHouse(blockInProcess, block, relocatedSeedTrays);
                     break;
                 case MovementType.PartialInAHouse:
+                    UpdateBlockPlaceInAHouse(blockInProcess, block, relocatedSeedTrays);
+                    break;
 
+                case MovementType.WithBortherOutAHouse:
+                    UpdateBlockPlaceOutAHouseWithBrother(blockInProcess, greenHouse, block, relocatedSeedTrays);
+                    break;
+
+                case MovementType.WithoutBortherOutAHouse:
+                    UpdateBlockPlaceOutAHouseWithOutBrother(blockInProcess, greenHouse, block, relocatedSeedTrays);
                     break;
 
             }
