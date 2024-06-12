@@ -92,6 +92,40 @@ namespace Domain.Processors
                 orderLocationRepository.Update(orderLocationOriginal);
             }
         }
+
+        private void UpdateBlockPlaceOutAHouseWithOutBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
+        {
+            OrderLocation orderLocationCopy = GetCopyOfAnOrderLocation(blockInProcess.OrderLocation);
+            OrderLocation orderLocationOriginal = blockInProcess.OrderLocation;
+
+            orderLocationCopy.GreenHouseId = greenHouse;
+            int alveolus = blockInProcess.OrderLocation.SeedlingAmount / blockInProcess.OrderLocation.SeedTrayAmount;
+            orderLocationCopy.SeedTrayAmount = relocatedSeedTrays;
+            orderLocationCopy.SeedlingAmount = relocatedSeedTrays * alveolus;
+
+
+
+            Block newBlock = new Block()
+            {
+                OrderLocationId = orderLocationCopy.Id,
+                BlockNumber = block,
+                SeedTrayAmount = relocatedSeedTrays
+            };
+
+            _repository.Insert(newBlock);
+
+            blockInProcess.SeedTrayAmount -= relocatedSeedTrays;
+
+            if (blockInProcess.SeedTrayAmount == 0)
+            {
+                _repository.Remove(blockInProcess.Id);
+            }
+            else
+            {
+                _repository.Update(blockInProcess);
+            }
+            throw new NotImplementedException();
+        }
         private OrderLocation GetCopyOfAnOrderLocation(OrderLocation orderLocation)
         {
             return new OrderLocation()
