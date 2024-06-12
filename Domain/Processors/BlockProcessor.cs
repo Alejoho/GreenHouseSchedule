@@ -89,16 +89,16 @@ namespace Domain.Processors
             }
         }
 
-        private void UpdateBlockPlaceOutAHouseWithOutBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
+        private void UpdateBlockPlaceOutAHouseWithBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
         {
-            OrderLocation orderLocationCopy = GetCopyOfAnOrderLocation(blockInProcess.OrderLocation);
-            OrderLocation orderLocationOriginal = blockInProcess.OrderLocation;
+            //LATER - remover estos comentarios
 
-            orderLocationCopy.GreenHouseId = greenHouse;
-            int alveolus = blockInProcess.OrderLocation.SeedlingAmount / blockInProcess.OrderLocation.SeedTrayAmount;
-            orderLocationCopy.SeedTrayAmount = relocatedSeedTrays;
-            orderLocationCopy.SeedlingAmount = relocatedSeedTrays * alveolus;
+            //consiguo el orderlocation brother y el original
+            OrderLocation orderLocationBrother = GetOrderLocationsBrother(blockInProcess.OrderLocation, greenHouse);
 
+            //llamo a este metodo
+            TransferBlock(orderLocationBrother, blockInProcess, block, relocatedSeedTrays);
+        }
 
 
             Block newBlock = new Block()
