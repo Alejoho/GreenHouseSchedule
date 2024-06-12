@@ -76,7 +76,23 @@ namespace Domain.Processors
             }
             else
             {
+                Order order = blockInProcess.OrderLocation.Order;
 
+                bool isThereBrother = order.OrderLocations
+                    .Any(x =>
+                        x.GreenHouseId == greenHouse
+                        && x.SeedTrayId == blockInProcess.OrderLocation.SeedTrayId
+                        && x.RealSowDate == blockInProcess.OrderLocation.RealSowDate
+                    );
+
+                if (isThereBrother == true)
+                {
+                    return MovementType.WithBortherOutAHouse;
+                }
+                else
+                {
+                    return MovementType.WithoutBortherOutAHouse;
+                }
             }
 
             throw new Exception("Tipo de movimiento no determinado");
