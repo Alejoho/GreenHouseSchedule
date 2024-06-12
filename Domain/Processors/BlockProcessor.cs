@@ -38,29 +38,25 @@ namespace Domain.Processors
             }
         }
 
-
-        private void UpdateBlockPlaceOutAHouseWithBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
+        private void TransferBlock(OrderLocation reciever, Block blockInProcess, byte block, short relocatedSeedTrays)
         {
-            //LATER - remover estos comentarios
+            //obtengo el sender
+            OrderLocation sender = blockInProcess.OrderLocation;
 
-            //consiguo el orderlocation brother y el original
-            OrderLocation orderLocationBrother = GetOrderLocationsBrother(blockInProcess.OrderLocation, greenHouse);
-            OrderLocation orderLocationOriginal = blockInProcess.OrderLocation;
+            //actualizar las bandejas y las posturas en el reciever
+            int alveolus = reciever.SeedlingAmount / reciever.SeedTrayAmount;
+            reciever.SeedTrayAmount += relocatedSeedTrays;
+            reciever.SeedlingAmount += relocatedSeedTrays * alveolus;
 
-            //actualizar las bandejas y las posturas en el brother
-            int alveolus = orderLocationBrother.SeedlingAmount / orderLocationBrother.SeedTrayAmount;
-            orderLocationBrother.SeedTrayAmount += relocatedSeedTrays;
-            orderLocationBrother.SeedlingAmount += relocatedSeedTrays * alveolus;
-
-            //actualizo el brother en la DB
+            //actualizo el reciever en la DB
             OrderLocationRepository orderLocationRepository = new OrderLocationRepository();
 
-            orderLocationRepository.Update(orderLocationBrother);
+            orderLocationRepository.Update(reciever);
 
-            //creo el nuebo bloque y lo inserto en la DB
+            //creo el nuevo bloque y lo inserto en la DB
             Block newBlock = new Block()
             {
-                OrderLocationId = orderLocationBrother.Id,
+                OrderLocationId = reciever.Id,
                 BlockNumber = block,
                 SeedTrayAmount = relocatedSeedTrays
             };
@@ -79,17 +75,17 @@ namespace Domain.Processors
                 _repository.Update(blockInProcess);
             }
 
-            //actualizo el orderLocationOriginal en la DB
-            orderLocationOriginal.SeedTrayAmount -= relocatedSeedTrays;
-            orderLocationOriginal.SeedlingAmount -= relocatedSeedTrays * alveolus;
+            //actualizo el sender en la DB
+            sender.SeedTrayAmount -= relocatedSeedTrays;
+            sender.SeedlingAmount -= relocatedSeedTrays * alveolus;
 
-            if (orderLocationOriginal.SeedTrayAmount == 0)
+            if (sender.SeedTrayAmount == 0)
             {
-                orderLocationRepository.Remove(orderLocationOriginal.Id);
+                orderLocationRepository.Remove(sender.Id);
             }
             else
             {
-                orderLocationRepository.Update(orderLocationOriginal);
+                orderLocationRepository.Update(sender);
             }
         }
 
