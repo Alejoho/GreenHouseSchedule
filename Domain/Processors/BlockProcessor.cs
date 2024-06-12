@@ -100,28 +100,17 @@ namespace Domain.Processors
             TransferBlock(orderLocationBrother, blockInProcess, block, relocatedSeedTrays);
         }
 
+        private void UpdateBlockPlaceOutAHouseWithOutBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
+        {
+            OrderLocation orderLocationCopy = GetCopyOfAnOrderLocation(blockInProcess.OrderLocation);
 
-            Block newBlock = new Block()
-            {
-                OrderLocationId = orderLocationCopy.Id,
-                BlockNumber = block,
-                SeedTrayAmount = relocatedSeedTrays
-            };
+            OrderLocationRepository orderLocationRepository = new OrderLocationRepository();
 
-            _repository.Insert(newBlock);
+            orderLocationRepository.Insert(orderLocationCopy);
 
-            blockInProcess.SeedTrayAmount -= relocatedSeedTrays;
-
-            if (blockInProcess.SeedTrayAmount == 0)
-            {
-                _repository.Remove(blockInProcess.Id);
-            }
-            else
-            {
-                _repository.Update(blockInProcess);
-            }
-            throw new NotImplementedException();
+            TransferBlock(orderLocationCopy, blockInProcess, block, relocatedSeedTrays);
         }
+
         private OrderLocation GetCopyOfAnOrderLocation(OrderLocation orderLocation)
         {
             return new OrderLocation()
