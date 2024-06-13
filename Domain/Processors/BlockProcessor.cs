@@ -103,7 +103,10 @@ namespace Domain.Processors
 
         private void UpdateBlockPlaceOutAHouseWithOutBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
         {
+            //NEXT - tests these cases
             OrderLocation orderLocationCopy = HelpingMethods.GetCopyOfAnOrderLocation(blockInProcess.OrderLocation);
+
+            orderLocationCopy.GreenHouseId = greenHouse;
 
             OrderLocationRepository orderLocationRepository = new OrderLocationRepository();
 
