@@ -1,7 +1,7 @@
 ﻿using Domain.Processors;
+using Presentation.InputForms;
 using Presentation.IRequesters;
 using SupportLayer.Models;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -72,7 +72,8 @@ namespace Presentation.Forms
 
         private void CallRelocatedBlockSetter()
         {
-            throw new NotImplementedException();
+            RelocateInputWindow window = new RelocateInputWindow(this);
+            window.ShowDialog();
         }
 
         private void btnRowDetail_Click(object sender, RoutedEventArgs e)
