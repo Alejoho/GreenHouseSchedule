@@ -188,8 +188,8 @@ create table "OrderLocations"(
 	references "SeedTrays" ("ID"),
 	CONSTRAINT [FK_OrderLocations_GreenHouseId] foreign key ("GreenHouseId") 
 	references "GreenHouses" ("ID"),
-	CONSTRAINT [CK_OrderLocations_SeedTrayAmount] CHECK ("SeedTrayAmount" > 0),
-	CONSTRAINT [CK_OrderLocations_SeedlingAmount] CHECK ("SeedlingAmount" > 0)
+	CONSTRAINT [CK_OrderLocations_SeedTrayAmount] CHECK ("SeedTrayAmount" > -1),
+	CONSTRAINT [CK_OrderLocations_SeedlingAmount] CHECK ("SeedlingAmount" > -1)
 );
 
 go

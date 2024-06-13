@@ -107,6 +107,8 @@ namespace Domain.Processors
             OrderLocation orderLocationCopy = HelpingMethods.GetCopyOfAnOrderLocation(blockInProcess.OrderLocation);
 
             orderLocationCopy.GreenHouseId = greenHouse;
+            orderLocationCopy.SeedTrayAmount = 0;
+            orderLocationCopy.SeedlingAmount = 0;
 
             OrderLocationRepository orderLocationRepository = new OrderLocationRepository();
 
