@@ -140,8 +140,6 @@ namespace Domain.Processors
 
         private MovementType DetermineMovementType(Block blockInProcess, byte greenHouse, short relocatedSeedTrays)
         {
-            MovementType output;
-
             if (blockInProcess.OrderLocation.GreenHouseId == greenHouse)
             {
                 int seedTraysWithoutDelivery =
@@ -149,11 +147,11 @@ namespace Domain.Processors
 
                 if (seedTraysWithoutDelivery == relocatedSeedTrays)
                 {
-                    output = MovementType.CompleteInAHouse;
+                    return MovementType.CompleteInAHouse;
                 }
                 else if (seedTraysWithoutDelivery > relocatedSeedTrays)
                 {
-                    output = MovementType.PartialInAHouse;
+                    return MovementType.PartialInAHouse;
                 }
             }
             else
