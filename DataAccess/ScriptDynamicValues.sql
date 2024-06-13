@@ -127,7 +127,8 @@ insert into "Orders" values
 	(3, 4, 21000, 25200, DATEADD(DAY, 38, @currentDate), DATEADD(DAY, -95, @currentDate), DATEADD(DAY, 8, @currentDate), DATEADD(DAY, 38, @currentDate), null, null, 0, 0),
 	(2, 3, 75000, 90160, DATEADD(DAY, -5, @currentDate), DATEADD(DAY, -80, @currentDate), DATEADD(DAY, -35, @currentDate), DATEADD(DAY, -5, @currentDate), DATEADD(DAY, -35, @currentDate), DATEADD(DAY, -5, @currentDate), 1, 0),
 	(1, 9, 83000, 99760, DATEADD(DAY, -1, @currentDate), DATEADD(DAY, -200, @currentDate), DATEADD(DAY, -46, @currentDate), DATEADD(DAY, -1, @currentDate), DATEADD(DAY, -46, @currentDate), null, 1, 0),
-	(4, 5, 47250, 56700, DATEADD(DAY, 9, @currentDate), DATEADD(DAY, -185, @currentDate), DATEADD(DAY, -21, @currentDate), DATEADD(DAY, 9, @currentDate), DATEADD(DAY, -21, @currentDate), null, 1, 0);
+	(4, 5, 47250, 56700, DATEADD(DAY, 9, @currentDate), DATEADD(DAY, -185, @currentDate), DATEADD(DAY, -21, @currentDate), DATEADD(DAY, 9, @currentDate), DATEADD(DAY, -21, @currentDate), null, 1, 0),
+	(2, 4, 46600, 56000, DATEADD(DAY, -5, @currentDate), DATEADD(DAY, -80, @currentDate), DATEADD(DAY, -35, @currentDate), DATEADD(DAY, -5, @currentDate), DATEADD(DAY, -35, @currentDate), DATEADD(DAY, -5, @currentDate), 1, 0);	
 
 
 go
@@ -161,7 +162,8 @@ insert into "OrderLocations" values
 	(2, 5, 11, 125,  20000, DATEADD(DAY, -45, @currentDate), @currentDate, DATEADD(DAY, -45, @currentDate), null),
 	(3, 5, 11, 310, 49600, DATEADD(DAY, -43, @currentDate), DATEADD(DAY, 2, @currentDate), DATEADD(DAY, -43, @currentDate), null),
 	(7, 4, 12, 267, 40050, DATEADD(DAY, -21, @currentDate), DATEADD(DAY, 9, @currentDate), DATEADD(DAY, -21, @currentDate), null),
-	(8, 4, 12, 111, 16650, DATEADD(DAY, -20, @currentDate), DATEADD(DAY, 10, @currentDate), DATEADD(DAY, -20, @currentDate), null);
+	(8, 4, 12, 111, 16650, DATEADD(DAY, -20, @currentDate), DATEADD(DAY, 10, @currentDate), DATEADD(DAY, -20, @currentDate), null),
+	(2, 6, 13, 200, 56000, DATEADD(DAY, -35, @currentDate), DATEADD(DAY, -5, @currentDate), DATEADD(DAY, -35, @currentDate),DATEADD(DAY, -5, @currentDate));
 
 
 
@@ -187,7 +189,8 @@ insert into "Blocks" values
 	(22, 2, 125, 0),
 	(23, 3, 310, 0),
 	(24, 2, 267, 0),
-	(25, 1, 111, 0);
+	(25, 1, 111, 0),
+	(26, 1, 200, 0);
 	--(9, 2, 80, 14),
 	--(10, 1, 35, 15),
 	--(11, 1, 51, 16),
