@@ -105,7 +105,14 @@ namespace Presentation.Forms
 
         private void RefreshTheDataGrids()
         {
-            throw new NotImplementedException();
+
+            OrderLocation orderLocation = BlockInProcess.OrderLocation;
+
+            _activeBlockDataGrid.Items.Refresh();
+
+            //NEXT - Make this method
+
+            //throw new NotImplementedException();
         }
 
         public Block BlockInProcess { get => _blockInProcess; }
