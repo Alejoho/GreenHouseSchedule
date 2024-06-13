@@ -45,7 +45,7 @@ namespace Domain.Processors
             OrderLocation sender = blockInProcess.OrderLocation;
 
             //actualizar las bandejas y las posturas en el reciever
-            int alveolus = reciever.SeedlingAmount / reciever.SeedTrayAmount;
+            int alveolus = sender.SeedlingAmount / sender.SeedTrayAmount;
             reciever.SeedTrayAmount += relocatedSeedTrays;
             reciever.SeedlingAmount += relocatedSeedTrays * alveolus;
 
