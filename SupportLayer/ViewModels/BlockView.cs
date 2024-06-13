@@ -1,36 +1,37 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
-namespace SupportLayer.Models
+namespace SupportLayer.Models;
+
+[DebuggerDisplay("Por entregar {SeedTraysAmountToBeDelivered}", Name = "{Id} - Bloque {BlockNumber} - {SeedTrayAmount} seedtrays")]
+public partial class Block
 {
-    public partial class Block
+    [NotMapped]
+    public int SeedTraysAmountToBeDelivered
     {
-        [NotMapped]
-        public int SeedTraysAmountToBeDelivered
+        get
         {
-            get
-            {
-                int seedTraysAlreadyDelivered = DeliveryDetails.Sum(x => x.SeedTrayAmountDelivered);
-                int seedTraysToBeDelivered = SeedTrayAmount - seedTraysAlreadyDelivered;
-                return seedTraysToBeDelivered;
-            }
+            int seedTraysAlreadyDelivered = DeliveryDetails.Sum(x => x.SeedTrayAmountDelivered);
+            int seedTraysToBeDelivered = SeedTrayAmount - seedTraysAlreadyDelivered;
+            return seedTraysToBeDelivered;
         }
+    }
 
-        [NotMapped]
-        public int SeedlingAmountToBeDelivered
+    [NotMapped]
+    public int SeedlingAmountToBeDelivered
+    {
+        get
         {
-            get
-            {
-                int alveolus = OrderLocation.SeedlingAmount / OrderLocation.SeedTrayAmount;
-                return alveolus * SeedTraysAmountToBeDelivered;
-            }
+            int alveolus = OrderLocation.SeedlingAmount / OrderLocation.SeedTrayAmount;
+            return alveolus * SeedTraysAmountToBeDelivered;
         }
+    }
 
-        public string BlockName
+    public string BlockName
+    {
+        get
         {
-            get
-            {
-                return "Bloque " + BlockNumber;
-            }
+            return "Bloque " + BlockNumber;
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System.Diagnostics;
+﻿namespace SupportLayer.Models;
 
-namespace SupportLayer.Models;
-[DebuggerDisplay(null, Name = "{Id}")]
 public partial class Order
 {
     public short Id { get; set; }

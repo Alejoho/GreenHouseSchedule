@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace SupportLayer.Models;
 
+[DebuggerDisplay(null, Name = "{Id} - {GreenHouse.Name}")]
 public partial class OrderLocation
 {
     [NotMapped]
