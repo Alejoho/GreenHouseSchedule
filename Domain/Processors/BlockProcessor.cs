@@ -112,7 +112,6 @@ namespace Domain.Processors
 
         private void UpdateBlockPlaceOutAHouseWithOutBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
         {
-            //NEXT - tests these cases
             OrderLocation orderLocationCopy = HelpingMethods.GetCopyOfAnOrderLocation(blockInProcess.OrderLocation);
 
             orderLocationCopy.GreenHouseId = greenHouse;
@@ -122,7 +121,13 @@ namespace Domain.Processors
             OrderLocationRepository orderLocationRepository = new OrderLocationRepository();
 
             orderLocationRepository.Insert(orderLocationCopy);
-            orderLocationCopy.Order.OrderLocations.Add(orderLocationCopy);
+            orderLocationCopy.SeedTray = blockInProcess.OrderLocation.SeedTray;
+            orderLocationCopy.Order = blockInProcess.OrderLocation.Order;
+
+            GreenHouseRepository greenHouseRepository = new GreenHouseRepository();
+            orderLocationCopy.GreenHouse = greenHouseRepository.GetAll().First(x => x.Id == greenHouse);
+
+            blockInProcess.OrderLocation.Order.OrderLocations.Add(orderLocationCopy);
 
             TransferBlock(orderLocationCopy, blockInProcess, block, relocatedSeedTrays);
         }
