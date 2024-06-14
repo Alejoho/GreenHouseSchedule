@@ -26,12 +26,15 @@ namespace Domain.Processors
             };
 
             _repository.Insert(newBlock);
+            orderlocation.Blocks.Add(newBlock);
+            newBlock.OrderLocation = orderlocation;
 
             blockInProcess.SeedTrayAmount -= relocatedSeedTrays;
 
             if (blockInProcess.SeedTrayAmount == 0)
             {
                 _repository.Remove(blockInProcess.Id);
+                blockInProcess.OrderLocation.Blocks.Remove(blockInProcess);
             }
             else
             {
@@ -63,6 +66,8 @@ namespace Domain.Processors
             };
 
             _repository.Insert(newBlock);
+            reciever.Blocks.Add(newBlock);
+            newBlock.OrderLocation = reciever;
 
             //actualizo el bloque original guardo cambios en la DB
             blockInProcess.SeedTrayAmount -= relocatedSeedTrays;
@@ -70,6 +75,7 @@ namespace Domain.Processors
             if (blockInProcess.SeedTrayAmount == 0)
             {
                 _repository.Remove(blockInProcess.Id);
+                sender.Blocks.Remove(blockInProcess);
             }
             else
             {
@@ -83,6 +89,7 @@ namespace Domain.Processors
             if (sender.SeedTrayAmount == 0)
             {
                 orderLocationRepository.Remove(sender.Id);
+                sender.Order.OrderLocations.Remove(sender);
             }
             else
             {
@@ -113,6 +120,7 @@ namespace Domain.Processors
             OrderLocationRepository orderLocationRepository = new OrderLocationRepository();
 
             orderLocationRepository.Insert(orderLocationCopy);
+            orderLocationCopy.Order.OrderLocations.Add(orderLocationCopy);
 
             TransferBlock(orderLocationCopy, blockInProcess, block, relocatedSeedTrays);
         }
