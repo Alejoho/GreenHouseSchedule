@@ -26,8 +26,6 @@ namespace Domain.Processors
             };
 
             _repository.Insert(newBlock);
-            orderlocation.Blocks.Add(newBlock);
-            newBlock.OrderLocation = orderlocation;
 
             blockInProcess.SeedTrayAmount -= relocatedSeedTrays;
 
@@ -40,6 +38,9 @@ namespace Domain.Processors
             {
                 _repository.Update(blockInProcess);
             }
+
+            orderlocation.Blocks.Add(newBlock);
+            newBlock.OrderLocation = orderlocation;
         }
 
         private void TransferBlock(OrderLocation reciever, Block blockInProcess, byte block, short relocatedSeedTrays)
@@ -66,8 +67,6 @@ namespace Domain.Processors
             };
 
             _repository.Insert(newBlock);
-            reciever.Blocks.Add(newBlock);
-            newBlock.OrderLocation = reciever;
 
             //actualizo el bloque original guardo cambios en la DB
             blockInProcess.SeedTrayAmount -= relocatedSeedTrays;
@@ -95,6 +94,9 @@ namespace Domain.Processors
             {
                 orderLocationRepository.Update(sender);
             }
+
+            reciever.Blocks.Add(newBlock);
+            newBlock.OrderLocation = reciever;
         }
 
         private void UpdateBlockPlaceOutAHouseWithBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
