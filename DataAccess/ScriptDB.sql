@@ -204,7 +204,7 @@ create table "Blocks"(
 	CONSTRAINT [PK_Blocks] primary key ("ID"),
 	CONSTRAINT [FK_Blocks_OrderLocationId] foreign key ("OrderLocationId") 
 	references "OrderLocations" ("ID") ON DELETE CASCADE,
-	CONSTRAINT [CK_Blocks_SeedTrayAmount] CHECK ("SeedTrayAmount" > 0),
+	CONSTRAINT [CK_Blocks_SeedTrayAmount] CHECK ("SeedTrayAmount" > -1),
 	CONSTRAINT [CK_Blocks_BlockNumber] CHECK ("BlockNumber" > 0),
 	CONSTRAINT [CK_Blocks_NumberWithinTheBlock] CHECK ("NumberWithinTheBlock" >= 0)
 );
