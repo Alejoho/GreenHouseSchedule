@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace SupportLayer.Models;
 
-[DebuggerDisplay(null, Name = "{Id} - {GreenHouse.Name}")]
+[DebuggerDisplay(null, Name = "{Id} - {GreenHouse.Name,nq}")]
 public partial class OrderLocation
 {
     [NotMapped]

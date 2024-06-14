@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace SupportLayer.Models;
 
-[DebuggerDisplay(null, Name = "{Id} - {Client.Name}")]
+[DebuggerDisplay(null, Name = "{Id} - {Client.Name,nq} - {Product.Variety,nq}")]
 public partial class Order : INotifyPropertyChanged
 {
     [NotMapped]

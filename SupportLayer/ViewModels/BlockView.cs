@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace SupportLayer.Models;
 
-[DebuggerDisplay("Por entregar {SeedTraysAmountToBeDelivered}", Name = "{Id} - Bloque {BlockNumber} - {SeedTrayAmount} seedtrays")]
+[DebuggerDisplay("Por entregar {SeedTraysAmountToBeDelivered,nq}", Name = "{Id} - Bloque {BlockNumber} - {SeedTrayAmount} seedtrays")]
 public partial class Block
 {
     [NotMapped]
