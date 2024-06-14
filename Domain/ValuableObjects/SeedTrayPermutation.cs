@@ -11,7 +11,7 @@ public class SeedTrayPermutation
     private int _secondAmount;
     private int _thirdSeedTrayID;
     private string _thirdSeedTrayName;
-    private int _thirdAmount;      
+    private int _thirdAmount;
 
     public SeedTrayPermutation(int pFirstSeedTrayID, string pfirstSeedTrayName, int pFirstAmount
         , int pSecondSeedTrayID2 = 0, string pSecondSeedTrayName = "", int pSecondAmount = 0
@@ -31,7 +31,7 @@ public class SeedTrayPermutation
     public SeedTrayPermutation(SeedTrayPermutation pSeedTrayPermutationOriginal)
     {
         this._firstSeedTrayID = pSeedTrayPermutationOriginal.FirstSeedTrayID;
-        this._firstSeedTrayName =pSeedTrayPermutationOriginal._firstSeedTrayName;
+        this._firstSeedTrayName = pSeedTrayPermutationOriginal._firstSeedTrayName;
         this._firstAmount = pSeedTrayPermutationOriginal.FirstAmount;
         this._secondSeedTrayID = pSeedTrayPermutationOriginal.SecondSeedTrayID;
         this._secondSeedTrayName = pSeedTrayPermutationOriginal.SecondSeedTrayName;
@@ -40,7 +40,7 @@ public class SeedTrayPermutation
         this._thirdSeedTrayName = pSeedTrayPermutationOriginal.ThirdSeedTrayName;
         this._thirdAmount = pSeedTrayPermutationOriginal.ThirdAmount;
     }
-    
+
     public int FirstSeedTrayID { get => _firstSeedTrayID; set => _firstSeedTrayID = value; }
 
     public string FirstSeedTrayName { get => _firstSeedTrayName; set => _firstSeedTrayName = value; }

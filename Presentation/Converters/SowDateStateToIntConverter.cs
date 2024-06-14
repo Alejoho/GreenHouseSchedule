@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Presentation.Resources;
+using System;
 using System.Globalization;
 using System.Windows.Data;
-using Presentation.Resources;
 
 namespace Presentation.Converters
 {

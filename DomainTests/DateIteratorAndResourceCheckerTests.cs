@@ -659,17 +659,17 @@ public class DateIteratorAndResourceCheckerTests
         var permutations = (LinkedList<SeedTrayPermutation>)fieldInfo.GetValue(iterator);
 
         permutations.Count.Should().Be(permutationAmount);
-        iterator.SeedBedStatus.GeneralAvailableArea.Should().BeApproximately(comprobationOfArea,0.001m);
+        iterator.SeedBedStatus.GeneralAvailableArea.Should().BeApproximately(comprobationOfArea, 0.001m);
 
     }
 
     [Theory]
     [InlineData(50000, 0)]
     [InlineData(65600, 4)]
-    [InlineData(70000, 8)]      
-    [InlineData(80000, 16)]      
-    [InlineData(90000, 24)]      
-    [InlineData(100000, 20)]     
+    [InlineData(70000, 8)]
+    [InlineData(80000, 16)]
+    [InlineData(90000, 24)]
+    [InlineData(100000, 20)]
     [InlineData(110000, 16)]
     [InlineData(120000, 10)]
     [InlineData(130000, 8)]
@@ -793,7 +793,7 @@ public class DateIteratorAndResourceCheckerTests
             greenHouse.SeedTrayAvailableArea *= 0.1640m;
         }
 
-        foreach(var seedtray in iterator.SeedBedStatus.SeedTrays)
+        foreach (var seedtray in iterator.SeedBedStatus.SeedTrays)
         {
             seedtray.FreeAmount = Convert.ToInt32(seedtray.FreeAmount * 0.2m);
         }

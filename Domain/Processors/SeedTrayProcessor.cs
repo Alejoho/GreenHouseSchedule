@@ -1,6 +1,5 @@
 ﻿using DataAccess.Contracts;
 using DataAccess.Repositories;
-using Domain.Models;
 using Domain.Validators;
 using FluentValidation.Results;
 using SupportLayer.Models;

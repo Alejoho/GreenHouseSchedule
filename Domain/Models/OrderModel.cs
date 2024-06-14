@@ -123,7 +123,7 @@ namespace Domain.Models
         /// <value>
         /// Gets the estimate date on which the order must be sown.
         /// </value>
-        public DateOnly? EstimateSowDate  => _estimateSowDate; 
+        public DateOnly? EstimateSowDate => _estimateSowDate;
 
         /// <value>
         /// Gets estimate date on which the order must be delivered.
