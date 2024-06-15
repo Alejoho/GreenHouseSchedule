@@ -4,17 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation.Forms"
-        xmlns:converters="clr-namespace:Presentation.Converters"
+        xmlns:converters="clr-namespace:Presentation.Converters" 
+        xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
         Title="Distribución de órdenes" Height="550" Width="1300" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowState="Normal">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" x:Name="dgDistributionList" Height="400" Margin="20 30 20 0"
+        <custom:TextBoxWithLabel FieldLabel="Búsqueda" Grid.Row="0" Width="210" HorizontalAlignment="Left" 
+                                VerticalAlignment="Top" Margin="20 5 0 0" x:Name="lbltxtSearch"
+                                TextChanged="lbltxtSearch_TextChanged"/>
+
+        <DataGrid Grid.Row="1" x:Name="dgDistributionList" Height="400" Margin="20 30 20 0"
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
                     CanUserReorderColumns="False" CanUserResizeColumns="False" 
                     CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
@@ -101,7 +107,7 @@
 
         </DataGrid>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="150 10 0 0" Height="50">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="150 10 0 0" Height="50">
             <Button x:Name="btnRelocate" Content="Reubicar" Margin="20 12" Width="80" Click="btnRelocate_Click"/>
             <Button x:Name="btnCancel" Content="Atrás" Margin="20 12" Width="80" Click="btnCancel_Click"/>
         </StackPanel>
