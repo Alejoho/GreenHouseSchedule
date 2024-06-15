@@ -34,6 +34,8 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
         LoadData();
     }
 
+    //NEXT - Agregarle a este window un textBox para busqueda, un combobox para seleccionar casa y otro para bandeja
+    // y un check para mostrar solo ordenes no ubicadas. creo que seria bueno hacer una sobrecarga del metodo load
     private void LoadData()
     {
         _orders = new ObservableCollection<Order>(_orderProcessor.GetOrdersInTheSeedBed());
@@ -130,4 +132,12 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
     }
 
     public Block BlockInProcess { get => _blockInProcess; }
+
+    private void lbltxtSearch_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        string filter = lbltxtSearch.TextBox.Text;
+        //_clients = _processor.GetFilteredClients(filter).ToList();
+        //dgClients.ItemsSource = null;
+        //dgClients.ItemsSource = _clients;
+    }
 }
