@@ -142,14 +142,14 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
 
     private void Filter(object sender, FilterEventArgs e)
     {
-        string filter = lbltxtSearch.TextBox.Text;
-        string dateFormat = (string)Application.Current.Resources["DateFormat"];
-
         Order order = e.Item as Order;
 
         if (order != null)
         {
             e.Accepted = false;
+
+            string filter = lbltxtSearch.TextBox.Text;
+            string dateFormat = (string)Application.Current.Resources["DateFormat"];
 
             if (order.Id.ToString().Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
                 || order.Client.Name.Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
@@ -166,8 +166,6 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
             {
                 e.Accepted = true;
             }
-
-            bool algo = order.BlocksView.Any();
         }
     }
 
