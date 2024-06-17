@@ -1,6 +1,5 @@
 ﻿using Domain.Processors;
 using SupportLayer.Models;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,7 +11,6 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class OrderListWindow : Window
 {
-    //LATER - Add HeadersVisibility = "Column" to the datagrids across the board
     private OrderProcessor _processor;
     private Orders _orders;
     private CollectionViewSource _viewSource;
@@ -112,13 +110,4 @@ public partial class OrderListWindow : Window
             }
         }
     }
-}
-
-//LATER - Give to this class a better name. And extract it in a separated file
-// or maybe remove it and do these things the way they should be done
-public class DataContextHolderClass
-{
-    private ObservableCollection<Order> _orders;
-
-    public ObservableCollection<Order> Orders { get; set; }
 }
