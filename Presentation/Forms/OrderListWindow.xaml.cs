@@ -3,6 +3,7 @@ using SupportLayer.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Presentation.Forms;
 
@@ -15,45 +16,36 @@ public partial class OrderListWindow : Window
     //LATER - Find out how to delete and order. Now I couldn't because the relation between order and orderlocations
     //is severed so i have to delete the orderlocations first in order to delete the actual order. I think I could set
     //"delete on cascade".
-    public ObservableCollection<Order> _orders;
-
     private OrderProcessor _processor;
-    private OrderViewModel _orderViewModel;
+    private Orders _orders;
+    private CollectionViewSource _viewSource;
 
     public OrderListWindow()
     {
         InitializeComponent();
         _processor = new OrderProcessor();
-        _orderViewModel = (OrderViewModel)this.DataContext;
-        //LoadData();
+        _orders = (Orders)this.Resources["orders"];
+        _viewSource = (CollectionViewSource)this.Resources["cvsOrders"];
+        LoadData();
     }
 
     private void LoadData()
     {
-
-        //_orderViewModel.Orders = new ObservableCollection<Order>(_processor.GetAllOrders());
-        //dgOrderList.ItemsSource = _orders;
-
-        //return;
         var orders = _processor.GetAllOrders();
 
         foreach (var order in orders)
         {
-            _orderViewModel.Orders.Add(order);
+            _orders.Add(order);
         }
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        //_orderViewModel.Source = _orderViewModel.Orders;
-        dgOrderList.ItemsSource = _orderViewModel.View;
-        //this.Close();
+        this.Close();
     }
 
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
-        _orderViewModel.Orders.RemoveAt(0);
-        return;
         if (dgOrderList.SelectedItem is Order order)
         {
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
@@ -83,6 +75,8 @@ public partial class OrderListWindow : Window
         //LATER - Change the implementation of all SearchTextBoxes.
         //Every time the text change a call to the database is made that is not performant
         //I'd rather to retrieve all records from the db and  then filter in the processor.
+    private void CollectionViewSource_Filter(object sender, System.Windows.Data.FilterEventArgs e)
+    {
         string filter = lbltxtSearch.TextBox.Text;
         _orders = new ObservableCollection<Order>(_processor.GetFilteredOrders(filter));
         dgOrderList.ItemsSource = null;

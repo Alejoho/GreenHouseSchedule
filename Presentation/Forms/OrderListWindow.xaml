@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:local="clr-namespace:Presentation.Forms"
         xmlns:root="clr-namespace:Presentation"
         xmlns:custom="clr-namespace:Presentation.CustomControls" 
@@ -12,12 +13,16 @@
         Title="Lista de órdenes" Height="650" Width="1300" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowState="Maximized">
     
-    <Window.DataContext>
-        <root:OrderViewModel/>
-    </Window.DataContext>
-    
     <Window.Resources>
         <converters:RowDetailSymbolConverter x:Key="Converter"/>
+        <root:Orders x:Key="orders"/>
+        <CollectionViewSource x:Key="cvsOrders" Source="{StaticResource orders}" Filter="CollectionViewSource_Filter">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="EstimateSowDate"/>
+                <scm:SortDescription PropertyName="RealSowDate"/>
+                <scm:SortDescription PropertyName="Client.Name"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
     </Window.Resources>
 
     <Grid>
@@ -35,7 +40,7 @@
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
                     CanUserReorderColumns="False" CanUserResizeColumns="False" 
                     CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
-                    HeadersVisibility="Column" ItemsSource="{Binding View}" 
+                    HeadersVisibility="Column" ItemsSource="{Binding Source={StaticResource cvsOrders} }" 
                     RowDetailsVisibilityMode="Collapsed">
 
             <DataGrid.Columns>
