@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Presentation.Forms;
@@ -24,13 +25,16 @@ namespace Presentation.Forms;
 public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
 {
     private ObservableCollection<Order> _orders;
+    private CollectionViewSource _viewSource;
     private OrderProcessor _orderProcessor;
     private Block _blockInProcess;
     private DataGrid _activeBlockDataGrid;
+
     public OrderDistributionWindow()
     {
         InitializeComponent();
         _orderProcessor = new OrderProcessor();
+        _viewSource = new CollectionViewSource();
         LoadData();
     }
 
@@ -56,9 +60,11 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
             }
         }
 
-        //CHECK - If is really needed to set the datacontex
-        dgDistributionList.DataContext = this;
-        dgDistributionList.ItemsSource = _orders;
+        _viewSource.Source = _orders;
+        _viewSource.SortDescriptions.Add(new SortDescription("RealSowDate", ListSortDirection.Ascending));
+        //LATER - maybe add other sorts. Like this one
+        //_viewSource.SortDescriptions.Add(new SortDescription("Client.Name", ListSortDirection.Descending));
+        dgDistributionList.ItemsSource = _viewSource.View;
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
