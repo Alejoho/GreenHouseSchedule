@@ -3,6 +3,7 @@ using Presentation.InputForms;
 using Presentation.IRequesters;
 using SupportLayer.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,9 +16,6 @@ namespace Presentation.Forms;
 //go to its corresponding site
 
 //LATER - Set a background to the row detail template to show the information in a clearer way.
-
-//NEXT - Agregarle a este window un textBox para busqueda, un combobox para seleccionar casa y otro para bandeja
-// y un check para mostrar solo ordenes no ubicadas.
 
 /// <summary>
 /// Interaction logic for OrderDistributionWindow.xaml
@@ -38,8 +36,6 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
         LoadData();
     }
 
-    //NEXT - Agregarle a este window un textBox para busqueda, un combobox para seleccionar casa y otro para bandeja
-    // y un check para mostrar solo ordenes no ubicadas. creo que seria bueno hacer una sobrecarga del metodo load
     private void LoadData()
     {
         _orders = new ObservableCollection<Order>(_orderProcessor.GetOrdersInTheSeedBed());
@@ -141,9 +137,66 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
 
     private void lbltxtSearch_TextChanged(object sender, TextChangedEventArgs e)
     {
+        _viewSource.Filter += Filter;
+    }
+
+    private void Filter(object sender, FilterEventArgs e)
+    {
         string filter = lbltxtSearch.TextBox.Text;
-        //_clients = _processor.GetFilteredClients(filter).ToList();
-        //dgClients.ItemsSource = null;
-        //dgClients.ItemsSource = _clients;
+        string dateFormat = (string)Application.Current.Resources["DateFormat"];
+
+        Order order = e.Item as Order;
+
+        if (order != null)
+        {
+            e.Accepted = false;
+
+            if (order.Id.ToString().Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+                || order.Client.Name.Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+                || order.Product.Specie.Name.Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+                || order.Product.Variety.Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+                || order.AmountOfWishedSeedlings.ToString().Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+                || order.AmountOfAlgorithmSeedlings.ToString().Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+                || order.DateOfRequest.ToString(dateFormat).Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+                || order.WishDate.ToString(dateFormat).Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+                || order.EstimateSowDate.ToString(dateFormat).Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+                || order.EstimateDeliveryDate.ToString(dateFormat).Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+                || order.RealSowDate.Value.ToString(dateFormat).Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+                || order.BlocksView.Any(MatchedAnyField))
+            {
+                e.Accepted = true;
+            }
+
+            bool algo = order.BlocksView.Any();
+        }
+    }
+
+    private bool MatchedAnyField(Block block)
+    {
+        string filter = lbltxtSearch.TextBox.Text;
+        string dateFormat = (string)Application.Current.Resources["DateFormat"];
+
+        if (block.Id.ToString().Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+            || block.OrderLocation.GreenHouse.Name.Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+            || block.BlockName.Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+            || block.OrderLocation.SeedTray.Name.Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+            || block.SeedTraysAmountToBeDelivered.ToString().Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+            || block.SeedlingAmountToBeDelivered.ToString().Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+            || block.OrderLocation.EstimateSowDate.Value.ToString(dateFormat).Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+            || block.OrderLocation.RealSowDate.Value.ToString(dateFormat).Contains(filter, System.StringComparison.CurrentCultureIgnoreCase)
+            || block.OrderLocation.EstimateDeliveryDate.Value.ToString(dateFormat).Contains(filter, System.StringComparison.CurrentCultureIgnoreCase))
+        {
+            return true;
+        }
+
+        if (block.OrderLocation.RealDeliveryDate.HasValue)
+        {
+            if (block.OrderLocation.RealDeliveryDate.Value.ToString(dateFormat).Contains(filter, System.StringComparison.CurrentCultureIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
