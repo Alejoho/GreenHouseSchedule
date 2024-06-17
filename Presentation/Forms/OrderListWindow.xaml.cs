@@ -52,7 +52,6 @@ public partial class OrderListWindow : Window
     private void LoadData()
     {
         _orders = new ObservableCollection<Order>(_processor.GetAllOrders());
-        dgOrderList.DataContext = this;
         dgOrderList.ItemsSource = _orders;
     }
 

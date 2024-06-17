@@ -65,11 +65,12 @@
                 <DataGridTextColumn Header="Posturas calculadas" Binding="{Binding AmountOfAlgorithmSeedlings}"/>
                 <DataGridTextColumn Header="Fecha requerida" Binding="{Binding WishDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                 <DataGridTextColumn Header="Fecha de pedido" Binding="{Binding DateOfRequest, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                <DataGridTextColumn Header="Fecha de siembra estimada" Binding="{Binding EstimateSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                <DataGridTextColumn Header="Fecha de entrega estimada" Binding="{Binding EstimateDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                <DataGridTextColumn Header="Fecha de siembra real" Binding="{Binding RealSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                <DataGridTextColumn Header="Fecha de entrega real" Binding="{Binding RealDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                <DataGridCheckBoxColumn Header="Completada" Binding="{Binding Complete}"/>
+                <DataGridTextColumn Header="Siembra estimada" Binding="{Binding EstimateSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                <DataGridTextColumn Header="Entrega estimada" Binding="{Binding EstimateDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                <DataGridTextColumn Header="Siembra real" Binding="{Binding RealSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                <DataGridTextColumn Header="Entrega real" Binding="{Binding RealDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                <DataGridCheckBoxColumn Header="Sembrada" Binding="{Binding Sown}"/>
+                <DataGridCheckBoxColumn Header="Entregada" Binding="{Binding Delivered}"/>
             </DataGrid.Columns>
 
             <DataGrid.RowDetailsTemplate>
@@ -78,17 +79,17 @@
                         SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" 
                         CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
                         IsReadOnly="True" ItemsSource="{Binding OrderLocations}" 
-                        HeadersVisibility="Column" Width="923" HorizontalScrollBarVisibility="Hidden">
+                        HeadersVisibility="Column" Width="auto" HorizontalScrollBarVisibility="Hidden">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Casa" Binding="{Binding GreenHouse.Name}"/>
                             <DataGridTextColumn Header="Bandeja" Binding="{Binding SeedTray.Name}"/>
                             <DataGridTextColumn Header="Cantidad de bandejas" Binding="{Binding SeedTrayAmount}"/>
                             <DataGridTextColumn Header="Cantidad de posturas" Binding="{Binding SeedlingAmount}"/>
-                            <DataGridTextColumn Header="Fecha de siembra estimada" Binding="{Binding EstimateSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                            <DataGridTextColumn Header="Fecha de siembra real" Binding="{Binding RealSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                            <DataGridTextColumn Header="Fecha de entrega estimada" Binding="{Binding EstimateDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
-                            <DataGridTextColumn Header="Fecha de entrega real" Binding="{Binding RealDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Siembra estimada" Binding="{Binding EstimateSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Siembra real" Binding="{Binding RealSowDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Entrega estimada" Binding="{Binding EstimateDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
+                            <DataGridTextColumn Header="Entrega real" Binding="{Binding RealDeliveryDate, StringFormat={StaticResource ResourceKey=DateFormat}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DataTemplate>
