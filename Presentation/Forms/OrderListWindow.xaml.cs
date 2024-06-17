@@ -18,21 +18,42 @@ public partial class OrderListWindow : Window
     public ObservableCollection<Order> _orders;
 
     private OrderProcessor _processor;
+    private OrderViewModel _orderViewModel;
 
     public OrderListWindow()
     {
         InitializeComponent();
         _processor = new OrderProcessor();
-        LoadData();
+        _orderViewModel = (OrderViewModel)this.DataContext;
+        //LoadData();
+    }
+
+    private void LoadData()
+    {
+
+        //_orderViewModel.Orders = new ObservableCollection<Order>(_processor.GetAllOrders());
+        //dgOrderList.ItemsSource = _orders;
+
+        //return;
+        var orders = _processor.GetAllOrders();
+
+        foreach (var order in orders)
+        {
+            _orderViewModel.Orders.Add(order);
+        }
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
+        //_orderViewModel.Source = _orderViewModel.Orders;
+        dgOrderList.ItemsSource = _orderViewModel.View;
+        //this.Close();
     }
 
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
+        _orderViewModel.Orders.RemoveAt(0);
+        return;
         if (dgOrderList.SelectedItem is Order order)
         {
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
@@ -47,12 +68,6 @@ public partial class OrderListWindow : Window
             MessageBox.Show("Debe seleccionar el registro que desea eliminar."
                 , "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-    }
-
-    private void LoadData()
-    {
-        _orders = new ObservableCollection<Order>(_processor.GetAllOrders());
-        dgOrderList.ItemsSource = _orders;
     }
 
     private void btnRowDetail_Click(object sender, RoutedEventArgs e)
