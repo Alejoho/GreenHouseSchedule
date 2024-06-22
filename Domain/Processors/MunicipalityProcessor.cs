@@ -50,7 +50,7 @@ public class MunicipalityProcessor
             }
             catch (Exception ex)
             {
-                //LATER - Add the code to log the errors
+                //NEXT - Add the code to log the errors
                 Error = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 return false;
             }

@@ -44,10 +44,10 @@ public partial class SowInputWindow : Window
                     this.lbltxtSownAmount.TextBox.Focus();
                 }
             }
-            //LATER - Discoment this error handler
+            //NEXT - Discoment this error handler
             //catch(Exception ex)
             //{
-            //    //LATER - Implement the log.
+            //    //NEXT - Implement the log.
             //    MessageBox.Show($"{ex.Message}");
             //}
         }

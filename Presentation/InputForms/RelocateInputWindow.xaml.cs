@@ -70,7 +70,7 @@ namespace Presentation.InputForms
                 }
                 //catch (Exception ex)
                 //{
-                //    //LATER - Implement the log.
+                //    //NEXT - Implement the log.
                 //    MessageBox.Show($"{ex.Message}");
                 //}
             }
