@@ -1,5 +1,7 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.AddEditForms;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +57,11 @@ namespace Presentation.Forms
                     _processor.DeleteSeedTray(seedTray.Id);
                     _seedTrays.Remove(seedTray);
                     RefreshData();
+
+                    ILog log = LogHelper.GetLogger();
+                    log4net.GlobalContext.Properties["Model"] = seedTray;
+                    log.Info("A SeedTray record was deleted from the DB");
+                    log4net.GlobalContext.Properties["Model"] = "";
                 }
             }
             else

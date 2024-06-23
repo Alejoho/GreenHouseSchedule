@@ -1,4 +1,6 @@
 ﻿using Domain.Processors;
+using log4net;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Windows;
 
@@ -9,10 +11,11 @@ namespace Presentation.AddEditForms
     /// </summary>
     public partial class AddEditSeedTrayWindow : Window
     {
+        private static readonly ILog _log = LogHelper.GetLogger();
         private SeedTrayProcessor _processor;
         private SeedTray _model;
 
-        //LATER - Evaluate if I really need the preference logic in the seedtrays.
+        //LATER - Evaluate if I really need the preference logic in the seedtrays. Remove it
 
         public AddEditSeedTrayWindow(byte nextPreferenceValue)
         {
@@ -20,6 +23,8 @@ namespace Presentation.AddEditForms
             _processor = new SeedTrayProcessor();
             _model = new SeedTray();
             _model.Preference = nextPreferenceValue;
+
+            _log.Info("The AddEditSeedTrayWindow was opened to add a new SeedTray");
         }
 
         public AddEditSeedTrayWindow(SeedTray model)
@@ -28,6 +33,10 @@ namespace Presentation.AddEditForms
             _processor = new SeedTrayProcessor();
             this._model = model;
             PopulateData();
+
+            log4net.GlobalContext.Properties["Model"] = _model;
+            _log.Info("The AddEditSeedTrayWindow was opened to edit a SeedTray");
+            log4net.GlobalContext.Properties["Model"] = "";
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -42,6 +51,11 @@ namespace Presentation.AddEditForms
                 if (_processor.SaveSeedTray(_model) == true)
                 {
                     MessageBox.Show("Registro salvado");
+
+                    log4net.GlobalContext.Properties["Model"] = _model;
+                    _log.Info("A SeedTray record was saved to the DB");
+                    log4net.GlobalContext.Properties["Model"] = "";
+
                     this.Close();
                 }
                 else
