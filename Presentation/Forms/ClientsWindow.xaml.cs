@@ -1,5 +1,7 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.AddEditForms;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,10 +48,10 @@ public partial class ClientsWindow : Window
         EditClient();
     }
 
-    //private void dgClients_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-    //{
-    //    EditClient();
-    //}
+    private void dgClients_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        EditClient();
+    }
 
     private void btnDeleteClient_Click(object sender, RoutedEventArgs e)
     {
@@ -61,6 +63,11 @@ public partial class ClientsWindow : Window
                 _processor.DeleteClient(client.Id);
                 _clients.Remove(client);
                 RefreshData();
+
+                ILog log = LogHelper.GetLogger();
+                log4net.GlobalContext.Properties["Model"] = client;
+                log.Info("A Client record was deleted from the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
             }
         }
         else

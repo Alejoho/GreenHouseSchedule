@@ -1,5 +1,7 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.IRequesters;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ namespace Presentation.AddEditForms;
 /// </summary>
 public partial class AddEditClientWindow : Window, IOrganizationRequester
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     //TODO - Set in all TextBoxWithLabels the tipvisibility to hide.
     private ClientProcessor _processor;
     private Client _model;
@@ -24,6 +27,8 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
         _processor = new ClientProcessor();
         _model = new Client();
         LoadData();
+
+        _log.Info("The AddEditClientWindow was opened to add a new Client");
     }
 
     public AddEditClientWindow(IClientRequester requestingWindow)
@@ -33,6 +38,10 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
         _model = new Client();
         _requester = requestingWindow;
         LoadData();
+
+        log4net.GlobalContext.Properties["Model"] = _model;
+        _log.Info("The AddEditClientWindow was opened to edit a Client");
+        log4net.GlobalContext.Properties["Model"] = "";
     }
 
     public AddEditClientWindow(Client model)
@@ -57,6 +66,11 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
             {
                 MessageBox.Show("Registro salvado");
                 _requester?.ClientComplete(_model);
+
+                log4net.GlobalContext.Properties["Model"] = _model;
+                _log.Info("A Client record was saved to the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
+
                 this.Close();
             }
             else
