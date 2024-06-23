@@ -1,83 +1,109 @@
-﻿using Presentation.Forms;
+﻿using log4net;
+using Presentation.Forms;
+using SupportLayer;
 using System.Windows;
 
-namespace Presentation
+//[assembly: log4net.Config.XmlConfigurator(ConfigFile = "App.config", Watch = true)]
+
+namespace Presentation;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    private static readonly ILog _log = LogHelper.GetLogger();
+    //LATER - Review the startup of all windows. (WindowStartUpLocation, WindowState) 
+    public MainWindow()
     {
-        //LATER - Review the startup of all windows. (WindowStartUpLocation, WindowState) 
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void btnGreenHouses_Click(object sender, RoutedEventArgs e)
-        {
-            GreenHousesWindow window = new GreenHousesWindow();
-            window.ShowDialog();
-        }
+    private void btnGreenHouses_Click(object sender, RoutedEventArgs e)
+    {
+        GreenHousesWindow window = new GreenHousesWindow();
+        _log.Info($"Opened the {window.GetType().Name}");
+        window.ShowDialog();
+        _log.Info($"Closed the {window.GetType().Name}");
+    }
 
-        private void btnSeedTrays_Click(object sender, RoutedEventArgs e)
-        {
-            SeedTraysWindow window = new SeedTraysWindow();
-            window.ShowDialog();
-        }
+    private void btnSeedTrays_Click(object sender, RoutedEventArgs e)
+    {
+        SeedTraysWindow window = new SeedTraysWindow();
+        _log.Info($"Opened the {window.GetType().Name}");
+        window.ShowDialog();
+        _log.Info($"Closed the {window.GetType().Name}");
+    }
 
-        private void btnClients_Click(object sender, RoutedEventArgs e)
-        {
-            ClientsWindow window = new ClientsWindow();
-            window.ShowDialog();
-        }
+    private void btnClients_Click(object sender, RoutedEventArgs e)
+    {
+        ClientsWindow window = new ClientsWindow();
+        _log.Info($"Opened the {window.GetType().Name}");
+        window.ShowDialog();
+        _log.Info($"Closed the {window.GetType().Name}");
+    }
 
-        private void btnProducts_Click(object sender, RoutedEventArgs e)
-        {
-            ProductsWindow window = new ProductsWindow();
-            window.ShowDialog();
-        }
+    private void btnProducts_Click(object sender, RoutedEventArgs e)
+    {
+        ProductsWindow window = new ProductsWindow();
+        _log.Info($"Opened the {window.GetType().Name}");
+        window.ShowDialog();
+        _log.Info($"Closed the {window.GetType().Name}");
+    }
 
-        private void btnOrganizations_Click(object sender, RoutedEventArgs e)
-        {
-            OrganizationsWindow window = new OrganizationsWindow();
-            window.ShowDialog();
-        }
+    private void btnOrganizations_Click(object sender, RoutedEventArgs e)
+    {
+        OrganizationsWindow window = new OrganizationsWindow();
+        _log.Info($"Opened the {window.GetType().Name}");
+        window.ShowDialog();
+        _log.Info($"Closed the {window.GetType().Name}");
+    }
 
-        private void btnOrderList_Click(object sender, RoutedEventArgs e)
-        {
-            OrderListWindow window = new OrderListWindow();
-            window.ShowDialog();
-        }
+    private void btnOrderList_Click(object sender, RoutedEventArgs e)
+    {
+        OrderListWindow window = new OrderListWindow();
+        _log.Info($"Opened the {window.GetType().Name}");
+        window.ShowDialog();
+        _log.Info($"Closed the {window.GetType().Name}");
+    }
 
-        private void btnNewOrder_Click(object sender, RoutedEventArgs e)
-        {
-            NewOrderWindow window = new NewOrderWindow();
-            window.ShowDialog();
-        }
+    private void btnNewOrder_Click(object sender, RoutedEventArgs e)
+    {
+        NewOrderWindow window = new NewOrderWindow();
+        _log.Info($"Opened the {window.GetType().Name}");
+        window.ShowDialog();
+        _log.Info($"Closed the {window.GetType().Name}");
+    }
 
-        private void btnDeliveries_Click(object sender, RoutedEventArgs e)
-        {
-            DeliveryWindow window = new DeliveryWindow();
-            window.ShowDialog();
-        }
+    private void btnDeliveries_Click(object sender, RoutedEventArgs e)
+    {
+        DeliveryWindow window = new DeliveryWindow();
+        _log.Info($"Opened the {window.GetType().Name}");
+        window.ShowDialog();
+        _log.Info($"Closed the {window.GetType().Name}");
+    }
 
-        private void btnSows_Click(object sender, RoutedEventArgs e)
-        {
-            SowWindow window = new SowWindow();
-            window.ShowDialog();
-        }
+    private void btnSows_Click(object sender, RoutedEventArgs e)
+    {
+        SowWindow window = new SowWindow();
+        _log.Info($"Opened the {window.GetType().Name}");
+        window.ShowDialog();
+        _log.Info($"Closed the {window.GetType().Name}");
+    }
 
-        private void btnOrderDistribution_Click(object sender, RoutedEventArgs e)
-        {
-            OrderDistributionWindow window = new OrderDistributionWindow();
-            window.ShowDialog();
-        }
+    private void btnOrderDistribution_Click(object sender, RoutedEventArgs e)
+    {
+        OrderDistributionWindow window = new OrderDistributionWindow();
+        _log.Info($"Opened the {window.GetType().Name}");
+        window.ShowDialog();
+        _log.Info($"Closed the {window.GetType().Name}");
+    }
 
-        private void btnUnloads_Click(object sender, RoutedEventArgs e)
-        {
-            UnloadWindow window = new UnloadWindow();
-            window.ShowDialog();
-        }
+    private void btnUnloads_Click(object sender, RoutedEventArgs e)
+    {
+        UnloadWindow window = new UnloadWindow();
+        _log.Info($"Opened the {window.GetType().Name}");
+        window.ShowDialog();
+        _log.Info($"Closed the {window.GetType().Name}");
     }
 }
