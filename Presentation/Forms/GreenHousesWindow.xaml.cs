@@ -1,5 +1,7 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.AddEditForms;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +58,11 @@ namespace Presentation.Forms
                     _processor.DeleteGreenHouse(greenHouse.Id);
                     _greenHouses.Remove(greenHouse);
                     RefreshData();
+
+                    ILog log = LogHelper.GetLogger();
+                    log4net.GlobalContext.Properties["Model"] = greenHouse;
+                    log.Info("A GreenHouse record was deleted from the DB");
+                    log4net.GlobalContext.Properties["Model"] = "";
                 }
             }
             else
@@ -81,6 +88,7 @@ namespace Presentation.Forms
         {
             if (dgGreenHouses.SelectedItem is GreenHouse greenHouse)
             {
+
                 AddEditGreenHouseWindow window = new AddEditGreenHouseWindow(greenHouse);
                 window.ShowDialog();
                 RefreshData();

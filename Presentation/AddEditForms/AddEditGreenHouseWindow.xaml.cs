@@ -1,4 +1,6 @@
 ﻿using Domain.Processors;
+using log4net;
+using SupportLayer;
 using SupportLayer.Models;
 using System;
 using System.Windows;
@@ -10,7 +12,7 @@ namespace Presentation.AddEditForms;
 /// </summary>
 public partial class AddEditGreenHouseWindow : Window
 {
-
+    private static readonly ILog _log = LogHelper.GetLogger();
     private GreenHouseProcessor _processor;
     private GreenHouse _model;
 
@@ -19,6 +21,8 @@ public partial class AddEditGreenHouseWindow : Window
         InitializeComponent();
         _processor = new GreenHouseProcessor();
         _model = new GreenHouse();
+
+        _log.Info("The AddEditGreenHouseWindow was opened to add a new GreenHouse");
     }
 
     public AddEditGreenHouseWindow(GreenHouse model)
@@ -27,6 +31,10 @@ public partial class AddEditGreenHouseWindow : Window
         _processor = new GreenHouseProcessor();
         this._model = model;
         PopulateData();
+
+        log4net.GlobalContext.Properties["Model"] = _model;
+        _log.Info("The AddEditGreenHouseWindow was opened to edit a GreenHouse");
+        log4net.GlobalContext.Properties["Model"] = "";
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -41,6 +49,11 @@ public partial class AddEditGreenHouseWindow : Window
             if (_processor.SaveGreenHouse(_model) == true)
             {
                 MessageBox.Show("Registro salvado");
+
+                log4net.GlobalContext.Properties["Model"] = _model;
+                _log.Info("A GreenHouse record was saved to the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
+
                 this.Close();
             }
             else
@@ -64,7 +77,8 @@ public partial class AddEditGreenHouseWindow : Window
 
         _model.Description = txtDescription.Text;
 
-        if (tbtxtWidth.FieldContent != string.Empty)
+        //LATER Change all the evaluation of these type to this current example
+        if (string.IsNullOrEmpty(tbtxtWidth.FieldContent) == false)
         {
             if (decimal.TryParse(tbtxtWidth.FieldContent, out width))
             {
@@ -77,7 +91,7 @@ public partial class AddEditGreenHouseWindow : Window
             }
         }
 
-        if (tbtxtLength.FieldContent != string.Empty)
+        if (string.IsNullOrEmpty(tbtxtLength.FieldContent) == false)
         {
             if (decimal.TryParse(tbtxtLength.FieldContent, out length))
             {
