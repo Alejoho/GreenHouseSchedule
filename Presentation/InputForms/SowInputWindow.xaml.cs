@@ -80,8 +80,7 @@ public partial class SowInputWindow : Window
             return false;
         }
 
-        if (lbltxtSownAmount.FieldContent == null
-            || lbltxtSownAmount.FieldContent == "")
+        if (string.IsNullOrEmpty(lbltxtSownAmount.FieldContent))
         {
             MessageBox.Show("Debe especificar la cantidad de bandejas sembradas.", "Dato faltante"
                 , MessageBoxButton.OK, MessageBoxImage.Information);

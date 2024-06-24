@@ -1,5 +1,7 @@
 ﻿using DataAccess.Repositories;
 using Domain.ValuableObjects;
+using log4net;
+using SupportLayer;
 using SupportLayer.Models;
 
 namespace Domain.Processors;
@@ -7,6 +9,7 @@ namespace Domain.Processors;
 
 public class BlockProcessor
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     private BlockRepository _repository;
     public BlockProcessor()
     {
@@ -40,6 +43,11 @@ public class BlockProcessor
 
         orderlocation.Blocks.Add(newBlock);
         newBlock.OrderLocation = orderlocation;
+
+        log4net.GlobalContext.Properties["Model"] = newBlock;
+        _log.Info("A Block was relocated completely or partial in the same " +
+            "GreenHouse and updated to the DB. UpdateBlockPlaceInAHouse");
+        log4net.GlobalContext.Properties["Model"] = "";
     }
 
     private void TransferBlock(OrderLocation reciever, Block blockInProcess, byte block, short relocatedSeedTrays)
@@ -64,6 +72,11 @@ public class BlockProcessor
             BlockNumber = block,
             SeedTrayAmount = relocatedSeedTrays
         };
+
+        log4net.GlobalContext.Properties["Model"] = newBlock;
+        _log.Info("A Block was transfer to another " +
+            "GreenHouse and updated to the DB");
+        log4net.GlobalContext.Properties["Model"] = "";
 
         _repository.Insert(newBlock);
 
@@ -107,6 +120,8 @@ public class BlockProcessor
 
         //llamo a este metodo
         TransferBlock(orderLocationBrother, blockInProcess, block, relocatedSeedTrays);
+
+        _log.Info("Completed the relocation of a block. UpdateBlockPlaceOutAHouseWithBrother");
     }
 
     private void UpdateBlockPlaceOutAHouseWithOutBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
@@ -129,6 +144,8 @@ public class BlockProcessor
         blockInProcess.OrderLocation.Order.OrderLocations.Add(orderLocationCopy);
 
         TransferBlock(orderLocationCopy, blockInProcess, block, relocatedSeedTrays);
+
+        _log.Info("Completed the relocation of a block. UpdateBlockPlaceOutAHouseWithBrother");
     }
 
     public void SaveRelocateBlockChange(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)

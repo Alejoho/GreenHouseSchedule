@@ -1,5 +1,7 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.IRequesters;
+using SupportLayer;
 using SupportLayer.Models;
 using System;
 using System.Windows;
@@ -12,6 +14,7 @@ namespace Presentation.InputForms
     /// </summary>
     public partial class RelocateInputWindow : Window
     {
+        private static readonly ILog _log = LogHelper.GetLogger();
         private IRelocatedBlockRequester _requester;
 
         public RelocateInputWindow(IRelocatedBlockRequester requestingWindow)
@@ -19,6 +22,10 @@ namespace Presentation.InputForms
             InitializeComponent();
             _requester = requestingWindow;
             LoadData();
+
+            log4net.GlobalContext.Properties["Model"] = _requester.BlockInProcess;
+            _log.Info("The RelocateInputWindow was opened to relocate a Block");
+            log4net.GlobalContext.Properties["Model"] = "";
         }
 
         private void LoadData()
@@ -61,6 +68,10 @@ namespace Presentation.InputForms
 
                     endIndex--;
 
+                    log4net.GlobalContext.Properties["Model"] = _requester.BlockInProcess;
+                    _log.Warn("It was passed an incorrect argument", ex);
+                    log4net.GlobalContext.Properties["Model"] = "";
+
                     MessageBox.Show($"{ex.Message.Substring(0, endIndex)}.");
 
                     if (ex.ParamName == "something")
@@ -68,11 +79,14 @@ namespace Presentation.InputForms
                         lbltxtPlacedAmount.TextBox.Focus();
                     }
                 }
-                //catch (Exception ex)
-                //{
-                //    //NEXT - Implement the log.
-                //    MessageBox.Show($"{ex.Message}");
-                //}
+                catch (Exception ex)
+                {
+                    log4net.GlobalContext.Properties["Model"] = _requester.BlockInProcess;
+                    _log.Error("There was an error relocating a Block", ex);
+                    log4net.GlobalContext.Properties["Model"] = "";
+
+                    MessageBox.Show($"{ex.Message}");
+                }
             }
         }
 
@@ -96,8 +110,7 @@ namespace Presentation.InputForms
                 return false;
             }
 
-            if (lbltxtPlacedAmount.FieldContent == null
-                || lbltxtPlacedAmount.FieldContent == "")
+            if (string.IsNullOrEmpty(lbltxtPlacedAmount.FieldContent))
             {
                 MessageBox.Show("Debe especificar la cantidad de bandejas reubicadas.", "Dato faltante"
                     , MessageBoxButton.OK, MessageBoxImage.Information);
