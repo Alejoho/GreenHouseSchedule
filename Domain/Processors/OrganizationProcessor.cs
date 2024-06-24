@@ -2,6 +2,8 @@
 using DataAccess.Repositories;
 using Domain.Validators;
 using FluentValidation.Results;
+using log4net;
+using SupportLayer;
 using SupportLayer.Models;
 
 namespace Domain.Processors;
@@ -50,7 +52,11 @@ public class OrganizationProcessor
             }
             catch (Exception ex)
             {
-                //LATER - Add the code to log the errors
+                ILog log = LogHelper.GetLogger();
+                log4net.GlobalContext.Properties["Model"] = model;
+                log.Error("There was an error saving an Organization record to the DB", ex);
+                log4net.GlobalContext.Properties["Model"] = "";
+
                 Error = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 return false;
             }
@@ -70,7 +76,6 @@ public class OrganizationProcessor
         return _repository.GetAll().OrderBy(x => x.Name);
     }
 
-    //LATER - Create this method for all of the processors despite whether I use it
     public IEnumerable<Organization> GetFilteredOrganizations(string filter)
     {
         _repository = new OrganizationRepository();

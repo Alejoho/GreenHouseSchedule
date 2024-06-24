@@ -1,5 +1,7 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.AddEditForms;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class OrganizationsWindow : Window
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     List<Organization> _organizations;
     List<Municipality> _municipalities;
     List<Province> _provinces;
@@ -62,6 +65,11 @@ public partial class OrganizationsWindow : Window
                 , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 _organizationProcessor.DeleteOrganization(organization.Id);
+
+                log4net.GlobalContext.Properties["Model"] = organization;
+                _log.Info("An Organization record was deleted from the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
+
                 _organizations.Remove(organization);
                 RefreshData();
             }
@@ -90,6 +98,10 @@ public partial class OrganizationsWindow : Window
 
         if (_municipalityProcessor.SaveMunicipality(_municipalityModel) == true)
         {
+            log4net.GlobalContext.Properties["Model"] = _municipalityModel;
+            _log.Info("A Municipality record was saved to the DB");
+            log4net.GlobalContext.Properties["Model"] = "";
+
             RefreshData();
             txtMunicipality.Text = "";
             cmbProvince.SelectedItem = null;
@@ -112,6 +124,11 @@ public partial class OrganizationsWindow : Window
                 , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 _municipalityProcessor.DeleteMunicipality(municipality.Id);
+
+                log4net.GlobalContext.Properties["Model"] = _municipalityModel;
+                _log.Info("A Municipality record was deleted from the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
+
                 _municipalities.Remove(municipality);
                 RefreshData();
             }
@@ -132,6 +149,10 @@ public partial class OrganizationsWindow : Window
             txtMunicipality.Text = municipality.Name;
             cmbProvince.SelectedItem = _provinces.Where(province => province.Id == municipality.ProvinceId).Single();
             btnRemoveMunicipality.IsEnabled = false;
+
+            log4net.GlobalContext.Properties["Model"] = municipality;
+            _log.Info("A doubleclick action was made on the lstMunicipalities to edit a Municipality");
+            log4net.GlobalContext.Properties["Model"] = "";
         }
         else
         {

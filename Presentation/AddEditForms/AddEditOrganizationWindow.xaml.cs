@@ -1,5 +1,7 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.IRequesters;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ namespace Presentation.AddEditForms;
 /// </summary>
 public partial class AddEditOrganizationWindow : Window
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     //TODO - Add to this window the funcionality to add a new location in window
     private OrganizationProcessor _processor;
     private Organization _model;
@@ -25,6 +28,8 @@ public partial class AddEditOrganizationWindow : Window
         _processor = new OrganizationProcessor();
         _model = new Organization();
         LoadData();
+
+        _log.Info("The AddEditOrganizationWindow was opened to add a new Organization");
     }
 
     public AddEditOrganizationWindow(IOrganizationRequester requestingWindow)
@@ -34,6 +39,8 @@ public partial class AddEditOrganizationWindow : Window
         _model = new Organization();
         _requester = requestingWindow;
         LoadData();
+
+        _log.Info("The AddEditOrganizationWindow was opened by AddEditClientWindow to add a new Organization");
     }
 
     public AddEditOrganizationWindow(Organization model)
@@ -43,6 +50,10 @@ public partial class AddEditOrganizationWindow : Window
         this._model = model;
         LoadData();
         PopulateData();
+
+        log4net.GlobalContext.Properties["Model"] = _model;
+        _log.Info("The AddEditOrganizationWindow was opened to edit an Organization");
+        log4net.GlobalContext.Properties["Model"] = "";
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -56,7 +67,10 @@ public partial class AddEditOrganizationWindow : Window
         {
             if (_processor.SaveOrganization(_model) == true)
             {
-                //MessageBox.Show("Registro salvado");
+                log4net.GlobalContext.Properties["Model"] = _model;
+                _log.Info("An Organization record was saved to the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
+
                 _requester?.OrganizationComplete();
                 this.Close();
             }
