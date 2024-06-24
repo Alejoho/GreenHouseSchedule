@@ -102,6 +102,8 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
         //determine if the order needs to be set its real sow date this without calling to the db
         _orderProcessor.UpdateOrderStatusAfterSow(_orderLocationInProcess.Order);
 
+        //here
+
         RefreshTheDataGrids();
     }
 

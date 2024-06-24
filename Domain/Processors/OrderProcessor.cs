@@ -11,6 +11,7 @@ namespace Domain.Processors;
 
 public class OrderProcessor : IOrderProcessor
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     //CHECK - If want to keep this interface type instead of change it to the class itself.
     private IOrderRepository _repository;
     public string Error { get; set; } = null!;
@@ -54,9 +55,8 @@ public class OrderProcessor : IOrderProcessor
             }
             catch (Exception ex)
             {
-                ILog log = LogHelper.GetLogger();
                 log4net.GlobalContext.Properties["Model"] = model;
-                log.Error("There was an error saving an Order record and all its OrderLocations records to the DB", ex);
+                _log.Error("There was an error saving an Order record and all its OrderLocations records to the DB", ex);
                 log4net.GlobalContext.Properties["Model"] = "";
 
                 Error = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
@@ -148,6 +148,10 @@ public class OrderProcessor : IOrderProcessor
         if (edited == true)
         {
             _repository.Update(model);
+
+            log4net.GlobalContext.Properties["Model"] = model;
+            _log.Info("An Order record was updated to the DB after sow");
+            log4net.GlobalContext.Properties["Model"] = "";
         }
     }
 

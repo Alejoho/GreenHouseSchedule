@@ -1,11 +1,14 @@
 ﻿using DataAccess.Repositories;
 using Domain.ValuableObjects;
+using log4net;
+using SupportLayer;
 using SupportLayer.Models;
 
 namespace Domain.Processors;
 
 public class OrderLocationProcessor : IOrderLocationProcessor
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     private OrderLocationRepository _repository;
 
     public OrderLocationProcessor()
@@ -30,6 +33,10 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         {
             orderLocation.RealSowDate = date;
             _repository.Update(orderLocation);
+
+            log4net.GlobalContext.Properties["Model"] = orderLocation;
+            _log.Info("An OrderLocation was sown and updated to the DB");
+            log4net.GlobalContext.Properties["Model"] = "";
         }
         else
         {
@@ -46,6 +53,10 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
             _repository.Update(orderLocation);
             _repository.Insert(orderLocationCopy);
+
+            log4net.GlobalContext.Properties["Model"] = orderLocationCopy;
+            _log.Info("Part of an OrderLocation was sown and inserted to the DB");
+            log4net.GlobalContext.Properties["Model"] = "";
         }
     }
 

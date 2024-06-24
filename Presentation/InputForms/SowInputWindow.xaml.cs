@@ -1,4 +1,6 @@
-﻿using Presentation.IRequesters;
+﻿using log4net;
+using Presentation.IRequesters;
+using SupportLayer;
 using System;
 using System.Windows;
 
@@ -10,12 +12,17 @@ namespace Presentation.InputForms;
 /// </summary>
 public partial class SowInputWindow : Window
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     private ISownOrderLocationChangeRequester _requester;
     public SowInputWindow(ISownOrderLocationChangeRequester requestingWindow)
     {
         InitializeComponent();
         _requester = requestingWindow;
         dtpSowDate.TimePicker.SelectedDate = DateTime.Today;
+
+        log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
+        _log.Info("The SowInputWindow was opened to sow an OrderLocation");
+        log4net.GlobalContext.Properties["Model"] = "";
     }
 
     private void btnConfirm_Click(object sender, RoutedEventArgs e)
@@ -25,6 +32,7 @@ public partial class SowInputWindow : Window
             try
             {
                 _requester.SetTheSownOrderLocation(dtpSowDate.SelectedDateOnly, lbltxtSownAmount.ShortNumber);
+
                 this.Close();
             }
             catch (ArgumentException ex)
@@ -32,6 +40,10 @@ public partial class SowInputWindow : Window
                 int endIndex = ex.Message.IndexOf('(');
 
                 endIndex--;
+
+                log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
+                _log.Warn("It was passed an incorrect argument", ex);
+                log4net.GlobalContext.Properties["Model"] = "";
 
                 MessageBox.Show($"{ex.Message.Substring(0, endIndex)}.");
 
@@ -44,12 +56,14 @@ public partial class SowInputWindow : Window
                     this.lbltxtSownAmount.TextBox.Focus();
                 }
             }
-            //NEXT - Discoment this error handler
-            //catch(Exception ex)
-            //{
-            //    //NEXT - Implement the log.
-            //    MessageBox.Show($"{ex.Message}");
-            //}
+            catch (Exception ex)
+            {
+                log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
+                _log.Error("There was an error sowing an OrderLocation", ex);
+                log4net.GlobalContext.Properties["Model"] = "";
+
+                MessageBox.Show($"{ex.Message}");
+            }
         }
     }
 
