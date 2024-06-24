@@ -68,9 +68,7 @@ namespace Presentation.InputForms
 
                     endIndex--;
 
-                    log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
                     _log.Warn("It was passed an incorrect argument", ex);
-                    log4net.GlobalContext.Properties["Model"] = "";
 
                     MessageBox.Show($"{ex.Message.Substring(0, endIndex)}.");
 
@@ -82,9 +80,7 @@ namespace Presentation.InputForms
                 }
                 catch (Exception ex)
                 {
-                    log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
                     _log.Error("There was an error placing an OrderLocation", ex);
-                    log4net.GlobalContext.Properties["Model"] = "";
 
                     MessageBox.Show($"{ex.Message}");
 
@@ -115,8 +111,8 @@ namespace Presentation.InputForms
                 return false;
             }
 
-            if (lbltxtPlacedAmount.FieldContent == null
-                || lbltxtPlacedAmount.FieldContent == "")
+
+            if (string.IsNullOrEmpty(lbltxtPlacedAmount.FieldContent))
             {
                 MessageBox.Show("Debe especificar la cantidad de bandejas ubicadas.", "Dato faltante"
                     , MessageBoxButton.OK, MessageBoxImage.Information);

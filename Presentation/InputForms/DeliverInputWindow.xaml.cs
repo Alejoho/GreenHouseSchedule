@@ -39,9 +39,7 @@ public partial class DeliverInputWindow : Window
 
                 endIndex--;
 
-                log4net.GlobalContext.Properties["Model"] = _requester.BlockInProcess;
                 _log.Warn("It was passed an incorrect argument", ex);
-                log4net.GlobalContext.Properties["Model"] = "";
 
                 MessageBox.Show($"{ex.Message.Substring(0, endIndex)}.");
 
@@ -56,9 +54,7 @@ public partial class DeliverInputWindow : Window
             }
             catch (Exception ex)
             {
-                log4net.GlobalContext.Properties["Model"] = _requester.BlockInProcess;
                 _log.Error("There was an error delivering a block", ex);
-                log4net.GlobalContext.Properties["Model"] = "";
 
                 MessageBox.Show($"{ex.Message}");
             }
@@ -76,8 +72,7 @@ public partial class DeliverInputWindow : Window
             return false;
         }
 
-        if (lbltxtDeliveredAmount.FieldContent == null
-            || lbltxtDeliveredAmount.FieldContent == "")
+        if (string.IsNullOrEmpty(lbltxtDeliveredAmount.FieldContent))
         {
             MessageBox.Show("Debe especificar la cantidad de bandejas sembradas.", "Dato faltante"
                 , MessageBoxButton.OK, MessageBoxImage.Information);

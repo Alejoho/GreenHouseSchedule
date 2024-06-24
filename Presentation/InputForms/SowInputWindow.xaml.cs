@@ -41,9 +41,7 @@ public partial class SowInputWindow : Window
 
                 endIndex--;
 
-                log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
                 _log.Warn("It was passed an incorrect argument", ex);
-                log4net.GlobalContext.Properties["Model"] = "";
 
                 MessageBox.Show($"{ex.Message.Substring(0, endIndex)}.");
 
@@ -58,9 +56,7 @@ public partial class SowInputWindow : Window
             }
             catch (Exception ex)
             {
-                log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
                 _log.Error("There was an error sowing an OrderLocation", ex);
-                log4net.GlobalContext.Properties["Model"] = "";
 
                 MessageBox.Show($"{ex.Message}");
 
