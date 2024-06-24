@@ -1,5 +1,7 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.IRequesters;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Windows;
 
@@ -10,7 +12,8 @@ namespace Presentation.AddEditForms
     /// </summary>
     public partial class AddEditSpeciesWindow : Window
     {
-        //LATER - Make a warnning if an user wnat to change the data of a specie
+        private static readonly ILog _log = LogHelper.GetLogger();
+        //LATER - Make a warnning if an user want to change the data of a specie
         //I think to show a message that says. Este registro no se puede editar
         //en cambio lo que puede hacer es crear otro registro con los nuevos datos y 
         //usar ese.
@@ -24,7 +27,8 @@ namespace Presentation.AddEditForms
             _processor = new SpeciesProcessor();
             _model = new Species();
             _requestor = requestor;
-            LlenarCasillas();
+
+            _log.Info("The AddEditSpeciesWindow was opened to add a new Species");
         }
 
         public AddEditSpeciesWindow(Species model)
@@ -33,6 +37,10 @@ namespace Presentation.AddEditForms
             _processor = new SpeciesProcessor();
             this._model = model;
             PopulateData();
+
+            log4net.GlobalContext.Properties["Model"] = _model;
+            _log.Info("The AddEditSpeciesWindow was opened to edit a Species");
+            log4net.GlobalContext.Properties["Model"] = "";
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -122,15 +130,6 @@ namespace Presentation.AddEditForms
             lbltxtWeightOf1000Seeds.FieldContent = _model.WeightOf1000Seeds.ToString();
             lbltxtAmountOfSeedsPerHectare.FieldContent = _model.AmountOfSeedsPerHectare.ToString();
             lbltxtWeightOfSeedsPerHectare.FieldContent = _model.WeightOfSeedsPerHectare.ToString();
-        }
-
-        private void LlenarCasillas()
-        {
-            lbltxtName.FieldContent = "aji picante";
-            lbltxtProductionDays.FieldContent = "45";
-            lbltxtWeightOf1000Seeds.FieldContent = "678";
-            lbltxtAmountOfSeedsPerHectare.FieldContent = "25000";
-            lbltxtWeightOfSeedsPerHectare.FieldContent = "32.63";
         }
     }
 }

@@ -6,4 +6,9 @@ public partial class Product
     {
         get => $"{Specie.Name} - {Variety}";
     }
+
+    public override string ToString()
+    {
+        return PropertyFormatter.FormatProperties(this);
+    }
 }

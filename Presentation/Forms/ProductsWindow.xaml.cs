@@ -1,6 +1,8 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.AddEditForms;
 using Presentation.IRequesters;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class ProductsWindow : Window, ISpeciesRequester
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     //LATER - Maybe implement the logic of the use of "ObservableCollection" in all the others.
     private ObservableCollection<Species> _species;
     private SpeciesProcessor _speciesProcessor;
@@ -74,6 +77,12 @@ public partial class ProductsWindow : Window, ISpeciesRequester
                 , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 _speciesProcessor.DeleteSpecies(species.Id);
+
+                ILog _log = LogHelper.GetLogger();
+                log4net.GlobalContext.Properties["Model"] = species;
+                _log.Info("A Species record was deleted from the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
+
                 _species.Remove(species);
             }
         }
@@ -110,8 +119,6 @@ public partial class ProductsWindow : Window, ISpeciesRequester
 
     private void btnAddVariety_Click(object sender, RoutedEventArgs e)
     {
-        //LATER - Create an string extension method in the SupportLayer project to check if a string is null or whitespace(this is whitespace"   ")
-
         ValidateDataType();
 
         if (_productModel.Id == 0)
@@ -121,10 +128,12 @@ public partial class ProductsWindow : Window, ISpeciesRequester
 
         if (_productProcessor.SaveProduct(_productModel) == true)
         {
+            log4net.GlobalContext.Properties["Model"] = _productModel;
+            _log.Info("A Product record was saved to the DB");
+            log4net.GlobalContext.Properties["Model"] = "";
+
             RefreshListBox();
-
             _productModel = new Product();
-
             txtNewVariety.Text = "";
             btnAddVariety.Content = "Agregar";
             btnRemoveVariety.IsEnabled = true;
@@ -167,6 +176,11 @@ public partial class ProductsWindow : Window, ISpeciesRequester
                 ((Species)dgSpecies.SelectedItem).Products.Remove(product);
 
                 RefreshListBox();
+
+                ILog log = LogHelper.GetLogger();
+                log4net.GlobalContext.Properties["Model"] = product;
+                log.Info("A Product record was deleted from the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
             }
         }
         else
@@ -185,6 +199,10 @@ public partial class ProductsWindow : Window, ISpeciesRequester
             txtNewVariety.Text = product.Variety;
             btnAddVariety.Content = "Editar";
             btnRemoveVariety.IsEnabled = false;
+
+            log4net.GlobalContext.Properties["Model"] = product;
+            _log.Info("A doubleclick action was made on the lstProducts to edit a Product");
+            log4net.GlobalContext.Properties["Model"] = "";
         }
         else
         {

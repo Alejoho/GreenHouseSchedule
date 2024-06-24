@@ -1,5 +1,7 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.IRequesters;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ namespace Presentation.AddEditForms;
 /// </summary>
 public partial class AddProductWindow : Window, ISpeciesRequester
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     private ProductProcessor _processor;
     private Product _model;
     private List<Species> _species;
@@ -24,6 +27,8 @@ public partial class AddProductWindow : Window, ISpeciesRequester
         _model = new Product();
         _requester = requestingWindow;
         LoadData();
+
+        _log.Info("The AddProductWindow was opened by the NewOrderWindow to add a new Product");
     }
 
     private void LoadData()
@@ -41,6 +46,11 @@ public partial class AddProductWindow : Window, ISpeciesRequester
             if (_processor.SaveProduct(_model) == true)
             {
                 MessageBox.Show("Registro salvado");
+
+                log4net.GlobalContext.Properties["Model"] = _model;
+                _log.Info("A Product record was saved to the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
+
                 _requester?.ProductComplete(_model);
                 this.Close();
             }
