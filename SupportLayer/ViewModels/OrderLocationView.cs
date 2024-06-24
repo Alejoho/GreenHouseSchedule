@@ -28,4 +28,9 @@ public partial class OrderLocation
             return (short)(seedTrays * alveolus);
         }
     }
+
+    public override string ToString()
+    {
+        return PropertyFormatter.FormatProperties(this);
+    }
 }
