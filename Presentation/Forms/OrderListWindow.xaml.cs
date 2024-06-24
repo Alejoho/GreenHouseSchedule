@@ -1,4 +1,6 @@
 ﻿using Domain.Processors;
+using log4net;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,7 +48,14 @@ public partial class OrderListWindow : Window
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
                 , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
+                //NEXT - Agregar un try / catch here
                 _processor.DeleteOrder(order.Id);
+
+                ILog log = LogHelper.GetLogger();
+                log4net.GlobalContext.Properties["Model"] = order;
+                log.Info("An Order record and all its related records were deleted from the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
+
                 _orders.Remove(order);
             }
         }
