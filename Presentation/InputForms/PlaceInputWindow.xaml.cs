@@ -1,5 +1,7 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.IRequesters;
+using SupportLayer;
 using SupportLayer.Models;
 using System;
 using System.Windows;
@@ -12,6 +14,7 @@ namespace Presentation.InputForms
     /// </summary>
     public partial class PlaceInputWindow : Window
     {
+        private static readonly ILog _log = LogHelper.GetLogger();
         private IPlacedOrderLocationChangeRequester _requester;
 
         public PlaceInputWindow(IPlacedOrderLocationChangeRequester requestingWindow)
@@ -19,6 +22,10 @@ namespace Presentation.InputForms
             InitializeComponent();
             _requester = requestingWindow;
             LoadData();
+
+            log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
+            _log.Info("The PlaceInputWindow was opened to place an OrderLocation");
+            log4net.GlobalContext.Properties["Model"] = "";
         }
 
         private void LoadData()
@@ -61,18 +68,30 @@ namespace Presentation.InputForms
 
                     endIndex--;
 
+                    log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
+                    _log.Warn("It was passed an incorrect argument", ex);
+                    log4net.GlobalContext.Properties["Model"] = "";
+
                     MessageBox.Show($"{ex.Message.Substring(0, endIndex)}.");
 
+                    //TODO - ver que nombre poner aqui.
                     if (ex.ParamName == "something")
                     {
                         lbltxtPlacedAmount.TextBox.Focus();
                     }
                 }
-                //catch (Exception ex)
-                //{
-                //    //NEXT - Implement the log.
-                //    MessageBox.Show($"{ex.Message}");
-                //}
+                catch (Exception ex)
+                {
+                    log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
+                    _log.Error("There was an error placing an OrderLocation", ex);
+                    log4net.GlobalContext.Properties["Model"] = "";
+
+                    MessageBox.Show($"{ex.Message}");
+
+                    //TODO - Maybe in the parent of this window(and all other similar windows) implement
+                    //an event that will be triggered from here close the parent window
+                    this.Close();
+                }
             }
         }
 

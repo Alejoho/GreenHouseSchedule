@@ -63,6 +63,8 @@ public partial class SowInputWindow : Window
                 log4net.GlobalContext.Properties["Model"] = "";
 
                 MessageBox.Show($"{ex.Message}");
+
+                this.Close();
             }
         }
     }

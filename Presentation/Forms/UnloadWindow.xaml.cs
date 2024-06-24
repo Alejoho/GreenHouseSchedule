@@ -1,6 +1,8 @@
 ﻿using Domain.Processors;
+using log4net;
 using Presentation.InputForms;
 using Presentation.IRequesters;
+using SupportLayer;
 using SupportLayer.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -14,6 +16,7 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     private ObservableCollection<Order> _orders;
     //TODO - Move the order processor to the only palce is used, the LoadData method
     private OrderProcessor _orderProcessor;
@@ -84,6 +87,8 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
     public void SetThePlacedOrderLocation(byte greenHouse, byte block, short placedSeedTrays)
     {
         _orderLocationProcessor.SavePlacedOrderLocationChange(_orderLocationInProcess, greenHouse, block, placedSeedTrays);
+
+        _log.Info("Completed the actual placing");
 
         RefreshTheDataGrids();
     }
