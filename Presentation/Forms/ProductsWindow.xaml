@@ -47,18 +47,17 @@
         
         <!--Variety-->
         <StackPanel Grid.Row="0" Grid.Column="1">
-            <ListBox x:Name="lstVarieties" Height="290" Margin="5 10 5 5" MouseDoubleClick="lstVarieties_MouseDoubleClick"
-                     >
+            <ListBox x:Name="lstProducts" Height="290" Margin="5 10 5 5" MouseDoubleClick="lstProducts_MouseDoubleClick">
 
             </ListBox>
             <StackPanel Orientation="Horizontal" Margin="5 5 5 5">
-                <TextBox x:Name="txtNewVariety" Width="110"/>
-                <Button x:Name="btnAddVariety" Content="Agregar" Margin="20 0 0 0" Click="btnAddVariety_Click"/>
+                <TextBox x:Name="txtNewProduct" Width="110"/>
+                <Button x:Name="btnAddProduct" Content="Agregar" Margin="20 0 0 0" Click="btnAddProduct_Click"/>
             </StackPanel>
         </StackPanel>
 
         <Button Grid.Row="0" Grid.Column="2" Height="40" Width="70" Margin="5 20 0 0" VerticalAlignment="Top" 
-                HorizontalAlignment="Left" x:Name="btnRemoveVariety" Click="btnRemoveVariety_Click">
+                HorizontalAlignment="Left" x:Name="btnRemoveProduct" Click="btnRemoveProduct_Click">
             <TextBlock Text="Borrar variedad" TextWrapping="Wrap" TextAlignment="Center"/>
         </Button>
         

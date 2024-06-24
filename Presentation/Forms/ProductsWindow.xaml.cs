@@ -99,7 +99,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
         //CHECK - if it's necessary specify the data context for this form.
         dgSpecies.DataContext = this;
         dgSpecies.ItemsSource = _species;
-        lstVarieties.DisplayMemberPath = "Variety";
+        lstProducts.DisplayMemberPath = "Variety";
     }
 
     public void SpeciesComplete(Species model)
@@ -111,13 +111,13 @@ public partial class ProductsWindow : Window, ISpeciesRequester
     {
         if (dgSpecies.SelectedItem is Species species)
         {
-            lstVarieties.ItemsSource = species.Products.OrderBy(x => x.Variety);
-            btnRemoveVariety.IsEnabled = true;
-            txtNewVariety.Text = "";
+            lstProducts.ItemsSource = species.Products.OrderBy(x => x.Variety);
+            btnRemoveProduct.IsEnabled = true;
+            txtNewProduct.Text = "";
         }
     }
 
-    private void btnAddVariety_Click(object sender, RoutedEventArgs e)
+    private void btnAddProduct_Click(object sender, RoutedEventArgs e)
     {
         ValidateDataType();
 
@@ -134,9 +134,9 @@ public partial class ProductsWindow : Window, ISpeciesRequester
 
             RefreshListBox();
             _productModel = new Product();
-            txtNewVariety.Text = "";
-            btnAddVariety.Content = "Agregar";
-            btnRemoveVariety.IsEnabled = true;
+            txtNewProduct.Text = "";
+            btnAddProduct.Content = "Agregar";
+            btnRemoveProduct.IsEnabled = true;
         }
         else
         {
@@ -146,7 +146,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
 
     private void ValidateDataType()
     {
-        _productModel.Variety = txtNewVariety.Text;
+        _productModel.Variety = txtNewProduct.Text;
         _productModel.SpecieId = ((Species)dgSpecies.SelectedItem).Id;
     }
 
@@ -158,13 +158,13 @@ public partial class ProductsWindow : Window, ISpeciesRequester
     private void RefreshListBox()
     {
         Species species = (Species)dgSpecies.SelectedItem;
-        lstVarieties.ItemsSource = null;
-        lstVarieties.ItemsSource = species.Products.OrderBy(x => x.Variety);
+        lstProducts.ItemsSource = null;
+        lstProducts.ItemsSource = species.Products.OrderBy(x => x.Variety);
     }
 
-    private void btnRemoveVariety_Click(object sender, RoutedEventArgs e)
+    private void btnRemoveProduct_Click(object sender, RoutedEventArgs e)
     {
-        if (lstVarieties.SelectedItem is Product product)
+        if (lstProducts.SelectedItem is Product product)
         {
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?"
                 , "Eliminar registro"
@@ -190,15 +190,15 @@ public partial class ProductsWindow : Window, ISpeciesRequester
         }
     }
 
-    private void lstVarieties_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void lstProducts_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         //LATER - In the database and all the logic above change the table Product by Variety
-        if (lstVarieties.SelectedItem is Product product)
+        if (lstProducts.SelectedItem is Product product)
         {
             _productModel = product;
-            txtNewVariety.Text = product.Variety;
-            btnAddVariety.Content = "Editar";
-            btnRemoveVariety.IsEnabled = false;
+            txtNewProduct.Text = product.Variety;
+            btnAddProduct.Content = "Editar";
+            btnRemoveProduct.IsEnabled = false;
 
             log4net.GlobalContext.Properties["Model"] = product;
             _log.Info("A doubleclick action was made on the lstProducts to edit a Product");
