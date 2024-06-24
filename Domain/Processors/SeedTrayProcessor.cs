@@ -84,10 +84,15 @@ namespace Domain.Processors
         {
             var changedSeedTrays = seedTrays.Where(x => x.IsSelected != x.Selected);
 
-            foreach (var st in changedSeedTrays)
+            foreach (var seedTray in changedSeedTrays)
             {
-                st.Selected = st.IsSelected;
-                this.SaveSeedTray(st);
+                seedTray.Selected = seedTray.IsSelected;
+                this.SaveSeedTray(seedTray);
+
+                ILog log = LogHelper.GetLogger();
+                log4net.GlobalContext.Properties["Model"] = seedTray;
+                log.Info("A SeedTray seletion was updated to the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
             }
         }
     }

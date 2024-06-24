@@ -2,9 +2,11 @@
 using Domain.Models;
 using Domain.Processors;
 using Domain.ValuableObjects;
+using log4net;
 using Presentation.AddEditForms;
 using Presentation.IRequesters;
 using Presentation.Resources;
+using SupportLayer;
 using SupportLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,7 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class NewOrderWindow : Window, IClientRequester, IProductRequester
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     private ClientProcessor _clientProcessor;
     private ProductProcessor _productProcessor;
     private SeedTrayProcessor _seedTrayProcessor;
@@ -96,18 +99,28 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
             _status = new SeedBedStatus();
 
-            _iterator = new DateIteratorAndResourceChecker(_status, CreateTheNewOrder());
+            OrderModel order = CreateTheNewOrder();
+
+            _iterator = new DateIteratorAndResourceChecker(_status, order);
+
+            log4net.GlobalContext.Properties["Model"] = order;
+            _log.Info("A SeedBedStatus and DateIteratorAndResourceChecker objects were created successfully");
+            log4net.GlobalContext.Properties["Model"] = "";
 
             _iterator.LookForAvailability();
 
             if (_iterator.SeedTrayPermutations.Count > 0)
             {
+                _log.Info("It was found disponibility for the new Order");
+
                 permutationsToDisplay = new LinkedList<SeedTrayPermutation>(_iterator.SeedTrayPermutations);
                 ToggleControls();
                 DisplayResults();
             }
             else
             {
+                _log.Info("It wasn't found disponibility for the new Order");
+
                 MessageBox.Show("No se encontró espacio para ubicar la nueva orden.");
             }
         }
@@ -309,6 +322,10 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     {
         if (dgSeedTrayPermutations.SelectedItem is SeedTrayPermutation permutation)
         {
+            log4net.GlobalContext.Properties["Model"] = permutation;
+            _log.Info("A SeedTrayPermutation was selected to display");
+            log4net.GlobalContext.Properties["Model"] = "";
+
             SetTheResultingOrder(permutation);
 
             DisplayOrderLocations();
@@ -321,7 +338,6 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
-        //TODO - Find out why when I save a new order its order locations are saved in reverse. I mean the olders first.
         OrderProcessor processor = new OrderProcessor();
 
         foreach (OrderLocation orderLocation in _resultingOrder.OrderLocations)
@@ -331,6 +347,10 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
         if (processor.SaveOrder(_resultingOrder) == true)
         {
+            log4net.GlobalContext.Properties["Model"] = _resultingOrder;
+            _log.Info("An Order record and all its OrderLocations records were saved to the DB");
+            log4net.GlobalContext.Properties["Model"] = "";
+
             MessageBox.Show("Nueva orden guardada");
             this.Close();
         }
@@ -339,8 +359,6 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             MessageBox.Show(processor.Error);
             this.Close();
         }
-
     }
-
     //LATER - Check the look of all MessageBox.Show methods and standarize them
 }

@@ -2,6 +2,7 @@
 using DataAccess.Repositories;
 using Domain.Validators;
 using FluentValidation.Results;
+using log4net;
 using SupportLayer;
 using SupportLayer.Models;
 using System.Configuration;
@@ -53,7 +54,11 @@ public class OrderProcessor : IOrderProcessor
             }
             catch (Exception ex)
             {
-                //NEXT - Add the code to log the errors
+                ILog log = LogHelper.GetLogger();
+                log4net.GlobalContext.Properties["Model"] = model;
+                log.Error("There was an error saving an Order record and all its OrderLocations records to the DB", ex);
+                log4net.GlobalContext.Properties["Model"] = "";
+
                 Error = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 return false;
             }
