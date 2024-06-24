@@ -2,6 +2,7 @@
 using log4net;
 using SupportLayer;
 using SupportLayer.Models;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -48,10 +49,23 @@ public partial class OrderListWindow : Window
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
                 , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                //NEXT - Agregar un try / catch here
-                _processor.DeleteOrder(order.Id);
-
                 ILog log = LogHelper.GetLogger();
+
+                try
+                {
+                    _processor.DeleteOrder(order.Id);
+                }
+                catch (Exception ex)
+                {
+                    log4net.GlobalContext.Properties["Model"] = order;
+                    log.Error("There was an error deleting an Order record from the DB", ex);
+                    log4net.GlobalContext.Properties["Model"] = "";
+
+                    MessageBox.Show("Hubo un error borrando el registro seleccionado. La ventana va a cerrarse");
+
+                    this.Close();
+                }
+
                 log4net.GlobalContext.Properties["Model"] = order;
                 log.Info("An Order record and all its related records were deleted from the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
