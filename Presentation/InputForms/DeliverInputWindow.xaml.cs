@@ -1,4 +1,6 @@
-﻿using Presentation.IRequesters;
+﻿using log4net;
+using Presentation.IRequesters;
+using SupportLayer;
 using System;
 using System.Windows;
 
@@ -9,12 +11,17 @@ namespace Presentation.InputForms;
 /// </summary>
 public partial class DeliverInputWindow : Window
 {
+    private static readonly ILog _log = LogHelper.GetLogger();
     private IDeliveredBlockRequester _requester;
     public DeliverInputWindow(IDeliveredBlockRequester requestingWindow)
     {
         InitializeComponent();
         _requester = requestingWindow;
         dtpDeliveryDate.TimePicker.SelectedDate = DateTime.Today;
+
+        log4net.GlobalContext.Properties["Model"] = _requester.BlockInProcess;
+        _log.Info("The DeliverInputWindow was opened to deliver a Block");
+        log4net.GlobalContext.Properties["Model"] = "";
     }
 
     private void btnConfirm_Click(object sender, RoutedEventArgs e)
@@ -32,6 +39,10 @@ public partial class DeliverInputWindow : Window
 
                 endIndex--;
 
+                log4net.GlobalContext.Properties["Model"] = _requester.BlockInProcess;
+                _log.Warn("It was passed an incorrect argument", ex);
+                log4net.GlobalContext.Properties["Model"] = "";
+
                 MessageBox.Show($"{ex.Message.Substring(0, endIndex)}.");
 
                 if (ex.ParamName == "date")
@@ -43,12 +54,14 @@ public partial class DeliverInputWindow : Window
                     this.lbltxtDeliveredAmount.TextBox.Focus();
                 }
             }
-            //NEXT - Discoment this error handler
-            //catch(Exception ex)
-            //{
-            //    //NEXT - Implement the log.
-            //    MessageBox.Show($"{ex.Message}");
-            //}
+            catch (Exception ex)
+            {
+                log4net.GlobalContext.Properties["Model"] = _requester.BlockInProcess;
+                _log.Error("There was an error delivering a block", ex);
+                log4net.GlobalContext.Properties["Model"] = "";
+
+                MessageBox.Show($"{ex.Message}");
+            }
         }
     }
 

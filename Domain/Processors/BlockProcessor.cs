@@ -121,7 +121,7 @@ public class BlockProcessor
         //llamo a este metodo
         TransferBlock(orderLocationBrother, blockInProcess, block, relocatedSeedTrays);
 
-        _log.Info("Completed the relocation of a block. UpdateBlockPlaceOutAHouseWithBrother");
+        _log.Info("Completed the relocation of the block. UpdateBlockPlaceOutAHouseWithBrother");
     }
 
     private void UpdateBlockPlaceOutAHouseWithOutBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
@@ -145,7 +145,7 @@ public class BlockProcessor
 
         TransferBlock(orderLocationCopy, blockInProcess, block, relocatedSeedTrays);
 
-        _log.Info("Completed the relocation of a block. UpdateBlockPlaceOutAHouseWithBrother");
+        _log.Info("Completed the relocation of the block. UpdateBlockPlaceOutAHouseWithOutBrother");
     }
 
     public void SaveRelocateBlockChange(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)

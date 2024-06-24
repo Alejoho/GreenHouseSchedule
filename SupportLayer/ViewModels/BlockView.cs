@@ -34,4 +34,9 @@ public partial class Block
             return "Bloque " + BlockNumber;
         }
     }
+
+    public override string ToString()
+    {
+        return PropertyFormatter.FormatProperties(this);
+    }
 }

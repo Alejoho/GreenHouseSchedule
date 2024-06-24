@@ -1,4 +1,6 @@
 ﻿using DataAccess.Repositories;
+using log4net;
+using SupportLayer;
 using SupportLayer.Models;
 
 namespace Domain.Processors;
@@ -34,6 +36,9 @@ public class DeliveryDetailProcessor : IDeliveryDetailProcessor
         _repository.Insert(deliveryDetail);
 
         block.DeliveryDetails.Add(deliveryDetail);
+
+        ILog log = LogHelper.GetLogger();
+        log.Info("Added a DeliveryDetail to the DB");
     }
 
     private void ValidateDeliveryChanges(Block block, DateOnly date, short deliveredSeedTrays)
