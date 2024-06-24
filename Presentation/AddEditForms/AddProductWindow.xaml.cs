@@ -28,7 +28,7 @@ public partial class AddProductWindow : Window, ISpeciesRequester
         _requester = requestingWindow;
         LoadData();
 
-        _log.Info("The AddProductWindow was opened by the NewOrderWindow to add a new Product");
+        _log.Info("The AddProductWindow was opened by NewOrderWindow to add a new Product");
     }
 
     private void LoadData()

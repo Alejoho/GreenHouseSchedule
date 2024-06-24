@@ -39,9 +39,7 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
         _requester = requestingWindow;
         LoadData();
 
-        log4net.GlobalContext.Properties["Model"] = _model;
-        _log.Info("The AddEditClientWindow was opened to edit a Client");
-        log4net.GlobalContext.Properties["Model"] = "";
+        _log.Info("The AddEditClientWindow was opened by NewOrderWindow to add a Client");
     }
 
     public AddEditClientWindow(Client model)
@@ -51,6 +49,10 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
         _model = model;
         LoadData();
         PopulateData();
+
+        log4net.GlobalContext.Properties["Model"] = _model;
+        _log.Info("The AddEditClientWindow was opened to edit a Client");
+        log4net.GlobalContext.Properties["Model"] = "";
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
