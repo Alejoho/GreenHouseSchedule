@@ -65,7 +65,7 @@ public partial class AddEditGreenHouseWindow : Window
 
     private void ShowError()
     {
-        MessageBox.Show(_processor.Error);
+        MessageBox.Show(_processor.Error, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
     }
 
     private bool ValidateDataType()
@@ -86,7 +86,7 @@ public partial class AddEditGreenHouseWindow : Window
             }
             else
             {
-                MessageBox.Show("Ancho inválido");
+                MessageBox.Show("Ancho inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
         }
@@ -99,7 +99,7 @@ public partial class AddEditGreenHouseWindow : Window
             }
             else
             {
-                MessageBox.Show("Largo inválido");
+                MessageBox.Show("Largo inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
         }
@@ -115,7 +115,7 @@ public partial class AddEditGreenHouseWindow : Window
         }
         else
         {
-            MessageBox.Show("Área de bandejas inválido");
+            MessageBox.Show("Área de bandejas inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
             return false;
         }
 
@@ -125,7 +125,7 @@ public partial class AddEditGreenHouseWindow : Window
         }
         else
         {
-            MessageBox.Show("Cantidad de bloques inválido");
+            MessageBox.Show("Cantidad de bloques inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
             return false;
         }
 
