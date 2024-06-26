@@ -10,19 +10,44 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel Margin="0 10 0 0" HorizontalAlignment="Center">
-            <custom:TextBoxWithLabel FieldLabel="Nombre*" HorizontalAlignment="Right" x:Name="tbtxtName"/>
-            <custom:TextBoxWithLabel FieldLabel="Ancho" HorizontalAlignment="Right" x:Name="tbtxtWidth"/>
-            <custom:TextBoxWithLabel FieldLabel="Largo" HorizontalAlignment="Right" x:Name="tbtxtLength"/>
-            <!--<custom:TextBoxWithLabel FieldLabel="Area de la casa" HorizontalAlignment="Right" x:Name="tbtxtGreenHouseArea"/>-->
-            <custom:TextBoxWithLabel FieldLabel="Area de bandejas*" HorizontalAlignment="Right" x:Name="tbtxtSeedTrayArea"/>
-            <custom:TextBoxWithLabel FieldLabel="Cantidad de bloques*" HorizontalAlignment="Right" x:Name="tbtxtAmountOfBlocks"/>
+            <custom:TextBoxWithLabel FieldLabel="Nombre*" HorizontalAlignment="Right" x:Name="tbtxtName"
+                Tip="Nombre de la casa de posturas (obligatorio)"/>
+
+            <custom:TextBoxWithLabel FieldLabel="Ancho" HorizontalAlignment="Right" x:Name="tbtxtWidth"
+                Tip="Ancho de la estructura de la casa de posturas (opcional)"/>
+
+            <custom:TextBoxWithLabel FieldLabel="Largo" HorizontalAlignment="Right" x:Name="tbtxtLength"
+                Tip="Largo de la estructura de la casa de posturas (opcional)"/>
+
+            <custom:TextBoxWithLabel FieldLabel="Área de bandejas*" HorizontalAlignment="Right" x:Name="tbtxtSeedTrayArea"
+                Tip="Área total dentro de la casa de posturas que puede ser ocupada por bandejas (obligatorio)"/>
+
+            <custom:TextBoxWithLabel FieldLabel="Cantidad de bloques*" HorizontalAlignment="Right" x:Name="tbtxtAmountOfBlocks"
+                Tip="Numero de bloques que hay en la casa de posturas (opcional)"/>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Text="Description" VerticalAlignment="Top" Margin="0 3 5 0" HorizontalAlignment="Right"
-                           x:Name="tbDescription"/>
+                <TextBlock Text="Descripción" VerticalAlignment="Top" Margin="0 3 5 0" HorizontalAlignment="Right"
+                    x:Name="tbDescription"/>
                 <TextBox Width="150" Height="70" Padding="5 0 0 0" TextWrapping="Wrap" Margin="0 3 0 0"
-                         x:Name="txtDescription"/>
+                    x:Name="txtDescription">
+                    <TextBox.ToolTip>
+                        <ToolTip ToolTipService.ShowDuration="5">
+                            <TextBlock Text="Alguna descripción que desee agregar sobre la casa de posturas (opcional)" TextWrapping="Wrap" Width="150"
+                            TextAlignment="Left"/>
+                        </ToolTip>
+                    </TextBox.ToolTip>
+                </TextBox>
             </StackPanel>
-            <CheckBox x:Name="chkActive" Content="Activa" HorizontalAlignment="Center" Margin="0 10 0 0" IsChecked="True"/>
+
+            <CheckBox x:Name="chkActive" Content="Activa" HorizontalAlignment="Center" Margin="0 10 0 0" IsChecked="True">
+                <CheckBox.ToolTip>
+                    <ToolTip ToolTipService.ShowDuration="5">
+                        <TextBlock Text="Especifica si la casa de posturas esta disponible para colocar bandejas (obligatorio)" 
+                            TextWrapping="Wrap" Width="150" TextAlignment="Left"/>
+                    </ToolTip>
+                </CheckBox.ToolTip>
+            </CheckBox>
+            
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
                 <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0"
                         Click="btnSave_Click"/>

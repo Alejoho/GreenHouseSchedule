@@ -11,9 +11,13 @@
     <Grid>
         <StackPanel Margin="0 10 0 0" HorizontalAlignment="Center">
             <custom:ComboBoxWithLabel FieldLabel="Especie*" HorizontalAlignment="Right" 
-                                    x:Name="lblcmbbtnSpecies" 
-                                    ButtonClick="lblcmbbtnSpecies_ButtonClick"/>
-            <custom:TextBoxWithLabel FieldLabel="Variedad*" HorizontalAlignment="Right" x:Name="lbltxtVariety"/>
+                x:Name="lblcmbbtnSpecies" ButtonClick="lblcmbbtnSpecies_ButtonClick"
+                ComboBoxTip="Seleccione la especie a la que pertenece la nueva variedad a agregar (obligatorio)"
+                ButtonTip="Click para agregar una nueva especie"/>
+            
+            <custom:TextBoxWithLabel FieldLabel="Variedad*" HorizontalAlignment="Right" x:Name="lbltxtVariety"
+                Tip="Nombre de la variedad perteneciente a esta especie (obligatorio)"/>
+            
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
                 <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0" 
                         Click="btnSave_Click"/>

@@ -23,5 +23,7 @@ namespace Presentation.CustomControls
         {
             Selection_Changed?.Invoke(sender, e);
         }
+
+        public string ComboBoxTip { get; set; }
     }
 }

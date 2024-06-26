@@ -14,26 +14,26 @@
                     Click="ButtonAdd_Click">
                 <Button.ToolTip>
                     <ToolTip>
-                        <TextBlock Text="{Binding ButtonTip}" TextWrapping="Wrap" Width="150"
-                            TextAlignment="Left"/>
+                        <TextBlock Text="{Binding ButtonTip}" TextWrapping="Wrap" Width="150" 
+                                   TextAlignment="Left"/>
                     </ToolTip>
                 </Button.ToolTip>
             </Button>
 
             <ComboBox Grid.Column="1" VerticalContentAlignment="Center" DockPanel.Dock="Right"
-                 HorizontalAlignment="Right" Padding="5 0 0 0" Margin="0 3"
-                 Width="132" x:Name="ComboBox">
+                      HorizontalAlignment="Right" Padding="5 0 0 0" Margin="0 3"
+                      Width="132" x:Name="ComboBox">
                 <ComboBox.ToolTip>
                     <ToolTip>
                         <TextBlock Text="{Binding ComboBoxTip}" TextWrapping="Wrap" Width="150"
-                            TextAlignment="Left"/>
+                                   TextAlignment="Left"/>
                     </ToolTip>
                 </ComboBox.ToolTip>
             </ComboBox>
 
             <TextBlock Grid.Column="0" Text="{Binding Path=FieldLabel}" VerticalAlignment="Center" 
-                Margin="0 0 5 0" HorizontalAlignment="Right" DockPanel.Dock="Right"
-                TextAlignment="Right"/>
+                       Margin="0 0 5 0" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                       TextAlignment="Right"/>
 
         </DockPanel>
     </Grid>

@@ -13,6 +13,12 @@
             <ComboBox Grid.Column="1" VerticalContentAlignment="Center" DockPanel.Dock="Right"
                  HorizontalAlignment="Right" Padding="5 0 0 0" Margin="0 3" Height="20"
                  Width="150" x:Name="ComboBox" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBox.ToolTip>
+                    <ToolTip>
+                        <TextBlock Text="{Binding ComboBoxTip}" TextWrapping="Wrap" Width="150"
+                            TextAlignment="Left"/>
+                    </ToolTip>
+                </ComboBox.ToolTip>
             </ComboBox>
 
             <TextBlock Grid.Column="0" Text="{Binding Path=FieldLabel}" VerticalAlignment="Center" 
