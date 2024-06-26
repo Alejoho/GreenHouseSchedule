@@ -20,12 +20,15 @@
         <TextBlock Text="Especifique la casa, el bloque y cuantas bandejas se ubicaron." Height="20" 
                    Margin="2 15 0 5" HorizontalAlignment="Center"/>
 
-        <custom:ComboBoxWithLabelNoButton x:Name="lblcmbGreenHouse" FieldLabel="Casa" Grid.Row="1" Width="290" 
-                                          Selection_Changed="lblcmbGreenHouse_Selection_Changed" Margin="0 0 50 0"/>
+        <custom:ComboBoxWithLabelNoButton x:Name="lblcmbGreenHouse" FieldLabel="Casa*" Grid.Row="1" Width="290" 
+                                          Selection_Changed="lblcmbGreenHouse_Selection_Changed" Margin="0 0 50 0"
+                                          ComboBoxTip="Selecione la casa en la que se van a ubicar estas bandejas (obligatorio)"/>
 
-        <custom:ComboBoxWithLabelNoButton x:Name="lblcmbBlock" FieldLabel="Bloque" Grid.Row="2" Width="290" Margin="0 0 50 0"/>
+        <custom:ComboBoxWithLabelNoButton x:Name="lblcmbBlock" FieldLabel="Bloque*" Grid.Row="2" Width="290" Margin="0 0 50 0" 
+                                          ComboBoxTip="Selecione el bloque en el que se van a ubicar estas bandejas (obligatorio)"/>
 
-        <custom:TextBoxWithLabel x:Name="lbltxtPlacedAmount" Grid.Row="3" FieldLabel="Bandejas ubicadas" Margin="2 0 57 0"/>
+        <custom:TextBoxWithLabel x:Name="lbltxtPlacedAmount" Grid.Row="3" FieldLabel="Bandejas ubicadas*" Margin="2 0 57 0"
+                                 Tip="Cantidad de bandejas a ser ubicadas (obligatorio)"/>
 
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="center"  Height="50" VerticalAlignment="Top"
                     Margin="0 4 0 0">

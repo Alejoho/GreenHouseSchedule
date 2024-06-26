@@ -17,8 +17,11 @@
         </Grid.RowDefinitions>
         <TextBlock Text="Especifique la fecha y cuantas bandejas se entregaron." Height="20" 
            Margin="2 15 0 5" HorizontalAlignment="Center"/>
-        <custom:DatePickerWithLabel x:Name="dtpDeliveryDate" Grid.Row="1" FieldLabel="Fecha" Margin="2 0 25 0"/>
-        <custom:TextBoxWithLabel x:Name="lbltxtDeliveredAmount" Grid.Row="2" FieldLabel="Bandejas entregadas" Margin="2 0 25 0"/>
+        <custom:DatePickerWithLabel x:Name="dtpDeliveryDate" Grid.Row="1" FieldLabel="Fecha*" Margin="2 0 25 0"
+                                    Tip="Fecha en la que se entregaron las bandejas del bloque (obligatorio)"/>
+        
+        <custom:TextBoxWithLabel x:Name="lbltxtDeliveredAmount" Grid.Row="2" FieldLabel="Bandejas entregadas*" 
+                                 Margin="2 0 25 0" Tip="Cantidad de bandejas entregadas del bloque (obligatorio)"/>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="center"  Height="50" VerticalAlignment="Top"
             Margin="0 4 0 0">
