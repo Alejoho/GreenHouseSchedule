@@ -11,7 +11,14 @@
 
             <DatePicker VerticalContentAlignment="Center"
                  HorizontalAlignment="Right" Padding="5 0 0 0" Margin="0 3" DockPanel.Dock="Right"
-                 Width="150" x:Name="TimePicker"/>
+                 Width="150" x:Name="TimePicker">
+                <DatePicker.ToolTip>
+                    <ToolTip>
+                        <TextBlock Text="{Binding Tip}" TextWrapping="Wrap" Width="150"
+                            TextAlignment="Left"/>
+                    </ToolTip>
+                </DatePicker.ToolTip>
+            </DatePicker>
 
             <TextBlock Grid.Column="0" Text="{Binding Path=FieldLabel}" DockPanel.Dock="Right" 
                 Margin="0 0 5 0" x:Name="Label" VerticalAlignment="Center"/>

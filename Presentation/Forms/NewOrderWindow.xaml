@@ -28,12 +28,22 @@
         <!--#region First Row-->
 
         <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
-            <custom:ComboBoxWithLabel x:Name="lblcmbbtnClient" FieldLabel="Cliente" HorizontalAlignment="Right" 
-                                        ButtonClick="lblcmbbtnClient_ButtonClick"/>
-            <custom:ComboBoxWithLabel x:Name="lblcmbbtnProduct" FieldLabel="Producto" HorizontalAlignment="Right"
-                                        ButtonClick="lblcmbbtnProduct_ButtonClick"/>
-            <custom:TextBoxWithLabel x:Name="txtAmountOfSeedlings" FieldLabel="Cantidad de posturas" HorizontalAlignment="Right"/>
-            <custom:DatePickerWithLabel x:Name="dtpWishDate" FieldLabel="Fecha deseada"/>
+            <custom:ComboBoxWithLabel x:Name="lblcmbbtnClient" FieldLabel="Cliente*" HorizontalAlignment="Right" 
+                                      ButtonClick="lblcmbbtnClient_ButtonClick"
+                                      ButtonTip="Click para agregar un nuevo cliente"
+                                      ComboBoxTip="Seleccione el cliente al que pertenece esta orden (obligatorio)"/>
+            
+            <custom:ComboBoxWithLabel x:Name="lblcmbbtnProduct" FieldLabel="Producto*" HorizontalAlignment="Right"
+                                      ButtonClick="lblcmbbtnProduct_ButtonClick"
+                                      ButtonTip="Click para agregar un nuevo producto"
+                                      ComboBoxTip="Seleccione la variedad que será sembrada en esta orden (obligatorio)"/>
+            
+            <custom:TextBoxWithLabel x:Name="txtAmountOfSeedlings" FieldLabel="Cantidad de posturas*" HorizontalAlignment="Right"
+                                     Tip="Cantidad de posturas pedidas por el cliente (obligatorio)"/>
+            
+            <custom:DatePickerWithLabel x:Name="dtpWishDate" FieldLabel="Fecha deseada*"
+                                        Tip="Seleccione la fecha en la que el cliente desea que sus posturas esten listas (obligatorio)"/>
+            
             <Button x:Name="btnSearchAvailability" Content="Buscar disponibilidad" Height="35" Width="150" Margin="0 10 0 0"
                     Click="btnSearchAvailability_Click"/>
         </StackPanel>

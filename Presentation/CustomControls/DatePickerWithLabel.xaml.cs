@@ -21,5 +21,6 @@ namespace Presentation.CustomControls
         //set base on the format in the pc
         public DateOnly SelectedDateOnly { get => DateOnly.FromDateTime((DateTime)TimePicker.SelectedDate); }
 
+        public string Tip { get; set; }
     }
 }
