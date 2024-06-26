@@ -16,7 +16,6 @@ public class PropertyFormatter
 
         foreach (var property in properties)
         {
-            var algo = property.GetValue(obj);
             builder.Append($"{property.Name} = {property.GetValue(obj)}, ");
         }
 

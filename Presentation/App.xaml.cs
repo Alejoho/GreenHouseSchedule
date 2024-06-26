@@ -18,6 +18,9 @@ namespace Presentation
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             _log.Info("The app was exited");
+            _log.Info("____________________________________________________________" +
+                "____________________________________________________________________" +
+                "________________________");
         }
     }
 }
