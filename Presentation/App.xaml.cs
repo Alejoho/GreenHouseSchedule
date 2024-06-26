@@ -19,7 +19,5 @@ namespace Presentation
         {
             _log.Info("The app was exited");
         }
-
-        //NEXT - Ver cual es el evento que se dispara al abrir y cerrar la app y poner un log en los dos.
     }
 }
