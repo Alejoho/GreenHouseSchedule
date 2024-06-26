@@ -130,12 +130,12 @@ public class OrderProcessor : IOrderProcessor
         return output;
     }
 
-    public void UpdateOrderStatusAfterSow(Order model)
+    public void UpdateOrderStatusAfterSow(Order model, DateOnly date)
     {
         bool edited = false;
         if (model.RealSowDate == null)
         {
-            model.RealSowDate = model.OrderLocations.Min(x => x.RealSowDate);
+            model.RealSowDate = date;
             edited = true;
         }
 

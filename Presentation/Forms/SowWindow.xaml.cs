@@ -97,12 +97,7 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
     {
         _orderLocationProcessor.SaveSownOrderLocationChange(_orderLocationInProcess, date, sownSeedTrays);
 
-        //NEXT - I have a bug here. When I sow part of an order location, that order location is splitted one half is
-        //saved to the db and the order not(this is the way I want it), but how do I access the one that was saved to
-        //determine if the order needs to be set its real sow date this without calling to the db
-        _orderProcessor.UpdateOrderStatusAfterSow(_orderLocationInProcess.Order);
-
-        //here
+        _orderProcessor.UpdateOrderStatusAfterSow(_orderLocationInProcess.Order, date);
 
         RefreshTheDataGrids();
     }

@@ -14,6 +14,8 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class OrderListWindow : Window
 {
+
+    //NEXT - hacer que en el dgOrderLocation child no se pueda seleccionar
     private OrderProcessor _processor;
     private Orders _orders;
     private CollectionViewSource _viewSource;
