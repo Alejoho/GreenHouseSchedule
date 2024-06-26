@@ -57,7 +57,7 @@ public partial class OrderListWindow : Window
                 }
                 catch (Exception ex)
                 {
-                    log4net.GlobalContext.Properties["Model"] = order;
+                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(order);
                     log.Error("There was an error deleting an Order record from the DB", ex);
                     log4net.GlobalContext.Properties["Model"] = "";
 
@@ -66,7 +66,7 @@ public partial class OrderListWindow : Window
                     this.Close();
                 }
 
-                log4net.GlobalContext.Properties["Model"] = order;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(order);
                 log.Info("An Order record and all its related records were deleted from the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
 

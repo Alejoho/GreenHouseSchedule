@@ -65,7 +65,7 @@ public partial class ClientsWindow : Window
                 RefreshData();
 
                 ILog log = LogHelper.GetLogger();
-                log4net.GlobalContext.Properties["Model"] = client;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(client);
                 log.Info("A Client record was deleted from the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
             }

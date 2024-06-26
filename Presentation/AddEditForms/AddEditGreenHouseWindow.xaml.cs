@@ -32,7 +32,7 @@ public partial class AddEditGreenHouseWindow : Window
         this._model = model;
         PopulateData();
 
-        log4net.GlobalContext.Properties["Model"] = _model;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
         _log.Info("The AddEditGreenHouseWindow was opened to edit a GreenHouse");
         log4net.GlobalContext.Properties["Model"] = "";
     }
@@ -50,7 +50,7 @@ public partial class AddEditGreenHouseWindow : Window
             {
                 MessageBox.Show("Registro salvado");
 
-                log4net.GlobalContext.Properties["Model"] = _model;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
                 _log.Info("A GreenHouse record was saved to the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
 

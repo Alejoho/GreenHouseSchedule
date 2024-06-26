@@ -51,7 +51,7 @@ public partial class AddEditOrganizationWindow : Window
         LoadData();
         PopulateData();
 
-        log4net.GlobalContext.Properties["Model"] = _model;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
         _log.Info("The AddEditOrganizationWindow was opened to edit an Organization");
         log4net.GlobalContext.Properties["Model"] = "";
     }
@@ -67,7 +67,7 @@ public partial class AddEditOrganizationWindow : Window
         {
             if (_processor.SaveOrganization(_model) == true)
             {
-                log4net.GlobalContext.Properties["Model"] = _model;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
                 _log.Info("An Organization record was saved to the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
 

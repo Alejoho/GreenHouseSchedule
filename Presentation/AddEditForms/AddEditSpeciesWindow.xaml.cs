@@ -38,7 +38,7 @@ namespace Presentation.AddEditForms
             this._model = model;
             PopulateData();
 
-            log4net.GlobalContext.Properties["Model"] = _model;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
             _log.Info("The AddEditSpeciesWindow was opened to edit a Species");
             log4net.GlobalContext.Properties["Model"] = "";
         }

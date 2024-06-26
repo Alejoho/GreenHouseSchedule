@@ -34,7 +34,7 @@ namespace Presentation.AddEditForms
             this._model = model;
             PopulateData();
 
-            log4net.GlobalContext.Properties["Model"] = _model;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
             _log.Info("The AddEditSeedTrayWindow was opened to edit a SeedTray");
             log4net.GlobalContext.Properties["Model"] = "";
         }
@@ -52,7 +52,7 @@ namespace Presentation.AddEditForms
                 {
                     MessageBox.Show("Registro salvado");
 
-                    log4net.GlobalContext.Properties["Model"] = _model;
+                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
                     _log.Info("A SeedTray record was saved to the DB");
                     log4net.GlobalContext.Properties["Model"] = "";
 

@@ -79,7 +79,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
                 _speciesProcessor.DeleteSpecies(species.Id);
 
                 ILog _log = LogHelper.GetLogger();
-                log4net.GlobalContext.Properties["Model"] = species;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(species);
                 _log.Info("A Species record was deleted from the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
 
@@ -128,7 +128,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
 
         if (_productProcessor.SaveProduct(_productModel) == true)
         {
-            log4net.GlobalContext.Properties["Model"] = _productModel;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_productModel);
             _log.Info("A Product record was saved to the DB");
             log4net.GlobalContext.Properties["Model"] = "";
 
@@ -178,7 +178,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
                 RefreshListBox();
 
                 ILog log = LogHelper.GetLogger();
-                log4net.GlobalContext.Properties["Model"] = product;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(product);
                 log.Info("A Product record was deleted from the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
             }
@@ -200,7 +200,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
             btnAddProduct.Content = "Editar";
             btnRemoveProduct.IsEnabled = false;
 
-            log4net.GlobalContext.Properties["Model"] = product;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(product);
             _log.Info("A doubleclick action was made on the lstProducts to edit a Product");
             log4net.GlobalContext.Properties["Model"] = "";
         }

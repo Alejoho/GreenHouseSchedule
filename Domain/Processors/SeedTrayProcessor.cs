@@ -53,7 +53,7 @@ namespace Domain.Processors
                 catch (Exception ex)
                 {
                     ILog log = LogHelper.GetLogger();
-                    log4net.GlobalContext.Properties["Model"] = model;
+                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(model);
                     log.Error("There was an error saving a SeedTray record to the DB", ex);
                     log4net.GlobalContext.Properties["Model"] = "";
 
@@ -90,7 +90,7 @@ namespace Domain.Processors
                 this.SaveSeedTray(seedTray);
 
                 ILog log = LogHelper.GetLogger();
-                log4net.GlobalContext.Properties["Model"] = seedTray;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(seedTray);
                 log.Info("A SeedTray seletion was updated to the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
             }

@@ -66,7 +66,7 @@ public partial class OrganizationsWindow : Window
             {
                 _organizationProcessor.DeleteOrganization(organization.Id);
 
-                log4net.GlobalContext.Properties["Model"] = organization;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(organization);
                 _log.Info("An Organization record was deleted from the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
 
@@ -98,7 +98,7 @@ public partial class OrganizationsWindow : Window
 
         if (_municipalityProcessor.SaveMunicipality(_municipalityModel) == true)
         {
-            log4net.GlobalContext.Properties["Model"] = _municipalityModel;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_municipalityModel);
             _log.Info("A Municipality record was saved to the DB");
             log4net.GlobalContext.Properties["Model"] = "";
 
@@ -125,7 +125,7 @@ public partial class OrganizationsWindow : Window
             {
                 _municipalityProcessor.DeleteMunicipality(municipality.Id);
 
-                log4net.GlobalContext.Properties["Model"] = _municipalityModel;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_municipalityModel);
                 _log.Info("A Municipality record was deleted from the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
 
@@ -150,7 +150,7 @@ public partial class OrganizationsWindow : Window
             cmbProvince.SelectedItem = _provinces.Where(province => province.Id == municipality.ProvinceId).Single();
             btnRemoveMunicipality.IsEnabled = false;
 
-            log4net.GlobalContext.Properties["Model"] = municipality;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(municipality);
             _log.Info("A doubleclick action was made on the lstMunicipalities to edit a Municipality");
             log4net.GlobalContext.Properties["Model"] = "";
         }

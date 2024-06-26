@@ -21,9 +21,4 @@ public partial class Organization
     {
         get { return $"{TypeOfOrganization.Name} - {Name}"; }
     }
-
-    public override string ToString()
-    {
-        return PropertyFormatter.FormatProperties(this);
-    }
 }

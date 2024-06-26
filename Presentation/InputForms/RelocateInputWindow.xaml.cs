@@ -23,7 +23,7 @@ namespace Presentation.InputForms
             _requester = requestingWindow;
             LoadData();
 
-            log4net.GlobalContext.Properties["Model"] = _requester.BlockInProcess;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_requester.BlockInProcess);
             _log.Info("The RelocateInputWindow was opened to relocate a Block");
             log4net.GlobalContext.Properties["Model"] = "";
         }

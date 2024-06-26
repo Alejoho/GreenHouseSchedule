@@ -6,9 +6,4 @@ public partial class Client
     {
         get { return $"{Organization.TypeOfOrganization.Name} - {Organization.Name}"; }
     }
-
-    public override string ToString()
-    {
-        return PropertyFormatter.FormatProperties(this);
-    }
 }

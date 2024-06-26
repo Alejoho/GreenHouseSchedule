@@ -20,7 +20,7 @@ public partial class SowInputWindow : Window
         _requester = requestingWindow;
         dtpSowDate.TimePicker.SelectedDate = DateTime.Today;
 
-        log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_requester.OrderLocationInProcess);
         _log.Info("The SowInputWindow was opened to sow an OrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
     }

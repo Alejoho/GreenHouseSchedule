@@ -44,7 +44,7 @@ public class BlockProcessor
         orderlocation.Blocks.Add(newBlock);
         newBlock.OrderLocation = orderlocation;
 
-        log4net.GlobalContext.Properties["Model"] = newBlock;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(newBlock);
         _log.Info("A Block was relocated completely or partial in the same " +
             "GreenHouse and updated to the DB. UpdateBlockPlaceInAHouse");
         log4net.GlobalContext.Properties["Model"] = "";
@@ -73,7 +73,7 @@ public class BlockProcessor
             SeedTrayAmount = relocatedSeedTrays
         };
 
-        log4net.GlobalContext.Properties["Model"] = newBlock;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(newBlock);
         _log.Info("A Block was transfer to another " +
             "GreenHouse and updated to the DB");
         log4net.GlobalContext.Properties["Model"] = "";

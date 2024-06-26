@@ -103,7 +103,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
             _iterator = new DateIteratorAndResourceChecker(_status, order);
 
-            log4net.GlobalContext.Properties["Model"] = order;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(order);
             _log.Info("A SeedBedStatus and DateIteratorAndResourceChecker objects were created successfully");
             log4net.GlobalContext.Properties["Model"] = "";
 
@@ -322,7 +322,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     {
         if (dgSeedTrayPermutations.SelectedItem is SeedTrayPermutation permutation)
         {
-            log4net.GlobalContext.Properties["Model"] = permutation;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(permutation);
             _log.Info("A SeedTrayPermutation was selected to display");
             log4net.GlobalContext.Properties["Model"] = "";
 
@@ -348,7 +348,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
         if (processor.SaveOrder(_resultingOrder) == true)
         {
-            log4net.GlobalContext.Properties["Model"] = _resultingOrder;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_resultingOrder);
             _log.Info("An Order record and all its OrderLocations records were saved to the DB");
             log4net.GlobalContext.Properties["Model"] = "";
 

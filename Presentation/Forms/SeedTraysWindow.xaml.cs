@@ -59,7 +59,7 @@ namespace Presentation.Forms
                     RefreshData();
 
                     ILog log = LogHelper.GetLogger();
-                    log4net.GlobalContext.Properties["Model"] = seedTray;
+                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(seedTray);
                     log.Info("A SeedTray record was deleted from the DB");
                     log4net.GlobalContext.Properties["Model"] = "";
                 }

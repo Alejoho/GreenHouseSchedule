@@ -23,7 +23,7 @@ namespace Presentation.InputForms
             _requester = requestingWindow;
             LoadData();
 
-            log4net.GlobalContext.Properties["Model"] = _requester.OrderLocationInProcess;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_requester.OrderLocationInProcess);
             _log.Info("The PlaceInputWindow was opened to place an OrderLocation");
             log4net.GlobalContext.Properties["Model"] = "";
         }

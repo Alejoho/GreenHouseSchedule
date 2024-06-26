@@ -11,9 +11,4 @@ public partial class Municipality
     {
         get { return $"{Name}, {Province.Name}"; }
     }
-
-    public override string ToString()
-    {
-        return PropertyFormatter.FormatProperties(this);
-    }
 }

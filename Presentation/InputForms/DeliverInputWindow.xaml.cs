@@ -19,7 +19,7 @@ public partial class DeliverInputWindow : Window
         _requester = requestingWindow;
         dtpDeliveryDate.TimePicker.SelectedDate = DateTime.Today;
 
-        log4net.GlobalContext.Properties["Model"] = _requester.BlockInProcess;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_requester.BlockInProcess);
         _log.Info("The DeliverInputWindow was opened to deliver a Block");
         log4net.GlobalContext.Properties["Model"] = "";
     }

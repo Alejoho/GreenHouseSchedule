@@ -34,7 +34,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
             orderLocation.RealSowDate = date;
             _repository.Update(orderLocation);
 
-            log4net.GlobalContext.Properties["Model"] = orderLocation;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocation);
             _log.Info("An OrderLocation was sown and updated to the DB");
             log4net.GlobalContext.Properties["Model"] = "";
         }
@@ -54,7 +54,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
             _repository.Update(orderLocation);
             _repository.Insert(orderLocationCopy);
 
-            log4net.GlobalContext.Properties["Model"] = orderLocationCopy;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocationCopy);
             _log.Info("Part of an OrderLocation was sown and inserted to the DB");
             log4net.GlobalContext.Properties["Model"] = "";
         }
@@ -79,7 +79,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         orderLocation.GreenHouseId = greenHouse;
         _repository.Update(orderLocation);
 
-        log4net.GlobalContext.Properties["Model"] = orderLocation;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocation);
         _log.Info("Updated the GreenHouse of the OrderLocation to the DB. SaveCompleteWithoutBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
 
@@ -93,7 +93,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         BlockRepository blockRepository = new BlockRepository();
         blockRepository.Insert(blockEntity);
 
-        log4net.GlobalContext.Properties["Model"] = blockEntity;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(blockEntity);
         _log.Info("Added a Block to the OrderLocation in the DB. SaveCompleteWithoutBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
     }
@@ -112,7 +112,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         //3-salvar la copia y recuperar su id
         _repository.Insert(orderLocationCopy);
 
-        log4net.GlobalContext.Properties["Model"] = orderLocationCopy;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocationCopy);
         _log.Info("Inserted an OrderLocation copy to the DB. SavePartialWithoutBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
 
@@ -121,7 +121,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         orderLocation.SeedlingAmount -= orderLocationCopy.SeedlingAmount;
         _repository.Update(orderLocation);
 
-        log4net.GlobalContext.Properties["Model"] = orderLocation;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocation);
         _log.Info("Updated the original OrderLocation to the DB. SavePartialWithoutBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
 
@@ -138,7 +138,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         BlockRepository blockRepository = new BlockRepository();
         blockRepository.Insert(blockEntity);
 
-        log4net.GlobalContext.Properties["Model"] = blockEntity;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(blockEntity);
         _log.Info("Added a Block to the OrderLocation in the DB. SavePartialWithoutBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
     }
@@ -155,7 +155,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         //salvar el hermano
         _repository.Update(orderLocationBrother);
 
-        log4net.GlobalContext.Properties["Model"] = orderLocationBrother;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocationBrother);
         _log.Info("Updated an OrderLocation brother to the DB. SaveCompleteWithBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
 
@@ -170,14 +170,14 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         BlockRepository blockRepository = new BlockRepository();
         blockRepository.Insert(blockEntity);
 
-        log4net.GlobalContext.Properties["Model"] = blockEntity;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(blockEntity);
         _log.Info("Added a Block to the OrderLocation brother in the DB. SaveCompleteWithBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
 
         //eliminar el original
         _repository.Remove(orderLocation.Id);
 
-        log4net.GlobalContext.Properties["Model"] = orderLocation;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocation);
         _log.Info("Removed the OrderLocation original from the DB. SaveCompleteWithBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
     }
@@ -199,13 +199,13 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         //actualizar ambos objetos en la DB
         _repository.Update(orderLocation);
 
-        log4net.GlobalContext.Properties["Model"] = orderLocation;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocation);
         _log.Info("Updated the original OrderLocation to the DB. SavePartialWithBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
 
         _repository.Update(orderLocationBrother);
 
-        log4net.GlobalContext.Properties["Model"] = orderLocationBrother;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocationBrother);
         _log.Info("Updated an OrderLocation brother to the DB. SavePartialWithBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
 
@@ -220,7 +220,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         BlockRepository blockRepository = new BlockRepository();
         blockRepository.Insert(blockEntity);
 
-        log4net.GlobalContext.Properties["Model"] = blockEntity;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(blockEntity);
         _log.Info("Added a Block to the OrderLocation brother in the DB. SavePartialWithBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
     }

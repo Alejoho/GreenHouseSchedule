@@ -55,7 +55,7 @@ public class OrderProcessor : IOrderProcessor
             }
             catch (Exception ex)
             {
-                log4net.GlobalContext.Properties["Model"] = model;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(model);
                 _log.Error("There was an error saving an Order record and all its OrderLocations records to the DB", ex);
                 log4net.GlobalContext.Properties["Model"] = "";
 
@@ -149,7 +149,7 @@ public class OrderProcessor : IOrderProcessor
         {
             _repository.Update(model);
 
-            log4net.GlobalContext.Properties["Model"] = model;
+            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(model);
             _log.Info("An Order record was updated to the DB after sow");
             log4net.GlobalContext.Properties["Model"] = "";
         }

@@ -50,7 +50,7 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
         LoadData();
         PopulateData();
 
-        log4net.GlobalContext.Properties["Model"] = _model;
+        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model); ;
         _log.Info("The AddEditClientWindow was opened to edit a Client");
         log4net.GlobalContext.Properties["Model"] = "";
     }
@@ -69,7 +69,7 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
                 MessageBox.Show("Registro salvado");
                 _requester?.ClientComplete(_model);
 
-                log4net.GlobalContext.Properties["Model"] = _model;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
                 _log.Info("A Client record was saved to the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
 

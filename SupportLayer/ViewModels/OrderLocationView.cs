@@ -24,15 +24,10 @@ public partial class OrderLocation
         get
         {
             int seedTrays = SeedTrayAmount - Blocks.Sum(x => x.SeedTrayAmount);
-            //TODO - there is a bug here but i don't know why. I think the error is in an external code
+            //NEXT - there is a bug here but i don't know why. I think the error is in an external code
             //when I'm going to show data the dgOrderLocations of the NewOrderWindow
             int alveolus = SeedTray.TotalAlveolus;
             return (short)(seedTrays * alveolus);
         }
-    }
-
-    public override string ToString()
-    {
-        return PropertyFormatter.FormatProperties(this);
     }
 }

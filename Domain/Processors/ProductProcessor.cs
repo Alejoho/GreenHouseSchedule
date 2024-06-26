@@ -53,7 +53,7 @@ public class ProductProcessor
             catch (Exception ex)
             {
                 ILog log = LogHelper.GetLogger();
-                log4net.GlobalContext.Properties["Model"] = model;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(model);
                 log.Error("There was an error saving a Product record to the DB", ex);
                 log4net.GlobalContext.Properties["Model"] = "";
 

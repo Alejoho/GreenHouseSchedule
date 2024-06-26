@@ -53,7 +53,7 @@ public class OrganizationProcessor
             catch (Exception ex)
             {
                 ILog log = LogHelper.GetLogger();
-                log4net.GlobalContext.Properties["Model"] = model;
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(model);
                 log.Error("There was an error saving an Organization record to the DB", ex);
                 log4net.GlobalContext.Properties["Model"] = "";
 

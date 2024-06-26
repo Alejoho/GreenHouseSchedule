@@ -60,7 +60,7 @@ namespace Presentation.Forms
                     RefreshData();
 
                     ILog log = LogHelper.GetLogger();
-                    log4net.GlobalContext.Properties["Model"] = greenHouse;
+                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(greenHouse);
                     log.Info("A GreenHouse record was deleted from the DB");
                     log4net.GlobalContext.Properties["Model"] = "";
                 }

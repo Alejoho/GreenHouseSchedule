@@ -62,9 +62,4 @@ public partial class Order : INotifyPropertyChanged
             _blocksView = value;
         }
     }
-
-    public override string ToString()
-    {
-        return PropertyFormatter.FormatProperties(this);
-    }
 }
