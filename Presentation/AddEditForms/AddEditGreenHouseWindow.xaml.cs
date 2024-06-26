@@ -59,13 +59,14 @@ public partial class AddEditGreenHouseWindow : Window
             else
             {
                 ShowError();
+                _model = new GreenHouse();
             }
         }
     }
 
     private void ShowError()
     {
-        MessageBox.Show(_processor.Error, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        MessageBox.Show(_processor.Error, "", MessageBoxButton.OK, MessageBoxImage.Warning);
     }
 
     private bool ValidateDataType()

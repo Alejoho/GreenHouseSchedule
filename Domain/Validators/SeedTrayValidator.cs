@@ -43,6 +43,7 @@ namespace Domain.Validators
             RuleFor(x => x.LogicalTrayArea).NotEmpty().WithName("Área lógica de la bandeja")
                 .WithMessage("El {PropertyName} no debe estar vacío ni contener el valor 0.")
                 .GreaterThanOrEqualTo(x => x.TrayArea)
+                .When(x => x.TrayLength != null && x.TrayWidth != null)
                 .WithMessage("El {PropertyName} debe ser mayor o igual que el " +
                 "área de la bandeja \n(Largo de la bandeja * Ancho de la bandeja).")
                 .LessThan(4).WithMessage("El {PropertyName} debe ser menor que 4");

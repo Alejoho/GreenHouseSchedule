@@ -93,7 +93,8 @@ namespace Presentation.Forms
             }
             else
             {
-                MessageBox.Show("Debe seleccionar el registro que desea editar.");
+                MessageBox.Show("Debe seleccionar el registro que desea editar."
+                    , "", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

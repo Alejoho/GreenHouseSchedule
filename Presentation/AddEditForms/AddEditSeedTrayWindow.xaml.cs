@@ -16,7 +16,7 @@ namespace Presentation.AddEditForms
         private SeedTray _model;
 
         //LATER - Evaluate if I really need the preference logic in the seedtrays. Remove it
-
+        //NEXT - Remove the Preference property from all the solution
         public AddEditSeedTrayWindow(byte nextPreferenceValue)
         {
             InitializeComponent();
@@ -48,6 +48,9 @@ namespace Presentation.AddEditForms
         {
             if (ValidateDataType() == true)
             {
+                //LATER - For another version maybe add an enum with 3 element Saved, InvalidInput and Error
+                //if is saved se muestra el mensaje de salvado. si es invalidInput se muestra un mesaje con 
+                //el triangulo amarillo y si es error se muestra el mensaje con el circulo rojo.
                 if (_processor.SaveSeedTray(_model) == true)
                 {
                     MessageBox.Show("Registro salvado");
@@ -61,13 +64,14 @@ namespace Presentation.AddEditForms
                 else
                 {
                     ShowError();
+                    _model = new SeedTray();
                 }
             }
         }
 
         private void ShowError()
         {
-            MessageBox.Show(_processor.Error);
+            MessageBox.Show(_processor.Error, "", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private bool ValidateDataType()
@@ -83,11 +87,11 @@ namespace Presentation.AddEditForms
             }
             else
             {
-                MessageBox.Show("Total de alvéolos inválido");
+                MessageBox.Show("Total de alvéolos inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 
-            if (lbltxtAlveolusLength.FieldContent != string.Empty)
+            if (string.IsNullOrEmpty(lbltxtAlveolusLength.FieldContent) == false)
             {
                 if (byte.TryParse(lbltxtAlveolusLength.FieldContent, out byte alveolusLength))
                 {
@@ -95,12 +99,12 @@ namespace Presentation.AddEditForms
                 }
                 else
                 {
-                    MessageBox.Show("Alvéolos a lo largo inválido");
+                    MessageBox.Show("Alvéolos a lo largo inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;
                 }
             }
 
-            if (lbltxtAlveolusWidth.FieldContent != string.Empty)
+            if (string.IsNullOrEmpty(lbltxtAlveolusWidth.FieldContent) == false)
             {
                 if (byte.TryParse(lbltxtAlveolusWidth.FieldContent, out byte alveolusWidth))
                 {
@@ -108,12 +112,12 @@ namespace Presentation.AddEditForms
                 }
                 else
                 {
-                    MessageBox.Show("Alvéolos a lo ancho inválido");
+                    MessageBox.Show("Alvéolos a lo ancho inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;
                 }
             }
 
-            if (lbltxtTrayLength.FieldContent != string.Empty)
+            if (string.IsNullOrEmpty(lbltxtTrayLength.FieldContent) == false)
             {
                 if (decimal.TryParse(lbltxtTrayLength.FieldContent, out trayLength))
                 {
@@ -121,12 +125,12 @@ namespace Presentation.AddEditForms
                 }
                 else
                 {
-                    MessageBox.Show("Largo de la bandeja inválido");
+                    MessageBox.Show("Largo de la bandeja inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;
                 }
             }
 
-            if (lbltxtTrayWidth.FieldContent != string.Empty)
+            if (string.IsNullOrEmpty(lbltxtTrayWidth.FieldContent) == false)
             {
                 if (decimal.TryParse(lbltxtTrayWidth.FieldContent, out trayWidth))
                 {
@@ -134,7 +138,7 @@ namespace Presentation.AddEditForms
                 }
                 else
                 {
-                    MessageBox.Show("Ancho de la bandeja inválido");
+                    MessageBox.Show("Ancho de la bandeja inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;
                 }
             }
@@ -150,7 +154,7 @@ namespace Presentation.AddEditForms
             }
             else
             {
-                MessageBox.Show("Área logica de la bandeja inválido");
+                MessageBox.Show("Área logica de la bandeja inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 
@@ -160,7 +164,7 @@ namespace Presentation.AddEditForms
             }
             else
             {
-                MessageBox.Show("Cantidad de bandejas inválido");
+                MessageBox.Show("Cantidad de bandejas inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 
