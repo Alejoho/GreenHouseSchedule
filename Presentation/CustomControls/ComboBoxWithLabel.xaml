@@ -11,11 +11,24 @@
         <DockPanel  Margin="0 0 0 0">
             <Button Content="+" HorizontalContentAlignment="Right" VerticalContentAlignment="Top"
                     Margin="2 3 2 3" x:Name="ButtonAdd" Width="14" DockPanel.Dock="Right"
-                    Click="ButtonAdd_Click"/>
+                    Click="ButtonAdd_Click">
+                <Button.ToolTip>
+                    <ToolTip>
+                        <TextBlock Text="{Binding ButtonTip}" TextWrapping="Wrap" Width="150"
+                            TextAlignment="Left"/>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
 
             <ComboBox Grid.Column="1" VerticalContentAlignment="Center" DockPanel.Dock="Right"
                  HorizontalAlignment="Right" Padding="5 0 0 0" Margin="0 3"
                  Width="132" x:Name="ComboBox">
+                <ComboBox.ToolTip>
+                    <ToolTip>
+                        <TextBlock Text="{Binding ComboBoxTip}" TextWrapping="Wrap" Width="150"
+                            TextAlignment="Left"/>
+                    </ToolTip>
+                </ComboBox.ToolTip>
             </ComboBox>
 
             <TextBlock Grid.Column="0" Text="{Binding Path=FieldLabel}" VerticalAlignment="Center" 

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation.CustomControls"
              mc:Ignorable="d" 
+             x:Name="root"
              d:DesignHeight="17" d:DesignWidth="300">
     <Grid>
         <DockPanel  Margin="0 0 0 0">
@@ -13,23 +14,16 @@
                  HorizontalAlignment="Stretch" Padding="5 0 0 0" Margin="0 3" DockPanel.Dock="Right"
                  Width="150" x:Name="TextBox" TextChanged="TextBox_TextChanged">
                 <TextBox.ToolTip>
-                    <ToolTip Visibility="{Binding IsTipVisible}">
+                    <ToolTip>
                         <TextBlock Text="{Binding Tip}" TextWrapping="Wrap" Width="150"
-                                   TextAlignment="Left"/>
+                            TextAlignment="Left"/>
                     </ToolTip>
                 </TextBox.ToolTip>
             </TextBox>
 
             <TextBlock Text="{Binding Path=FieldLabel}" VerticalAlignment="Center" 
                 Margin="0 0 5 0" DockPanel.Dock="Right" HorizontalAlignment="Right" x:Name="Label"
-                       TextAlignment="Right">
-                <TextBlock.ToolTip>
-                    <ToolTip Visibility="{Binding IsTipVisible}">
-                        <TextBlock Text="{Binding Tip}" TextWrapping="Wrap" Width="150"
-                                   TextAlignment="Left"/>
-                    </ToolTip>
-                </TextBlock.ToolTip>
-            </TextBlock>
+                TextAlignment="Right"/>
         </DockPanel>
     </Grid>
 </UserControl>

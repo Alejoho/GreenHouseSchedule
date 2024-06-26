@@ -10,12 +10,23 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel Margin="0 10 0 0" HorizontalAlignment="Center">
-            <custom:TextBoxWithLabel FieldLabel="Nombre*" HorizontalAlignment="Right" x:Name="lbltxtName"/>
-            <custom:TextBoxWithLabel FieldLabel="Apodo" HorizontalAlignment="Right" x:Name="lbltxtNickName"/>
-            <custom:TextBoxWithLabel FieldLabel="Número celular" HorizontalAlignment="Right" x:Name="lbltxtPhoneNumber"/>
-            <custom:TextBoxWithLabel FieldLabel="Número fijo" HorizontalAlignment="Right" x:Name="lbltxtOtherNumber"/>
+            <custom:TextBoxWithLabel FieldLabel="Nombre*" HorizontalAlignment="Right" x:Name="lbltxtName" 
+                TipVisibility="Hidden" Tip="Nombre completo del cliente (obligatorio)"/>
+            
+            <custom:TextBoxWithLabel FieldLabel="Apodo" HorizontalAlignment="Right" x:Name="lbltxtNickName"
+                Tip="Apodo del cliente (opcional)"/>
+            
+            <custom:TextBoxWithLabel FieldLabel="Número celular" HorizontalAlignment="Right" x:Name="lbltxtPhoneNumber"
+                Tip="Número celular del cliente (opcional)"/>
+
+            <custom:TextBoxWithLabel FieldLabel="Número fijo" HorizontalAlignment="Right" x:Name="lbltxtOtherNumber"
+                Tip="Número fijo del cliente (opcional)"/>
+
             <custom:ComboBoxWithLabel FieldLabel="Organización*" HorizontalAlignment="Right" x:Name="lblcmbbtnOrganization"
-                                    ButtonClick="lblcmbbtnOrganization_ButtonClick"/>
+                                    ButtonClick="lblcmbbtnOrganization_ButtonClick" 
+                                    ButtonTip="Click para agregar una nueva organización"
+                                    ComboBoxTip="Selecciona la organización a la que pertenece el cliente (obligatorio)"/>
+            
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
                 <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0" Click="btnSave_Click"/>
                 <Button x:Name="btnCancel" Content="Cancelar" Width="80" Click="btnCancel_Click"/>

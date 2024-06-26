@@ -11,6 +11,7 @@ namespace Presentation.CustomControls
         public event RoutedEventHandler ButtonClick;
         private string _fieldLabel;
 
+
         public ComboBoxWithLabel()
         {
             InitializeComponent();
@@ -23,5 +24,8 @@ namespace Presentation.CustomControls
         {
             ButtonClick?.Invoke(sender, e);
         }
+
+        public string ButtonTip { get; set; }
+        public string ComboBoxTip { get; set; }
     }
 }
