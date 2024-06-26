@@ -14,7 +14,7 @@ public partial class OrderLocation
     {
         get
         {
-            return (short)(SeedTrayAmount - Blocks.Sum(x => x.SeedTrayAmount));
+            return Blocks != null ? (short)(SeedTrayAmount - Blocks.Sum(x => x.SeedTrayAmount)) : (short)0;
         }
     }
 
@@ -23,9 +23,7 @@ public partial class OrderLocation
     {
         get
         {
-            int seedTrays = SeedTrayAmount - Blocks.Sum(x => x.SeedTrayAmount);
-            //NEXT - there is a bug here but i don't know why. I think the error is in an external code
-            //when I'm going to show data the dgOrderLocations of the NewOrderWindow
+            int seedTrays = Blocks != null ? (short)(SeedTrayAmount - Blocks.Sum(x => x.SeedTrayAmount)) : (short)0;
             int alveolus = SeedTray != null ? SeedTray.TotalAlveolus : 0;
             return (short)(seedTrays * alveolus);
         }

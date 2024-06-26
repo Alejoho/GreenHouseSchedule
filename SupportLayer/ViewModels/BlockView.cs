@@ -11,7 +11,7 @@ public partial class Block
     {
         get
         {
-            int seedTraysAlreadyDelivered = DeliveryDetails.Sum(x => x.SeedTrayAmountDelivered);
+            int seedTraysAlreadyDelivered = DeliveryDetails != null ? DeliveryDetails.Sum(x => x.SeedTrayAmountDelivered) : 0;
             int seedTraysToBeDelivered = SeedTrayAmount - seedTraysAlreadyDelivered;
             return seedTraysToBeDelivered;
         }
@@ -22,7 +22,7 @@ public partial class Block
     {
         get
         {
-            int alveolus = OrderLocation.SeedlingAmount / OrderLocation.SeedTrayAmount;
+            int alveolus = OrderLocation != null ? OrderLocation.SeedlingAmount / OrderLocation.SeedTrayAmount : 0;
             return alveolus * SeedTraysAmountToBeDelivered;
         }
     }
