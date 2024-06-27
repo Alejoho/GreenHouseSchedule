@@ -225,7 +225,7 @@ public partial class OrganizationsWindow : Window
 
     private void ShowError()
     {
-        MessageBox.Show(_municipalityProcessor.Error);
+        MessageBox.Show(_municipalityProcessor.Error, "", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     //LATER - think If I have to change the name of this method to something else clearer
