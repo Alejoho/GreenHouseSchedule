@@ -67,6 +67,8 @@ public partial class AddEditOrganizationWindow : Window
         {
             if (_processor.SaveOrganization(_model) == true)
             {
+                MessageBox.Show("Registro salvado");
+
                 log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
                 _log.Info("An Organization record was saved to the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
@@ -83,7 +85,7 @@ public partial class AddEditOrganizationWindow : Window
 
     private void ShowError()
     {
-        MessageBox.Show(_processor.Error);
+        MessageBox.Show(_processor.Error, "", MessageBoxButton.OK, MessageBoxImage.Warning);
     }
 
     private bool ValidateDataType()

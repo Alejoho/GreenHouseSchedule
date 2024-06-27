@@ -84,7 +84,7 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
 
     private void ShowError()
     {
-        MessageBox.Show(_processor.Error);
+        MessageBox.Show(_processor.Error, "", MessageBoxButton.OK, MessageBoxImage.Warning);
     }
 
     //LATER - Change the name of this method. Something like PopulateModel fit better.
