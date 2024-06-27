@@ -57,11 +57,11 @@ insert into "Organizations" values
 
 go
 insert into "Clients" values
-	('Alberto Martínez', null, '52368566', null, 1),
-	('Yesdel Acosta Pérez', null, '55423113', null, 2),
-	('Manuel Rodríguez', null, null, '47425145', 1),
-	('Alberto Espinosa', null, '52556650', null, 3),
-	('Jose Carlos', null, '53742114', null, 1);
+	('Alberto Martínez', '', '52368566', '', 1),
+	('Yesdel Acosta Pérez', '', '55423113', '', 2),
+	('Manuel Rodríguez', '', '', '47425145', 1),
+	('Alberto Espinosa', '', '52556650', '', 3),
+	('Jose Carlos', '', '53742114', '', 1);
 
 --------------------------------------------------------------------------------------------
 
@@ -89,14 +89,14 @@ go
 insert into "GreenHouses" values
 	('    -', 'This is a ghost house to put 
 	the dont sown order locations', 1, 1, 1, 1, 1, 0),
-	('Casa 1', null, 11.58, 35, 405.3, 306.81, 4, 1),
-	('Casa 2', null, 11.58, 34.6, 400.67, 306.72, 4, 1),
-	('Casa 3', null, 11.32, 35, 396.2, 256.81, 4, 1),
-	('Casa 4', null, 11.58, 35.2, 407.62, 308.77, 4, 1),
-	('Casa 5', null, 11.58, 35, 405.3, 305.98, 4, 1),
-	('Casa 6', null, 7, 30, 210, 170, 2, 1),
-	('Casa 7', null, 7.3, 35, 255.5, 181.61, 2, 1),
-	('Casa 8', null, 7.78, 35, 272.3, 181.61, 2, 1);
+	('Casa 1', '', 11.58, 35, 405.3, 306.81, 4, 1),
+	('Casa 2', '', 11.58, 34.6, 400.67, 306.72, 4, 1),
+	('Casa 3', '', 11.32, 35, 396.2, 256.81, 4, 1),
+	('Casa 4', '', 11.58, 35.2, 407.62, 308.77, 4, 1),
+	('Casa 5', '', 11.58, 35, 405.3, 305.98, 4, 1),
+	('Casa 6', '', 7, 30, 210, 170, 2, 1),
+	('Casa 7', '', 7.3, 35, 255.5, 181.61, 2, 1),
+	('Casa 8', '', 7.78, 35, 272.3, 181.61, 2, 1);
 
 go
 insert into "SeedTrays" values
