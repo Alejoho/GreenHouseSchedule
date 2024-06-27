@@ -55,6 +55,7 @@ namespace Presentation.AddEditForms
                 if (_processor.SaveSpecies(_model) == true)
                 {
                     MessageBox.Show("Registro salvado");
+
                     _requestor?.SpeciesComplete(_model);
                     this.Close();
                 }
@@ -67,7 +68,7 @@ namespace Presentation.AddEditForms
 
         private void ShowError()
         {
-            MessageBox.Show(_processor.Error);
+            MessageBox.Show(_processor.Error, "", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         //TODO - I have a problem here. When a update a record if the model has an error in the
@@ -83,7 +84,7 @@ namespace Presentation.AddEditForms
             }
             else
             {
-                MessageBox.Show("Días de produccion inválido");
+                MessageBox.Show("Días de produccion inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 
@@ -95,7 +96,7 @@ namespace Presentation.AddEditForms
                 }
                 else
                 {
-                    MessageBox.Show("Peso de 1000 semillas inválido");
+                    MessageBox.Show("Peso de 1000 semillas inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;
                 }
             }
@@ -106,7 +107,7 @@ namespace Presentation.AddEditForms
             }
             else
             {
-                MessageBox.Show("Semillas en una hectárea inválido");
+                MessageBox.Show("Semillas en una hectárea inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 
@@ -116,7 +117,7 @@ namespace Presentation.AddEditForms
             }
             else
             {
-                MessageBox.Show("Peso de una hectárea de semilla inválido");
+                MessageBox.Show("Peso de una hectárea de semilla inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 

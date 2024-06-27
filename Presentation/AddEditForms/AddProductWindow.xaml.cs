@@ -63,12 +63,13 @@ public partial class AddProductWindow : Window, ISpeciesRequester
 
     private void ShowError()
     {
-        MessageBox.Show(_processor.Error);
+        MessageBox.Show(_processor.Error, "", MessageBoxButton.OK, MessageBoxImage.Warning);
     }
 
     private bool ValidateDataType()
     {
         bool output = true;
+
         _model.Variety = lbltxtVariety.FieldContent;
 
         if (lblcmbbtnSpecies.ComboBox.SelectedItem != null)

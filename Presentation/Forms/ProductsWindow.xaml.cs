@@ -119,40 +119,51 @@ public partial class ProductsWindow : Window, ISpeciesRequester
 
     private void btnAddProduct_Click(object sender, RoutedEventArgs e)
     {
-        ValidateDataType();
-
-        if (_productModel.Id == 0)
+        if (ValidateDataType())
         {
-            ((Species)dgSpecies.SelectedItem).Products.Add(_productModel);
-        }
+            if (_productModel.Id == 0)
+            {
+                ((Species)dgSpecies.SelectedItem).Products.Add(_productModel);
+            }
 
-        if (_productProcessor.SaveProduct(_productModel) == true)
-        {
-            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_productModel);
-            _log.Info("A Product record was saved to the DB");
-            log4net.GlobalContext.Properties["Model"] = "";
+            if (_productProcessor.SaveProduct(_productModel) == true)
+            {
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_productModel);
+                _log.Info("A Product record was saved to the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
 
-            RefreshListBox();
-            _productModel = new Product();
-            txtNewProduct.Text = "";
-            btnAddProduct.Content = "Agregar";
-            btnRemoveProduct.IsEnabled = true;
-        }
-        else
-        {
-            ShowError();
+                RefreshListBox();
+                _productModel = new Product();
+                txtNewProduct.Text = "";
+                btnAddProduct.Content = "Agregar";
+                btnRemoveProduct.IsEnabled = true;
+            }
+            else
+            {
+                ShowError();
+            }
         }
     }
 
-    private void ValidateDataType()
+    private bool ValidateDataType()
     {
-        _productModel.Variety = txtNewProduct.Text;
+        if (dgSpecies.SelectedItem == null)
+        {
+            MessageBox.Show("Debe seleccionar un cultivo antes de agregar una variedad"
+                , "", MessageBoxButton.OK, MessageBoxImage.Information);
+            return false;
+        }
+
         _productModel.SpecieId = ((Species)dgSpecies.SelectedItem).Id;
+
+        _productModel.Variety = txtNewProduct.Text;
+
+        return true;
     }
 
     private void ShowError()
     {
-        MessageBox.Show(_productProcessor.Error);
+        MessageBox.Show(_productProcessor.Error, "", MessageBoxButton.OK, MessageBoxImage.Warning);
     }
 
     private void RefreshListBox()
