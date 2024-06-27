@@ -30,7 +30,7 @@ public partial class Order : INotifyPropertyChanged
     {
         get
         {
-            return _orderLocationView;
+            return _orderLocationView ?? null;
         }
 
         set
@@ -54,7 +54,7 @@ public partial class Order : INotifyPropertyChanged
     {
         get
         {
-            return _blocksView;
+            return _blocksView ?? null;
         }
 
         set

@@ -1,24 +1,70 @@
-﻿namespace SupportLayer.Models;
+﻿using log4net;
+
+namespace SupportLayer.Models;
 
 public partial class Organization
 {
     public string MunicipalityName
     {
-        get { return Municipality.Name; }
+        get
+        {
+            if (Municipality != null)
+            {
+                return Municipality.Name;
+            }
+
+            ILog log = LogHelper.GetLogger();
+            log.Warn("In a Organization object the Municipality property is null");
+
+            return string.Empty;
+        }
     }
 
     public string TypeOfOrganizationName
     {
-        get { return TypeOfOrganization.Name; }
+        get
+        {
+            if (TypeOfOrganization != null)
+            {
+                return TypeOfOrganization.Name;
+            }
+
+            ILog log = LogHelper.GetLogger();
+            log.Warn("In a Organization object the Municipality property is null");
+
+            return string.Empty;
+        }
     }
 
     public string ProvinceName
     {
-        get { return Municipality.Province.Name; }
+        get
+        {
+            if (Municipality != null)
+            {
+                return Municipality.Province.Name;
+            }
+
+            ILog log = LogHelper.GetLogger();
+            log.Warn("In a Organization object the Municipality property is null");
+
+            return string.Empty;
+        }
     }
 
     public string TypeAndOrganizationName
     {
-        get { return $"{TypeOfOrganization.Name} - {Name}"; }
+        get
+        {
+            if (TypeOfOrganization != null)
+            {
+                return $"{TypeOfOrganization.Name} - {Name}";
+            }
+
+            ILog log = LogHelper.GetLogger();
+            log.Warn("In a Organization object the Municipality property is null");
+
+            return string.Empty;
+        }
     }
 }
