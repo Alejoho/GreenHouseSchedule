@@ -247,7 +247,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     {
         if (lblcmbbtnClient.ComboBox.SelectedItem == null)
         {
-            MessageBox.Show("Debe seleccionar un cliente.", "Dato faltante"
+            MessageBox.Show("Debe seleccionar un cliente", "Dato faltante"
                 , MessageBoxButton.OK, MessageBoxImage.Information);
             lblcmbbtnProduct.ComboBox.Focus();
             return false;
@@ -255,7 +255,7 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
 
         if (lblcmbbtnProduct.ComboBox.SelectedItem == null)
         {
-            MessageBox.Show("Debe seleccionar un producto.", "Dato faltante"
+            MessageBox.Show("Debe seleccionar un producto", "Dato faltante"
                 , MessageBoxButton.OK, MessageBoxImage.Information);
             lblcmbbtnProduct.ComboBox.Focus();
             return false;
@@ -264,14 +264,14 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         if (txtAmountOfSeedlings.FieldContent == null
             || txtAmountOfSeedlings.FieldContent == "")
         {
-            MessageBox.Show("Debe especificar la cantidad de posturas.", "Dato faltante"
+            MessageBox.Show("Debe especificar la cantidad de posturas", "Dato faltante"
                 , MessageBoxButton.OK, MessageBoxImage.Information);
             txtAmountOfSeedlings.TextBox.Focus();
             return false;
         }
         else if (int.TryParse(txtAmountOfSeedlings.FieldContent, out int amountOfSeedlings) == false)
         {
-            MessageBox.Show("La cantidad de posturas no esta en el formato correcto."
+            MessageBox.Show("La cantidad de posturas no está en el formato correcto."
                 , "Cantidad de posturas inválida"
                 , MessageBoxButton.OK, MessageBoxImage.Warning);
             txtAmountOfSeedlings.TextBox.Focus();
@@ -290,9 +290,9 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         }
         else if (dtpWishDate.TimePicker.SelectedDate.Value < DateTime.Today.AddDays(daysToDeliver))
         {
-            MessageBox.Show("La fecha deseada debe ser más futura que el día presente, en tantos días necesite el producto para estar listo."
-                , "Fecha inválida"
-            , MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("La fecha deseada debe ser más futura que el día presente, en tantos días " +
+                "necesite el producto para estar listo.", "Fecha inválida"
+                , MessageBoxButton.OK, MessageBoxImage.Warning);
             dtpWishDate.TimePicker.Focus();
             return false;
         }
@@ -332,33 +332,42 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         }
         else
         {
-            MessageBox.Show("Debe seleccionar una permutacion para mostrar las locaciones de la orden.");
+            MessageBox.Show("Debe seleccionar una permutacion para mostrar las locaciones de la orden."
+                , "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         //el error es lanzado cuando llega a esta linea
     }
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
-        OrderProcessor processor = new OrderProcessor();
-
-        foreach (OrderLocation orderLocation in _resultingOrder.OrderLocations)
+        if (dgOrderLocations.Items.Count > 0)
         {
-            orderLocation.Id = 0;
-        }
+            OrderProcessor processor = new OrderProcessor();
 
-        if (processor.SaveOrder(_resultingOrder) == true)
-        {
-            log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_resultingOrder);
-            _log.Info("An Order record and all its OrderLocations records were saved to the DB");
-            log4net.GlobalContext.Properties["Model"] = "";
+            foreach (OrderLocation orderLocation in _resultingOrder.OrderLocations)
+            {
+                orderLocation.Id = 0;
+            }
 
-            MessageBox.Show("Nueva orden guardada");
-            this.Close();
+            if (processor.SaveOrder(_resultingOrder) == true)
+            {
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_resultingOrder);
+                _log.Info("An Order record and all its OrderLocations records were saved to the DB");
+                log4net.GlobalContext.Properties["Model"] = "";
+
+                MessageBox.Show("Nueva orden guardada");
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show(processor.Error, "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.Close();
+            }
         }
         else
         {
-            MessageBox.Show(processor.Error);
-            this.Close();
+            MessageBox.Show("Faltan acciones por realizar para poder guardar la orden"
+                , "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
     //LATER - Check the look of all MessageBox.Show methods and standarize them
