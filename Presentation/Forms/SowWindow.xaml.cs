@@ -72,6 +72,14 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
 
     private void CallSownOrderLocationSetter()
     {
+        if (_orderLocationInProcess == null)
+        {
+            MessageBox.Show("Debe seleccionar la locación que desea sembrar"
+                , "", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            return;
+        }
+
         SowInputWindow window = new SowInputWindow(this);
         window.ShowDialog();
     }
