@@ -78,10 +78,11 @@
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <DataGrid Margin="20 5 20 5" AutoGenerateColumns="False" HorizontalAlignment="Left"
-                        SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" 
-                        CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
-                        IsReadOnly="True" ItemsSource="{Binding OrderLocations}" 
-                        HeadersVisibility="Column" Width="auto" HorizontalScrollBarVisibility="Hidden">
+                              SelectionMode="Single" CanUserAddRows="False" CanUserReorderColumns="False" 
+                              CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
+                              IsReadOnly="True" ItemsSource="{Binding OrderLocations}" 
+                              HeadersVisibility="Column" Width="auto" HorizontalScrollBarVisibility="Hidden"
+                              PreviewMouseLeftButtonDown="DataGrid_PreviewMouseLeftButtonDown">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Casa" Binding="{Binding GreenHouse.Name}"/>

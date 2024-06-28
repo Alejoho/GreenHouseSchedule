@@ -14,8 +14,6 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class OrderListWindow : Window
 {
-
-    //NEXT - hacer que en el dgOrderLocation child no se pueda seleccionar
     private OrderProcessor _processor;
     private Orders _orders;
     private CollectionViewSource _viewSource;
@@ -134,5 +132,11 @@ public partial class OrderListWindow : Window
                 e.Accepted = true;
             }
         }
+    }
+
+    private void DataGrid_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        //this is to deactivated the click on the dgOrderLocation
+        e.Handled = true;
     }
 }
