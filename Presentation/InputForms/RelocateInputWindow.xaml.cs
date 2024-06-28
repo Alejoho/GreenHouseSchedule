@@ -70,7 +70,8 @@ namespace Presentation.InputForms
 
                     _log.Warn("It was passed an incorrect argument", ex);
 
-                    MessageBox.Show($"{ex.Message.Substring(0, endIndex)}.");
+                    MessageBox.Show($"{ex.Message.Substring(0, endIndex)}."
+                        , "", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                     if (ex.ParamName == "something")
                     {
@@ -81,7 +82,7 @@ namespace Presentation.InputForms
                 {
                     _log.Error("There was an error relocating a Block", ex);
 
-                    MessageBox.Show($"{ex.Message}");
+                    MessageBox.Show($"{ex.Message}", "", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -115,7 +116,7 @@ namespace Presentation.InputForms
             }
             else if (short.TryParse(lbltxtPlacedAmount.FieldContent, out short amountOfSeedlings) == false)
             {
-                MessageBox.Show("La cantidad de bandejas reubicadas no esta en el formato correcto."
+                MessageBox.Show("La cantidad de bandejas reubicadas no está en el formato correcto."
                     , "Cantidad de bandejas ubicadas inválida"
                     , MessageBoxButton.OK, MessageBoxImage.Warning);
                 lbltxtPlacedAmount.TextBox.Focus();
