@@ -1,4 +1,5 @@
-﻿using DataAccess.Repositories;
+﻿using DataAccess.Contracts;
+using DataAccess.Repositories;
 using Domain.ValuableObjects;
 using log4net;
 using SupportLayer;
@@ -8,12 +9,19 @@ namespace Domain.Processors;
 
 public class OrderLocationProcessor : IOrderLocationProcessor
 {
-    private static readonly ILog _log = LogHelper.GetLogger();
-    private OrderLocationRepository _repository;
+    private static ILog _log;
+    private IOrderLocationRepository _repository;
 
     public OrderLocationProcessor()
     {
         _repository = new OrderLocationRepository();
+        _log = LogHelper.GetLogger();
+    }
+
+    public OrderLocationProcessor(ILog log, IOrderLocationRepository repository)
+    {
+        _log = log;
+        _repository = repository;
     }
 
     public IEnumerable<OrderLocation> GetOrderLocationsFromADateOn(DateOnly date)
