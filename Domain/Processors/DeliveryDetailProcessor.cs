@@ -1,4 +1,5 @@
-﻿using DataAccess.Repositories;
+﻿using DataAccess.Contracts;
+using DataAccess.Repositories;
 using log4net;
 using SupportLayer;
 using SupportLayer.Models;
@@ -7,11 +8,19 @@ namespace Domain.Processors;
 
 public class DeliveryDetailProcessor : IDeliveryDetailProcessor
 {
-    private DeliveryDetailRepository _repository;
+    private ILog _log;
+    private IDeliveryDetailRepository _repository;
 
     public DeliveryDetailProcessor()
     {
         _repository = new DeliveryDetailRepository();
+        _log = LogHelper.GetLogger();
+    }
+
+    public DeliveryDetailProcessor(ILog log, IDeliveryDetailRepository repository)
+    {
+        _repository = repository;
+        _log = log;
     }
 
     public IEnumerable<DeliveryDetail> GetDeliveryDetailFromADateOn(DateOnly date)
@@ -22,7 +31,7 @@ public class DeliveryDetailProcessor : IDeliveryDetailProcessor
         return output;
     }
 
-    public void SaveNewDeliveryDetails(Block block, DateOnly date, short deliveredSeedTrays)
+    public void SaveNewDeliveryDetail(Block block, DateOnly date, short deliveredSeedTrays)
     {
         ValidateDeliveryChanges(block, date, deliveredSeedTrays);
 
@@ -37,8 +46,7 @@ public class DeliveryDetailProcessor : IDeliveryDetailProcessor
 
         block.DeliveryDetails.Add(deliveryDetail);
 
-        ILog log = LogHelper.GetLogger();
-        log.Info("Added a DeliveryDetail to the DB");
+        _log.Info("Added a DeliveryDetail to the DB");
     }
 
     private void ValidateDeliveryChanges(Block block, DateOnly date, short deliveredSeedTrays)

@@ -96,7 +96,7 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
 
     public void SetTheDeliveredBlock(DateOnly date, short deliveredSeedTrays)
     {
-        _deliveryDetailProcessor.SaveNewDeliveryDetails(_blockInProcess, date, deliveredSeedTrays);
+        _deliveryDetailProcessor.SaveNewDeliveryDetail(_blockInProcess, date, deliveredSeedTrays);
 
         _orderProcessor.UpdateOrderStatusAfterDelivery(_blockInProcess.OrderLocation.Order);
 
