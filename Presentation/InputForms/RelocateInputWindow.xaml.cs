@@ -73,7 +73,7 @@ namespace Presentation.InputForms
                     MessageBox.Show($"{ex.Message.Substring(0, endIndex)}."
                         , "", MessageBoxButton.OK, MessageBoxImage.Warning);
 
-                    if (ex.ParamName == "something")
+                    if (ex.ParamName == "relocatedSeedTrays")
                     {
                         lbltxtPlacedAmount.TextBox.Focus();
                     }

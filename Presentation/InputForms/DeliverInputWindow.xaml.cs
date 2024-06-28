@@ -41,7 +41,8 @@ public partial class DeliverInputWindow : Window
 
                 _log.Warn("It was passed an incorrect argument", ex);
 
-                MessageBox.Show($"{ex.Message.Substring(0, endIndex)}.");
+                MessageBox.Show($"{ex.Message.Substring(0, endIndex)}."
+                    , "", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                 if (ex.ParamName == "date")
                 {
@@ -74,14 +75,15 @@ public partial class DeliverInputWindow : Window
 
         if (string.IsNullOrEmpty(lbltxtDeliveredAmount.FieldContent))
         {
-            MessageBox.Show("Debe especificar la cantidad de bandejas sembradas.", "Dato faltante"
+            MessageBox.Show("Debe especificar la cantidad de bandejas sembradas."
+                , "Dato faltante"
                 , MessageBoxButton.OK, MessageBoxImage.Information);
             lbltxtDeliveredAmount.TextBox.Focus();
             return false;
         }
         else if (short.TryParse(lbltxtDeliveredAmount.FieldContent, out short amountOfSeedlings) == false)
         {
-            MessageBox.Show("La cantidad de bandejas sembradas no esta en el formato correcto."
+            MessageBox.Show("La cantidad de bandejas sembradas no está en el formato correcto."
                 , "Cantidad de bandejas sembradas inválida"
                 , MessageBoxButton.OK, MessageBoxImage.Warning);
             lbltxtDeliveredAmount.TextBox.Focus();
