@@ -49,7 +49,6 @@ namespace DataAccess.Repositories
                 seedTray.LogicalTrayArea = entity.LogicalTrayArea;
                 seedTray.TotalAmount = entity.TotalAmount;
                 seedTray.Material = entity.Material;
-                seedTray.Preference = entity.Preference;
                 seedTray.Active = entity.Active;
                 _sowScheduleDB.SaveChanges();
                 return true;

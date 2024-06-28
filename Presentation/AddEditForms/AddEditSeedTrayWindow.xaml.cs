@@ -15,14 +15,11 @@ namespace Presentation.AddEditForms
         private SeedTrayProcessor _processor;
         private SeedTray _model;
 
-        //LATER - Evaluate if I really need the preference logic in the seedtrays. Remove it
-        //NEXT - Remove the Preference property from all the solution
-        public AddEditSeedTrayWindow(byte nextPreferenceValue)
+        public AddEditSeedTrayWindow()
         {
             InitializeComponent();
             _processor = new SeedTrayProcessor();
             _model = new SeedTray();
-            _model.Preference = nextPreferenceValue;
 
             _log.Info("The AddEditSeedTrayWindow was opened to add a new SeedTray");
         }

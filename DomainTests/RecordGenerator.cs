@@ -330,7 +330,6 @@ internal class RecordGenerator
     {
         //TODO - Add the selected field to the generator of seedtrays
         byte index = 1;
-        byte preference = 1;
         short[] amounts = { 1100, 2100, 2450, 1800, 2600, 1050, 2550 };
         return new Faker<SeedTray>()
             .RuleFor(x => x.Id, () => index++)
@@ -357,7 +356,6 @@ internal class RecordGenerator
             }
             )
             .RuleFor(x => x.Material, f => f.Vehicle.Type())
-            .RuleFor(x => x.Preference, f => preference++)
             .RuleFor(x => x.Active, f => f.Random.Bool())
             .RuleFor(x => x.IsSelected, (f, u) => u.Id % 2 == 0 ? false : true)
             .RuleFor(x => x.Selected, (f, u) => u.Id % 2 == 0 ? false : true);

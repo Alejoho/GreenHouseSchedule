@@ -13,9 +13,6 @@ namespace Presentation.Forms;
 /// Interaction logic for Clients.xaml
 /// </summary>
 /// 
-//NEXT - check the funcionality of all search text box. Because when i go to use contains in
-//a null string it throws an error. Always when i create an object to save it to the db i have to assign string.Empty 
-//to all strings properties
 public partial class ClientsWindow : Window
 {
     private List<Client> _clients;

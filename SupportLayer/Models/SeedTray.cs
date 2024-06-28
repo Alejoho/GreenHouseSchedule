@@ -24,8 +24,6 @@ public partial class SeedTray
 
     public string? Material { get; set; }
 
-    public byte Preference { get; set; }
-
     public bool Active { get; set; }
 
     public bool Selected { get; set; }

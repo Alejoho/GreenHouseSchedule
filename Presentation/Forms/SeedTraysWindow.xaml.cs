@@ -32,7 +32,7 @@ namespace Presentation.Forms
 
         private void btnNewSeedTray_Click(object sender, RoutedEventArgs e)
         {
-            AddEditSeedTrayWindow window = new AddEditSeedTrayWindow((byte)(_seedTrays.Max(x => x.Preference) + 1));
+            AddEditSeedTrayWindow window = new AddEditSeedTrayWindow();
             window.ShowDialog();
             LoadData();
         }

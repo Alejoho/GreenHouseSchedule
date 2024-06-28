@@ -127,7 +127,6 @@ create table "SeedTrays"(
 	"LogicalTrayArea" numeric(5,4) not null,
 	"TotalAmount" smallint not null,
 	"Material" nvarchar(20),
-	"Preference" tinyint not null,
 	"Active" bit not null,
 	"Selected" bit not null,
 	CONSTRAINT [PK_SeedTrays] primary key ("ID"),
@@ -139,10 +138,7 @@ create table "SeedTrays"(
 	CONSTRAINT [CK_SeedTrays_TrayWidth] CHECK ("TrayWidth" is null or ("TrayWidth" > 0 and "TrayWidth" < 1.5)),
 	CONSTRAINT [CK_SeedTrays_TrayArea] CHECK ("TrayArea" is null or ("TrayArea" > 0 and "TrayArea" < 2.25)),
 	CONSTRAINT [CK_SeedTrays_LogicalTrayArea] CHECK (("LogicalTrayArea" >= "TrayArea") and "LogicalTrayArea" < 4),
-	CONSTRAINT [CK_SeedTrays_TotalAmount] CHECK ("TotalAmount" > 0 and "TotalAmount" < 10000),
-	CONSTRAINT [UC_SeedTrays_Preference] UNIQUE ("Preference"),
-	CONSTRAINT [CK_SeedTrays_Preference] CHECK ("Preference" > 0)
-
+	CONSTRAINT [CK_SeedTrays_TotalAmount] CHECK ("TotalAmount" > 0 and "TotalAmount" < 10000)
 );
 
 

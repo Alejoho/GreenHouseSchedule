@@ -216,8 +216,6 @@ public partial class SowScheduleContext : DbContext
         {
             entity.HasIndex(e => e.Name, "UC_SeedTrays_Name").IsUnique();
 
-            entity.HasIndex(e => e.Preference, "UC_SeedTrays_Preference").IsUnique();
-
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("ID");

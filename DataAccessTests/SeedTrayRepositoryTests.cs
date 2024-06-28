@@ -87,7 +87,6 @@ public class SeedTrayRepositoryTests
         recordUpdated.LogicalTrayArea.Should().Be(newRecordData.LogicalTrayArea);
         recordUpdated.TotalAmount.Should().Be(newRecordData.TotalAmount);
         recordUpdated.Material.Should().Be(newRecordData.Material);
-        recordUpdated.Preference.Should().Be(newRecordData.Preference);
         recordUpdated.Active.Should().Be(newRecordData.Active);
 
     }
@@ -110,7 +109,6 @@ public class SeedTrayRepositoryTests
     public Faker<SeedTray> GetFaker()
     {
         byte index = 1;
-        byte preference = 1;
         return new Faker<SeedTray>()
             .RuleFor(x => x.Id, f => index++)
             .RuleFor(x => x.AlveolusLength, f => f.Random.Byte(10, 25))
@@ -123,7 +121,6 @@ public class SeedTrayRepositoryTests
             .RuleFor(x => x.LogicalTrayArea, (f, u) => u.TrayArea * f.Random.Decimal(1, 1.2M))
             .RuleFor(x => x.TotalAmount, f => f.Random.Short(300, 1500))
             .RuleFor(x => x.Material, f => f.Vehicle.Type())
-            .RuleFor(x => x.Preference, f => preference++)
             .RuleFor(x => x.Active, f => f.Random.Bool());
     }
 }
