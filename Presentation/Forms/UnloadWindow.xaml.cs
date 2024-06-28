@@ -63,6 +63,14 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
 
     private void CallOrderLocationPlaceSetter()
     {
+        if (_orderLocationInProcess == null)
+        {
+            MessageBox.Show("Debe seleccionar la locación que desea desestibar"
+                , "", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            return;
+        }
+
         PlaceInputWindow window = new PlaceInputWindow(this);
         window.ShowDialog();
     }
