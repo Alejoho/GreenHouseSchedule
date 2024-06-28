@@ -11,7 +11,7 @@ namespace Domain.Processors;
 
 public class OrderProcessor : IOrderProcessor
 {
-    private static readonly ILog _log = LogHelper.GetLogger();
+    private static ILog _log;
     //CHECK - If want to keep this interface type instead of change it to the class itself.
     private IOrderRepository _repository;
     public string Error { get; set; } = null!;
@@ -19,6 +19,13 @@ public class OrderProcessor : IOrderProcessor
     public OrderProcessor()
     {
         _repository = new OrderRepository();
+        _log = LogHelper.GetLogger();
+    }
+
+    public OrderProcessor(ILog log, IOrderRepository repository)
+    {
+        _repository = repository;
+        _log = log;
     }
 
     private bool ValidateData(Order model)
