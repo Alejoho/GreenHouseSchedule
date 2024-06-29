@@ -62,7 +62,11 @@ public class DeliveryDetailProcessorTests
 
         short deliveredSeedTrays = 100;
 
-        _processor.SaveNewDeliveryDetail(block, _date.AddDays(3), deliveredSeedTrays);
+        Action action = () => _processor.SaveNewDeliveryDetail(block, _date.AddDays(3), deliveredSeedTrays);
+
+        action.Should().Throw<ArgumentException>()
+            .WithParameterName("date")
+            .WithMessage("La fecha debe ser igual o anterior que el dia presente (Parameter 'date')");
 
         _newDeliveryDetail.Should().BeNull();
         block.DeliveryDetails.Should().HaveCount(0);
@@ -81,7 +85,11 @@ public class DeliveryDetailProcessorTests
 
         short deliveredSeedTrays = 125;
 
-        _processor.SaveNewDeliveryDetail(block, _date, deliveredSeedTrays);
+        Action action = () => _processor.SaveNewDeliveryDetail(block, _date, deliveredSeedTrays);
+
+        action.Should().Throw<ArgumentException>()
+            .WithParameterName("deliveredSeedTrays")
+            .WithMessage("La cantidad de bandejas entregadas debe estar entre 0 y la cantidad de bandejas del bloque (Parameter 'deliveredSeedTrays')");
 
         _newDeliveryDetail.Should().BeNull();
         block.DeliveryDetails.Should().HaveCount(0);
