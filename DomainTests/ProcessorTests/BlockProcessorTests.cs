@@ -49,6 +49,7 @@ public class BlockProcessorTests
     Mock<ILog> _logMock;
     BlockProcessor _processor;
     Block _newBlock;
+    OrderLocation _newOrderLocation;
     Order _order;
 
     public BlockProcessorTests()
@@ -62,6 +63,8 @@ public class BlockProcessorTests
 
         _orderLocationRepoMock = new Mock<IOrderLocationRepository>();
 
+        _orderLocationRepoMock.Setup(x => x.Insert(It.IsAny<OrderLocation>()))
+            .Callback<OrderLocation>(ol => _newOrderLocation = ol);
         _orderLocationRepoMock.Setup(x => x.Remove(It.IsAny<int>()));
         _orderLocationRepoMock.Setup(x => x.Update(It.IsAny<OrderLocation>()));
 
@@ -88,6 +91,7 @@ public class BlockProcessorTests
         OrderLocation orderLocation1 = new OrderLocation()
         {
             Id = 5,
+            Order = order,
             SeedTrayAmount = 100,
             SeedlingAmount = 26000,
             GreenHouseId = 2,
@@ -109,6 +113,7 @@ public class BlockProcessorTests
         OrderLocation orderLocation2 = new OrderLocation()
         {
             Id = 6,
+            Order = order,
             SeedTrayAmount = 50,
             SeedlingAmount = 13000,
             GreenHouseId = 4,
@@ -130,6 +135,7 @@ public class BlockProcessorTests
         OrderLocation orderLocation3 = new OrderLocation()
         {
             Id = 7,
+            Order = order,
             SeedTrayAmount = 60,
             SeedlingAmount = 9600,
             GreenHouseId = 3,
@@ -167,6 +173,7 @@ public class BlockProcessorTests
         _processor.SaveRelocateBlockChange(blockToRelocate, newGreenHouse, newBlockNumber, relocatedSeedTrays);
 
         _newBlock.OrderLocationId.Should().Be(blockToRelocate.OrderLocation.Id);
+        _newBlock.OrderLocation.Should().Be(orderLocation);
         _newBlock.BlockNumber.Should().Be(newBlockNumber);
         _newBlock.SeedTrayAmount.Should().Be(relocatedSeedTrays);
 
@@ -178,6 +185,8 @@ public class BlockProcessorTests
 
         _orderLocationRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Never);
         _orderLocationRepoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Never);
+
+        _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Once);
     }
 
     [Fact]
@@ -193,6 +202,7 @@ public class BlockProcessorTests
         _processor.SaveRelocateBlockChange(blockToRelocate, newGreenHouse, newBlockNumber, relocatedSeedTrays);
 
         _newBlock.OrderLocationId.Should().Be(blockToRelocate.OrderLocation.Id);
+        _newBlock.OrderLocation.Should().Be(orderLocation);
         _newBlock.BlockNumber.Should().Be(newBlockNumber);
         _newBlock.SeedTrayAmount.Should().Be(relocatedSeedTrays);
 
@@ -206,38 +216,89 @@ public class BlockProcessorTests
 
         _orderLocationRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Never);
         _orderLocationRepoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Never);
+
+        _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Once);
     }
 
     [Fact]
-    public void SaveRelocateBlockChange_ShouldRelocateABlockOutAHouseWithBrother()
+    public void SaveRelocateBlockChange_ShouldRelocateACompleteBlockOutAHouseWithBrother()
     {
         OrderLocation orderLocation = _order.OrderLocations.First();
+        OrderLocation orderLocationBrother = _order.OrderLocations.First(x => x.Id == 6);
         Block blockToRelocate = orderLocation.Blocks.First();
         short relocatedSeedTrays = 100;
-        byte newGreenHouse = 2;
+        byte newGreenHouse = 4;
         byte newBlockNumber = 4;
 
         _processor.SaveRelocateBlockChange(blockToRelocate, newGreenHouse, newBlockNumber, relocatedSeedTrays);
 
-        _newBlock.OrderLocationId.Should().Be(blockToRelocate.OrderLocation.Id);
+        _newBlock.OrderLocationId.Should().Be(orderLocationBrother.Id);
+        _newBlock.OrderLocation.Should().Be(orderLocationBrother);
         _newBlock.BlockNumber.Should().Be(newBlockNumber);
         _newBlock.SeedTrayAmount.Should().Be(relocatedSeedTrays);
 
-        orderLocation.Blocks.Should().HaveCount(1);
+        blockToRelocate.SeedTrayAmount.Should().Be(0);
+
+        orderLocation.Blocks.Should().HaveCount(0);
+        orderLocation.SeedTrayAmount.Should().Be(0);
+        orderLocation.SeedlingAmount.Should().Be(0);
+        orderLocationBrother.Blocks.Should().HaveCount(2);
 
         _blockRepoMock.Verify(x => x.Insert(It.IsAny<Block>()), Times.Once);
         _blockRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Once);
         _blockRepoMock.Verify(x => x.Update(It.IsAny<Block>()), Times.Never);
 
+        _orderLocationRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Once);
+        _orderLocationRepoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Once);
+
+        _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Exactly(2));
+    }
+
+    [Fact]
+    public void SaveRelocateBlockChange_ShouldRelocateAPartialBlockOutAHouseWithBrother()
+    {
+        OrderLocation orderLocation = _order.OrderLocations.First();
+        OrderLocation orderLocationBrother = _order.OrderLocations.First(x => x.Id == 6);
+        short originalSeedTraysOfTheBrother = orderLocationBrother.SeedTrayAmount;
+        int originalSeedlingsOfTheBrother = orderLocationBrother.SeedlingAmount;
+        Block blockToRelocate = orderLocation.Blocks.First();
+        int alveolus = orderLocation.SeedlingAmount / orderLocation.SeedTrayAmount;
+        short originalSeedTraysOfTheBlock = blockToRelocate.SeedTrayAmount;
+        short relocatedSeedTrays = 30;
+        byte newGreenHouse = 4;
+        byte newBlockNumber = 4;
+
+        _processor.SaveRelocateBlockChange(blockToRelocate, newGreenHouse, newBlockNumber, relocatedSeedTrays);
+
+        _newBlock.OrderLocationId.Should().Be(orderLocationBrother.Id);
+        _newBlock.OrderLocation.Should().Be(orderLocationBrother);
+        _newBlock.BlockNumber.Should().Be(newBlockNumber);
+        _newBlock.SeedTrayAmount.Should().Be(relocatedSeedTrays);
+
+        blockToRelocate.SeedTrayAmount.Should().Be((short)(originalSeedTraysOfTheBlock - relocatedSeedTrays));
+
+        orderLocation.Blocks.Should().HaveCount(1);
+        orderLocation.SeedTrayAmount.Should().Be((short)(originalSeedTraysOfTheBlock - relocatedSeedTrays));
+        orderLocation.SeedlingAmount.Should().Be((originalSeedTraysOfTheBlock - relocatedSeedTrays) * alveolus);
+
+        orderLocationBrother.Blocks.Should().HaveCount(2);
+        orderLocationBrother.SeedTrayAmount.Should().Be((short)(originalSeedTraysOfTheBrother + relocatedSeedTrays));
+        orderLocationBrother.SeedlingAmount.Should().Be(originalSeedlingsOfTheBrother + (relocatedSeedTrays * alveolus));
+
+        _blockRepoMock.Verify(x => x.Insert(It.IsAny<Block>()), Times.Once);
+        _blockRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Never);
+        _blockRepoMock.Verify(x => x.Update(It.IsAny<Block>()), Times.Once);
+
         _orderLocationRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Never);
-        _orderLocationRepoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Never);
+        _orderLocationRepoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Exactly(2));
+
+        _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Exactly(2));
     }
 
     [Fact]
     public void SaveRelocateBlockChange_ShouldRelocateABlockOutAHouseWithOutBrother()
     {
-        //La cantidad de bandejas reubicadas debe estar entre 0 y la cantidad de bandejas sin entregar de la locación  (Parameter 'relocatedSeedTrays')
-        //La cantidad de bandejas reubicadas debe estar entre 0 y la cantidad de bandejas sin entregar de la locación (Parameter 'relocatedSeedTrays')
+
     }
 
     [Fact]
@@ -266,6 +327,8 @@ public class BlockProcessorTests
 
         _orderLocationRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Never);
         _orderLocationRepoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Never);
+
+        _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Never);
     }
 
     [Fact]
@@ -294,5 +357,7 @@ public class BlockProcessorTests
 
         _orderLocationRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Never);
         _orderLocationRepoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Never);
+
+        _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Never);
     }
 }
