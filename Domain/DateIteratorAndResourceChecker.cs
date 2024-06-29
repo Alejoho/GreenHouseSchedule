@@ -349,9 +349,7 @@ namespace Domain
         {
             bool output;
             _seedTrayPermutations.Clear();
-            //TODO - I think it is solved but in case of anything i leave it here. there is a bug in these method.
-            //lets say there is a situation where i used all the seedtrays of 
-            //one type so that type shouldn't appear in any seedtray permutation but it does. Find out why?
+
             GenerateAndAddSimplePermutations();
             GenerateAndAddDoublePermutations();
             GenerateAndAddTriplePermutations();
@@ -368,7 +366,7 @@ namespace Domain
         private void GenerateAndAddSimplePermutations()
         {
             var listOfSeedTraysLevel1 = SeedBedStatus.SeedTrays
-                        .Where(seedTray => seedTray.Selected == true);
+                .Where(seedTray => seedTray.Selected == true && seedTray.FreeAmount > 0);
 
             foreach (SeedTrayModel seedTrayModelLevel1 in listOfSeedTraysLevel1)
             {
@@ -397,7 +395,7 @@ namespace Domain
         private void GenerateAndAddDoublePermutations()
         {
             var listOfSeedTraysLevel1 = SeedBedStatus.SeedTrays
-            .Where(seedTray => seedTray.Selected == true);
+                .Where(seedTray => seedTray.Selected == true && seedTray.FreeAmount > 0);
 
             foreach (SeedTrayModel seedTrayModelLevel1 in listOfSeedTraysLevel1)
             {
@@ -437,7 +435,7 @@ namespace Domain
         private void GenerateAndAddTriplePermutations()
         {
             var listOfSeedTraysLevel1 = SeedBedStatus.SeedTrays
-                .Where(seedTray => seedTray.Selected == true);
+                .Where(seedTray => seedTray.Selected == true && seedTray.FreeAmount > 0);
 
             foreach (SeedTrayModel seedTrayModelLevel1 in listOfSeedTraysLevel1)
             {
