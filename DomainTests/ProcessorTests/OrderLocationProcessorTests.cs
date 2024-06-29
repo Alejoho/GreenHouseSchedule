@@ -96,10 +96,13 @@ namespace DomainTests.ProcessorTests
 
             short seedTraysToSow = 100;
 
-            _processor.SaveSownOrderLocationChange(orderLocationToSow, _dateOfSow.AddDays(3), seedTraysToSow);
+            Action action = () => _processor.SaveSownOrderLocationChange(orderLocationToSow, _dateOfSow.AddDays(3), seedTraysToSow);
+
+            action.Should().Throw<ArgumentException>().WithParameterName("date")
+                .WithMessage("La fecha debe ser igual o anterior que el día presente (Parameter 'date')");
 
             orderLocationToSow.RealSowDate.Should().BeNull();
-            _orderLocationCopy.RealSowDate.Should().BeNull();
+            _orderLocationCopy.Should().BeNull();
 
             _repoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Never);
             _repoMock.Verify(x => x.Insert(It.IsAny<OrderLocation>()), Times.Never);
@@ -116,10 +119,13 @@ namespace DomainTests.ProcessorTests
 
             short seedTraysToSow = 125;
 
-            _processor.SaveSownOrderLocationChange(orderLocationToSow, _dateOfSow.AddDays(3), seedTraysToSow);
+            Action action = () => _processor.SaveSownOrderLocationChange(orderLocationToSow, _dateOfSow, seedTraysToSow);
+
+            action.Should().Throw<ArgumentException>().WithParameterName("sownSeedTrays")
+                .WithMessage("La cantidad de bandejas sembradas debe estar entre 0 y la cantidad de bandejas de la Locación (Parameter 'sownSeedTrays')");
 
             orderLocationToSow.RealSowDate.Should().BeNull();
-            _orderLocationCopy.RealSowDate.Should().BeNull();
+            _orderLocationCopy.Should().BeNull();
 
             _repoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Never);
             _repoMock.Verify(x => x.Insert(It.IsAny<OrderLocation>()), Times.Never);

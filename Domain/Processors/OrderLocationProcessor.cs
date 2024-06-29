@@ -72,7 +72,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
     {
         if (date > DateOnly.FromDateTime(DateTime.Now))
         {
-            throw new ArgumentException("La fecha debe ser igual o anterior que el dia presente", "date");
+            throw new ArgumentException("La fecha debe ser igual o anterior que el día presente", "date");
         }
 
         if (sownSeedTrays <= 0 || sownSeedTrays > orderLocation.SeedTrayAmount)
