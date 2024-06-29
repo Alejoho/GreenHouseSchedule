@@ -52,10 +52,10 @@ public class BlockProcessorTests
             , _orderLocationRepoMock.Object
             , _greenHouseRepoMock.Object);
 
-        _order = GenerateOrderRecord();
+        _order = GetOrderRecord();
     }
 
-    private Order GenerateOrderRecord()
+    private Order GetOrderRecord()
     {
         Order order = new Order()
         {

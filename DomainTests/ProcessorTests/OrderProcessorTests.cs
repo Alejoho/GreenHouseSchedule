@@ -116,4 +116,200 @@ public class OrderProcessorTests
         _repoMock.Invocations.Clear();
         _logMock.Invocations.Clear();
     }
+
+    [Fact]
+    public void UpdateOrderStatusAfterDelivery_ShouldUpdateNothing()
+    {
+        Order order = GetOrderRecordWithoutDelivery();
+
+        _processor.UpdateOrderStatusAfterDelivery(order);
+
+        order.Delivered.Should().BeFalse();
+        _repoMock.Verify(x => x.Update(It.IsAny<Order>()), Times.Never);
+    }
+
+    [Fact]
+    public void UpdateOrderStatusAfterDelivery_ShouldUpdateTheOrder()
+    {
+        Order order = GetOrderRecordCompletelyDelivered();
+
+        _processor.UpdateOrderStatusAfterDelivery(order);
+
+        order.Delivered.Should().BeTrue();
+        _repoMock.Verify(x => x.Update(It.IsAny<Order>()), Times.Once);
+    }
+
+    private Order GetOrderRecordWithoutDelivery()
+    {
+        Order order = new Order()
+        {
+            Id = 3,
+            AmountOfWishedSeedlings = 40500,
+            AmountOfAlgorithmSeedlings = 48600,
+            RealSowDate = new DateOnly(2023, 6, 25),
+            Sown = true,
+            Delivered = false
+        };
+
+        OrderLocation orderLocation1 = new OrderLocation()
+        {
+            Id = 5,
+            Order = order,
+            SeedTrayAmount = 100,
+            SeedlingAmount = 26000,
+            GreenHouseId = 2,
+            SeedTrayId = 1,
+            RealSowDate = new DateOnly(2023, 6, 25)
+        };
+
+        Block block1 = new Block()
+        {
+            Id = 15,
+            OrderLocationId = 5,
+            BlockNumber = 4,
+            SeedTrayAmount = 100,
+            OrderLocation = orderLocation1
+        };
+
+        orderLocation1.Blocks.Add(block1);
+
+        OrderLocation orderLocation2 = new OrderLocation()
+        {
+            Id = 6,
+            Order = order,
+            SeedTrayAmount = 50,
+            SeedlingAmount = 13000,
+            GreenHouseId = 4,
+            SeedTrayId = 1,
+            RealSowDate = new DateOnly(2023, 6, 25)
+        };
+
+        Block block2 = new Block()
+        {
+            Id = 16,
+            OrderLocationId = 6,
+            BlockNumber = 3,
+            SeedTrayAmount = 50,
+            OrderLocation = orderLocation2
+        };
+
+        orderLocation2.Blocks.Add(block2);
+
+        OrderLocation orderLocation3 = new OrderLocation()
+        {
+            Id = 7,
+            Order = order,
+            SeedTrayAmount = 60,
+            SeedlingAmount = 9600,
+            GreenHouseId = 3,
+            SeedTrayId = 2,
+            RealSowDate = new DateOnly(2023, 6, 27)
+        };
+
+        Block block3 = new Block()
+        {
+            Id = 17,
+            OrderLocationId = 7,
+            BlockNumber = 2,
+            SeedTrayAmount = 60,
+            OrderLocation = orderLocation3
+        };
+
+        orderLocation3.Blocks.Add(block3);
+
+        order.OrderLocations.Add(orderLocation1);
+        order.OrderLocations.Add(orderLocation2);
+        order.OrderLocations.Add(orderLocation3);
+
+        return order;
+    }
+
+    private Order GetOrderRecordCompletelyDelivered()
+    {
+        Order order = new Order()
+        {
+            Id = 3,
+            AmountOfWishedSeedlings = 40500,
+            AmountOfAlgorithmSeedlings = 48600,
+            RealSowDate = new DateOnly(2023, 6, 25),
+            Sown = true,
+            Delivered = false
+        };
+
+        OrderLocation orderLocation1 = new OrderLocation()
+        {
+            Id = 5,
+            Order = order,
+            SeedTrayAmount = 100,
+            SeedlingAmount = 26000,
+            GreenHouseId = 2,
+            SeedTrayId = 1,
+            RealSowDate = new DateOnly(2023, 6, 25)
+        };
+
+        Block block1 = new Block()
+        {
+            Id = 15,
+            OrderLocationId = 5,
+            BlockNumber = 4,
+            SeedTrayAmount = 100,
+            OrderLocation = orderLocation1,
+            DeliveryDetails = { new DeliveryDetail() { SeedTrayAmountDelivered = 100 } }
+        };
+
+        orderLocation1.Blocks.Add(block1);
+
+        OrderLocation orderLocation2 = new OrderLocation()
+        {
+            Id = 6,
+            Order = order,
+            SeedTrayAmount = 50,
+            SeedlingAmount = 13000,
+            GreenHouseId = 4,
+            SeedTrayId = 1,
+            RealSowDate = new DateOnly(2023, 6, 25)
+        };
+
+        Block block2 = new Block()
+        {
+            Id = 16,
+            OrderLocationId = 6,
+            BlockNumber = 3,
+            SeedTrayAmount = 50,
+            OrderLocation = orderLocation2,
+            DeliveryDetails = { new DeliveryDetail() { SeedTrayAmountDelivered = 50 } }
+        };
+
+        orderLocation2.Blocks.Add(block2);
+
+        OrderLocation orderLocation3 = new OrderLocation()
+        {
+            Id = 7,
+            Order = order,
+            SeedTrayAmount = 60,
+            SeedlingAmount = 9600,
+            GreenHouseId = 3,
+            SeedTrayId = 2,
+            RealSowDate = new DateOnly(2023, 6, 27)
+        };
+
+        Block block3 = new Block()
+        {
+            Id = 17,
+            OrderLocationId = 7,
+            BlockNumber = 2,
+            SeedTrayAmount = 60,
+            OrderLocation = orderLocation3,
+            DeliveryDetails = { new DeliveryDetail() { SeedTrayAmountDelivered = 60 } }
+        };
+
+        orderLocation3.Blocks.Add(block3);
+
+        order.OrderLocations.Add(orderLocation1);
+        order.OrderLocations.Add(orderLocation2);
+        order.OrderLocations.Add(orderLocation3);
+
+        return order;
+    }
+
 }
