@@ -1,4 +1,5 @@
-﻿using DataAccess.Repositories;
+﻿using DataAccess.Contracts;
+using DataAccess.Repositories;
 using Domain.ValuableObjects;
 using log4net;
 using SupportLayer;
@@ -9,11 +10,19 @@ namespace Domain.Processors;
 
 public class BlockProcessor
 {
-    private static readonly ILog _log = LogHelper.GetLogger();
-    private BlockRepository _repository;
+    private ILog _log;
+    private IBlockRepository _repository;
+
     public BlockProcessor()
     {
         _repository = new BlockRepository();
+        _log = LogHelper.GetLogger();
+    }
+
+    public BlockProcessor(ILog log, IBlockRepository repository)
+    {
+        _repository = repository;
+        _log = log;
     }
 
     private void UpdateBlockPlaceInAHouse(Block blockInProcess, byte block, short relocatedSeedTrays)
