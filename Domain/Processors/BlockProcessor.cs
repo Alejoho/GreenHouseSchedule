@@ -11,17 +11,20 @@ namespace Domain.Processors;
 public class BlockProcessor
 {
     private ILog _log;
-    private IBlockRepository _repository;
+    private IBlockRepository _blockRepository;
+    private IOrderLocationRepository _orderLocationRepository;
 
     public BlockProcessor()
     {
-        _repository = new BlockRepository();
+        _blockRepository = new BlockRepository();
+        _orderLocationRepository = new OrderLocationRepository();
         _log = LogHelper.GetLogger();
     }
 
-    public BlockProcessor(ILog log, IBlockRepository repository)
+    public BlockProcessor(ILog log, IBlockRepository blockRepository, IOrderLocationRepository orderLocationRepository)
     {
-        _repository = repository;
+        _blockRepository = blockRepository;
+        _orderLocationRepository = orderLocationRepository;
         _log = log;
     }
 
@@ -36,18 +39,18 @@ public class BlockProcessor
             SeedTrayAmount = relocatedSeedTrays
         };
 
-        _repository.Insert(newBlock);
+        _blockRepository.Insert(newBlock);
 
         blockInProcess.SeedTrayAmount -= relocatedSeedTrays;
 
         if (blockInProcess.SeedTrayAmount == 0)
         {
-            _repository.Remove(blockInProcess.Id);
+            _blockRepository.Remove(blockInProcess.Id);
             blockInProcess.OrderLocation.Blocks.Remove(blockInProcess);
         }
         else
         {
-            _repository.Update(blockInProcess);
+            _blockRepository.Update(blockInProcess);
         }
 
         orderlocation.Blocks.Add(newBlock);
@@ -69,10 +72,8 @@ public class BlockProcessor
         reciever.SeedTrayAmount += relocatedSeedTrays;
         reciever.SeedlingAmount += relocatedSeedTrays * alveolus;
 
-        //actualizo el reciever en la DB
-        OrderLocationRepository orderLocationRepository = new OrderLocationRepository();
-
-        orderLocationRepository.Update(reciever);
+        //actualizo el reciever en la DB        
+        _orderLocationRepository.Update(reciever);
 
         //creo el nuevo bloque y lo inserto en la DB
         Block newBlock = new Block()
@@ -87,19 +88,19 @@ public class BlockProcessor
             "GreenHouse and updated to the DB");
         log4net.GlobalContext.Properties["Model"] = "";
 
-        _repository.Insert(newBlock);
+        _blockRepository.Insert(newBlock);
 
         //actualizo el bloque original guardo cambios en la DB
         blockInProcess.SeedTrayAmount -= relocatedSeedTrays;
 
         if (blockInProcess.SeedTrayAmount == 0)
         {
-            _repository.Remove(blockInProcess.Id);
+            _blockRepository.Remove(blockInProcess.Id);
             sender.Blocks.Remove(blockInProcess);
         }
         else
         {
-            _repository.Update(blockInProcess);
+            _blockRepository.Update(blockInProcess);
         }
 
         //actualizo el sender en la DB
@@ -108,12 +109,12 @@ public class BlockProcessor
 
         if (sender.SeedTrayAmount == 0)
         {
-            orderLocationRepository.Remove(sender.Id);
+            _orderLocationRepository.Remove(sender.Id);
             sender.Order.OrderLocations.Remove(sender);
         }
         else
         {
-            orderLocationRepository.Update(sender);
+            _orderLocationRepository.Update(sender);
         }
 
         reciever.Blocks.Add(newBlock);
