@@ -8,44 +8,10 @@ namespace DomainTests.ProcessorTests;
 
 public class BlockProcessorTests
 {
-    #region coments
-    //LATER - Make all these tests. and add a little more to test the exceptions
-    // agregar un boton para reducir un bloque y otro para ampliarlo
-
-    //these 4 are OK
-    //in house | complete | with delivery OK
-
-    //in house | complete | without delivery OK
-
-    //in house | partial | with delivery OK
-
-    //in house | partial | without delivery OK
-
-    //si un block tiene delivery lo que quiere decir es que la transferencia va a ser parcial.
-
-
-    //out house no brother | block  complete | OL with 1 block | with delivery OK
-
-    //out house no brother | block  complete | OL with 1 block | without delivery OK
-
-    //out house no brother | block  partial | OL with 1 or more blocks | with delivery OK
-
-    //out house no brother | block  partial | OL with 1 or more blocks | without delivery OK
-
-
-
-    //out house with brother | block  complete | OL with 1 block 
-
-    //out house with brother | block  partial | OL with 1 block OK
-
-    //out house with brother | block  complete | OL with 1 or more blocks
-
-    //out house with brother | block  partial | OL with 1 or more blocks 
-
-    #endregion
 
     Mock<IBlockRepository> _blockRepoMock;
     Mock<IOrderLocationRepository> _orderLocationRepoMock;
+    Mock<IGreenHouseRepository> _greenHouseRepoMock;
     Mock<ILog> _logMock;
     BlockProcessor _processor;
     Block _newBlock;
@@ -68,11 +34,23 @@ public class BlockProcessorTests
         _orderLocationRepoMock.Setup(x => x.Remove(It.IsAny<int>()));
         _orderLocationRepoMock.Setup(x => x.Update(It.IsAny<OrderLocation>()));
 
+        _greenHouseRepoMock = new Mock<IGreenHouseRepository>();
+
+        _greenHouseRepoMock.Setup(x => x.GetAll())
+            .Returns(
+                new List<GreenHouse>() {
+                    new GreenHouse() { Id = 3 }
+                }
+            );
+
         _logMock = new Mock<ILog>();
 
         _logMock.Setup(x => x.Info(It.IsAny<string>()));
 
-        _processor = new BlockProcessor(_logMock.Object, _blockRepoMock.Object, _orderLocationRepoMock.Object);
+        _processor = new BlockProcessor(_logMock.Object
+            , _blockRepoMock.Object
+            , _orderLocationRepoMock.Object
+            , _greenHouseRepoMock.Object);
 
         _order = GenerateOrderRecord();
     }
@@ -296,9 +274,86 @@ public class BlockProcessorTests
     }
 
     [Fact]
-    public void SaveRelocateBlockChange_ShouldRelocateABlockOutAHouseWithOutBrother()
+    public void SaveRelocateBlockChange_ShouldRelocateACompleteBlockOutAHouseWithOutBrother()
     {
+        OrderLocation orderLocation = _order.OrderLocations.First();
+        Block blockToRelocate = orderLocation.Blocks.First();
+        short relocatedSeedTrays = 100;
+        byte newGreenHouse = 3;
+        byte newBlockNumber = 4;
 
+        _processor.SaveRelocateBlockChange(blockToRelocate, newGreenHouse, newBlockNumber, relocatedSeedTrays);
+
+        _newBlock.OrderLocationId.Should().Be(_newOrderLocation.Id);
+        _newBlock.OrderLocation.Should().Be(_newOrderLocation);
+        _newBlock.BlockNumber.Should().Be(newBlockNumber);
+        _newBlock.SeedTrayAmount.Should().Be(relocatedSeedTrays);
+
+        blockToRelocate.SeedTrayAmount.Should().Be(0);
+
+        orderLocation.Blocks.Should().HaveCount(0);
+        orderLocation.SeedTrayAmount.Should().Be(0);
+        orderLocation.SeedlingAmount.Should().Be(0);
+
+        _newOrderLocation.Blocks.Should().HaveCount(1);
+        _newOrderLocation.SeedTrayAmount.Should().Be(relocatedSeedTrays);
+        _newOrderLocation.Order.Should().Be(_order);
+        _newOrderLocation.GreenHouseId.Should().Be(newGreenHouse);
+
+        _blockRepoMock.Verify(x => x.Insert(It.IsAny<Block>()), Times.Once);
+        _blockRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Once);
+        _blockRepoMock.Verify(x => x.Update(It.IsAny<Block>()), Times.Never);
+
+        _orderLocationRepoMock.Verify(x => x.Insert(It.IsAny<OrderLocation>()), Times.Once);
+        _orderLocationRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Once);
+        _orderLocationRepoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Once);
+
+        _greenHouseRepoMock.Verify(x => x.GetAll(), Times.Once);
+
+        _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Exactly(2));
+    }
+
+    [Fact]
+    public void SaveRelocateBlockChange_ShouldRelocateAPartialBlockOutAHouseWithOutBrother()
+    {
+        OrderLocation orderLocation = _order.OrderLocations.First();
+        short originalSeedTraysOfTheOrderLocation = orderLocation.SeedTrayAmount;
+        int originalSeedlingOfTheOrderLocation = orderLocation.SeedlingAmount;
+        int alveolus = originalSeedlingOfTheOrderLocation / originalSeedTraysOfTheOrderLocation;
+        Block blockToRelocate = orderLocation.Blocks.First();
+        short relocatedSeedTrays = 70;
+        byte newGreenHouse = 3;
+        byte newBlockNumber = 4;
+
+        _processor.SaveRelocateBlockChange(blockToRelocate, newGreenHouse, newBlockNumber, relocatedSeedTrays);
+
+        _newBlock.OrderLocationId.Should().Be(_newOrderLocation.Id);
+        _newBlock.OrderLocation.Should().Be(_newOrderLocation);
+        _newBlock.BlockNumber.Should().Be(newBlockNumber);
+        _newBlock.SeedTrayAmount.Should().Be(relocatedSeedTrays);
+
+        blockToRelocate.SeedTrayAmount.Should().Be((short)(originalSeedTraysOfTheOrderLocation - relocatedSeedTrays));
+
+        orderLocation.Blocks.Should().HaveCount(1);
+        orderLocation.SeedTrayAmount.Should().Be((short)(originalSeedTraysOfTheOrderLocation - relocatedSeedTrays));
+        orderLocation.SeedlingAmount.Should().Be((originalSeedTraysOfTheOrderLocation - relocatedSeedTrays) * alveolus);
+
+        _newOrderLocation.Blocks.Should().HaveCount(1);
+        _newOrderLocation.SeedTrayAmount.Should().Be(relocatedSeedTrays);
+        _newOrderLocation.Order.Should().Be(_order);
+        _newOrderLocation.GreenHouseId.Should().Be(newGreenHouse);
+
+        _blockRepoMock.Verify(x => x.Insert(It.IsAny<Block>()), Times.Once);
+        _blockRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Never);
+        _blockRepoMock.Verify(x => x.Update(It.IsAny<Block>()), Times.Once);
+
+        _orderLocationRepoMock.Verify(x => x.Insert(It.IsAny<OrderLocation>()), Times.Once);
+        _orderLocationRepoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Never);
+        _orderLocationRepoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Exactly(2));
+
+        _greenHouseRepoMock.Verify(x => x.GetAll(), Times.Once);
+
+        _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Exactly(2));
     }
 
     [Fact]

@@ -13,18 +13,24 @@ public class BlockProcessor
     private ILog _log;
     private IBlockRepository _blockRepository;
     private IOrderLocationRepository _orderLocationRepository;
+    private IGreenHouseRepository _greenHouseRepository;
 
     public BlockProcessor()
     {
         _blockRepository = new BlockRepository();
         _orderLocationRepository = new OrderLocationRepository();
+        _greenHouseRepository = new GreenHouseRepository();
         _log = LogHelper.GetLogger();
     }
 
-    public BlockProcessor(ILog log, IBlockRepository blockRepository, IOrderLocationRepository orderLocationRepository)
+    public BlockProcessor(ILog log
+        , IBlockRepository blockRepository
+        , IOrderLocationRepository orderLocationRepository
+        , IGreenHouseRepository greenHouseRepository)
     {
         _blockRepository = blockRepository;
         _orderLocationRepository = orderLocationRepository;
+        _greenHouseRepository = greenHouseRepository;
         _log = log;
     }
 
@@ -142,14 +148,11 @@ public class BlockProcessor
         orderLocationCopy.SeedTrayAmount = 0;
         orderLocationCopy.SeedlingAmount = 0;
 
-        OrderLocationRepository orderLocationRepository = new OrderLocationRepository();
-
-        orderLocationRepository.Insert(orderLocationCopy);
+        _orderLocationRepository.Insert(orderLocationCopy);
         orderLocationCopy.SeedTray = blockInProcess.OrderLocation.SeedTray;
         orderLocationCopy.Order = blockInProcess.OrderLocation.Order;
 
-        GreenHouseRepository greenHouseRepository = new GreenHouseRepository();
-        orderLocationCopy.GreenHouse = greenHouseRepository.GetAll().First(x => x.Id == greenHouse);
+        orderLocationCopy.GreenHouse = _greenHouseRepository.GetAll().First(x => x.Id == greenHouse);
 
         blockInProcess.OrderLocation.Order.OrderLocations.Add(orderLocationCopy);
 
