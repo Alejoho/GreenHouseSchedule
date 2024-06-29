@@ -349,7 +349,6 @@ namespace Domain
         {
             bool output;
             _seedTrayPermutations.Clear();
-            //TODO - Redo the test for these three methods.
             //TODO - I think it is solved but in case of anything i leave it here. there is a bug in these method.
             //lets say there is a situation where i used all the seedtrays of 
             //one type so that type shouldn't appear in any seedtray permutation but it does. Find out why?

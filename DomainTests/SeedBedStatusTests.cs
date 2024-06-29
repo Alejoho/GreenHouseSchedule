@@ -4,8 +4,7 @@ using Domain.Models;
 using FluentAssertions;
 using Moq;
 using System.Reflection;
-//LATER - improve the name of some tests. Mainly the last ones.
-//TODO - Check if I have to change anything because of the new field of seedtrays
+
 namespace DomainTests;
 public class SeedBedStatusTests
 {
@@ -16,9 +15,6 @@ public class SeedBedStatusTests
 
     public SeedBedStatusTests()
     {
-        //CHECK - test in the generated records the filter from a date on of the order
-        //, order location and delivery detail repository
-
         if (_generator == null)
         {
             _generator = new RecordGenerator(600, _pastDate);

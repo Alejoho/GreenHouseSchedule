@@ -328,7 +328,6 @@ internal class RecordGenerator
 
     private Faker<SeedTray> GetSeedTrayFaker()
     {
-        //TODO - Add the selected field to the generator of seedtrays
         byte index = 1;
         short[] amounts = { 1100, 2100, 2450, 1800, 2600, 1050, 2550 };
         return new Faker<SeedTray>()

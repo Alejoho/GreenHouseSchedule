@@ -10,12 +10,8 @@ using System.Windows.Controls;
 
 namespace Presentation.Forms;
 
-//TODO - made something for when i have several dgorderlocation open and i change from one to another
+//NEWFUNC - made something for when i have several dgorderlocation open and i change from one to another
 //selecting an orderlocation que la seleccion del anterior se ponga a null.
-
-//TODO - Falta determinar que voy a hacer con el EstimateDelivaryDate. Cuando yo siembro la 1ra orderlocation de una
-//orden y no coincide con el estimate sowdate que hago con el estimate deliverydate, lo dejo como estaba o lo actualizo
-//para que tenga coerencia con el realsowdate
 
 /// <summary>
 /// Interaction logic for SowWindow.xaml

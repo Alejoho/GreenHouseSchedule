@@ -15,7 +15,7 @@ namespace Presentation.AddEditForms;
 public partial class AddEditOrganizationWindow : Window
 {
     private static readonly ILog _log = LogHelper.GetLogger();
-    //TODO - Add to this window the funcionality to add a new location in window
+    //NEWFUNC - Add to this window the funcionality to add a new location in window
     private OrganizationProcessor _processor;
     private Organization _model;
     private List<TypesOfOrganization> _typesOfOrganizations;

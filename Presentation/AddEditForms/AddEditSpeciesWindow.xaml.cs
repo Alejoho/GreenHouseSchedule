@@ -71,9 +71,6 @@ namespace Presentation.AddEditForms
             MessageBox.Show(_processor.Error, "", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-        //TODO - I have a problem here. When a update a record if the model has an error in the
-        //validateDataType it launches the error mesagge. The record isn,t save to the 
-        //database but the model link to the datagrid changes.
         private bool ValidateDataType()
         {
             _model.Name = lbltxtName.FieldContent;
@@ -84,7 +81,7 @@ namespace Presentation.AddEditForms
             }
             else
             {
-                MessageBox.Show("Días de produccion inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Días de producción inválido", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 
