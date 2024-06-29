@@ -203,12 +203,55 @@ public class BlockProcessorTests
     [Fact]
     public void SaveRelocateBlockChange_ShouldRelocateABlockOutAHouseWithOutBrother()
     {
-
+        //La cantidad de bandejas reubicadas debe estar entre 0 y la cantidad de bandejas sin entregar de la locación  (Parameter 'relocatedSeedTrays')
+        //La cantidad de bandejas reubicadas debe estar entre 0 y la cantidad de bandejas sin entregar de la locación (Parameter 'relocatedSeedTrays')
     }
 
     [Fact]
-    public void SaveRelocateBlockChange_ShouldThrowAnArgumentExceptionOnrelocatedSeedTrays()
+    public void SaveRelocateBlockChange_ShouldThrowAnArgumentExceptionOnrelocatedSeedTraysLessThanZero()
     {
+        OrderLocation orderLocation = _order.OrderLocations.First();
+        Block blockToRelocate = orderLocation.Blocks.First();
+        short relocatedSeedTrays = -20;
+        byte newBlockNumber = 4;
 
+        Action action = () => _processor.SaveRelocateBlockChange(blockToRelocate, 2, newBlockNumber, relocatedSeedTrays);
+
+        action.Should().Throw<ArgumentException>()
+            .WithParameterName("relocatedSeedTrays")
+            .WithMessage("La cantidad de bandejas reubicadas debe estar entre 0 y la cantidad de bandejas sin " +
+                "entregar de la locación (Parameter 'relocatedSeedTrays')");
+
+        _newBlock.Should().BeNull();
+
+        orderLocation.Blocks.Should().HaveCount(1);
+
+        _repoMock.Verify(x => x.Insert(It.IsAny<Block>()), Times.Never);
+        _repoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Never);
+        _repoMock.Verify(x => x.Update(It.IsAny<Block>()), Times.Never);
+    }
+
+    [Fact]
+    public void SaveRelocateBlockChange_ShouldThrowAnArgumentExceptionOnrelocatedSeedTraysGreaterThanTheActualAmount()
+    {
+        OrderLocation orderLocation = _order.OrderLocations.First();
+        Block blockToRelocate = orderLocation.Blocks.First();
+        short relocatedSeedTrays = 120;
+        byte newBlockNumber = 4;
+
+        Action action = () => _processor.SaveRelocateBlockChange(blockToRelocate, 2, newBlockNumber, relocatedSeedTrays);
+
+        action.Should().Throw<ArgumentException>()
+            .WithParameterName("relocatedSeedTrays")
+            .WithMessage("La cantidad de bandejas reubicadas debe estar entre 0 y la cantidad de bandejas sin " +
+                "entregar de la locación (Parameter 'relocatedSeedTrays')");
+
+        _newBlock.Should().BeNull();
+
+        orderLocation.Blocks.Should().HaveCount(1);
+
+        _repoMock.Verify(x => x.Insert(It.IsAny<Block>()), Times.Never);
+        _repoMock.Verify(x => x.Remove(It.IsAny<int>()), Times.Never);
+        _repoMock.Verify(x => x.Update(It.IsAny<Block>()), Times.Never);
     }
 }

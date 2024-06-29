@@ -231,7 +231,7 @@ public class BlockProcessor
         if (relocatedSeedTrays <= 0 || relocatedSeedTrays > seedTraysWithoutDelivery)
         {
             throw new ArgumentException("La cantidad de bandejas reubicadas debe estar entre 0 " +
-                "y la cantidad de bandejas sin entregar de la locación", "relocatedSeedTrays");
+                "y la cantidad de bandejas sin entregar de la locación", nameof(relocatedSeedTrays));
         }
     }
 
