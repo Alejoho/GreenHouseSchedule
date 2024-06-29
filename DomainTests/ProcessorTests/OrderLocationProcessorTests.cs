@@ -8,6 +8,29 @@ namespace DomainTests.ProcessorTests
 {
     public class OrderLocationProcessorTests
     {
+        private Mock<IOrderLocationRepository> _repoMock;
+        private Mock<ILog> _logMock;
+        private OrderLocationProcessor _processor;
+        private DateOnly _dateOfSow;
+        private OrderLocation _orderLocationCopy;
+
+        public OrderLocationProcessorTests()
+        {
+            _repoMock = new Mock<IOrderLocationRepository>();
+
+            _repoMock.Setup(x => x.Update(It.IsAny<OrderLocation>())).Returns(true);
+            _repoMock.Setup(x => x.Insert(It.IsAny<OrderLocation>())).Returns(true)
+                .Callback<OrderLocation>(o => _orderLocationCopy = o);
+
+            _logMock = new Mock<ILog>();
+
+            _logMock.Setup(x => x.Info(It.IsAny<string>()));
+
+            _processor = new OrderLocationProcessor(_logMock.Object, _repoMock.Object);
+
+            _dateOfSow = DateOnly.FromDateTime(DateTime.Now);
+        }
+
         [Fact]
         public void SaveSownOrderLocationChange_ShouldSowACompleteOrderLocation()
         {
@@ -16,28 +39,19 @@ namespace DomainTests.ProcessorTests
                 SeedTrayAmount = 100
             };
 
-            DateOnly dateOfSow = new DateOnly(2023, 6, 25);
-
             short seedTraysToSow = 100;
 
-            Mock<IOrderLocationRepository> repoMock = new Mock<IOrderLocationRepository>();
+            _processor.SaveSownOrderLocationChange(orderLocationToSow, _dateOfSow, seedTraysToSow);
 
-            repoMock.Setup(x => x.Update(It.IsAny<OrderLocation>())).Returns(true);
-            repoMock.Setup(x => x.Insert(It.IsAny<OrderLocation>())).Returns(true);
+            orderLocationToSow.RealSowDate.Should().Be(_dateOfSow);
+            _orderLocationCopy.Should().BeNull();
 
-            Mock<ILog> logMock = new Mock<ILog>();
+            _repoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Once);
+            _repoMock.Verify(x => x.Insert(It.IsAny<OrderLocation>()), Times.Never);
+            _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Once);
 
-            logMock.Setup(x => x.Info(It.IsAny<string>()));
-
-            OrderLocationProcessor processor = new OrderLocationProcessor(logMock.Object, repoMock.Object);
-
-            processor.SaveSownOrderLocationChange(orderLocationToSow, dateOfSow, seedTraysToSow);
-
-            orderLocationToSow.RealSowDate.Should().Be(dateOfSow);
-
-            repoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Once);
-            repoMock.Verify(x => x.Insert(It.IsAny<OrderLocation>()), Times.Never);
-            logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Once);
+            _repoMock.Invocations.Clear();
+            _logMock.Invocations.Clear();
         }
 
         [Fact]
@@ -49,40 +63,67 @@ namespace DomainTests.ProcessorTests
                 SeedlingAmount = 26000
             };
 
-            DateOnly dateOfSow = new DateOnly(2023, 6, 25);
-
             short alveolus = 260;
             short seedTraysToSow = 60;
             short restSeedTrays = 40;
 
-            Mock<IOrderLocationRepository> repoMock = new Mock<IOrderLocationRepository>();
+            _processor.SaveSownOrderLocationChange(orderLocationToSow, _dateOfSow, seedTraysToSow);
 
-            OrderLocation orderLocationCopy = null;
-
-            repoMock.Setup(x => x.Update(It.IsAny<OrderLocation>())).Returns(true);
-            repoMock.Setup(x => x.Insert(It.IsAny<OrderLocation>())).Returns(true)
-                .Callback<OrderLocation>(o => orderLocationCopy = o);
-
-            Mock<ILog> logMock = new Mock<ILog>();
-
-            logMock.Setup(x => x.Info(It.IsAny<string>()));
-
-            OrderLocationProcessor processor = new OrderLocationProcessor(logMock.Object, repoMock.Object);
-
-            processor.SaveSownOrderLocationChange(orderLocationToSow, dateOfSow, seedTraysToSow);
-
-            orderLocationToSow.RealSowDate.Should().Be(null);
-            orderLocationCopy.RealSowDate.Should().Be(dateOfSow);
+            orderLocationToSow.RealSowDate.Should().BeNull();
+            _orderLocationCopy.RealSowDate.Should().Be(_dateOfSow);
 
             orderLocationToSow.SeedTrayAmount.Should().Be(restSeedTrays);
-            orderLocationCopy.SeedTrayAmount.Should().Be(seedTraysToSow);
+            _orderLocationCopy.SeedTrayAmount.Should().Be(seedTraysToSow);
 
             orderLocationToSow.SeedlingAmount.Should().Be(restSeedTrays * alveolus);
-            orderLocationCopy.SeedlingAmount.Should().Be(seedTraysToSow * alveolus);
+            _orderLocationCopy.SeedlingAmount.Should().Be(seedTraysToSow * alveolus);
 
-            repoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Once);
-            repoMock.Verify(x => x.Insert(It.IsAny<OrderLocation>()), Times.Once);
-            logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Once);
+            _repoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Once);
+            _repoMock.Verify(x => x.Insert(It.IsAny<OrderLocation>()), Times.Once);
+            _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Once);
+
+            _repoMock.Invocations.Clear();
+            _logMock.Invocations.Clear();
+        }
+
+        [Fact]
+        public void SaveSownOrderLocationChange_ShouldThrowAnArgumentExceptionOnTheDate()
+        {
+            OrderLocation orderLocationToSow = new OrderLocation()
+            {
+                SeedTrayAmount = 100
+            };
+
+            short seedTraysToSow = 100;
+
+            _processor.SaveSownOrderLocationChange(orderLocationToSow, _dateOfSow.AddDays(3), seedTraysToSow);
+
+            orderLocationToSow.RealSowDate.Should().BeNull();
+            _orderLocationCopy.RealSowDate.Should().BeNull();
+
+            _repoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Never);
+            _repoMock.Verify(x => x.Insert(It.IsAny<OrderLocation>()), Times.Never);
+            _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Never);
+        }
+
+        [Fact]
+        public void SaveSownOrderLocationChange_ShouldThrowAnArgumentExceptionOnTheSeedTrays()
+        {
+            OrderLocation orderLocationToSow = new OrderLocation()
+            {
+                SeedTrayAmount = 100
+            };
+
+            short seedTraysToSow = 125;
+
+            _processor.SaveSownOrderLocationChange(orderLocationToSow, _dateOfSow.AddDays(3), seedTraysToSow);
+
+            orderLocationToSow.RealSowDate.Should().BeNull();
+            _orderLocationCopy.RealSowDate.Should().BeNull();
+
+            _repoMock.Verify(x => x.Update(It.IsAny<OrderLocation>()), Times.Never);
+            _repoMock.Verify(x => x.Insert(It.IsAny<OrderLocation>()), Times.Never);
+            _logMock.Verify(x => x.Info(It.IsAny<string>()), Times.Never);
         }
     }
 }
