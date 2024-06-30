@@ -67,7 +67,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
         }
     }
 
-    //LATER - Review what I want to do when I delete a record with associate records in another table
+    //LATER - para orita con los 2 error handlers globales Review what I want to do when I delete a record with associate records in another table
     //Because in the database I have set DeleteRestric
     private void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
     {

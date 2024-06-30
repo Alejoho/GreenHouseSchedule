@@ -78,7 +78,6 @@ public partial class AddEditGreenHouseWindow : Window
 
         _model.Description = txtDescription.Text;
 
-        //LATER Change all the evaluation of these type to this current example
         if (string.IsNullOrEmpty(tbtxtWidth.FieldContent) == false)
         {
             if (decimal.TryParse(tbtxtWidth.FieldContent, out width))

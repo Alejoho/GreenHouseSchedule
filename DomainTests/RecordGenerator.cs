@@ -96,7 +96,6 @@ internal class RecordGenerator
         return output;
     }
 
-    //LATER - Split this method into a few smaller ones.
     /// <summary>
     /// Generates the desired amount the orders and its derive types
     /// </summary>

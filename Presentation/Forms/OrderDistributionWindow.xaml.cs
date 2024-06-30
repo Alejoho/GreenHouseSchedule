@@ -15,8 +15,6 @@ namespace Presentation.Forms;
 
 //NEWFUNC - Falta la funcionalidad de poder aumentar o disminuir la cantidad de bandejas de un bloque.
 
-//LATER - Set a background to the row detail template to show the information in a clearer way.
-
 /// <summary>
 /// Interaction logic for OrderDistributionWindow.xaml
 /// </summary>
