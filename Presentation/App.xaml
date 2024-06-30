@@ -5,7 +5,8 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml"
              Startup="Application_Startup"
-             Exit="Application_Exit">
+             Exit="Application_Exit"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException">
     <!--StartupUri="Forms/SowWindow.xaml">-->
 
     <Application.Resources>
