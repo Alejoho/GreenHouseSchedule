@@ -495,24 +495,22 @@ namespace Domain
                 .Find(seedTray => seedTray.ID == pSeedTrayPermutation.FirstSeedTrayID);
             firstSeedTrayComprobation = seedTrayModel.FreeAmount >= pSeedTrayPermutation.FirstAmount ? true : false;
 
-            //LATER - Refactor these two methods. If I have a permutation with only a seedtray it have to iterate 
-            //over all the seedtrays to find that the secondId and the thirdId are null. Instead of that include
-            //the look up of the seedtray inside of the if.
-            seedTrayModel = SeedBedStatus.SeedTrays
-                .FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID, null);
-
-            if (seedTrayModel != null)
+            if (pSeedTrayPermutation.SecondSeedTrayID > 0)
             {
+                seedTrayModel = SeedBedStatus.SeedTrays
+                    .FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.SecondSeedTrayID, null);
+
                 secondSeedTrayComprobation = seedTrayModel.FreeAmount >= pSeedTrayPermutation.SecondAmount ? true : false;
             }
 
-            seedTrayModel = SeedBedStatus.SeedTrays
-                .FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID, null);
-
-            if (seedTrayModel != null)
+            if (pSeedTrayPermutation.ThirdSeedTrayID > 0)
             {
+                seedTrayModel = SeedBedStatus.SeedTrays
+                    .FirstOrDefault(seedTray => seedTray.ID == pSeedTrayPermutation.ThirdSeedTrayID, null);
+
                 thirdSeedTrayComprobation = seedTrayModel.FreeAmount >= pSeedTrayPermutation.ThirdAmount ? true : false;
             }
+
             output = firstSeedTrayComprobation && secondSeedTrayComprobation && thirdSeedTrayComprobation;
 
             return output;
