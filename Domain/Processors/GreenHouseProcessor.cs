@@ -71,7 +71,7 @@ namespace Domain.Processors
 
         public IEnumerable<GreenHouse> GetAllGreenHouses()
         {
-            return _repository.GetAll();
+            return _repository.GetAll().OrderBy(x => x.Name);
         }
 
         public IEnumerable<GreenHouse> GetActiveGreenHouses()
