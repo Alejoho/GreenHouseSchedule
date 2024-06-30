@@ -18,7 +18,8 @@ namespace DataAccess.Repositories
         {
             return _sowScheduleDB.Products;
         }
-        //LATER - Make test for this method
+
+        //LATER - Make the test for this method
         public Product GetById(int pId)
         {
             return _sowScheduleDB.Products.Find((byte)pId);
