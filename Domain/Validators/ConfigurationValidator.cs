@@ -7,7 +7,6 @@ namespace Domain.Validators
         public ConfigurationValidator()
         {
             RuleLevelCascadeMode = CascadeMode.Stop;
-            //Later - Colocate placeholders in the message of the validator instead of using hard strings.
             RuleFor(x => x.RegressionDays).InclusiveBetween(90, 180)
                 .WithName("Días de retroceso")
                 .WithMessage("La configuración {PropertyName} debe estar entre {From} y {To}.");

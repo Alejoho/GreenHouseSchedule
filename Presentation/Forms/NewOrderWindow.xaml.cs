@@ -370,5 +370,4 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
                 , "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
-    //LATER - Check the look of all MessageBox.Show methods and standarize them
 }

@@ -6,7 +6,6 @@ using System.Windows;
 
 namespace Presentation.InputForms;
 
-//CHECK - What is the property show in the taskbar
 /// <summary>
 /// Interaction logic for SowInputWindow.xaml
 /// </summary>

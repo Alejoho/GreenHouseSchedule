@@ -11,20 +11,18 @@ namespace Presentation.Forms;
 /// </summary>
 public partial class ConfigurationWindow : Window
 {
-    //EXT - this window is reading from the config file but is not writing to it. Fix this behavior.
+    //NEWFUNC - Implement this window to change the settings of the app
     ConfigurationProcessor _processor;
     Configurations _model;
     public ConfigurationWindow()
     {
         InitializeComponent();
         _processor = new ConfigurationProcessor();
-        //_model = new Configurations();
         LoadData();
     }
 
     private void LoadData()
     {
-        //EXT - Move this code to the processor
         lbltxtRegressionDays.FieldContent = ConfigurationManager
             .AppSettings[ConfigurationNames.RegressionDays] ?? "null";
         lbltxtDailySowingPotential.FieldContent = ConfigurationManager
@@ -41,11 +39,8 @@ public partial class ConfigurationWindow : Window
             .AppSettings[ConfigurationNames.DeliveryShowRange] ?? "null";
     }
 
-    //LATER - In general in the windows with datagrids there is a button named "atras"
-    //but in code it's named btnCanel. Changed its name to btnBack.
-    private void btnBack_Click(object sender, RoutedEventArgs e)
+    private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        //string algo = _processor.GetUserSettingsDirectory();
         this.Close();
     }
 

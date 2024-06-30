@@ -86,7 +86,6 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
         MessageBox.Show(_processor.Error, "", MessageBoxButton.OK, MessageBoxImage.Warning);
     }
 
-    //LATER - Change the name of this method. Something like PopulateModel fit better.
     private bool ValidateDataType()
     {
         bool output = true;
