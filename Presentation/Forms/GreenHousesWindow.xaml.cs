@@ -52,14 +52,25 @@ namespace Presentation.Forms
                 if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
                     , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
-                    _processor.DeleteGreenHouse(greenHouse.Id);
-                    _greenHouses.Remove(greenHouse);
-                    RefreshData();
-
                     ILog log = LogHelper.GetLogger();
-                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(greenHouse);
-                    log.Info("A GreenHouse record was deleted from the DB");
-                    log4net.GlobalContext.Properties["Model"] = "";
+
+                    try
+                    {
+                        _processor.DeleteGreenHouse(greenHouse.Id);
+                        _greenHouses.Remove(greenHouse);
+                        RefreshData();
+
+                        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(greenHouse);
+                        log.Info("A GreenHouse record was deleted from the DB");
+                        log4net.GlobalContext.Properties["Model"] = "";
+                    }
+                    catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                    {
+                        log.Error("Attend to delete a related GreenHouse record from the DB", ex);
+
+                        MessageBox.Show("El registro seleccionado no se puede borrar, porque esta relacionado " +
+                            "con otros registros.", "Operación Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
             }
             else

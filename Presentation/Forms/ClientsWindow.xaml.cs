@@ -54,19 +54,30 @@ public partial class ClientsWindow : Window
 
     private void btnDeleteClient_Click(object sender, RoutedEventArgs e)
     {
+        //NEXT - poner aqui bloque try para coger DbUpdateException exceptions
         if (dgClients.SelectedItem is Client client)
         {
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
                     , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                _processor.DeleteClient(client.Id);
-                _clients.Remove(client);
-                RefreshData();
-
                 ILog log = LogHelper.GetLogger();
-                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(client);
-                log.Info("A Client record was deleted from the DB");
-                log4net.GlobalContext.Properties["Model"] = "";
+                try
+                {
+                    _processor.DeleteClient(client.Id);
+                    _clients.Remove(client);
+                    RefreshData();
+
+                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(client);
+                    log.Info("A Client record was deleted from the DB");
+                    log4net.GlobalContext.Properties["Model"] = "";
+                }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                {
+                    log.Error("Attend to delete a related Client record from the DB", ex);
+
+                    MessageBox.Show("El registro seleccionado no se puede borrar, porque esta relacionado " +
+                        "con otros registros.", "Operación Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
         }
         else

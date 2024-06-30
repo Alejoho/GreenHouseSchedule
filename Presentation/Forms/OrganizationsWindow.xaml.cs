@@ -56,19 +56,30 @@ public partial class OrganizationsWindow : Window
 
     private void btnDeleteOrganization_Click(object sender, RoutedEventArgs e)
     {
+        //NEXT - poner aqui bloque try para coger invalidoperation exceptions
         if (dgOrganizations.SelectedItem is Organization organization)
         {
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
                 , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                _organizationProcessor.DeleteOrganization(organization.Id);
+                try
+                {
+                    _organizationProcessor.DeleteOrganization(organization.Id);
 
-                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(organization);
-                _log.Info("An Organization record was deleted from the DB");
-                log4net.GlobalContext.Properties["Model"] = "";
+                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(organization);
+                    _log.Info("An Organization record was deleted from the DB");
+                    log4net.GlobalContext.Properties["Model"] = "";
 
-                _organizations.Remove(organization);
-                RefreshData();
+                    _organizations.Remove(organization);
+                    RefreshData();
+                }
+                catch (System.InvalidOperationException ex)
+                {
+                    _log.Error("Attend to delete a related Organization record from the DB", ex);
+
+                    MessageBox.Show("El registro seleccionado no se puede borrar, porque esta relacionado " +
+                        "con otros registros.", "Operación Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
         }
         else
@@ -115,14 +126,24 @@ public partial class OrganizationsWindow : Window
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
                 , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                _municipalityProcessor.DeleteMunicipality(municipality.Id);
+                try
+                {
+                    _municipalityProcessor.DeleteMunicipality(municipality.Id);
 
-                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_municipalityModel);
-                _log.Info("A Municipality record was deleted from the DB");
-                log4net.GlobalContext.Properties["Model"] = "";
+                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_municipalityModel);
+                    _log.Info("A Municipality record was deleted from the DB");
+                    log4net.GlobalContext.Properties["Model"] = "";
 
-                _municipalities.Remove(municipality);
-                RefreshData();
+                    _municipalities.Remove(municipality);
+                    RefreshData();
+                }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                {
+                    _log.Error("Attend to delete a related Municipality record from the DB", ex);
+
+                    MessageBox.Show("El registro seleccionado no se puede borrar, porque esta relacionado " +
+                        "con otros registros.", "Operación Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
         }
         else

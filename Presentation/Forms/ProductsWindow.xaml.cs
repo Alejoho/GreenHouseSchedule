@@ -67,8 +67,6 @@ public partial class ProductsWindow : Window, ISpeciesRequester
         }
     }
 
-    //LATER - para orita con los 2 error handlers globales Review what I want to do when I delete a record with associate records in another table
-    //Because in the database I have set DeleteRestric
     private void btnDeleteSpecies_Click(object sender, RoutedEventArgs e)
     {
         if (dgSpecies.SelectedItem is Species species)
@@ -76,14 +74,22 @@ public partial class ProductsWindow : Window, ISpeciesRequester
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
                 , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                _speciesProcessor.DeleteSpecies(species.Id);
+                try
+                {
+                    _speciesProcessor.DeleteSpecies(species.Id);
+                    _species.Remove(species);
 
-                ILog _log = LogHelper.GetLogger();
-                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(species);
-                _log.Info("A Species record was deleted from the DB");
-                log4net.GlobalContext.Properties["Model"] = "";
+                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(species);
+                    _log.Info("A Species record was deleted from the DB");
+                    log4net.GlobalContext.Properties["Model"] = "";
+                }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                {
+                    _log.Error("Attend to delete a related Species record from the DB", ex);
 
-                _species.Remove(species);
+                    MessageBox.Show("El registro seleccionado no se puede borrar, porque esta relacionado " +
+                        "con otros registros.", "Operación Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
         }
         else
@@ -180,16 +186,26 @@ public partial class ProductsWindow : Window, ISpeciesRequester
                 , MessageBoxButton.YesNo
                 , MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                _productProcessor.DeleteProduct(product.Id);
+                try
+                {
+                    _productProcessor.DeleteProduct(product.Id);
 
-                ((Species)dgSpecies.SelectedItem).Products.Remove(product);
+                    ((Species)dgSpecies.SelectedItem).Products.Remove(product);
 
-                RefreshListBox();
+                    RefreshListBox();
 
-                ILog log = LogHelper.GetLogger();
-                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(product);
-                log.Info("A Product record was deleted from the DB");
-                log4net.GlobalContext.Properties["Model"] = "";
+                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(product);
+                    _log.Info("A Product record was deleted from the DB");
+                    log4net.GlobalContext.Properties["Model"] = "";
+                }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                {
+                    _log.Error("Attend to delete a related Product record from the DB", ex);
+
+                    MessageBox.Show("El registro seleccionado no se puede borrar, porque esta relacionado " +
+                        "con otros registros.", "Operación Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
             }
         }
         else

@@ -53,14 +53,25 @@ namespace Presentation.Forms
                 if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"
                     , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
-                    _processor.DeleteSeedTray(seedTray.Id);
-                    _seedTrays.Remove(seedTray);
-                    RefreshData();
-
                     ILog log = LogHelper.GetLogger();
-                    log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(seedTray);
-                    log.Info("A SeedTray record was deleted from the DB");
-                    log4net.GlobalContext.Properties["Model"] = "";
+
+                    try
+                    {
+                        _processor.DeleteSeedTray(seedTray.Id);
+                        _seedTrays.Remove(seedTray);
+                        RefreshData();
+
+                        log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(seedTray);
+                        log.Info("A SeedTray record was deleted from the DB");
+                        log4net.GlobalContext.Properties["Model"] = "";
+                    }
+                    catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                    {
+                        log.Error("Attend to delete a related Seedtray record from the DB", ex);
+
+                        MessageBox.Show("El registro seleccionado no se puede borrar, porque esta relacionado " +
+                            "con otros registros.", "Operación Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
             }
             else
