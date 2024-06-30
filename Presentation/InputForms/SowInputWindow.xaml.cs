@@ -59,9 +59,10 @@ public partial class SowInputWindow : Window
             {
                 _log.Error("There was an error sowing an OrderLocation", ex);
 
-                MessageBox.Show($"{ex.Message}", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"{ex.Message}\n\nLa aplicación se va a cerrar."
+                    , "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                this.Close();
+                App.Current.Shutdown();
             }
         }
     }

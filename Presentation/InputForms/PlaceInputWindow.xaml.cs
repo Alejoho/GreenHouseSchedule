@@ -73,8 +73,7 @@ namespace Presentation.InputForms
                     MessageBox.Show($"{ex.Message.Substring(0, endIndex)}."
                         , "", MessageBoxButton.OK, MessageBoxImage.Warning);
 
-                    //TODO - ver que nombre poner aqui.
-                    if (ex.ParamName == "something")
+                    if (ex.ParamName == "placedSeedTrays")
                     {
                         lbltxtPlacedAmount.TextBox.Focus();
                     }
@@ -83,11 +82,10 @@ namespace Presentation.InputForms
                 {
                     _log.Error("There was an error placing an OrderLocation", ex);
 
-                    MessageBox.Show($"{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"{ex.Message}\n\nLa aplicación se va a cerrar."
+                        , "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                    //TODO - Maybe in the parent of this window(and all other similar windows) implement
-                    //an event that will be triggered from here close the parent window
-                    this.Close();
+                    App.Current.Shutdown();
                 }
             }
         }

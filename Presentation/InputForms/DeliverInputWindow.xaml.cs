@@ -57,7 +57,10 @@ public partial class DeliverInputWindow : Window
             {
                 _log.Error("There was an error delivering a block", ex);
 
-                MessageBox.Show($"{ex.Message}");
+                MessageBox.Show($"{ex.Message}\n\nLa aplicación se va a cerrar."
+                    , "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                App.Current.Shutdown();
             }
         }
     }

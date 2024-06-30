@@ -82,7 +82,10 @@ namespace Presentation.InputForms
                 {
                     _log.Error("There was an error relocating a Block", ex);
 
-                    MessageBox.Show($"{ex.Message}", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"{ex.Message}\n\nLa aplicación se va a cerrar."
+                        , "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    App.Current.Shutdown();
                 }
             }
         }
