@@ -70,18 +70,15 @@ public class BlockProcessor
 
     private void TransferBlock(OrderLocation reciever, Block blockInProcess, byte block, short relocatedSeedTrays)
     {
-        //obtengo el sender
+
         OrderLocation sender = blockInProcess.OrderLocation;
 
-        //actualizar las bandejas y las posturas en el reciever
         int alveolus = sender.SeedlingAmount / sender.SeedTrayAmount;
         reciever.SeedTrayAmount += relocatedSeedTrays;
         reciever.SeedlingAmount += relocatedSeedTrays * alveolus;
 
-        //actualizo el reciever en la DB        
         _orderLocationRepository.Update(reciever);
 
-        //creo el nuevo bloque y lo inserto en la DB
         Block newBlock = new Block()
         {
             OrderLocationId = reciever.Id,
@@ -96,7 +93,6 @@ public class BlockProcessor
 
         _blockRepository.Insert(newBlock);
 
-        //actualizo el bloque original guardo cambios en la DB
         blockInProcess.SeedTrayAmount -= relocatedSeedTrays;
 
         if (blockInProcess.SeedTrayAmount == 0)
@@ -109,7 +105,6 @@ public class BlockProcessor
             _blockRepository.Update(blockInProcess);
         }
 
-        //actualizo el sender en la DB
         sender.SeedTrayAmount -= relocatedSeedTrays;
         sender.SeedlingAmount -= relocatedSeedTrays * alveolus;
 
@@ -129,12 +124,8 @@ public class BlockProcessor
 
     private void UpdateBlockPlaceOutAHouseWithBrother(Block blockInProcess, byte greenHouse, byte block, short relocatedSeedTrays)
     {
-        //LATER - remover estos comentarios
-
-        //consiguo el orderlocation brother y el original
         OrderLocation orderLocationBrother = HelpingMethods.GetOrderLocationsBrother(blockInProcess.OrderLocation, greenHouse);
 
-        //llamo a este metodo
         TransferBlock(orderLocationBrother, blockInProcess, block, relocatedSeedTrays);
 
         _log.Info("Completed the relocation of the block. UpdateBlockPlaceOutAHouseWithBrother");

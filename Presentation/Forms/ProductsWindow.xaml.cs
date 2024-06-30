@@ -16,7 +16,7 @@ namespace Presentation.Forms;
 public partial class ProductsWindow : Window, ISpeciesRequester
 {
     private static readonly ILog _log = LogHelper.GetLogger();
-    //LATER - Maybe implement the logic of the use of "ObservableCollection" in all the others.
+    //NEWFUNC - Implement the logic of the use of "ObservableCollection" in all the others.
     private ObservableCollection<Species> _species;
     private SpeciesProcessor _speciesProcessor;
     private ProductProcessor _productProcessor;

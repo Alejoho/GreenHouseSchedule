@@ -198,10 +198,8 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             {
                 Id = orderLocationIndex++,
                 GreenHouseId = 0,
-                //LATER - Maybe change this type from int to byte
                 SeedTrayId = Convert.ToByte(orderLocationModel.SeedTrayType),
                 OrderId = 0,
-                //LATER - Maybe change this type from int to short
                 SeedTrayAmount = Convert.ToInt16(orderLocationModel.SeedTrayAmount),
                 SeedlingAmount = orderLocationModel.SeedlingAmount,
                 EstimateSowDate = orderLocationModel.SowDate,

@@ -110,23 +110,19 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
     private void SavePartialWithoutBrothersOrderLocation(OrderLocation orderLocation, byte greenHouse, byte block, short placedSeedTrays)
     {
-        //1-crear una copia del orderlocation
         OrderLocation orderLocationCopy = HelpingMethods.GetCopyOfAnOrderLocation(orderLocation);
 
-        //2-asignarle a la copia sus valores(casa, cantidad de bandejas, cantidad de posturas)
         orderLocationCopy.GreenHouseId = greenHouse;
         int alveolus = orderLocation.SeedlingAmount / orderLocation.SeedTrayAmount;
         orderLocationCopy.SeedTrayAmount = placedSeedTrays;
         orderLocationCopy.SeedlingAmount = placedSeedTrays * alveolus;
 
-        //3-salvar la copia y recuperar su id
         _orderLocationRepository.Insert(orderLocationCopy);
 
         log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocationCopy);
         _log.Info("Inserted an OrderLocation copy to the DB. SavePartialWithoutBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
 
-        //4-reducir la cantidad de bandejas y posturas del OL original y salvarlo a la DB
         orderLocation.SeedTrayAmount -= orderLocationCopy.SeedTrayAmount;
         orderLocation.SeedlingAmount -= orderLocationCopy.SeedlingAmount;
         _orderLocationRepository.Update(orderLocation);
@@ -134,9 +130,6 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocation);
         _log.Info("Updated the original OrderLocation to the DB. SavePartialWithoutBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
-
-        //5-crear un block object, asignarle sus valores(OLid, blocknumber and seedtrayamount) en base al OLCopy
-        //y salvarlo en la DB.
 
         Block blockEntity = new Block()
         {
@@ -154,21 +147,17 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
     private void SaveCompleteWithBrothersOrderLocation(OrderLocation orderLocation, byte greenHouse, byte block, short placedSeedTrays)
     {
-        //encontrar el hermano
         OrderLocation orderLocationBrother = HelpingMethods.GetOrderLocationsBrother(orderLocation, greenHouse);
 
-        //agregar los datos al hermano
         orderLocationBrother.SeedTrayAmount += orderLocation.SeedTrayAmount;
         orderLocationBrother.SeedlingAmount += orderLocation.SeedlingAmount;
 
-        //salvar el hermano
         _orderLocationRepository.Update(orderLocationBrother);
 
         log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocationBrother);
         _log.Info("Updated an OrderLocation brother to the DB. SaveCompleteWithBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
 
-        //crear el nuevo block y salvarlo
         Block blockEntity = new Block()
         {
             OrderLocationId = orderLocationBrother.Id,
@@ -182,7 +171,6 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         _log.Info("Added a Block to the OrderLocation brother in the DB. SaveCompleteWithBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
 
-        //eliminar el original
         _orderLocationRepository.Remove(orderLocation.Id);
 
         log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocation);
@@ -192,19 +180,16 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
     private void SavePartialWithBrothersOrderLocation(OrderLocation orderLocation, byte greenHouse, byte block, short placedSeedTrays)
     {
-        //encontrar el hermano y los alveolos de la bandeja usadadas
         OrderLocation orderLocationBrother = HelpingMethods.GetOrderLocationsBrother(orderLocation, greenHouse);
 
         int alveolus = orderLocation.SeedlingAmount / orderLocation.SeedTrayAmount;
 
-        //asignar editar los valores en los dos objetos(sumar al hermano y quitar al original)
         orderLocationBrother.SeedTrayAmount += placedSeedTrays;
         orderLocationBrother.SeedlingAmount += placedSeedTrays * alveolus;
 
         orderLocation.SeedTrayAmount -= placedSeedTrays;
         orderLocation.SeedlingAmount -= placedSeedTrays * alveolus;
 
-        //actualizar ambos objetos en la DB
         _orderLocationRepository.Update(orderLocation);
 
         log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(orderLocation);
@@ -217,7 +202,6 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         _log.Info("Updated an OrderLocation brother to the DB. SavePartialWithBrothersOrderLocation");
         log4net.GlobalContext.Properties["Model"] = "";
 
-        //crear el nuevo bloque y salvarlo
         Block blockEntity = new Block()
         {
             OrderLocationId = orderLocationBrother.Id,
@@ -234,8 +218,6 @@ public class OrderLocationProcessor : IOrderLocationProcessor
 
     public void SavePlacedOrderLocationChange(OrderLocation orderLocationInProcess, byte greenHouse, byte block, short placedSeedTrays)
     {
-        //brother OL are OL's that have the same real sow date, the same seedtray type and the same greenhouse
-
         ValidatePlaceChanges(orderLocationInProcess, placedSeedTrays);
 
         switch (DetermineOrderLocationType(orderLocationInProcess, greenHouse, placedSeedTrays))
