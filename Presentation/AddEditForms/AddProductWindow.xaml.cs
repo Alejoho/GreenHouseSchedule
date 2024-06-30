@@ -51,7 +51,7 @@ public partial class AddProductWindow : Window, ISpeciesRequester
                 _log.Info("A Product record was saved to the DB");
                 log4net.GlobalContext.Properties["Model"] = "";
 
-                _requester?.ProductComplete(_model);
+                _requester.ProductComplete(_model);
                 this.Close();
             }
             else

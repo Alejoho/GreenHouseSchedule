@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="AddEditForms\AddMunicipalityWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="CustomControls\ComboBoxWithLabel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -45,6 +48,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="AddEditForms\AddMunicipalityWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="CustomControls\ComboBoxWithLabel.xaml">
       <SubType>Designer</SubType>
     </Page>

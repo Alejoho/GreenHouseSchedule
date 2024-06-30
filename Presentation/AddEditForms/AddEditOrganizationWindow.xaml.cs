@@ -12,10 +12,9 @@ namespace Presentation.AddEditForms;
 /// <summary>
 /// Interaction logic for AddEditOrganizationWindow.xaml
 /// </summary>
-public partial class AddEditOrganizationWindow : Window
+public partial class AddEditOrganizationWindow : Window, IMunicipalityRequester
 {
     private static readonly ILog _log = LogHelper.GetLogger();
-    //NEWFUNC - Add to this window the funcionality to add a new location in window
     private OrganizationProcessor _processor;
     private Organization _model;
     private List<TypesOfOrganization> _typesOfOrganizations;
@@ -134,5 +133,18 @@ public partial class AddEditOrganizationWindow : Window
             .Where(type => type.Id == _model.TypeOfOrganizationId).Single();
         lblcmbLocation.ComboBox.SelectedItem = _locations
             .Where(x => x.Id == _model.MunicipalityId).Single();
+    }
+
+    private void lblcmbLocation_ButtonClick(object sender, RoutedEventArgs e)
+    {
+        AddMunicipalityWindow window = new AddMunicipalityWindow(this);
+        window.ShowDialog();
+    }
+
+    public void MunicipalityComplete(Municipality model)
+    {
+        _locations.Add(model);
+        lblcmbLocation.ComboBox.ItemsSource = _locations.OrderBy(x => x.Location);
+        lblcmbLocation.ComboBox.SelectedItem = model;
     }
 }

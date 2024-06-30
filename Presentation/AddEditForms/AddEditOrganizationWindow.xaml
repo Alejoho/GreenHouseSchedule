@@ -16,8 +16,9 @@
             <custom:ComboBoxWithLabelNoButton FieldLabel="Tipo*" HorizontalAlignment="Right" x:Name="lblcmbType"
                 ComboBoxTip="Tipo de organización (obligatorio)"/>
             
-            <custom:ComboBoxWithLabelNoButton FieldLabel="Localización*" HorizontalAlignment="Right" x:Name="lblcmbLocation"
-                ComboBoxTip="Localización de la oficina central de la organización (obligatorio)"/>
+            <custom:ComboBoxWithLabel FieldLabel="Localización*" HorizontalAlignment="Right" x:Name="lblcmbLocation"
+                                      ComboBoxTip="Localización de la oficina central de la organización (obligatorio)" 
+                                      ButtonClick="lblcmbLocation_ButtonClick"/>
             
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
                 <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0" Click="btnSave_Click"/>
