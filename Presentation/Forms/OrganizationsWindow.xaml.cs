@@ -100,7 +100,7 @@ public partial class OrganizationsWindow : Window
             txtMunicipality.Text = "";
             cmbProvince.SelectedItem = null;
             _municipalityModel = new Municipality();
-            btnRemoveMunicipality.IsEnabled = true;
+            btnDeleteMunicipality.IsEnabled = true;
         }
         else
         {
@@ -108,7 +108,7 @@ public partial class OrganizationsWindow : Window
         }
     }
 
-    private void btnRemoveMunicipality_Click(object sender, RoutedEventArgs e)
+    private void btnDeleteMunicipality_Click(object sender, RoutedEventArgs e)
     {
         if (dgMunicipalities.SelectedItem is Municipality municipality)
         {
@@ -140,10 +140,10 @@ public partial class OrganizationsWindow : Window
             _municipalityModel = municipality;
             txtMunicipality.Text = municipality.Name;
             cmbProvince.SelectedItem = _provinces.Where(province => province.Id == municipality.ProvinceId).Single();
-            btnRemoveMunicipality.IsEnabled = false;
+            btnDeleteMunicipality.IsEnabled = false;
 
             log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(municipality);
-            _log.Info("A doubleclick action was made on the lstMunicipalities to edit a Municipality");
+            _log.Info("A double click action was made on the lstMunicipalities to edit a Municipality");
             log4net.GlobalContext.Properties["Model"] = "";
         }
         else
@@ -158,7 +158,7 @@ public partial class OrganizationsWindow : Window
         if (_municipalityModel.Id != 0)
         {
             _municipalityModel = new Municipality();
-            btnRemoveMunicipality.IsEnabled = true;
+            btnDeleteMunicipality.IsEnabled = true;
             txtMunicipality.Text = "";
             cmbProvince.SelectedItem = null;
         }

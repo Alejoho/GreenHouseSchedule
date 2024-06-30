@@ -75,8 +75,8 @@
                     <TextBlock FontSize="40" FontWeight="Bold" VerticalAlignment="Top" Text="+" Margin="0 -13 0 0"
                                IsHitTestVisible="False"/>
                 </Button>
-                <Button x:Name="btnRemoveMunicipality" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="10"
-                        Click="btnRemoveMunicipality_Click">
+                <Button x:Name="btnDeleteMunicipality" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="10"
+                        Click="btnDeleteMunicipality_Click">
                     <TextBlock FontSize="40" FontWeight="Bold" VerticalAlignment="Top" Text="-" Margin="0 -13 0 0"
                                IsHitTestVisible="False"/>
                 </Button>
