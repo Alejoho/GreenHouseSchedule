@@ -11,8 +11,7 @@ namespace Domain.Processors;
 
 public class OrderProcessor : IOrderProcessor
 {
-    private static ILog _log;
-    //CHECK - If want to keep this interface type instead of change it to the class itself.
+    private ILog _log;
     private IOrderRepository _repository;
     public string Error { get; set; } = null!;
 
@@ -126,9 +125,6 @@ public class OrderProcessor : IOrderProcessor
         int interval = int.Parse(ConfigurationManager.AppSettings[ConfigurationNames.SowShowRange]);
 
         DateOnly date = DateOnly.FromDateTime(DateTime.Now.AddDays(interval));
-        //CHECK - If executting the next line, without having the signature of "GetIncompleteBeforeADate" in the
-        //interface this works.
-        //((OrderRepository)_repository).GetIncompleteBeforeADate(date);
 
         output = _repository.GetIncompleteBeforeADate(date)
             .OrderBy(x => x.DateOfRequest)

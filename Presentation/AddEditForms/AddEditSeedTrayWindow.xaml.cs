@@ -173,7 +173,6 @@ namespace Presentation.AddEditForms
         {
             lbltxtName.FieldContent = _model.Name;
             lbltxtTotalAlveolus.FieldContent = _model.TotalAlveolus.ToString();
-            //CHECK - if this property was null would it thrown an error
             lbltxtAlveolusLength.FieldContent = _model.AlveolusLength.ToString();
             lbltxtAlveolusWidth.FieldContent = _model.AlveolusWidth.ToString();
             lbltxtTrayLength.FieldContent = _model.TrayLength.ToString();

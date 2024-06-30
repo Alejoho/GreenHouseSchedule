@@ -9,7 +9,7 @@ namespace Domain.Processors;
 
 public class OrderLocationProcessor : IOrderLocationProcessor
 {
-    private static ILog _log;
+    private ILog _log;
     private IOrderLocationRepository _orderLocationRepository;
     private IBlockRepository _blockRepository;
 
