@@ -730,20 +730,12 @@ namespace Domain
 
         #region Properties
 
-        //LATER - Evaluar si quitar estas propiedades ya que no se usan fuera de la clase
-
         /// <summary>
         /// Gets the actual SeedBedStatus or sets an separate instance of one.
         /// </summary>
         public SeedBedStatus SeedBedStatus { get => _seedBedStatus; set => _seedBedStatus = value; }
 
-        //public SeedBedStatus SeedBedStatusAuxiliar { get => _seedBedStatusAuxiliar; set => _seedBedStatusAuxiliar = value; }
-
-        //public OrderModel OrderInProcess { get => _orderInProcess; set => _orderInProcess = value; }
-
         public LinkedList<SeedTrayPermutation> SeedTrayPermutations { get => _seedTrayPermutations; set => _seedTrayPermutations = value; }
-
-        //public ArrayList SeedTrayPermutationsToDelete { get => _seedTrayPermutationsToDelete; set => _seedTrayPermutationsToDelete = value; }
 
         #endregion
     }

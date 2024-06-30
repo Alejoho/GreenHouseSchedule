@@ -8,13 +8,12 @@ using System.Configuration;
 
 namespace Domain
 {
-    //LATER - I think it'd be good to change the evaluation of availability of sow seedtray per day from seedtray to 
+    //NEWFUNC - I think it'd be good to change the evaluation of availability of sow seedtray per day from seedtray to 
     //seedlings, because diferent types of seedtrays change the amount of seedtray that can be sown in one day
-    // -----(mientras que) amount of seedling remaings the same.
+    //while the amount of seedling remaings the same.
 
     /// <summary>
-    /// Represents the amount of resources in the seed bed 
-    /// at any given time.
+    /// Represents the amount of resources in the seedbed at any given time.
     /// </summary>    
     public class SeedBedStatus
     {
