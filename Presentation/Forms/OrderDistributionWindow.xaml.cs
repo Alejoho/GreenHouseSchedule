@@ -57,8 +57,7 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
         _viewSource = new CollectionViewSource();
         _viewSource.Source = _orders;
         _viewSource.SortDescriptions.Add(new SortDescription("RealSowDate", ListSortDirection.Ascending));
-        //LATER - maybe add other sorts. Like this one
-        //_viewSource.SortDescriptions.Add(new SortDescription("Client.Name", ListSortDirection.Descending));
+        _viewSource.SortDescriptions.Add(new SortDescription("Client.Name", ListSortDirection.Ascending));
         dgDistributionList.ItemsSource = _viewSource.View;
     }
 

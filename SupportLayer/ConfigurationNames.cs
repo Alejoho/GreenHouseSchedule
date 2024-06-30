@@ -9,5 +9,6 @@ public class ConfigurationNames
     public static string SeedlingMultiplier { get; } = "SeedlingMultiplier";
     public static string SowShowRange { get; } = "SowShowRange";
     public static string DeliveryShowRange { get; } = "DeliveryShowRange";
+    public static string LimitDate { get; } = "LimitDate";
 
 }

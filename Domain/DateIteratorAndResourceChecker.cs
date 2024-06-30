@@ -47,6 +47,8 @@ namespace Domain
 
         private double _multiplier;
 
+        private int _limitDate;
+
         #endregion
 
 
@@ -58,7 +60,8 @@ namespace Domain
         /// <param name="seedBedStatus">The seedbed loaded until the present day.</param>
         /// <param name="pOrderInProcess">The order that to place in the seedbed.</param>
         /// <param name="testing">Some variable to diferentiate this ctor.</param>
-        public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel orderInProcess = null, bool testing = true)
+        public DateIteratorAndResourceChecker(SeedBedStatus seedBedStatus, OrderModel orderInProcess = null,
+            bool testing = true, int limitDate = 180)
         {
             _seedBedStatus = new SeedBedStatus(seedBedStatus);
             _auxiliarSeedBedStatus = new SeedBedStatus(_seedBedStatus);
@@ -74,6 +77,7 @@ namespace Domain
 
             _seedTrayPermutations = new LinkedList<SeedTrayPermutation>();
             _seedTrayPermutationsToDelete = new ArrayList();
+            _limitDate = limitDate;
         }
 
         /// <summary>
@@ -89,7 +93,9 @@ namespace Domain
             _multiplier = multiplier;
 
             _orderInProcess = new OrderModel(pOrderInProcess);
-            _orderInProcess.SeedlingAmount = Convert.ToInt32(_orderInProcess.SeedlingAmount * multiplier);
+            _orderInProcess.SeedlingAmount = Convert.ToInt32(_orderInProcess.SeedlingAmount * _multiplier);
+
+            _limitDate = int.Parse(ConfigurationManager.AppSettings[ConfigurationNames.LimitDate]);
 
             _auxOrderInProcess = new OrderModel(_orderInProcess);
 
@@ -285,9 +291,7 @@ namespace Domain
         /// </summary>
         public void LookForAvailability()
         {
-
-            //LATER - Maybe add this configuration to the appConfig
-            DateOnly limit = (DateOnly)_orderInProcess.EstimateSowDate?.AddDays(180);
+            DateOnly limit = (DateOnly)_orderInProcess.EstimateSowDate?.AddDays(_limitDate);
 
             GreenHouseModel tempGreenHouse = new GreenHouseModel(-1, "TempGreenHouse", 0, 0, true);
             SeedBedStatus.GreenHouses.Add(tempGreenHouse);
