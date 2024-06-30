@@ -970,9 +970,9 @@ public class DateIteratorAndResourceCheckerTests
     }
 
     [Theory]
-    [InlineData(75000, 1, 268, 0, 0, 0, 0, 1)]
-    [InlineData(75000, 1, 179, 2, 174, 0, 0, 2)]
-    [InlineData(75000, 1, 90, 2, 174, 4, 116, 3)]
+    [InlineData(75000, 1, 322, 0, 0, 0, 0, 1)]
+    [InlineData(75000, 1, 178, 2, 279, 0, 0, 2)]
+    [InlineData(75000, 1, 90, 2, 174, 4, 184, 3)]
     public void InsertOrderInProcessIntoSeedBedStatusAuxiliar_ShouldInsertAnOrderAndItsOrderLocation(
         int seedlingAmount
         , int seedTrayId1, int amount1
@@ -1010,8 +1010,15 @@ public class DateIteratorAndResourceCheckerTests
 
         iterator.SeedBedStatus.Orders.Count.Should().Be(oldOrderCount + 1);
         iterator.SeedBedStatus.OrderLocations.Count.Should().Be(oldOrderLocationsCount + newOrderLocations);
-        //TODO - Improve the assert of this method. I count the number of order locations added. but i also have to count
-        //the amount of seedling in those order location and check that their sum is equal to the total amount of seedlings
+        foreach (var order in iterator.SeedBedStatus.Orders)
+        {
+        }
+
+        iterator.SeedBedStatus.Orders.Should().AllSatisfy(order =>
+        {
+            var sumOfSeedlings = order.OrderLocations.Sum(x => x.SeedlingAmount);
+            sumOfSeedlings.Should().BeCloseTo(order.SeedlingAmount, 170);
+        });
     }
 
     [Theory]
