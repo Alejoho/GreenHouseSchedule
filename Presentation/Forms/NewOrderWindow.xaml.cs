@@ -33,6 +33,12 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
     private LinkedList<SeedTrayPermutation> permutationsToDisplay;
     private Order _resultingOrder;
     private bool _areControlsEnabled;
+    private int _seedtrayPermutationID = 0;
+    public int SeedtrayPermutationID
+    {
+        get { return ++_seedtrayPermutationID; }
+    }
+
     public NewOrderWindow()
     {
         InitializeComponent();
@@ -147,15 +153,13 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
         if (_areControlsEnabled == true)
         {
             dgSeedTrayPermutations.ItemsSource = null;
+            _seedtrayPermutationID = 0;
             dgOrderLocations.ItemsSource = null;
         }
     }
 
     private void DisplayResults()
     {
-        //LATER - Look how to put and id to the permutation but without putting it in the class.
-        //I think I will have to add an id field to the class.
-
         dgSeedTrayPermutations.ItemsSource = null;
         dgSeedTrayPermutations.Items.Clear();
         dgSeedTrayPermutations.ItemsSource = permutationsToDisplay;

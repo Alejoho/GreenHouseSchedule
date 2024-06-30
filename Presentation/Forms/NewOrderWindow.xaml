@@ -8,7 +8,8 @@
         xmlns:custom="clr-namespace:Presentation.CustomControls"
         mc:Ignorable="d"
         Title="Nueva orden" Height="575" Width="590" ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        x:Name="root">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -82,16 +83,17 @@
                 </DataGrid.Resources>
                 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="" IsReadOnly="True"/>
+                <DataGridTextColumn Header="" IsReadOnly="True"
+                                    Binding="{Binding ElementName=root, Path=SeedtrayPermutationID}"/>
                 <DataGridTextColumn Header="1ra bandeja" Binding="{Binding FirstSeedTrayName}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Cantidad" Binding="{Binding FirstAmount
-                    ,Converter={StaticResource ZeroToEmptyStringConverter}}" IsReadOnly="True"/>
+                                    ,Converter={StaticResource ZeroToEmptyStringConverter}}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="2da bandeja" Binding="{Binding SecondSeedTrayName}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Cantidad" Binding="{Binding SecondAmount
-                    ,Converter={StaticResource ZeroToEmptyStringConverter}}" IsReadOnly="True"/>
+                                    ,Converter={StaticResource ZeroToEmptyStringConverter}}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="3ra bandeja" Binding="{Binding ThirdSeedTrayName}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Cantidad" Binding="{Binding ThirdAmount
-                    ,Converter={StaticResource ZeroToEmptyStringConverter}}" IsReadOnly="True"/>
+                                    ,Converter={StaticResource ZeroToEmptyStringConverter}}" IsReadOnly="True"/>
                 </DataGrid.Columns>
 
         </DataGrid>
