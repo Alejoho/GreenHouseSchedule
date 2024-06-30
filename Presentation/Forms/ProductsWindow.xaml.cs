@@ -96,8 +96,6 @@ public partial class ProductsWindow : Window, ISpeciesRequester
     private void LoadData()
     {
         _species = new ObservableCollection<Species>(_speciesProcessor.GetAllSpecies());
-        //CHECK - if it's necessary specify the data context for this form.
-        dgSpecies.DataContext = this;
         dgSpecies.ItemsSource = _species;
         lstProducts.DisplayMemberPath = "Variety";
     }

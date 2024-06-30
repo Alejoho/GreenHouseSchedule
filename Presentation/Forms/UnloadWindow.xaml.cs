@@ -41,7 +41,6 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
             order.OrderLocationsView = new ObservableCollection<OrderLocation>(orderLocationsToDisplay);
         }
 
-        dgSowList.DataContext = this;
         dgSowList.ItemsSource = _orders;
     }
 

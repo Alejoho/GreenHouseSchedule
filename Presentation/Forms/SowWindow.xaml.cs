@@ -42,7 +42,6 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
             order.OrderLocationsView = new ObservableCollection<OrderLocation>(orderLocationsToDisplay);
         }
 
-        dgSowList.DataContext = this;
         dgSowList.ItemsSource = _orders;
     }
 

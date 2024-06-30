@@ -51,8 +51,6 @@ public partial class DeliveryWindow : Window, IDeliveredBlockRequester
             }
         }
 
-        //CHECK - If is really needed to set the datacontex
-        dgDeliveryList.DataContext = this;
         dgDeliveryList.ItemsSource = _orders;
     }
 
