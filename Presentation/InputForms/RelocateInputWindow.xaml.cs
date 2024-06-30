@@ -80,7 +80,7 @@ namespace Presentation.InputForms
                 }
                 catch (Exception ex)
                 {
-                    _log.Error("There was an error relocating a Block", ex);
+                    _log.Fatal("There was an error relocating a Block", ex);
 
                     MessageBox.Show($"{ex.Message}\n\nLa aplicación se va a cerrar."
                         , "Error", MessageBoxButton.OK, MessageBoxImage.Error);

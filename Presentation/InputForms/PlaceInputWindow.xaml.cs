@@ -80,7 +80,7 @@ namespace Presentation.InputForms
                 }
                 catch (Exception ex)
                 {
-                    _log.Error("There was an error placing an OrderLocation", ex);
+                    _log.Fatal("There was an error placing an OrderLocation", ex);
 
                     MessageBox.Show($"{ex.Message}\n\nLa aplicación se va a cerrar."
                         , "Error", MessageBoxButton.OK, MessageBoxImage.Error);
