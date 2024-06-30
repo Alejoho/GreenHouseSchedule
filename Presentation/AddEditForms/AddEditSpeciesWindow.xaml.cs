@@ -56,7 +56,7 @@ namespace Presentation.AddEditForms
                 {
                     if (_processor.SaveSpecies(_model) == true)
                     {
-                        MessageBox.Show("Registro salvado");
+                        //MessageBox.Show("Registro salvado");
 
                         _requestor?.SpeciesComplete(_model);
                         this.Close();

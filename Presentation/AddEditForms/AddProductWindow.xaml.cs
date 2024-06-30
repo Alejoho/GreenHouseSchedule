@@ -45,7 +45,7 @@ public partial class AddProductWindow : Window, ISpeciesRequester
         {
             if (_processor.SaveProduct(_model) == true)
             {
-                MessageBox.Show("Registro salvado");
+                //MessageBox.Show("Registro salvado");
 
                 log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
                 _log.Info("A Product record was saved to the DB");

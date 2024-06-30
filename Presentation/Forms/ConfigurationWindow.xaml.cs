@@ -56,7 +56,7 @@ public partial class ConfigurationWindow : Window
         {
             if (_processor.SaveConfigurations(_model) == true)
             {
-                MessageBox.Show("Registro salvado");
+                //MessageBox.Show("Registro salvado");
                 this.Close();
             }
             else

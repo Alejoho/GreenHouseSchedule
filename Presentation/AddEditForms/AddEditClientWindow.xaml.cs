@@ -65,7 +65,7 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
         {
             if (_processor.SaveClient(_model) == true)
             {
-                MessageBox.Show("Registro salvado");
+                //MessageBox.Show("Registro salvado");
                 _requester?.ClientComplete(_model);
 
                 log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);

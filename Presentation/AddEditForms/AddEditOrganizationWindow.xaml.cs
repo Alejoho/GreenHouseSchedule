@@ -66,7 +66,7 @@ public partial class AddEditOrganizationWindow : Window, IMunicipalityRequester
         {
             if (_processor.SaveOrganization(_model) == true)
             {
-                MessageBox.Show("Registro salvado");
+                //MessageBox.Show("Registro salvado");
 
                 log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
                 _log.Info("An Organization record was saved to the DB");

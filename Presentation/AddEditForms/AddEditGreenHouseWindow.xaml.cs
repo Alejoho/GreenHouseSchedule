@@ -48,7 +48,7 @@ public partial class AddEditGreenHouseWindow : Window
         {
             if (_processor.SaveGreenHouse(_model) == true)
             {
-                MessageBox.Show("Registro salvado");
+                //MessageBox.Show("Registro salvado");
 
                 log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
                 _log.Info("A GreenHouse record was saved to the DB");

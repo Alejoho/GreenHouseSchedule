@@ -52,7 +52,7 @@ namespace Presentation.AddEditForms
                 //Error: se muestra el mensaje con el circulo rojo.
                 if (_processor.SaveSeedTray(_model) == true)
                 {
-                    MessageBox.Show("Registro salvado");
+                    //MessageBox.Show("Registro salvado");
 
                     log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(_model);
                     _log.Info("A SeedTray record was saved to the DB");
