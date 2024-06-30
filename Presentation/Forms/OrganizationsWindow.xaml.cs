@@ -88,7 +88,6 @@ public partial class OrganizationsWindow : Window
 
     //LATER - Shearch how to select the edited or added item
 
-    //LATER - este boton tiene un textblock dentro de el, el area de hacer click es el del boton mas el de el textblock el cual sobresale del boton. arreglar este detalle.
     private void btnAddMunicipality_Click(object sender, RoutedEventArgs e)
     {
         ValidateDataType();
@@ -112,7 +111,6 @@ public partial class OrganizationsWindow : Window
         }
     }
 
-    //LATER - este boton tiene un textblock dentro de el, el area de hacer click es el del boton mas el de el textblock el cual sobresale del boton. arreglar este detalle.
     private void btnRemoveMunicipality_Click(object sender, RoutedEventArgs e)
     {
         if (dgMunicipalities.SelectedItem is Municipality municipality)

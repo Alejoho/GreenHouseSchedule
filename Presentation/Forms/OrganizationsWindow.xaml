@@ -72,11 +72,13 @@
                 <ComboBox x:Name="cmbProvince" Grid.Row="1" Grid.Column="0" Text="hola" Margin="15 5"/>
                 <Button x:Name="btnAddMunicipality" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="10" 
                         Click="btnAddMunicipality_Click">
-                    <TextBlock FontSize="40" FontWeight="Bold" VerticalAlignment="Top" Text="+" Margin="0 -13 0 0"></TextBlock>
+                    <TextBlock FontSize="40" FontWeight="Bold" VerticalAlignment="Top" Text="+" Margin="0 -13 0 0"
+                               IsHitTestVisible="False"/>
                 </Button>
                 <Button x:Name="btnRemoveMunicipality" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="10"
                         Click="btnRemoveMunicipality_Click">
-                    <TextBlock FontSize="40" FontWeight="Bold" VerticalAlignment="Top" Text="-" Margin="0 -13 0 0"></TextBlock>
+                    <TextBlock FontSize="40" FontWeight="Bold" VerticalAlignment="Top" Text="-" Margin="0 -13 0 0"
+                               IsHitTestVisible="False"/>
                 </Button>
             </Grid>
         </StackPanel>
