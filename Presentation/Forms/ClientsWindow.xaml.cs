@@ -54,7 +54,6 @@ public partial class ClientsWindow : Window
 
     private void btnDeleteClient_Click(object sender, RoutedEventArgs e)
     {
-        //NEXT - poner aqui bloque try para coger DbUpdateException exceptions
         if (dgClients.SelectedItem is Client client)
         {
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"

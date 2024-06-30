@@ -56,7 +56,6 @@ public partial class OrganizationsWindow : Window
 
     private void btnDeleteOrganization_Click(object sender, RoutedEventArgs e)
     {
-        //NEXT - poner aqui bloque try para coger invalidoperation exceptions
         if (dgOrganizations.SelectedItem is Organization organization)
         {
             if (MessageBox.Show("Esta seguro que desea eliminar este registro?", "Eliminar registro"

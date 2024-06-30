@@ -8,7 +8,6 @@ namespace Presentation
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    // TODO - Set the 2 global error handlers and test them
     public partial class App : Application
     {
         private static readonly ILog _log = LogHelper.GetLogger();
