@@ -4,6 +4,5 @@ namespace DataAccess.Contracts
 {
     public interface IOrganizationRepository : IGenericRepository<Organization>
     {
-        public IEnumerable<Organization> GetSome(string filter);
     }
 }

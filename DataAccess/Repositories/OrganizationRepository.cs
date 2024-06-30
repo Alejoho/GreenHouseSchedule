@@ -19,12 +19,7 @@ public class OrganizationRepository : GenericRepository, IOrganizationRepository
         return _sowScheduleDB.Organizations;
     }
 
-    //LATER - Look up how can I use something similar to the "like" of SQL in EF Core 7
     //LATER - Make the test for this method
-    public IEnumerable<Organization> GetSome(string filter)
-    {
-        return _sowScheduleDB.Organizations;
-    }
 
     public bool Insert(Organization entity)
     {
