@@ -17,8 +17,8 @@ namespace Presentation.CustomControls
         private string _fieldLabel;
 
         public string FieldLabel { get => _fieldLabel; set => _fieldLabel = value; }
-        //LATER - Look up how to change the format of a datetimepicker to dd/mm/yyyy.I think that the format is
-        //set base on the format in the pc
+
+        //NEWFUNC - Look up how to change the format of a datetimepicker to dd/mm/yyyy.
         public DateOnly SelectedDateOnly { get => DateOnly.FromDateTime((DateTime)TimePicker.SelectedDate); }
 
         public string Tip { get; set; }

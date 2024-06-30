@@ -13,7 +13,7 @@ namespace Domain.Validators
             RuleFor(x => x.DailySowingPotential).LessThanOrEqualTo(1500)
                 .WithName("Potencial de siembra diario")
                 .WithMessage("La configuración {PropertyName} no debe ser mayor que {ComparisonValue}.");
-            //LATER - make a custom validator for this property because a need to create custom placeholder
+            //Make a custom validator for this property because a need to create custom placeholder
             RuleFor(x => x.MinimumLimitOfSowPerDay).GreaterThan(0).WithName("Siembra diaria mínima")
                 .WithMessage("La configuración {PropertyName} debe ser mayor que {ComparisonValue}.")
                 .LessThan(x => Convert.ToInt32(x.DailySowingPotential * 0.5))

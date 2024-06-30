@@ -14,9 +14,6 @@ namespace Presentation.Forms;
 
 //NEWFUNC - Falta la funcionalidad de poder aumentar o disminuir la cantidad de bandejas de un bloque.
 
-//LATER - Look up how can I set a defaul ordenation for the dg, so when I add a new item itself
-//go to its corresponding site
-
 //LATER - Set a background to the row detail template to show the information in a clearer way.
 
 /// <summary>
