@@ -15,7 +15,6 @@ namespace Presentation.AddEditForms;
 public partial class AddEditClientWindow : Window, IOrganizationRequester
 {
     private static readonly ILog _log = LogHelper.GetLogger();
-    //TODO - Set in all TextBoxWithLabels the tipvisibility to hide.
     private ClientProcessor _processor;
     private Client _model;
     private List<Organization> _organizations;

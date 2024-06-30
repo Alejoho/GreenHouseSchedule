@@ -34,7 +34,6 @@
                 <DataGridTextColumn Header="Área lógica" Binding="{Binding LogicalTrayArea}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Cantidad" Binding="{Binding TotalAmount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Material" Binding="{Binding Material}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Preferencia" Binding="{Binding Preference}" IsReadOnly="False"/>
                 <DataGridCheckBoxColumn Header="Activa" Binding="{Binding Active}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>

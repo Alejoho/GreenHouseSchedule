@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace Presentation.Forms;
 
-//NEXT - Falta la funcionalidad de poder aumentar o disminuir la cantidad de bandejas de un bloque.
+//NEWFUNC - Falta la funcionalidad de poder aumentar o disminuir la cantidad de bandejas de un bloque.
 
 //LATER - Look up how can I set a defaul ordenation for the dg, so when I add a new item itself
 //go to its corresponding site

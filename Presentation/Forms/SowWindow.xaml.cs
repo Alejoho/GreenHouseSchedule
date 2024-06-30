@@ -54,10 +54,9 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
 
     private void btnSow_Click(object sender, RoutedEventArgs e)
     {
-        //TODO - Place a comprobation to open the sow input window because if I select an orderlocation
+        //NEWFUNC - Place a comprobation to open the sow input window because if I select an orderlocation
         //, close the rowdetail of the order and click the sowbutton it opens the window but it should
         //at least the row detail is open. And do the solution i came up with in the other similar methods
-
         CallSownOrderLocationSetter();
     }
 

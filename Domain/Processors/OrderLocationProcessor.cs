@@ -305,7 +305,7 @@ public class OrderLocationProcessor : IOrderLocationProcessor
         if (placedSeedTrays <= 0 || placedSeedTrays > restOfSeedTraysToBeLocated)
         {
             throw new ArgumentException("La cantidad de bandejas ubicadas debe estar entre 0 " +
-                "y la cantidad de bandejas por ubicar de la locación", "placedSeedTrays");
+                "y la cantidad de bandejas por ubicar de la locación", nameof(placedSeedTrays));
         }
     }
 

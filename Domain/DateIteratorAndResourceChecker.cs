@@ -12,7 +12,7 @@ namespace Domain
     /// </summary>
     public class DateIteratorAndResourceChecker
     {
-        //TODO - Maybe implement a restriction to avoid sow seedtrays on sundays.
+        //NEWFUNC - Maybe implement a restriction to avoid sow seedtrays on sundays.
         #region Fields
 
         /// <summary>

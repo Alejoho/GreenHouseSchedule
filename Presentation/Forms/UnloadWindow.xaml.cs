@@ -18,8 +18,6 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
 {
     private static readonly ILog _log = LogHelper.GetLogger();
     private ObservableCollection<Order> _orders;
-    //TODO - Move the order processor to the only palce is used, the LoadData method
-    private OrderProcessor _orderProcessor;
     private OrderLocationProcessor _orderLocationProcessor;
     private OrderLocation _orderLocationInProcess;
     private DataGrid _activeOrderLocationDataGrid;
@@ -27,14 +25,15 @@ public partial class UnloadWindow : Window, IPlacedOrderLocationChangeRequester
     public UnloadWindow()
     {
         InitializeComponent();
-        _orderProcessor = new OrderProcessor();
         _orderLocationProcessor = new OrderLocationProcessor();
         LoadData();
     }
 
     private void LoadData()
     {
-        _orders = new ObservableCollection<Order>(_orderProcessor.GetNextOrdersToUnload());
+        OrderProcessor orderProcessor = new OrderProcessor();
+
+        _orders = new ObservableCollection<Order>(orderProcessor.GetNextOrdersToUnload());
 
         foreach (Order order in _orders)
         {
