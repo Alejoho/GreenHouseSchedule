@@ -20,7 +20,6 @@ namespace Presentation.Forms
         public SeedTraysWindow()
         {
             InitializeComponent();
-            _seedTrays = new List<SeedTray>();
             _processor = new SeedTrayProcessor();
             LoadData();
         }

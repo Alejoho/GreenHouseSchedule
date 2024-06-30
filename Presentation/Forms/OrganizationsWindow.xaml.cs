@@ -26,9 +26,6 @@ public partial class OrganizationsWindow : Window
     public OrganizationsWindow()
     {
         InitializeComponent();
-        _organizations = new List<Organization>();
-        _municipalities = new List<Municipality>();
-        _provinces = new List<Province>();
         _organizationProcessor = new OrganizationProcessor();
         _municipalityProcessor = new MunicipalityProcessor();
         _municipalityModel = new Municipality();

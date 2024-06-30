@@ -20,8 +20,6 @@ namespace Presentation.Forms
         public GreenHousesWindow()
         {
             InitializeComponent();
-            //CHECK - Evaluate if I remove this instanciation something would happen in the class
-            _greenHouses = new List<GreenHouse>();
             _processor = new GreenHouseProcessor();
             LoadData();
         }

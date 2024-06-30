@@ -21,7 +21,6 @@ public partial class ClientsWindow : Window
     public ClientsWindow()
     {
         InitializeComponent();
-        _clients = new List<Client>();
         _processor = new ClientProcessor();
         LoadData();
     }

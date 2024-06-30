@@ -34,7 +34,6 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
     {
         InitializeComponent();
         _orderProcessor = new OrderProcessor();
-        _viewSource = new CollectionViewSource();
         LoadData();
     }
 
@@ -58,6 +57,7 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
             }
         }
 
+        _viewSource = new CollectionViewSource();
         _viewSource.Source = _orders;
         _viewSource.SortDescriptions.Add(new SortDescription("RealSowDate", ListSortDirection.Ascending));
         //LATER - maybe add other sorts. Like this one
