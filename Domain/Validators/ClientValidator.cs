@@ -21,13 +21,13 @@ public class ClientValidator : AbstractValidator<Client>
             .Must(x => Regex.IsMatch(x, @"\+53[0-9]{8}$") || Regex.IsMatch(x, @"^\d{8}$"))
             .When(x => x.PhoneNumber != "")
             .WithName("Número celular")
-            .WithMessage("El {PropertyName} no esta en el formato correcto." +
+            .WithMessage("El {PropertyName} no está en el formato correcto." +
                 "\nFormato correcto: +53xxxxxxxx ó xxxxxxxx");
         RuleFor(x => x.OtherNumber)
             .Must(x => Regex.IsMatch(x, @"\+53[0-9]{8}$") || Regex.IsMatch(x, @"^\d{8}$"))
             .When(x => x.OtherNumber != "")
             .WithName("Número fijo")
-            .WithMessage("El {PropertyName} no esta en el formato correcto." +
+            .WithMessage("El {PropertyName} no está en el formato correcto." +
                 "\nFormato correcto: +53xxxxxxxx ó xxxxxxxx");
         RuleFor(x => x.OrganizationId).GreaterThan((short)0).WithName("Organización")
             .WithMessage("La {PropertyName} no debe estar vacía.");

@@ -22,7 +22,7 @@
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" 
                     MouseDoubleClick="dgGreenHouses_MouseDoubleClick" CanUserReorderColumns="False"
                     CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
-                    IsReadOnly="True">
+                    IsReadOnly="True" HeadersVisibility="Column">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>

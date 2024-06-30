@@ -31,7 +31,7 @@
                     AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
                     MouseDoubleClick="dgOrganizations_MouseDoubleClick" CanUserReorderColumns="False"
                     CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
-                    IsReadOnly="True">
+                    IsReadOnly="True" HeadersVisibility="Column">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
@@ -45,10 +45,10 @@
         <!--#region Municipalities and provinces-->
         <StackPanel Grid.Row="1" Grid.Column="1">
             <DataGrid x:Name="dgMunicipalities" Grid.Row="1" Grid.Column="1" Margin="5" Height="270"
-                    AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
-                    CanUserReorderColumns="False"
-                    CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
-                    IsReadOnly="True" MouseDoubleClick="dgMunicipalities_MouseDoubleClick" SelectionChanged="dgMunicipalities_SelectionChanged">
+                      AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
+                      CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="True" 
+                      ColumnWidth="auto" IsReadOnly="True" MouseDoubleClick="dgMunicipalities_MouseDoubleClick" 
+                      SelectionChanged="dgMunicipalities_SelectionChanged" HeadersVisibility="Column">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                     <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>

@@ -8,10 +8,7 @@
         mc:Ignorable="d"
         Title="Entregas pendientes" Height="550" Width="1300" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowState="Normal">
-    <Window.Resources>
-        
-    </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -19,11 +16,11 @@
         </Grid.RowDefinitions>
 
         <DataGrid Grid.Row="0" x:Name="dgDeliveryList" Height="400" Margin="20 30 20 0"
-                    AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
-                    CanUserReorderColumns="False" CanUserResizeColumns="False" 
-                    CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
-                    HeadersVisibility="Column" ItemsSource="{Binding Orders}" 
-                    RowDetailsVisibilityMode="Collapsed">
+                  AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
+                  CanUserReorderColumns="False" CanUserResizeColumns="False" 
+                  CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True"
+                  HeadersVisibility="Column" ItemsSource="{Binding Orders}" 
+                  RowDetailsVisibilityMode="Collapsed">
             <DataGrid.Resources>
                 <converters:RowDetailSymbolConverter x:Key="RowDetailSymbolConverter"/>
             </DataGrid.Resources>
@@ -32,26 +29,18 @@
                 <local:DataContextHolderClass/>
             </DataGrid.DataContext>
 
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Style.Triggers>
-                        
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.RowStyle>
-
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button VerticalContentAlignment="Center" HorizontalAlignment="Center" 
-                        Height="12" Width="12" Background="#FFFFFF" BorderBrush="#A0A0A0"
-                        x:Name="btnRowDetail" Click="btnRowDetail_Click">
+                                    Height="12" Width="12" Background="#FFFFFF" BorderBrush="#A0A0A0"
+                                    x:Name="btnRowDetail" Click="btnRowDetail_Click">
                                 <TextBlock Text="{Binding Path=DetailsVisibility,
-                        RelativeSource={RelativeSource AncestorType=DataGridRow},                                    
-                        Converter={StaticResource RowDetailSymbolConverter}}" 
-                            VerticalAlignment="Center" HorizontalAlignment="Center"
-                            Margin="1 -1 0 0"/>
+                                               RelativeSource={RelativeSource AncestorType=DataGridRow},                                    
+                                               Converter={StaticResource RowDetailSymbolConverter}}" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Margin="1 -1 0 0"/>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

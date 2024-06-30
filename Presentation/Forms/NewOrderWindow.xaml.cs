@@ -335,7 +335,6 @@ public partial class NewOrderWindow : Window, IClientRequester, IProductRequeste
             MessageBox.Show("Debe seleccionar una permutacion para mostrar las locaciones de la orden."
                 , "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        //el error es lanzado cuando llega a esta linea
     }
 
     private void btnSave_Click(object sender, RoutedEventArgs e)

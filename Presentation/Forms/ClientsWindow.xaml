@@ -17,16 +17,15 @@
 
         <!--#region Filter-->
         <custom:TextBoxWithLabel FieldLabel="Búsqueda" Grid.Row="0" Width="210" HorizontalAlignment="Left" 
-                                VerticalAlignment="Top" Margin="20 5 0 0" x:Name="lbltxtSearch"
-                                TextChanged="lbltxtSearch_TextChanged"/>
+                                 VerticalAlignment="Top" Margin="20 5 0 0" x:Name="lbltxtSearch"
+                                 TextChanged="lbltxtSearch_TextChanged"/>
         <!--#endregion-->
 
         <!--#region DataGrid-->
         <DataGrid x:Name="dgClients" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5"
-                    AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" 
-                    CanUserReorderColumns="False" CanUserResizeColumns="False" 
-                    CanUserSortColumns="True" ColumnWidth="auto"
-                    IsReadOnly="True">
+                  AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" 
+                  CanUserReorderColumns="False" CanUserResizeColumns="False" IsReadOnly="True" 
+                  HeadersVisibility="Column">
             
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">

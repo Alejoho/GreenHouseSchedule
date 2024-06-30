@@ -19,9 +19,10 @@
 
         <!--DataGrid-->
         <DataGrid x:Name="dgSeedTrays" Grid.Row="1" Grid.Column="0" Margin="20 5 20 5" 
-                    AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
-                    MouseDoubleClick="dgSeedTrays_MouseDoubleClick" CanUserReorderColumns="False"
-                    CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto">
+                  AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False"
+                  MouseDoubleClick="dgSeedTrays_MouseDoubleClick" CanUserReorderColumns="False"
+                  CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto"
+                  HeadersVisibility="Column">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" IsReadOnly="True"/>

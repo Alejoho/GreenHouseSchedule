@@ -14,7 +14,6 @@ namespace Presentation.Forms
     /// </summary>
     public partial class GreenHousesWindow : Window
     {
-        //LATER - disable the row header in all the data grid that not need it.
         private List<GreenHouse> _greenHouses;
         private GreenHouseProcessor _processor;
         public GreenHousesWindow()

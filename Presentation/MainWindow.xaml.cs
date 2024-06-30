@@ -3,8 +3,6 @@ using Presentation.Forms;
 using SupportLayer;
 using System.Windows;
 
-//[assembly: log4net.Config.XmlConfigurator(ConfigFile = "App.config", Watch = true)]
-
 namespace Presentation;
 
 /// <summary>
@@ -15,6 +13,9 @@ public partial class MainWindow : Window
     private static readonly ILog _log = LogHelper.GetLogger();
     //LATER - Review the startup of all windows. (WindowStartUpLocation, WindowState) 
     //NEWFUNC - Maybe put in all textboxes' tittles the name of the app
+
+    //NEWFUNC - Create 2 custom controls. One for the DataGrid's without RowDetailTemplate and another for the ones
+    //with RowDetailTemplate
     public MainWindow()
     {
         InitializeComponent();
