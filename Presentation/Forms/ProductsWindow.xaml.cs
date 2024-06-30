@@ -69,7 +69,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
 
     //LATER - para orita con los 2 error handlers globales Review what I want to do when I delete a record with associate records in another table
     //Because in the database I have set DeleteRestric
-    private void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
+    private void btnDeleteSpecies_Click(object sender, RoutedEventArgs e)
     {
         if (dgSpecies.SelectedItem is Species species)
         {
@@ -110,7 +110,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
         if (dgSpecies.SelectedItem is Species species)
         {
             lstProducts.ItemsSource = species.Products.OrderBy(x => x.Variety);
-            btnRemoveProduct.IsEnabled = true;
+            btnDeleteProduct.IsEnabled = true;
             txtNewProduct.Text = "";
         }
     }
@@ -134,7 +134,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
                 _productModel = new Product();
                 txtNewProduct.Text = "";
                 btnAddProduct.Content = "Agregar";
-                btnRemoveProduct.IsEnabled = true;
+                btnDeleteProduct.IsEnabled = true;
             }
             else
             {
@@ -171,7 +171,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
         lstProducts.ItemsSource = species.Products.OrderBy(x => x.Variety);
     }
 
-    private void btnRemoveProduct_Click(object sender, RoutedEventArgs e)
+    private void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
     {
         if (lstProducts.SelectedItem is Product product)
         {
@@ -206,7 +206,7 @@ public partial class ProductsWindow : Window, ISpeciesRequester
             _productModel = product;
             txtNewProduct.Text = product.Variety;
             btnAddProduct.Content = "Editar";
-            btnRemoveProduct.IsEnabled = false;
+            btnDeleteProduct.IsEnabled = false;
 
             log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(product);
             _log.Info("A doubleclick action was made on the lstProducts to edit a Product");
