@@ -1,6 +1,7 @@
 ﻿using Domain.Processors;
 using Presentation.InputForms;
 using Presentation.IRequesters;
+using Presentation.Resources;
 using SupportLayer.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -84,11 +85,7 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
 
     private void btnRowDetail_Click(object sender, RoutedEventArgs e)
     {
-        //LATER - Maybe extract this logic to a static class
-        var row = DataGridRow.GetRowContainingElement((Button)sender);
-
-        row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ?
-        Visibility.Collapsed : Visibility.Visible;
+        VisibilitySwitch.Switch(sender);
     }
 
     private void dgBlockChild_SelectionChanged(object sender, SelectionChangedEventArgs e)

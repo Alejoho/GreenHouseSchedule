@@ -1,5 +1,6 @@
 ﻿using Domain.Processors;
 using log4net;
+using Presentation.Resources;
 using SupportLayer;
 using SupportLayer.Models;
 using System;
@@ -82,10 +83,7 @@ public partial class OrderListWindow : Window
 
     private void btnRowDetail_Click(object sender, RoutedEventArgs e)
     {
-        var row = DataGridRow.GetRowContainingElement((Button)sender);
-
-        row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ?
-        Visibility.Collapsed : Visibility.Visible;
+        VisibilitySwitch.Switch(sender);
     }
 
     private void lbltxtSearch_TextChanged(object sender, TextChangedEventArgs e)

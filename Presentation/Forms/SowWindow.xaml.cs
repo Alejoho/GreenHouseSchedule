@@ -1,6 +1,7 @@
 ﻿using Domain.Processors;
 using Presentation.InputForms;
 using Presentation.IRequesters;
+using Presentation.Resources;
 using SupportLayer.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -80,10 +81,7 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
 
     private void btnRowDetail_Click(object sender, RoutedEventArgs e)
     {
-        var row = DataGridRow.GetRowContainingElement((Button)sender);
-
-        row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ?
-        Visibility.Collapsed : Visibility.Visible;
+        VisibilitySwitch.Switch(sender);
     }
 
     private void dgOrderLocationChild_SelectionChanged(object sender, SelectionChangedEventArgs e)
