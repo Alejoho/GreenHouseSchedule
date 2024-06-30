@@ -116,7 +116,6 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
     private void PopulateData()
     {
         lbltxtName.FieldContent = _model.Name;
-        //LATER - Evaluate if the nullable properties value should be set "nulo" when display their values"
         lbltxtNickName.FieldContent = _model.NickName;
         lbltxtPhoneNumber.FieldContent = _model.PhoneNumber;
         lbltxtOtherNumber.FieldContent = _model.OtherNumber;

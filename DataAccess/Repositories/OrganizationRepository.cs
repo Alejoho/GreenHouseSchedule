@@ -19,8 +19,6 @@ public class OrganizationRepository : GenericRepository, IOrganizationRepository
         return _sowScheduleDB.Organizations;
     }
 
-    //LATER - Make the test for this method
-
     public bool Insert(Organization entity)
     {
         _sowScheduleDB.Organizations.Add(entity);

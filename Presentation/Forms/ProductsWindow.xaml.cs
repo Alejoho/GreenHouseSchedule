@@ -201,7 +201,6 @@ public partial class ProductsWindow : Window, ISpeciesRequester
 
     private void lstProducts_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        //LATER - In the database and all the logic above change the table Product by Variety
         if (lstProducts.SelectedItem is Product product)
         {
             _productModel = product;

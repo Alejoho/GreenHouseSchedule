@@ -45,9 +45,11 @@ namespace Presentation.AddEditForms
         {
             if (ValidateDataType() == true)
             {
-                //LATER - For another version maybe add an enum with 3 element Saved, InvalidInput and Error
-                //if is saved se muestra el mensaje de salvado. si es invalidInput se muestra un mesaje con 
-                //el triangulo amarillo y si es error se muestra el mensaje con el circulo rojo.
+                //NEWFUNC - For another version maybe add an enum with 3 element: Saved, InvalidInput and Error
+                //If the returned value is:
+                //Saved: se muestra el mensaje de salvado
+                //InvalidInput: se muestra un mesaje con el triangulo amarillo
+                //Error: se muestra el mensaje con el circulo rojo.
                 if (_processor.SaveSeedTray(_model) == true)
                 {
                     MessageBox.Show("Registro salvado");
