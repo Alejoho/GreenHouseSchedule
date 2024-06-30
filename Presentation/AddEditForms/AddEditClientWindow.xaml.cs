@@ -99,11 +99,6 @@ public partial class AddEditClientWindow : Window, IOrganizationRequester
         if (lblcmbbtnOrganization.ComboBox.SelectedItem != null)
         {
             _model.OrganizationId = ((Organization)lblcmbbtnOrganization.ComboBox.SelectedItem).Id;
-            //CHECK - After I edit a client, the clients window refreshes the field organization
-            //by insstanciating again the ClientRepository in the ClientProcessor by calling
-            //the method GetAllClient. Evaluate if 
-            //is better reasign the Organization property in the model like the next line.
-            //_model.Organization = (Organization)lblcmbbtnOrganization.ComboBox.SelectedItem;
         }
 
         return output;

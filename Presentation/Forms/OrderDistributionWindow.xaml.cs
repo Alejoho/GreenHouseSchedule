@@ -125,7 +125,7 @@ public partial class OrderDistributionWindow : Window, IRelocatedBlockRequester
 
         order.BlocksView.Add(newBlock);
 
-        //check if the a blockinprocess has 0 seedtrays and deleted from the blockview in their order.
+        //checks if the a blockinprocess has 0 seedtrays and deleted from the blockview in their order.
         if (BlockInProcess.SeedTraysAmountToBeDelivered == 0)
         {
             BlockInProcess.OrderLocation.Order.BlocksView.Remove(BlockInProcess);

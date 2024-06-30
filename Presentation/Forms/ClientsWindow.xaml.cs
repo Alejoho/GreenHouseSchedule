@@ -93,6 +93,7 @@ public partial class ClientsWindow : Window
 
     private void RefreshData()
     {
+        //NEWFUNC - Improve the performance of the refreshes in the window that need it.
         _clients = _processor.GetAllClients().ToList();
         dgClients.ItemsSource = null;
         dgClients.ItemsSource = _clients;

@@ -285,11 +285,6 @@ namespace Domain
         /// </summary>
         public void LookForAvailability()
         {
-            //CHECK - al crear la instancia de esta clase el status se mueve directo al dia de la orden que se desea agregar
-            //y realiza el trabajo de ese dia sin agregar la orden. Pero al pasar al metodo LookForAvailability se va 
-            //a trabajar de nuevo el dia requerido por la orden, esto trae consigo que se rewstablezca el potencial de
-            //siembra del dia, lo que es un error.
-
 
             //LATER - Maybe add this configuration to the appConfig
             DateOnly limit = (DateOnly)_orderInProcess.EstimateSowDate?.AddDays(180);
