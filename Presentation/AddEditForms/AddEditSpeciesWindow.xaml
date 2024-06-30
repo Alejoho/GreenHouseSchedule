@@ -17,13 +17,13 @@
                 Tip="Días que demora en estar lista la postura de esta especie para su entrega (obligatorio)"/>
             
             <custom:TextBoxWithLabel FieldLabel="Peso de 1000 semillas" HorizontalAlignment="Right" x:Name="lbltxtWeightOf1000Seeds"
-                Tip="Peso de 1000 semilla de esta especie (opcional)"/>
+                Tip="Peso de 1000 semilla de esta especie en g (opcional)"/>
             
             <custom:TextBoxWithLabel FieldLabel="Semillas en una hectárea*" HorizontalAlignment="Right" x:Name="lbltxtAmountOfSeedsPerHectare"
                 Tip="Cantidad de semillas necesaria para sembrar una hectárea de la especie (obligatorio)"/>
             
             <custom:TextBoxWithLabel FieldLabel="Peso de una hectárea de semillas*" HorizontalAlignment="Right" x:Name="lbltxtWeightOfSeedsPerHectare"
-                Tip="Peso total de las semillas necesarias para sembrar una hectárea (obligatorio)"/>
+                Tip="Peso total de las semillas necesarias para sembrar una hectárea en Kg (obligatorio)"/>
                                      
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 18 0 0">
                 <Button x:Name="btnSave" Content="Guardar" Width="80" Margin="0 0 50 0" Click="btnSave_Click"/>

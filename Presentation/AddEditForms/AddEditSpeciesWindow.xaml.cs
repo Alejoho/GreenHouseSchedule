@@ -13,10 +13,6 @@ namespace Presentation.AddEditForms
     public partial class AddEditSpeciesWindow : Window
     {
         private static readonly ILog _log = LogHelper.GetLogger();
-        //LATER - Make a warnning if an user want to change the data of a specie
-        //I think to show a message that says. Este registro no se puede editar
-        //en cambio lo que puede hacer es crear otro registro con los nuevos datos y 
-        //usar ese.
         private SpeciesProcessor _processor;
         private Species _model;
         private ISpeciesRequester _requestor;
@@ -52,16 +48,27 @@ namespace Presentation.AddEditForms
         {
             if (ValidateDataType() == true)
             {
-                if (_processor.SaveSpecies(_model) == true)
+                if (_model.Id != 0 && MessageBox.Show("Editar estos registros puede traer resultados inesperados en la " +
+                    "aplicación. Es recomendable crear un nuevo registro con los nuevos datos aunque la especie sea la misma " +
+                    "y diferenciarlos de alguna manera. Por ejemplo ya existe 'Tomate' crear otro que se llame " +
+                    "'Tomate 2'.\n\n ¿Desea guardar los cambios?"
+                    , "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("Registro salvado");
+                    if (_processor.SaveSpecies(_model) == true)
+                    {
+                        MessageBox.Show("Registro salvado");
 
-                    _requestor?.SpeciesComplete(_model);
-                    this.Close();
+                        _requestor?.SpeciesComplete(_model);
+                        this.Close();
+                    }
+                    else
+                    {
+                        ShowError();
+                    }
                 }
                 else
                 {
-                    ShowError();
+                    this.Close();
                 }
             }
         }
