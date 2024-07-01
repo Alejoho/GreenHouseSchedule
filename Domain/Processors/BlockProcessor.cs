@@ -119,6 +119,8 @@ public class BlockProcessor
         }
 
         reciever.Blocks.Add(newBlock);
+
+        //I can assign here the house
         newBlock.OrderLocation = reciever;
     }
 
@@ -140,14 +142,15 @@ public class BlockProcessor
         orderLocationCopy.SeedlingAmount = 0;
 
         _orderLocationRepository.Insert(orderLocationCopy);
+
+        TransferBlock(orderLocationCopy, blockInProcess, block, relocatedSeedTrays);
+
         orderLocationCopy.SeedTray = blockInProcess.OrderLocation.SeedTray;
         orderLocationCopy.Order = blockInProcess.OrderLocation.Order;
 
         orderLocationCopy.GreenHouse = _greenHouseRepository.GetAll().First(x => x.Id == greenHouse);
 
         blockInProcess.OrderLocation.Order.OrderLocations.Add(orderLocationCopy);
-
-        TransferBlock(orderLocationCopy, blockInProcess, block, relocatedSeedTrays);
 
         _log.Info("Completed the relocation of the block. UpdateBlockPlaceOutAHouseWithOutBrother");
     }
