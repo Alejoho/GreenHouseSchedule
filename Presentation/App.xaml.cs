@@ -8,6 +8,11 @@ namespace Presentation
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+
+    //NEWFUNC - Add the AreaToSeedling conversor to the NewOrderWindow
+
+    //NEWFUNC - Add user authentication to the app.
+
     public partial class App : Application
     {
         private static readonly ILog _log = LogHelper.GetLogger();
@@ -15,6 +20,7 @@ namespace Presentation
 
         public App()
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             _wasTheMessageDisplayed = false;
         }
