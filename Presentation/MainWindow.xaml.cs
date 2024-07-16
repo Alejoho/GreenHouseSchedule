@@ -11,7 +11,7 @@ namespace Presentation;
 public partial class MainWindow : Window
 {
     private static readonly ILog _log = LogHelper.GetLogger();
-    //LATER - pa orita con internet Review the startup of all windows. (WindowStartUpLocation, WindowState) 
+    //NEXT - pa orita con internet Review the startup of all windows. (WindowStartUpLocation, WindowState) 
 
     //NEWFUNC - Maybe put in all textboxes' tittles the name of the app
 
