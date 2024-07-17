@@ -38,4 +38,8 @@
     </Page>
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if not exist &quot;$(TargetDir)Backups&quot; mkdir &quot;$(TargetDir)Backups&quot;" />
+  </Target>
+
 </Project>
