@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using Domain.ValuableObjects;
+using log4net;
 using SupportLayer;
 using System;
 using System.Windows;
@@ -25,9 +26,10 @@ namespace Presentation
             _wasTheMessageDisplayed = false;
         }
 
-        private void Application_Startup(object sender, StartupEventArgs e)
+        private async void Application_Startup(object sender, StartupEventArgs e)
         {
             _log.Info("The app was launched");
+            await DBOperations.BackupDatabaseAsync();
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
