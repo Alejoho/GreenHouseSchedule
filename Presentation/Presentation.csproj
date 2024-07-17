@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="if not exist &quot;$(TargetDir)Backups&quot; mkdir &quot;$(TargetDir)Backups&quot;" />
+    <Exec Command="if not exist &quot;$(TargetDir)Backups&quot; mkdir &quot;$(TargetDir)Backups&quot;&#xD;&#xA;if not exist &quot;$(TargetDir)Logs&quot; mkdir &quot;$(TargetDir)Logs&quot;" />
   </Target>
 
 </Project>
