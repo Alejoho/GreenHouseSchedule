@@ -15,15 +15,14 @@ public static class DataBaseOperations
 
             using (var command = connection.CreateCommand())
             {
-                var backupFileName = $"backup_{DateTime.Now:yyyyMMddHHmmss}.bak";
+                var backupFileName = $"backup_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.bak";
                 var backupFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, backupFileName);
 
-                command.CommandText = $"BACKUP DATABASE {connection.Database} TO DISK = '{backupFilePath}' WITH FORMAT, MEDIANAME = 'SQL_Backup', NAME = 'Full Backup of {connection.Database}';";
+                command.CommandText = $"BACKUP DATABASE [{connection.Database}] TO DISK = '{backupFilePath}' WITH FORMAT, MEDIANAME = 'SQL_Backup', NAME = 'Full Backup of SowScheduleDB';";
                 await command.ExecuteNonQueryAsync();
             }
 
             await connection.CloseAsync();
         }
     }
-
 }
