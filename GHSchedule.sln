@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupportLayer", "SupportLaye
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainTests", "DomainTests\DomainTests.csproj", "{AF377EB0-12A8-4EA5-A533-98DA0C0FF437}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupProject", "SetupProject\SetupProject.vdproj", "{8DBC4E83-8737-46C5-84F3-335FECB5A549}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{AF377EB0-12A8-4EA5-A533-98DA0C0FF437}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AF377EB0-12A8-4EA5-A533-98DA0C0FF437}.Release|x64.ActiveCfg = Release|x64
 		{AF377EB0-12A8-4EA5-A533-98DA0C0FF437}.Release|x64.Build.0 = Release|x64
+		{8DBC4E83-8737-46C5-84F3-335FECB5A549}.Debug|Any CPU.ActiveCfg = Debug
+		{8DBC4E83-8737-46C5-84F3-335FECB5A549}.Debug|x64.ActiveCfg = Debug
+		{8DBC4E83-8737-46C5-84F3-335FECB5A549}.Release|Any CPU.ActiveCfg = Release
+		{8DBC4E83-8737-46C5-84F3-335FECB5A549}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
