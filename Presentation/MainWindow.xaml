@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation"        
         mc:Ignorable="d"
-        Title="MainWindow" Height="270" Width="400" WindowStartupLocation="CenterScreen" 
+        Title="Gestor de Casas de Posturas" Height="270" Width="400" WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
