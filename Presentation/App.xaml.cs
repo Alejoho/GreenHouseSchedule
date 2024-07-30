@@ -2,6 +2,8 @@
 using log4net;
 using SupportLayer;
 using System;
+using System.Globalization;
+using System.Threading;
 using System.Windows;
 
 namespace Presentation
@@ -21,7 +23,12 @@ namespace Presentation
 
         public App()
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+            Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+            Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator = ".";
+            Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator = ".";
+            Thread.CurrentThread.CurrentCulture.NumberFormat.PercentDecimalSeparator = ".";
+
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             _wasTheMessageDisplayed = false;
         }
