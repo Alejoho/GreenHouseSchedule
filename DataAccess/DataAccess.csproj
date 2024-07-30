@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ProductionDB\SowScheduleDB.mdf" />
+    <None Remove="ProductionDB\SowScheduleDB_log.ldf" />
     <None Remove="SowScheduleDB.mdf" />
     <None Remove="SowScheduleDB_log.ldf" />
   </ItemGroup>
@@ -18,6 +20,12 @@
     </Content>
     <Content Include="SowScheduleDB_log.ldf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestingDB\SowScheduleDB.mdf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestingDB\SowScheduleDB_log.ldf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
