@@ -11,10 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="AppIcon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="AppIcon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
