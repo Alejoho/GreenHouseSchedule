@@ -1,0 +1,4 @@
+﻿CREATE TABLE [dbo].[SeedTrays]
+(
+	[Id] INT NOT NULL PRIMARY KEY
+)

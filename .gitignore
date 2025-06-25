@@ -6,6 +6,7 @@
 /.vs
 /.vscode
 /packages
+.idea/
 
 /DataAccess/bin
 /Domain/bin
