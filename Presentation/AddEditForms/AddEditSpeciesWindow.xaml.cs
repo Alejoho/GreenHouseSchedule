@@ -46,31 +46,34 @@ namespace Presentation.AddEditForms
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (ValidateDataType() == true)
+            // TODO: Change the logic of all the btnSave_Click event handler to follow
+            // this pattern.
+            if (ValidateDataType() == false)
             {
-                if (_model.Id != 0 && MessageBox.Show("Editar estos registros puede traer resultados inesperados en la " +
-                    "aplicación. Es recomendable crear un nuevo registro con los nuevos datos aunque la especie sea la misma " +
-                    "y diferenciarlos de alguna manera. Por ejemplo ya existe 'Tomate' crear otro que se llame " +
-                    "'Tomate 2'.\n\n ¿Desea guardar los cambios?"
-                    , "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                {
-                    if (_processor.SaveSpecies(_model) == true)
-                    {
-                        //MessageBox.Show("Registro salvado");
-
-                        _requestor?.SpeciesComplete(_model);
-                        this.Close();
-                    }
-                    else
-                    {
-                        ShowError();
-                    }
-                }
-                else
-                {
-                    this.Close();
-                }
+                return;
             }
+
+            if (_model.Id != 0 && MessageBox.Show("Editar estos registros puede traer resultados inesperados en la " +
+                "aplicación. Es recomendable crear un nuevo registro con los nuevos datos aunque la especie sea la misma " +
+                "y diferenciarlos de alguna manera. Por ejemplo ya existe 'Tomate' crear otro que se llame " +
+                "'Tomate 2'.\n\n ¿Desea guardar los cambios?"
+                , "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+                this.Close();
+            }
+
+            if (_processor.SaveSpecies(_model) == true)
+            {
+                //MessageBox.Show("Registro salvado");
+
+                _requestor?.SpeciesComplete(_model);
+                this.Close();
+            }
+            else
+            {
+                ShowError();
+            }
+
         }
 
         private void ShowError()
