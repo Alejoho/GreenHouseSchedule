@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel Margin="0 10 0 0" HorizontalAlignment="Center">
-            <custom:TextBoxWithLabel FieldLabel="Nombre*" HorizontalAlignment="Right" x:Name="lbltxtName"
+            <custom:TextBoxWithLabel FieldLabel="Nombre del municipio*" HorizontalAlignment="Right" x:Name="lbltxtName"
                 Tip="Nombre del municipio (obligatorio)"/>
 
             <custom:ComboBoxWithLabelNoButton FieldLabel="Provincia*" HorizontalAlignment="Right" 

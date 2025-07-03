@@ -32,6 +32,7 @@ create table "Municipalities"(
 	"Name" nvarchar(50) not null,
 	"ProvinceId" tinyint not null,
 	constraint [PK_Municipalities] primary key ("ID"),
+	CONSTRAINT [UQ_Municipalities_Name] UNIQUE ([Name]),
 	constraint [FK_Municipalities_ProvinceId] foreign key ("ProvinceId") 
 	references "Provinces" ("ID")
 );
