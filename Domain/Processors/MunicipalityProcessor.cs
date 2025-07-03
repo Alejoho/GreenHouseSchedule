@@ -3,6 +3,7 @@ using DataAccess.Repositories;
 using Domain.Validators;
 using FluentValidation.Results;
 using log4net;
+using Microsoft.Data.SqlClient;
 using SupportLayer;
 using SupportLayer.Models;
 
@@ -49,6 +50,18 @@ public class MunicipalityProcessor
                     _repository.Update(model);
                 }
                 return true;
+            }
+            // TODO: Refactor this error handling
+            catch (Exception ex) when (ex.InnerException is SqlException sqlEx
+                && sqlEx.Number == 2627)
+            {
+                ILog log = LogHelper.GetLogger();
+                log4net.GlobalContext.Properties["Model"] = PropertyFormatter.FormatProperties(model);
+                log.Error("There was an error saving a Municipality record to the DB", ex);
+                log4net.GlobalContext.Properties["Model"] = "";
+
+                Error = "El registro que intentaste insertar ya existe.";
+                return false;
             }
             catch (Exception ex)
             {
