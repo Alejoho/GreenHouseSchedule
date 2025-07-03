@@ -58,6 +58,7 @@
     <Folder Include="Properties" />
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
+    <Folder Include="Post-Deployment Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Provinces.sql" />
@@ -68,5 +69,14 @@
     <Build Include="dbo\Tables\Species.sql" />
     <Build Include="dbo\Tables\Products.sql" />
     <Build Include="dbo\Tables\SeedTrays.sql" />
+    <Build Include="dbo\Tables\GreenHouses.sql" />
+    <Build Include="dbo\Tables\OrderLocations.sql" />
+    <Build Include="dbo\Tables\Blocks.sql" />
+    <Build Include="dbo\Tables\DeliveryDetails.sql" />
+    <Build Include="dbo\Tables\Orders.sql" />
+    <Build Include="dbo\Tables\OrderDetails.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Post-Deployment Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>
