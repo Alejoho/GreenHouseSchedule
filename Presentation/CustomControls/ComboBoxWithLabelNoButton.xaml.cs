@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 
 namespace Presentation.CustomControls
 {
@@ -7,7 +8,10 @@ namespace Presentation.CustomControls
     /// </summary>
     public partial class ComboBoxWithLabelNoButton : UserControl
     {
+        // TODO: Change the Selection_Changed name to SelectionChange
         public SelectionChangedEventHandler Selection_Changed { get; set; }
+
+        public EventHandler DropDownOpened { get; set; }
 
         private string _fieldLabel;
 
@@ -25,5 +29,10 @@ namespace Presentation.CustomControls
         }
 
         public string ComboBoxTip { get; set; }
+
+        private void ComboBox_DropDownOpened(object sender, System.EventArgs e)
+        {
+            DropDownOpened?.Invoke(sender, e);
+        }
     }
 }

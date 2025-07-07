@@ -49,6 +49,19 @@ namespace Presentation.InputForms
             }
         }
 
+        private void lblcmbBlock_DropDownOpened(object sender, EventArgs e)
+        {
+            if ((GreenHouse)lblcmbGreenHouse.ComboBox.SelectedItem is null)
+            {
+                MessageBox.Show(
+                    "Debe especificar la casa en la que se ubicaron estas bandejas antes de especificar el bloque"
+                    , "Dato faltante"
+                    , MessageBoxButton.OK, MessageBoxImage.Information);
+
+                lblcmbGreenHouse.ComboBox.Focus();
+            }
+        }
+
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             if (ValidateData() == true)
