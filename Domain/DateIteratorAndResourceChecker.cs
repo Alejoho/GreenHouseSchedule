@@ -167,9 +167,12 @@ namespace Domain
         /// <summary>
         /// Do all tasks that should be done on one day.
         /// </summary>
-        private void DoTheWorkOfThisDay()
+        private void DoTheWorkOfThisDay(bool resetPotential = true)
         {
-            RestartPotentialOfSowSeedTrayPerDay();
+            if (resetPotential == true)
+            {
+                RestartPotentialOfSowSeedTrayPerDay();
+            }
             ImplementEstimateRelease();
             ImplementEstimateReservation();
             SeedBedStatus.UpdateObjects();
@@ -569,11 +572,13 @@ namespace Domain
                 _seedBedStatus = new SeedBedStatus(_auxiliarSeedBedStatus);
                 InsertOrderInProcessIntoSeedBedStatus(seedTrayPermutation);
                 _seedBedStatus.IteratorDate = _seedBedStatus.IteratorDate.AddDays(-1);
+                bool resetPotential = false;
 
                 do
                 {
                     _seedBedStatus.IteratorDate = _seedBedStatus.IteratorDate.AddDays(1);
-                    DoTheWorkOfThisDay();
+                    DoTheWorkOfThisDay(resetPotential);
+                    resetPotential = true;
                 } while (
                 _seedBedStatus.IteratorDate < limitDate &&
                 _seedBedStatus.ThereAreNonNegattiveValuesOfSeedTray() &&
@@ -593,6 +598,8 @@ namespace Domain
             {
                 output = true;
             }
+
+            _seedBedStatus = new SeedBedStatus(_auxiliarSeedBedStatus);
 
             return output;
         }
