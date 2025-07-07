@@ -24,7 +24,6 @@
                     CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
                     IsReadOnly="True" HeadersVisibility="Column">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Ancho (m)" Binding="{Binding Width}"/>
                 <DataGridTextColumn Header="Largo (m)" Binding="{Binding Length}"/>

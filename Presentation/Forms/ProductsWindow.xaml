@@ -35,7 +35,6 @@
             </DataGrid.RowStyle>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Días de producción (u)" Binding="{Binding ProductionDays}"/>
                 <DataGridTextColumn Header="Peso de 1000 semillas (g)" Binding="{Binding WeightOf1000Seeds}"/>

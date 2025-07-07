@@ -51,7 +51,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Cliente" Binding="{Binding Client.Name}"/>
                 <DataGridTextColumn Header="Especie" Binding="{Binding Product.Specie.Name}"/>
                 <DataGridTextColumn Header="Variedad" Binding="{Binding Product.Variety}"/>
@@ -86,7 +85,6 @@
                         </DataGrid.RowStyle>
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Casa" Binding="{Binding OrderLocation.GreenHouse.Name}"/>
                             <DataGridTextColumn Header="Bloque" Binding="{Binding BlockName}"/>
                             <DataGridTextColumn Header="Bandeja" Binding="{Binding OrderLocation.SeedTray.Name}"/>

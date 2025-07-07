@@ -24,7 +24,6 @@
                   CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto"
                   HeadersVisibility="Column">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Total de alvéolos (u)" Binding="{Binding TotalAlveolus}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Largo de alvéolos (u)" Binding="{Binding AlveolusLength}" IsReadOnly="True"/>

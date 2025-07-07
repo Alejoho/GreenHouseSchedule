@@ -32,9 +32,8 @@
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
                 </Style>
             </DataGrid.Resources>
-            
+
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Apodo" Binding="{Binding NickName}"/>
                 <DataGridTextColumn Header="Celular" Binding="{Binding PhoneNumber}"/>

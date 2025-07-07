@@ -33,7 +33,6 @@
                     CanUserResizeColumns="False" CanUserSortColumns="True" ColumnWidth="auto" 
                     IsReadOnly="True" HeadersVisibility="Column">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Tipo" Binding="{Binding TypeOfOrganizationName, Mode=OneWay}"/>
                 <DataGridTextColumn Header="Provincia" Binding="{Binding ProvinceName}"/>
@@ -50,7 +49,6 @@
                       ColumnWidth="auto" IsReadOnly="True" MouseDoubleClick="dgMunicipalities_MouseDoubleClick" 
                       SelectionChanged="dgMunicipalities_SelectionChanged" HeadersVisibility="Column">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                     <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="Provincia" Binding="{Binding ProvinceName}"/>
                 </DataGrid.Columns>

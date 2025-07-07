@@ -45,7 +45,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Cliente" Binding="{Binding Client.Name}"/>
                 <DataGridTextColumn Header="Especie" Binding="{Binding Product.Specie.Name}"/>
                 <DataGridTextColumn Header="Variedad" Binding="{Binding Product.Variety}"/>
@@ -76,7 +75,6 @@
                         </DataGrid.RowStyle>
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Bandeja" Binding="{Binding SeedTray.Name}"/>
                             <DataGridTextColumn Header="Bandejas por ubicar" Binding="{Binding RestOfSeedTraysToBeLocated}"/>
                             <DataGridTextColumn Header="Posturas por ubicar" Binding="{Binding RestOfSeedlingToBeLocated}"/>
