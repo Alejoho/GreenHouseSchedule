@@ -90,7 +90,7 @@ create table "Species"(
 	"ProductionDays" tinyint not null,
 	"WeightOf1000Seeds" numeric(7,3),
 	"AmountOfSeedsPerHectare" int not null,
-	"WeightOfSeedsPerHectare" numeric(7,3) not null,
+	"WeightOfSeedsPerHectare" numeric(6,2) not null,
 	CONSTRAINT [PK_Species] primary key ("ID"),
 	CONSTRAINT [UC_Species_Name] UNIQUE ("Name"),
 	CONSTRAINT [CK_Species_ProductionDays] check ("ProductionDays" > 0 and "ProductionDays" < 100),

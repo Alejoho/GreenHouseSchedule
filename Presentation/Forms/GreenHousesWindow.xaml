@@ -26,10 +26,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Ancho" Binding="{Binding Width}"/>
-                <DataGridTextColumn Header="Largo" Binding="{Binding Length}"/>
-                <DataGridTextColumn Header="Area total" Binding="{Binding GreenHouseArea}"/>
-                <DataGridTextColumn Header="Area de bandejas" Binding="{Binding SeedTrayArea}"/>
+                <DataGridTextColumn Header="Ancho (m)" Binding="{Binding Width}"/>
+                <DataGridTextColumn Header="Largo (m)" Binding="{Binding Length}"/>
+                <DataGridTextColumn Header="Area total (m²)" Binding="{Binding GreenHouseArea}"/>
+                <DataGridTextColumn Header="Area de bandejas (m²)" Binding="{Binding SeedTrayArea}"/>
                 <DataGridTextColumn Header="Bloques" Binding="{Binding AmountOfBlocks}"/>
                 <DataGridCheckBoxColumn Header="Activa" Binding="{Binding Active}"/>
                 <DataGridTextColumn Header="Descripcion" Binding="{Binding Description}"/>

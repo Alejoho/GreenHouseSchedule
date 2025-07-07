@@ -26,14 +26,14 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Total de alvéolos" Binding="{Binding TotalAlveolus}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Largo de alvéolos" Binding="{Binding AlveolusLength}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Ancho de alvéolos" Binding="{Binding AlveolusWidth}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Largo" Binding="{Binding TrayLength}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Ancho" Binding="{Binding TrayWidth}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Área" Binding="{Binding TrayArea}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Área lógica" Binding="{Binding LogicalTrayArea}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Cantidad" Binding="{Binding TotalAmount}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Total de alvéolos (u)" Binding="{Binding TotalAlveolus}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Largo de alvéolos (u)" Binding="{Binding AlveolusLength}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Ancho de alvéolos (u)" Binding="{Binding AlveolusWidth}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Largo (m)" Binding="{Binding TrayLength}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Ancho (m)" Binding="{Binding TrayWidth}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Área (m²)" Binding="{Binding TrayArea}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Área lógica  (m²)" Binding="{Binding LogicalTrayArea}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Cantidad (u)" Binding="{Binding TotalAmount}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Material" Binding="{Binding Material}" IsReadOnly="True"/>
                 <DataGridCheckBoxColumn Header="Activa" Binding="{Binding Active}" IsReadOnly="True"/>
             </DataGrid.Columns>

@@ -37,10 +37,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Días de producción" Binding="{Binding ProductionDays}"/>
-                <DataGridTextColumn Header="Peso de 1000 semillas" Binding="{Binding WeightOf1000Seeds}"/>
-                <DataGridTextColumn Header="Semillas en una hectárea" Binding="{Binding AmountOfSeedsPerHectare}"/>
-                <DataGridTextColumn Header="Peso de una hectárea de semillas" Binding="{Binding WeightOfSeedsPerHectare}"/>
+                <DataGridTextColumn Header="Días de producción (u)" Binding="{Binding ProductionDays}"/>
+                <DataGridTextColumn Header="Peso de 1000 semillas (g)" Binding="{Binding WeightOf1000Seeds}"/>
+                <DataGridTextColumn Header="Semillas en una hectárea (u)" Binding="{Binding AmountOfSeedsPerHectare}"/>
+                <DataGridTextColumn Header="Peso de una hectárea de semillas (g)" Binding="{Binding WeightOfSeedsPerHectare}"/>
             </DataGrid.Columns>
 
         </DataGrid>
