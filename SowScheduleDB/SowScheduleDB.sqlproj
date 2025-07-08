@@ -59,6 +59,8 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="Post-Deployment Scripts" />
+    <Folder Include="Publish Profile" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Provinces.sql" />
@@ -78,5 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Post-Deployment Scripts\Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SowScheduleDB to localDB.publish.xml" />
+    <None Include="Scripts\Initial script v1.0.2.sql" />
   </ItemGroup>
 </Project>

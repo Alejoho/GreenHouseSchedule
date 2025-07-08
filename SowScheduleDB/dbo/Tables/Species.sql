@@ -5,7 +5,7 @@
 	[ProductionDays] TINYINT NOT NULL,
 	[WeightOf1000Seeds] NUMERIC(7,3),
 	[AmountOfSeedsPerHectare] INT NOT NULL,
-	[WeightOfSeedsPerHectare] NUMERIC(7,3) NOT NULL,
+	[WeightOfSeedsPerHectare] NUMERIC(6,2) NOT NULL,
 	CONSTRAINT [PK_Species] PRIMARY KEY ([ID]),
 	CONSTRAINT [UQ_Species_Name] UNIQUE ([Name]),
 	CONSTRAINT [CK_Species_ProductionDays] CHECK ([ProductionDays] > 0 AND [ProductionDays] < 100),
