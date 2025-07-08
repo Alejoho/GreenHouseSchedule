@@ -106,6 +106,9 @@ public partial class OrganizationsWindow : Window
             _log.Info("A Municipality record was saved to the DB");
             log4net.GlobalContext.Properties["Model"] = "";
 
+            // LATER: Do something to avoid the need to reinstanciate the municipalityProcessor
+            _municipalityProcessor = new MunicipalityProcessor();
+
             RefreshData();
             txtMunicipality.Text = "";
             cmbProvince.SelectedItem = null;
