@@ -82,7 +82,7 @@
     <PostDeploy Include="Post-Deployment Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SowScheduleDB to localDB.publish.xml" />
     <None Include="Scripts\Initial script v1.0.2.sql" />
+    <None Include="Publish Profile\SowScheduleDB to localDB.publish.xml" />
   </ItemGroup>
 </Project>
