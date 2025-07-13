@@ -1,6 +1,7 @@
 ﻿using Domain.Processors;
 using log4net;
 using Presentation.AddEditForms;
+using Presentation.Resources;
 using SupportLayer;
 using SupportLayer.Models;
 using System.Collections.Generic;
@@ -72,12 +73,22 @@ public partial class OrganizationsWindow : Window
                     _organizations.Remove(organization);
                     RefreshData();
                 }
-                catch (System.InvalidOperationException ex)
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex) when (ex.IsForeignKeyViolation())
                 {
                     _log.Error("Attend to delete a related Organization record from the DB", ex);
 
                     MessageBox.Show("El registro seleccionado no se puede borrar, porque esta relacionado " +
                         "con otros registros.", "Operación Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                {
+                    _log.Error("An unexpected database error occurred while deleting an organization.", ex);
+
+                    MessageBox.Show("Ocurrió un error al intentar eliminar el registro.",
+                        "Error de Base de Datos",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
                 }
             }
         }
@@ -139,12 +150,22 @@ public partial class OrganizationsWindow : Window
                     _municipalities.Remove(municipality);
                     RefreshData();
                 }
-                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex) when (ex.IsForeignKeyViolation())
                 {
                     _log.Error("Attend to delete a related Municipality record from the DB", ex);
 
                     MessageBox.Show("El registro seleccionado no se puede borrar, porque esta relacionado " +
                         "con otros registros.", "Operación Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                {
+                    _log.Error("An unexpected database error occurred while deleting an organization.", ex);
+
+                    MessageBox.Show("Ocurrió un error al intentar eliminar el registro.",
+                        "Error de Base de Datos",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
                 }
             }
         }

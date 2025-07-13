@@ -2,6 +2,7 @@
 using log4net;
 using Presentation.AddEditForms;
 using Presentation.IRequesters;
+using Presentation.Resources;
 using SupportLayer;
 using SupportLayer.Models;
 using System.Collections.ObjectModel;
@@ -83,12 +84,22 @@ public partial class ProductsWindow : Window, ISpeciesRequester
                     _log.Info("A Species record was deleted from the DB");
                     log4net.GlobalContext.Properties["Model"] = "";
                 }
-                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex) when (ex.IsForeignKeyViolation())
                 {
                     _log.Error("Attend to delete a related Species record from the DB", ex);
 
                     MessageBox.Show("El registro seleccionado no se puede borrar, porque esta relacionado " +
                         "con otros registros.", "Operación Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                {
+                    _log.Error("An unexpected database error occurred while deleting an organization.", ex);
+
+                    MessageBox.Show("Ocurrió un error al intentar eliminar el registro.",
+                        "Error de Base de Datos",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
                 }
             }
         }
@@ -198,14 +209,23 @@ public partial class ProductsWindow : Window, ISpeciesRequester
                     _log.Info("A Product record was deleted from the DB");
                     log4net.GlobalContext.Properties["Model"] = "";
                 }
-                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex) when (ex.IsForeignKeyViolation())
                 {
                     _log.Error("Attend to delete a related Product record from the DB", ex);
 
                     MessageBox.Show("El registro seleccionado no se puede borrar, porque esta relacionado " +
                         "con otros registros.", "Operación Invalida", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                {
+                    _log.Error("An unexpected database error occurred while deleting an organization.", ex);
 
+                    MessageBox.Show("Ocurrió un error al intentar eliminar el registro.",
+                        "Error de Base de Datos",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+                }
             }
         }
         else
