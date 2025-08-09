@@ -37,7 +37,9 @@ namespace DataAccess.Repositories
         //LATER - Make the test for this method.
         public IEnumerable<Order> GetReadyToDeliver(DateOnly date)
         {
-            return _sowScheduleDB.Orders.Where(x => x.EstimateDeliveryDate <= date && x.Delivered == false);
+            return _sowScheduleDB.Orders.Where(x => x.EstimateDeliveryDate <= date
+                && x.Delivered == false
+                && x.RealSowDate != null);
         }
         //LATER - Make the test for this method.
         public IEnumerable<Order> GetSownsWithPlace()
