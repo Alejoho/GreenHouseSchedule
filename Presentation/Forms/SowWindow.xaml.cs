@@ -107,6 +107,7 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
         if (_orderLocationInProcess.Order.Sown == true)
         {
             _orders.Remove(_orderLocationInProcess.Order);
+            _orderLocationInProcess = null;
         }
         else if (_orderLocationInProcess.RealSowDate != null)
         {
@@ -114,10 +115,8 @@ public partial class SowWindow : Window, ISownOrderLocationChangeRequester
             order.OrderLocationsView.Remove(_orderLocationInProcess);
             order.UIColorsUpdateTrigger++;
         }
-        else
-        {
-            _activeOrderLocationDataGrid.Items.Refresh();
-        }
+
+        _activeOrderLocationDataGrid.Items.Refresh();
     }
 
     public OrderLocation OrderLocationInProcess { get => _orderLocationInProcess; }
